@@ -1,1 +1,1 @@
-from .manager import VariableManager as Manager
+from build.variables.manager import VariableManager as Manager
