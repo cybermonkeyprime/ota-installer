@@ -8,12 +8,19 @@ import build.variables as variables
 @dataclass
 class StockBootImagePusher(tasks.TaskFactoryTemplate):
     instance: type[variables.Manager] = field(default=variables.Manager)
+    comment_string: str = field(default="Patch boot image in Magisk app")
 
-    def __post_init__(self) -> None:
+    @property
+    def index(self) -> int:
+        return 2
+
+    @property
+    def title(self) -> str:
+        return "Push Stock Boot Image"
+
+    @property
+    def command_string(self) -> str:
         stock = self.instance.boot_image_struct.stock
-        self.index: int = 2
-        self.title: str = "Push Stock Boot Image"
-        self.command_string: str = (
+        return (
             f"adb push {Path.home() / stock.directory_path / stock.file_name} /sdcard/"
         )
-        self.comment = "Patch boot image in Magisk app"

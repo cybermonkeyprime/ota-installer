@@ -8,17 +8,38 @@ import build.tasks as tasks
 class MagiskImagePuller(tasks.TaskFactoryTemplate):
     instance: type = field()
 
-    def __post_init__(self) -> None:
-        magisk = self.instance.boot_image_struct.magisk
-        magisk_directory = self.instance.directory.magisk_image
+    @property
+    def index(self) -> int:
+        return 4
 
-        magisk_local_path = Path(magisk_directory.local_path)
-        magisk_remote_path = Path(magisk_directory.remote_path)
+    @property
+    def title(self) -> str:
+        return "Pull Magisk Image:"
 
-        self.index = 4
-        self.title = "Pull Magisk Image:"
-        self.source_path: Path = (
-            Path(magisk_remote_path) / self.instance.patched_image_name
-        )
-        self.destination_path = Path.home() / magisk_local_path / magisk.file_name
-        self.command_string = f"adb pull {self.source_path} {self.destination_path}"
+    @property
+    def magisk_struct(self) -> type:
+        return self.instance.boot_image_struct.magisk
+
+    @property
+    def magisk_directory(self) -> type:
+        return self.instance.directory.magisk_image
+
+    @property
+    def magisk_local_path(self) -> Path:
+        return Path(self.magisk_directory.local_path)
+
+    @property
+    def magisk_remote_path(self) -> Path:
+        return Path(self.magisk_directory.remote_path)
+
+    @property
+    def source_path(self) -> Path:
+        return Path(self.magisk_remote_path) / self.instance.patched_image_name
+
+    @property
+    def destination_path(self) -> Path:
+        return Path.home() / self.magisk_local_path / self.magisk_struct.file_name
+
+    @property
+    def command_string(self) -> str:
+        return f"adb pull {self.source_path} {self.destination_path}"

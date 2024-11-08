@@ -16,11 +16,17 @@ import build.decorators as decorators
 class MagiskImageFinder(tasks.TaskFactoryTemplate):
     instance: type = field(default=variables.Manager)
 
-    def __post_init__(self) -> None:
-        self.index = 3
-        self.title = "Find Magisk Image"
-        self.command_string = f"adb shell ls {
-            self.instance.directory.magisk_image.remote_path} | grep magisk_patched | head -n1"
+    @property
+    def index(self) -> int:
+        return 3
+
+    @property
+    def title(self) -> str:
+        return "Find Magisk Image"
+
+    @property
+    def command_string(self) -> str:
+        return f"adb shell ls { self.instance.directory.magisk_image.remote_path} | grep magisk_patched | head -n1"
 
     @ConfirmationPrompt(comment="Execute the command", indent=2, char=" ")
     @ContinueOnKeyPress(indent=1, char=" ")

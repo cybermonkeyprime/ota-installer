@@ -9,10 +9,14 @@ import build.variables as variables
 class PayloadImageExtractor(tasks.TaskFactoryTemplate):
     instance: type[variables.Manager] = field(default=variables.Manager)
 
-    def __post_init__(self) -> None:
-        self.index: int = 1
-        self.title: str = "Payload Image Extracter"
-        self.command_string: str = (
-            f"unzip -o {
-                self.instance.path} payload.bin -d {Path.home()}"
-        )
+    @property
+    def index(self) -> int:
+        return 1
+
+    @property
+    def title(self) -> str:
+        return "Payload Image Extracter"
+
+    @property
+    def command_string(self) -> str:
+        return f"unzip -o { self.instance.path} payload.bin -d {Path.home()}"

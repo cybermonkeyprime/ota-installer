@@ -1,34 +1,43 @@
 from dataclasses import dataclass, field
 from pathlib import Path
 
-import build.dispatchers as dispatchers
 import build.tasks as tasks
-import build.variables as variables
+from build.dispatchers import DispatcherTemplate, MainDispatcher
 
 
 @dataclass
 class MagiskImageBooter(tasks.TaskFactoryTemplate):
-    instance: type = field(default=variables.Manager)
+    instance: type = field(default=type)
 
-    def __post_init__(self) -> None:
+    @property
+    def index(self) -> int:
+        return 4
+
+    @property
+    def title(self) -> str:
+        return "Boot to Magisk Image"
+
+    @property
+    def magisk_struct(self) -> type:
+        return self.instance.boot_image_struct.magisk
+
+    @property
+    def device_name(self) -> str:
+        return self.instance.file_name_parser.device
+
+    @property
+    def magisk_image_path(self) -> Path:
+        return Path.home().joinpath(
+            self.magisk_struct.directory_path, self.magisk_struct.file_name
+        )
+
+    @property
+    def command_string(self) -> str:
+        return f"fastboot flash {self._image_handler(self.device_name)} {self.magisk_image_path}"
+
+    def _image_handler(self, key: str) -> DispatcherTemplate:
         try:
-            magisk = self.instance.boot_image_struct.magisk
-            device = self.instance.file_name_parser.device
-
-            self.index: int = 4
-            self.title: str = "Boot to Magisk Image"
-            self.path: str = str(
-                Path.home().joinpath(magisk.directory_path, magisk.file_name)
-            )
-            self.command_string: str = (
-                f"fastboot flash {self._image_handler(device)} {self.path}"
-            )
-        except AttributeError as e:
-            raise ValueError("Invalid instance attribute") from e
-
-    def _image_handler(self, key: str) -> dispatchers.DispatcherTemplate:
-        try:
-            dispatcher = dispatchers.MainDispatcher("image")
+            dispatcher = MainDispatcher("image")
             retriever = dispatcher.get_dispatcher()
             return retriever.get_key(key)
         except AttributeError as e:

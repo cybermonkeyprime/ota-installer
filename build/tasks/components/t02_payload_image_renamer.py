@@ -10,12 +10,19 @@ import build.variables as variables
 class PayloadImageRenamer(tasks.TaskFactoryTemplate):
     instance: type[variables.Manager] = field(default=variables.Manager)
 
-    def __post_init__(self) -> None:
-        self.index: int = 2
-        self.title: str = "Payload Image Renamer"
-        source_path: Path = Path.home().joinpath("payload.bin")
-        destination_path: Path = Path.home().joinpath(
+    @property
+    def index(self) -> int:
+        return 2
+
+    @property
+    def title(self) -> str:
+        return "Payload Image Renamer"
+
+    @property
+    def command_string(self) -> str:
+        source_path = Path.home().joinpath("payload.bin")
+        destination_path = Path.home().joinpath(
             self.instance.boot_image_struct.payload.file_name
         )
 
-        self.command_string: str = f"mv -v {source_path} {destination_path}"
+        return f"mv -v {source_path} {destination_path}"
