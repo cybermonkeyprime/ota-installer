@@ -8,7 +8,6 @@ class CommandLineInterface(object):
     list_paths: bool = field(default=False)
     ota_file_path: str = field(default="")
 
-    @property
     def parse_arguments(self) -> argparse.Namespace:
         parser = self._create_argument_parser()
         args = self._try_parse_arguments(parser)
@@ -55,7 +54,7 @@ class CommandLineInterface(object):
 
 def main() -> None:
     cli = CommandLineInterface()
-    parsed_args = cli.parse_arguments
+    parsed_args = cli.parse_arguments()
     # Now you can use parsed_args or the fields of cli
     # Example: print(cli.ota_file_path)
 
