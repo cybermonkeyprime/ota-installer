@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from build.software_versioning.base_version import BaseVersion
+from build.program_versioning.base_version import BaseVersion
 
 
 @dataclass

@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 
 from build.display.functions.display_factory import DisplayFactory
 
-from build.software_versioning import BaseVersion
+from build.program_versioning import BaseVersion
 
 
 @dataclass

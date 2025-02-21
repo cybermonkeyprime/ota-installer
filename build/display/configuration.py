@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
 
 import build.display as display
-import build.software_versioning as versioning
+import build.program_versioning as versioning
 
 
 @dataclass
