@@ -4,5 +4,5 @@ from dataclasses import dataclass
 @dataclass
 class BaseVersion(object):
     title: str = "OTA-Installer"
-    build_number: int = 20241107
-    revision_number: int = 10070620
+    build_number: int = 20250221
+    revision_number: int = 2210330
