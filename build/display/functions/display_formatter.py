@@ -3,7 +3,7 @@ from typing import Any
 
 from build.decorators import Colorizer, FooterWrapper, Printer
 
-from .components import DisplaySubtitle, DisplayTitle, Separator
+from build.display.components import Subtitle, Title, Separator
 
 
 @dataclass
@@ -24,7 +24,7 @@ class DisplayFormatter:
 
     @Printer(suffix="")
     def display_title(self) -> Any:
-        component = DisplayTitle(self.title)
+        component = Title(self.title)
         return component.display()
 
     @Printer(suffix="")
@@ -40,5 +40,5 @@ class DisplayFormatter:
 
     @Printer()
     def display_subtitle(self) -> str:
-        component = DisplaySubtitle(self.build, self.revision)
+        component = Subtitle(self.build, self.revision)
         return component.display()

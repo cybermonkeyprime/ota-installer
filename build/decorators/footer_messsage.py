@@ -1,9 +1,9 @@
+from collections.abc import Callable
 from dataclasses import dataclass
 from functools import wraps
-from typing import Any, Callable
+from typing import Any
 
-from build.styles.palette import Colors
-from build.styles.indentation import Indentation
+from build.styles import Colors, Indentation
 
 
 class Decorator:
@@ -24,8 +24,8 @@ class Decorator:
         def colorize_output(self) -> None:
             print("")
             print(
-                f"{Colors.task}{self.indentation()}{
-                  self.text}{Colors.reset}\n"
+                f"{Colors.warning}{self.indentation()}{
+                  self.text}{Colors.default}\n"
             )
 
         def indentation(self) -> str:

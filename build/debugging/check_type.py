@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Any, Type
+from typing import Any
 
 
 @dataclass
@@ -9,7 +9,7 @@ class TypeChecker:
 
     def display_type_information(self) -> None:
         try:
-            object_type: Type = type(self.object_to_check)
+            object_type: type = type(self.object_to_check)
             print(
                 f'{self.name.title()}: "{self.object_to_check}" is a {object_type.__name__}'
             )

@@ -1,9 +1,9 @@
+from collections.abc import Callable
 from dataclasses import dataclass
 from functools import wraps
-from typing import Any, Callable
+from typing import Any
 
-from .colorizer import Colorizer
-from .printer import Printer
+from build.decorators import Colorizer, Printer
 
 
 @dataclass
@@ -13,7 +13,7 @@ class ColorizedPrinter:
     style: str = "variable"
 
     def __call__(self, function: Callable) -> Any:
-        @Printer(color=False)
+        @Printer(use_color=False)
         @Colorizer(style=self.style)
         @wraps(function)
         def inner(*args: Any, **kwargs: Any) -> Any:

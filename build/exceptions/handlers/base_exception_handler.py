@@ -1,13 +1,14 @@
+from collections.abc import Callable
 from dataclasses import dataclass, field
-from typing import Any, Callable
+from typing import Any
 
-from build.decorators import Indent, Colorizer, Printer
+from build.decorators import Colorizer, Indent, Printer
 
 
 @dataclass
 class DefaultErrorMessage(object):
     def __str__(self) -> str:
-        return "An error occurred"
+        return "A Base Exception error occurred"
 
 
 @dataclass
@@ -29,7 +30,7 @@ class BaseExceptionHandler(object):
         return formatted_message
 
     @Indent(interval=1)
-    @Colorizer(style="variable")
+    @Colorizer(style="warning")
     def format_message(self, error: BaseException) -> str:
         error_message = self.custom_messages.get(type(error), DefaultErrorMessage())
         return f"{error_message}"

@@ -1,11 +1,12 @@
 from dataclasses import dataclass, field
-from .tasks.task_execution import Executor as TaskExecutor
-from .tasks.task_execution_handler import TaskExecutionHandler
-from .services import (
-    ScreenManagerService,
+
+from build.services import (
     ArgumentParserService,
     DisplayConfigurationService,
+    ScreenManagerService,
 )
+from build.tasks.task_execution import Executor as TaskExecutor
+from build.tasks.task_execution_handler import TaskExecutionHandler
 
 
 @dataclass

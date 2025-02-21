@@ -1,5 +1,6 @@
+from collections.abc import Iterator
 from dataclasses import dataclass, field
-from typing import Tuple, Iterator
+
 from decorators import ConfirmationPrompt, PaddedFooterWrapper
 
 
@@ -26,14 +27,14 @@ class TaskDefinitions:
 
 @dataclass
 class TaskDefinitionsTemplate:
-    _tasks: Tuple[str, ...] = field(default_factory=tuple)
+    _tasks: tuple[str, ...] = field(default_factory=tuple)
 
     @property
-    def tasks(self) -> Tuple[str, ...]:
+    def tasks(self) -> tuple[str, ...]:
         return self._tasks
 
     @tasks.setter
-    def tasks(self, value: Tuple[str, ...]) -> None:
+    def tasks(self, value: tuple[str, ...]) -> None:
         self._tasks = value
 
     def __iter__(self) -> Iterator[str]:

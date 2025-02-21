@@ -69,14 +69,16 @@ class ImageFile:
         self.magisk = self.create_image_file(MagiskImage)
 
     def create_image_file(
-        self, image_template_class: type[PayloadImage | StockImage | MagiskImage]
+        self,
+        image_template_class: type[PayloadImage | StockImage | MagiskImage],
     ) -> structures.ImageFile:
         device = self.file_name_parser.device
         version = self.file_name_parser.version
         try:
             image_instance = image_template_class(device, version, self.path)
             return structures.ImageFile(
-                image_instance.generate_file_name(), image_instance.generate_directory()
+                image_instance.generate_file_name(),
+                image_instance.generate_directory(),
             )
         except Exception as e:
             raise ValueError(f"Failed to create image structure: {e}")
@@ -89,7 +91,7 @@ def create_file_name_parser(variable: str) -> structures.FileNameParser:
 if __name__ == "__main__":
     variable = "example_device-2.0"
     parser = create_file_name_parser(variable)
-    image_manager = ImageFileTypeDefinition(parser)
+    image_manager = ImageFile(parser)
     print(image_manager.payload_image)
     print(image_manager.stock_image)
     print(image_manager.magisk_image)

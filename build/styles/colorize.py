@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from .palette import Colors
+from build.styles.palette import Colors
 
 
 @dataclass

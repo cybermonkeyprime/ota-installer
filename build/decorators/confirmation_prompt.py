@@ -1,10 +1,10 @@
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from functools import wraps
-from typing import Any, Callable, List, Optional, TypeVar
+from typing import Any, Optional, TypeVar
 
-from build.styles.palette import Colors
-
-from . import Colorizer, Indent, Printer
+from build.decorators import Colorizer, Indent, Printer
+from build.styles import Colors
 
 # Define a generic type for the decorator
 F = TypeVar("F", bound=Callable[..., Any])
@@ -38,20 +38,20 @@ class ConfirmationPrompt:
         return wrapper  # type: ignore
 
     @Printer(prefix="", suffix="")
-    @Colorizer(style="task")
+    @Colorizer(style="info")
     def display_prompt(self) -> str:
         message = "Do you want to "
         prompt_message = f"{self.begin}{message}{self.comment}? {
             self.ending()}]: "
         return prompt_message
 
-    def valid_options(self) -> List[str]:
+    def valid_options(self) -> list[str]:
         return ["Y", "N"]
 
     def key_options(self) -> str:
         return "/".join(self.valid_options())
 
-    @Colorizer(style="variable")
+    @Colorizer(style="warning")
     @Indent(interval=1)
     def invalid_option_message(self) -> str:
         return "Invalid Option!"
@@ -64,7 +64,7 @@ class ConfirmationPrompt:
         return f"{self.comment}"
 
     def ending(self) -> str:
-        return f"{Colors.reset}[{self.key_options()}{Colors.reset}"
+        return f"{Colors.default}[{self.key_options()}"
 
 
 # Example usage:

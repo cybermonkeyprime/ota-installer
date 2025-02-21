@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
 
-from ..display.screen_manager import ScreenManager
+from build.display.screen_manager import ScreenManager
 
 
 @dataclass

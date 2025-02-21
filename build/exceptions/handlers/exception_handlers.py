@@ -1,15 +1,16 @@
+from collections.abc import Callable
 from dataclasses import dataclass, field
-from typing import Any, Callable, Dict, Type, Union
+from typing import Any, Union
 
-from build.decorators import Indent, Colorizer, Printer
+from build.decorators import Colorizer, Indent, Printer
 
 
 @dataclass
 class BaseExceptionHandler:
     func: Callable
-    exception_type: Type[BaseException] = field(default=BaseException)
-    default_message: str = field(default="An error occurred")
-    custom_messages: Dict[Type[BaseException], str] = field(default_factory=dict)
+    exception_type: type[BaseException] = field(default=BaseException)
+    default_message: str = field(default="An Base Exception occurred ")
+    custom_messages: dict[type[BaseException], str] = field(default_factory=dict)
 
     def handle(self, *args: Any, **kwargs: Any) -> Union[Any, None]:
         try:
@@ -33,8 +34,8 @@ class BaseExceptionHandler:
         return self.handle(*args, **kwargs)
 
 
-def exception_handler_factory(*exception_types: Type[BaseException]):
-    def decorator(cls: Type[BaseExceptionHandler]) -> Type[BaseExceptionHandler]:
+def exception_handler_factory(*exception_types: type[BaseException]):
+    def decorator(cls: type[BaseExceptionHandler]) -> type[BaseExceptionHandler]:
         original_init = cls.__init__
 
         def __init__(self, *args, **kwargs):

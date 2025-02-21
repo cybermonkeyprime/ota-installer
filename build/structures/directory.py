@@ -1,16 +1,13 @@
 from dataclasses import dataclass, field
-from .boot_image import BootImage
-from .magisk import Magisk
+from build.structures.boot_image import BootImage
+from build.structures.magisk import Magisk
 
 
 @dataclass
 class Directory:
     ota: str
-    # Exclude _boot_image from the generated __repr__
     _boot_image: str = field(repr=False)
-    # Exclude boot_image from the __init__ method
     boot_image: BootImage = field(init=False)
-    # Exclude magisk from the __init__ method
     magisk: Magisk = field(init=False)
 
     def __post_init__(self) -> None:

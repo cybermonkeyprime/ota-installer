@@ -30,12 +30,12 @@ class TaskFactoryTemplate(ABC):
         if self.comment_string:
             self.after_comment()
 
-    @decorators.ColorizedIndentPrinter(indent=1, end=":", style="task")
+    @decorators.ColorizedIndentPrinter(indent=1, end=":", style="warning")
     def index_and_title(self) -> str:
-        return f"{self.index}. {self.title}:"
+        return f"{self.index}. {self.title}: "
 
     @decorators.FooterWrapper()
-    @decorators.ColorizedIndentPrinter(indent=3, end="", style="non_error")
+    @decorators.ColorizedIndentPrinter(indent=3, end="", style="default")
     def return_command_string(self) -> str:
         return self.command_string
 
@@ -43,8 +43,8 @@ class TaskFactoryTemplate(ABC):
     @decorators.ContinueOnKeyPress(indent=1, char=" ")
     @decorators.Encapsulate()
     def execute_command_string(self) -> None:
-        run([self.command_string], shell=True, check=False)
+        run([self.command_string], shell=True)
 
-    @decorators.ColorizedIndentPrinter(indent=2, begin="", end="", style="task")
+    @decorators.ColorizedIndentPrinter(indent=2, begin="", end="", style="warning")
     def after_comment(self) -> str:
         return f"{self.comment_string}"

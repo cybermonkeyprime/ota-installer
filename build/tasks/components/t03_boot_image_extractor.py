@@ -25,9 +25,9 @@ class BootImageExtractor(tasks.TaskFactoryTemplate):
         device: str = self.instance.file_name_parser.device
         source: Path = Path.home() / self.instance.boot_image_struct.payload.file_name
         options: str = (
-            f"--images={self._image_handler(device)} --out {Path.home() / "images"}"
+            f"--images={self._image_handler(device)} " f"--out {Path.home() / "images"}"
         )
-        return f"payload_dumper.py {source} {options}"
+        return f"payload_dumper {source} {options}"
 
     def _image_handler(self, key: str) -> DispatcherTemplate:
         try:

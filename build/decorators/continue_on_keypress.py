@@ -1,11 +1,10 @@
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from functools import wraps
-from typing import Any, Callable, TypeVar
+from typing import Any, TypeVar
 
-from build.styles.indentation import Indentation
-
-from .colorizer import Colorizer
-from .printer import Printer
+from build.decorators import Colorizer, Printer
+from build.styles import Indentation
 
 # Define a generic type for the decorator
 T = TypeVar("T", bound=Callable[..., Any])

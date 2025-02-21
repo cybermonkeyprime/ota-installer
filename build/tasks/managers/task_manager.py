@@ -1,20 +1,20 @@
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Callable, Tuple
-
-from ..definitions import TaskDefinitions
-from ..task_factory import TaskFactory
+from typing import Optional
 
 import build.display as display
 import build.variables as variables
+from build.tasks.definitions import TaskDefinitions
+from build.tasks.task_factory import TaskFactory
 
 
 @dataclass
 class TaskIteration:
     instance: variables.Manager = field()
-    task_group: Tuple[str, str] = field(default=("", ""))
+    task_group: tuple[str, str] = field(default=("", ""))
 
-    def execute_iteration(self, task_group: Tuple[str, ...]) -> None:
+    def execute_iteration(self, task_group: tuple[str, ...]) -> None:
         task_director = TaskDirector()
         try:
             stack = list(task_group)
@@ -37,16 +37,20 @@ class TaskDirector:
 class TaskManager:
     file_name: str = field(default="")
     function: Callable = field(default=Callable)
-    iteration: TaskIteration | None = field(default=None)
-    variable: variables.Manager = field(default=None)
+    iteration: Optional[TaskIteration] = field(default=None)
+    variable: variables.Manager = field(init=False)
     sub_tasks: TaskDefinitions = field(default_factory=TaskDefinitions)
+
+    @property
+    def file_path(self) -> Path:
+        return Path(self.file_name)
 
     def initiate_task(self, args: str) -> None:
         try:
             self.file_name = args
-            self.variable = variables.Manager(self.file_name)
+            self.variable = variables.Manager(self.file_path)
             self.iteration = TaskIteration(self.variable)
-            self.posix_path = Path(self.file_name)
+            self.posix_path = self.file_path
             self.list_vars()
         except Exception as e:
             print(f"An error occurred: {e}")

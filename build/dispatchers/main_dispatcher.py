@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
 from typing import Any
 
-from . import DispatcherTemplate, DispatcherFactory
+from build.dispatchers import DispatcherTemplate, DispatcherFactory
 
 
 @dataclass

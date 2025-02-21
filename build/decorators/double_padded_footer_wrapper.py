@@ -1,8 +1,9 @@
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from functools import wraps
-from typing import Any, Callable
+from typing import Any
 
-from . import Colorizer, Indent, Printer
+from build.decorators import Colorizer, Indent, Printer
 
 
 @dataclass
@@ -22,8 +23,8 @@ class DoublePaddedFooterWrapper:
 
         return inner
 
-    @Printer(color=False)
-    @Colorizer(style="variable")
+    @Printer(use_color=False)
+    @Colorizer(style="info")
     @Indent(interval=1)
     def string_output(self, message) -> str:
         return f"{message}"

@@ -1,11 +1,13 @@
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Optional
+from pydantic import BaseModel, ValidationError, FilePath
 
 import build.dispatchers as dispatchers
 import build.structures as structures
 import build.types.definitions as definitions
 import build.types.managers as managers
+import sys
 
 magisk_instance = structures.MagiskStruct()
 
@@ -32,7 +34,7 @@ class VariableManager:
     # user_home_path: Path = field(default_factory=lambda: Path.home())
 
     def __post_init__(self) -> None:
-        self._file_path = FilePathValidator(self.path).validate()
+        self._file_path = FilePathValidator(file_path=self.path).validator()
         self.patched_image_name = "place_holder"
         self.initialize_variables()
 
@@ -72,15 +74,31 @@ class VariableManager:
             return None
 
 
+class FileExistenceModel(BaseModel):
+    file_path: FilePath
+
+    def checker(self):
+        file_path = Path(self.file_path)
+        try:
+            file_path.exists()
+        except FileNotFoundError:
+            print(f"Warning, {file_path.stem} doesn't exist.")
+        finally:
+            return file_path
+
+
 @dataclass
-class FilePathValidator(object):
+class FilePathValidator:
     file_path: Path
 
-    def validate(self) -> Path:
-        posix_file_path = Path(self.file_path)
-        if not posix_file_path.exists():
-            print(f"Warning, {posix_file_path.stem} does not exist.")
-        return posix_file_path
+    def validator(self) -> Path:
+        try:
+            FileExistenceModel(file_path=self.file_path).checker()
+        except ValidationError:
+            print(f"Warning, {Path(self.file_path).stem} does not exist.")
+            sys.exit()
+        else:
+            return Path(self.file_path)
 
 
 @dataclass

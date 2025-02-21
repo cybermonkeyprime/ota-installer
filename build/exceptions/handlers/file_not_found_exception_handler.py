@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
-from .exception_handler_factory import exception_handler_factory
-from .base_exception_handler import BaseExceptionHandler
+from build.exceptions.handlers import exception_handler_factory
+from build.exceptions.handlers import BaseExceptionHandler
 
 
 @exception_handler_factory(FileNotFoundError)

@@ -1,8 +1,9 @@
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from functools import wraps
-from typing import Any, Callable
+from typing import Any
 
-from . import Colorizer, Indent, Printer  # Wrapper as DoubleWrapper
+from build.decorators import Colorizer, Indent, Printer  # Wrapper as DoubleWrapper
 
 
 @dataclass
@@ -19,7 +20,7 @@ class FooterWrapper:
         return inner
 
     @Printer(use_color=True)
-    @Colorizer(style="variable")
+    @Colorizer(style="info")
     @Indent(interval=1)
     def message_output(self) -> Any:
         return f"{self.message}"

@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from typing import Any
-from build.styles.indentation import Indentation
+from build.styles import Indentation
 
 
 @dataclass

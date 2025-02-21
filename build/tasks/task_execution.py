@@ -1,15 +1,17 @@
 from argparse import Namespace
-from typing import Any
 from dataclasses import dataclass, field
-from build.dispatchers import MainDispatcher, DispatcherTemplate
-from .definitions import TaskDefinitions
-from .managers import TaskManager
-from build.exceptions.handlers import KeyboardInterruptHandler
+from typing import Any
+
 from build.decorators import FooterWrapper
+from build.dispatchers import DispatcherTemplate, MainDispatcher
+from build.exceptions.handlers import KeyboardInterruptHandler
+from build.styles.palette import Colors
+from build.tasks.definitions import TaskDefinitions
+from build.tasks.managers import TaskManager
 
 
 @KeyboardInterruptHandler
-@FooterWrapper(message="All Done!\n")
+@FooterWrapper(message="All Finished!\n")
 @dataclass
 class Executor:
     arguments: Namespace = field(default_factory=Namespace)
@@ -48,6 +50,7 @@ class Executor:
                 raise AttributeError("Arguments must have 'task_group' attribute")
         except Exception as e:
             print(f"Error processing arguments: {e}")
+            print(CustomException("arguments", e))
 
     def initialize_task_dispatcher(self) -> None:
         dispatcher = MainDispatcher("task_group", self.task_definitions)
@@ -62,7 +65,9 @@ class Executor:
             execution_function = self.task_manager.iteration.execute_iteration
             execution_function(task_group=dispatcher_instance)
         except Exception as e:
-            print(f"Error processing {task_group_key}: {e}")
+            print(CustomException(task_group_key, e))
+
+    #            print(f"{Colors.error}Error processing {task_group_key}: {e}")
 
     def execute_single_task(self) -> None:
         if self.task_group:
@@ -71,6 +76,15 @@ class Executor:
     def execute_all_tasks(self) -> None:
         for task_group_key in ["preparation", "migration", "application"]:
             self.execute_task(task_group_key)
+
+
+@dataclass
+class CustomException(Exception):
+    operation: str
+    error: Exception
+
+    def __str__(self) -> str:
+        return f"{Colors.error}Error processing {self.operation}: {self.error}"
 
 
 if __name__ == "__main__":

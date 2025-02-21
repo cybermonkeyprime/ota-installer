@@ -1,13 +1,14 @@
+from collections.abc import Callable
 from dataclasses import dataclass, field
-from typing import Any, Callable, Dict, Type
-from .base_exception_handler import BaseExceptionHandler
+from typing import Any
+
+from build.exceptions.handlers.base_exception_handler import BaseExceptionHandler
 
 
-# def create_exception_handler(*exception_types: Type[BaseException]) -> Callable:
-def exception_handler_factory(*exception_types: Type[BaseException]) -> Callable:
+def exception_handler_factory(*exception_types: type[BaseException]) -> Callable:
     def decorator(
-        handler_class: Type[BaseExceptionHandler],
-    ) -> Type[BaseExceptionHandler]:
+        handler_class: type[BaseExceptionHandler],
+    ) -> type[BaseExceptionHandler]:
         original_init = handler_class.__init__
 
         def __init__(self: BaseExceptionHandler, *args: Any, **kwargs: Any) -> None:
@@ -23,8 +24,8 @@ def exception_handler_factory(*exception_types: Type[BaseException]) -> Callable
 
 @dataclass
 class ExceptionHandler(object):
-    default_message: str = "An error occurred"
-    custom_messages: Dict[Type[BaseException], str] = field(default_factory=dict)
+    default_message: str = "An Exception error occurred"
+    custom_messages: dict[type[BaseException], str] = field(default_factory=dict)
 
 
 if __name__ == "__main__":

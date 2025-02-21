@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
 from typing import Any
 from pathlib import Path
-from ..dispatcher_template import DispatcherTemplate
+from build.dispatchers.dispatcher_template import DispatcherTemplate
 
 
 @dataclass

@@ -1,8 +1,9 @@
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from functools import wraps
-from typing import Any, Callable
+from typing import Any
 
-from . import Colorizer, Indent, Printer
+from build.decorators import Colorizer, Indent, Printer
 
 
 @dataclass
@@ -19,7 +20,7 @@ class Wrapper:
 
         return inner
 
-    @Printer(color=False)
+    @Printer(use_color=False)
     @Colorizer(style="variable")
     @Indent(interval=1)
     def string_output(self) -> None:

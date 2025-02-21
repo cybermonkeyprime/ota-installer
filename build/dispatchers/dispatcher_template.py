@@ -1,10 +1,11 @@
-from typing import Any, Callable, Dict
+from collections.abc import Callable
+from typing import Union
 
 
 class DispatcherTemplate:
-    collection: Dict[str, Callable] = {}
+    collection: dict[str, type] = {}
 
-    def get_value(self, key: str) -> Any:
+    def get_value(self, key: str) -> Union[type, None]:
         return self.collection.get(key)
 
     def get_instance(self, key: str) -> Callable | None:

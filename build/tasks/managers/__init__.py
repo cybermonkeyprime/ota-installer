@@ -1,1 +1,1 @@
-from .task_manager import *
+from build.tasks.managers.task_manager import *

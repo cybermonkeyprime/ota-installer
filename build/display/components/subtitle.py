@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
 
-from decorators import Colorizer
+from build.decorators import Colorizer
 
 import build.display.template as template
 
@@ -17,7 +17,8 @@ class Subtitle(template.DisplayComponent):
 
     @Colorizer(style="version")
     def build_formatter(self) -> str:
-        return f"Build: {self.build}"
+        subtitle = f"Build: {self.build}"
+        return f"{subtitle}"
 
     @Colorizer(style="version")
     def revision_formatter(self) -> str:

@@ -1,6 +1,6 @@
 from argparse import Namespace
 from dataclasses import dataclass, field
-from .task_execution import Executor as TaskExecutor
+from build.tasks import Executor as TaskExecutor
 
 
 @dataclass

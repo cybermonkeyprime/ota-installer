@@ -1,10 +1,17 @@
+from collections.abc import Callable
 from dataclasses import dataclass
 from functools import wraps
-from typing import Any, Callable
+from typing import Any
 
-from .indent import Indent
-from .colorizer import Colorizer
-from .printer import Printer
+from build.decorators.colorizer import Colorizer
+from build.decorators.indent import Indent
+from build.decorators.printer import Printer
+
+"""
+Do not use this causes circlular import
+circular until resolved
+from build.decorators import Colorizer, Indent, Printer
+"""
 
 
 @dataclass
@@ -15,12 +22,12 @@ class ColorizedIndentPrinter:
     style: str = "variable"
 
     def __call__(self, function: Callable) -> Any:
-        @Printer(color=False)
+        @Printer(use_color=True)
         @Colorizer(style=self.style)
         @Indent(interval=self.indent)
         @wraps(function)
         def inner(*args: Any, **kwargs: Any) -> Any:
             result = function(*args, **kwargs)
-            return f"{result}"
+            return result
 
         return inner

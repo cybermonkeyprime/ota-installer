@@ -1,8 +1,8 @@
 from typing import Any
 
-from .dispatcher_template import DispatcherTemplate
+from build.dispatchers.dispatcher_template import DispatcherTemplate
 
-from .types import (
+from build.dispatchers.types import (
     ImageTypeDispatcher,
     DirectoryTypeDispatcher,
     FileTypeDispatcher,

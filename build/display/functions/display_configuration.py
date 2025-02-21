@@ -1,12 +1,12 @@
 from dataclasses import dataclass, field
 
-from .display_factory import DisplayFactory
+from build.display.functions.display_factory import DisplayFactory
 
-from build.software_version import SoftwareVersion
+from build.software_versioning import BaseVersion
 
 
 @dataclass
-class DisplayConfiguration(SoftwareVersion):
+class DisplayConfiguration(BaseVersion):
     version_info: str = field(default_factory=str)
 
     def render_version_text(self) -> None:

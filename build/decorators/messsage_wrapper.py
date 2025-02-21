@@ -1,9 +1,9 @@
+from collections.abc import Callable
 from dataclasses import dataclass
 from functools import wraps
-from typing import Any, Callable
+from typing import Any
 
-from .colorizer import Colorizer
-from .printer import Printer
+from build.decorators import Colorizer, Printer
 
 
 @dataclass

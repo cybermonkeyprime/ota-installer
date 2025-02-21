@@ -1,11 +1,11 @@
+from collections.abc import Callable
 from dataclasses import dataclass
 from functools import wraps
-from typing import Any, Callable
+from typing import Any
 
 from rich import print as rprint
 
-from build.styles.palette import Colors
-from build.styles.indentation import Indentation
+from build.styles import Colors, Indentation
 
 
 @dataclass
@@ -33,4 +33,4 @@ class PrettyOutputWrapper:
         return f"{style}{self.begin}{self.indentation()}"
 
     def ending(self) -> str:
-        return f"{self.end}{Colors.reset}"
+        return f"{self.end}{Colors.default}"

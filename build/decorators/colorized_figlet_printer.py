@@ -1,10 +1,17 @@
+from collections.abc import Callable
 from dataclasses import dataclass
 from functools import wraps
-from typing import Any, Callable
+from typing import Any
 
-from .colorizer import Colorizer
-from .figletizer import Figletizer
-from .printer import Printer
+from build.decorators.colorizer import Colorizer
+from build.decorators.figletizer import Figletizer
+from build.decorators.printer import Printer
+
+"""
+Do not use this causes circlular import
+circular until resolved
+from build.decorators import Colorizer, Figletizer, Printer
+"""
 
 
 @dataclass

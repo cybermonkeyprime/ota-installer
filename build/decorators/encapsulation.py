@@ -1,9 +1,10 @@
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from functools import wraps
-from typing import Any, Callable
+from typing import Any
 
-from .multiply_string import MultiplyString
-from .printer import Printer
+from build.decorators.multiply_string import MultiplyString
+from build.decorators.printer import Printer
 
 
 @dataclass

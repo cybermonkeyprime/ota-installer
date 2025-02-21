@@ -1,9 +1,11 @@
+from collections.abc import Callable
 from dataclasses import dataclass
 from functools import wraps
-from typing import Any, Callable
+from typing import Any
+
 from pyfiglet import figlet_format
-from .colors import Colors
-from .indentation import Indentation
+
+from build.styles import Colors, Indentation
 
 
 @dataclass
@@ -31,7 +33,7 @@ class Decorators:
             @wraps(function)
             def inner(*args, **kwargs):
                 result = function(*args, **kwargs)
-                return f"{self._style()}{result}{Colors.reset}"
+                return f"{self._style()}{result}{Colors.default}"
 
             return inner
 
@@ -82,7 +84,7 @@ class Decorators:
 
     @dataclass
     class ColorizedFiglet:
-        style: str = "variable"
+        style: str = "info"
         font: str = "slant"
 
         def __call__(self, function):
@@ -99,7 +101,7 @@ class Decorators:
     class PrintColorizedFiglet:
         color: bool = True
         end: str = "\n"
-        style: str = "variable"
+        style: str = "info"
         font: str = "slant"
 
         def __call__(self, function):

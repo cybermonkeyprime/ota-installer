@@ -1,11 +1,13 @@
 from dataclasses import dataclass, field
-from typing import List
+from pathlib import Path
+from pydantic import BaseModel, StringConstraints, ValidationError
+from typing import Annotated, Any
 
 
 @dataclass
-class FileNameParser:
+class FileNameParser(object):
     raw_name: str
-    parts: List[str] = field(init=False)
+    parts: list[str] = field(init=False)
     device: str = field(init=False)
     file_type: str = field(init=False)
     version: str = field(init=False)
@@ -26,6 +28,33 @@ class FileNameParser:
         return self.raw_name
 
 
+class VersionModel(BaseModel):
+    version_string: Annotated[
+        str, StringConstraints(pattern="^[a-z]{2}[1-9][a-z].[0-9]{6}.[0-9]{3}$")
+    ]
+
+
+@dataclass
+class DataValidation(object):
+    validation_instance: type
+    model_instance: Any
+
+    def validator(self):
+        try:
+            self.model_instance
+        except ValidationError as error:
+            error_items = str(error).strip().split("\n")
+            error_message = error_items[2].strip()  # .split(" ")
+            print(f"ValidationError- : {error_message}")
+
+
 if __name__ == "__main__":
-    file_name = "device-type-version-extra-info"
-    FileNameParser(raw_name=file_name)
+    file_string = "tokay-ota-ap4a.250205.00a-22cfd265.zip"
+    file_name = Path(file_string).stem
+    file_name_parser = FileNameParser(raw_name=str(file_name))
+    version_model = VersionModel(
+        version_string=file_name_parser.version,
+    )
+    print()
+    data = DataValidation(VersionModel, version_model)
+    data.validator()

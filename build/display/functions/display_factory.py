@@ -1,5 +1,5 @@
 from dataclasses import field
-from .display_formatter import DisplayFormatter
+from build.display.functions.display_formatter import DisplayFormatter
 
 
 class DisplayFactory:

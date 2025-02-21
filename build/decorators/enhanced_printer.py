@@ -1,6 +1,8 @@
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from functools import wraps
-from typing import Any, Callable, TypeVar, cast, Optional
+from typing import Any, Optional, TypeVar, cast
+
 from colorama import Fore, Style
 
 # Define a generic type for functions
@@ -45,9 +47,11 @@ class ColoredPrinter:
             result = function(*args, **kwargs)
             color_prefix = self.color if self.use_color else ""
             color_suffix = Style.RESET_ALL if self.use_color else ""
-            print(f"{color_prefix}{self.prefix}{result}{
-                  color_suffix}", end=self.suffix)
+            print(
+                f"{color_prefix}{self.prefix}{result}{
+                  color_suffix}",
+                end=self.suffix,
+            )
             return result
 
         return cast(F, decorated_function)
-

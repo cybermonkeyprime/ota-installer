@@ -1,7 +1,9 @@
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from functools import wraps
-from build.styles.palette import Colors
-from typing import Any, Callable
+from typing import Any
+
+from build.styles import Colors
 
 
 @dataclass
@@ -12,7 +14,7 @@ class TextStyler:
         @wraps(function)
         def wrapped_function(*args: Any, **kwargs: Any) -> str:
             result = function(*args, **kwargs)
-            return f"{self.get_style_code()}{result}{Colors.reset}"
+            return f"{self.get_style_code()}{result}{Colors.default}"
 
         return wrapped_function
 

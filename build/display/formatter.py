@@ -1,11 +1,9 @@
 from dataclasses import dataclass, field
 from typing import Any
 
-from ..decorators import Colorizer, FooterWrapper, Printer
-
-from ..styles.escape_code_manager import EscapeCodeManager
-
 import build.display.components as display_components
+from build.decorators import Colorizer, FooterWrapper, Printer
+from build.styles.escape_code_manager import EscapeCodeManager
 
 
 @dataclass

@@ -1,6 +1,8 @@
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from functools import wraps
-from typing import Any, Callable, Optional, TypeVar, cast
+from typing import Any, Optional, TypeVar, cast
+
 from build.styles import Colors
 
 # Define a generic type for functions
@@ -16,7 +18,7 @@ class Printer:
 
     def __post_init__(self):
         if self.use_color and self.color is None:
-            self.color = Colors.variable  # Default color
+            self.color = Colors.warning  # Default color
 
     def __call__(self, function: F) -> F:
         @wraps(function)
@@ -24,7 +26,7 @@ class Printer:
             try:
                 result = function(*args, **kwargs)
                 color_prefix = self.color if self.use_color else ""
-                color_suffix = Colors.reset if self.use_color else ""
+                color_suffix = Colors.default if self.use_color else ""
                 print(
                     f"{color_prefix}{self.prefix}{result}{color_suffix}",
                     end=self.suffix,

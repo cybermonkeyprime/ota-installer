@@ -19,4 +19,4 @@ class PayloadImageExtractor(tasks.TaskFactoryTemplate):
 
     @property
     def command_string(self) -> str:
-        return f"unzip -o { self.instance.path} payload.bin -d {Path.home()}"
+        return f"unzip -o {self.instance.path} payload.bin -d {Path.home()}"
