@@ -1,65 +1,49 @@
+import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Optional
-from pydantic import BaseModel, ValidationError, FilePath
+
+from pydantic import BaseModel, FilePath, ValidationError
 
 import build.dispatchers as dispatchers
 import build.structures as structures
 import build.types.definitions as definitions
 import build.types.managers as managers
-import sys
 
-magisk_instance = structures.MagiskStruct()
+magisk = structures.MagiskStruct()
 
 
 @dataclass
 class VariableManager:
-    _file_path: Path = field(init=False, repr=False)
-    file_stem: str = field(init=False)
-    file_name_parser: structures.FileNameParser = field(init=False)
-    boot_image_struct: Optional[definitions.ImageFile] = field(init=False)
-    # patched_image_name: str = field(init=False)
-    log_file: "LogFile" = field(init=False)
-    ota_parent_path: Path = field(init=False)
-    boot_image_path: Path = field(
-        init=False,
-        default_factory=lambda: Path.home() / "Android" / "boot-images",
-        # default_factory=lambda: Path(BootImage),
-    )
-    directory: Optional[definitions.Directory] = field(init=False)
-    remote_magisk_path: str = field(
-        init=False, default=str(magisk_instance.remote_path)
-    )
     path: Path = field(default_factory=Path)
-    # user_home_path: Path = field(default_factory=lambda: Path.home())
 
-    def __post_init__(self) -> None:
-        self._file_path = FilePathValidator(file_path=self.path).validator()
-        self.patched_image_name = "place_holder"
-        self.initialize_variables()
+    @property
+    def file_name(self) -> "FileName":
+        return FileName(path=self.path)
 
-    def initialize_variables(self) -> None:
-        self.file_stem = self._file_path.stem
-        self.file_name_parser = structures.FileNameParser(self.file_stem)
-        self._define_directories()
-        self._define_files()
+    @property
+    def boot_image(self) -> "BootImage":
+        return BootImage(self.file_name.validator)
 
-    def _define_files(self) -> None:
-        self.boot_image_struct = managers.ImageFile(
-            self.file_name_parser, str(self.boot_image_path)
-        ).create_image()
-        self.log_file = LogFile(self.file_name_parser)
+    @property
+    def patched_image_name(self) -> str:
+        return "place_holder"
 
-    def _define_directories(self) -> None:
-        self.ota_parent_directory = self._file_path.parent
-        self.directory = managers.Directory(self._file_path.parent).create_directory()
+    @property
+    def log_file(self) -> "LogFile":
+        return LogFile(self.file_name.parser)
+
+    @property
+    def directory(self) -> Optional[definitions.Directory]:
+        manager = managers.Directory(self.file_name.path.parent)
+        return manager.create_directory()
 
     def create_directory(self) -> Optional[definitions.Directory]:
         try:
             return definitions.Directory(
-                self.ota_parent_path,
-                str(self.boot_image_path),
-                self.remote_magisk_path,
+                self.file_name.path.parent,
+                str(self.boot_image.path),
+                magisk.remote_path,
             )
         except Exception as e:
             print(f"Error creating directory: {e}")
@@ -72,6 +56,38 @@ class VariableManager:
             return dispatchers.MainDispatcher(object_type, variable_manager(self.path))
         else:
             return None
+
+
+@dataclass
+class FileName(object):
+    path: Path = field(default=Path(""))
+
+    @property
+    def validator(self) -> Path:
+        file_path_validator = FilePathValidator(file_path=self.path)
+        return file_path_validator.validator()
+
+    @property
+    def parser(self) -> structures.FileNameParser:
+        return structures.FileNameParser(self.path.stem)
+
+
+@dataclass
+class BootImage(object):
+    file_path: Path = field(default=Path(""))
+
+    @property
+    def file_name_parser(self):
+        return structures.FileNameParser(self.file_path.stem)
+
+    @property
+    def path(self) -> Path:
+        return Path.home() / "Android" / "boot-images"
+
+    @property
+    def struct(self) -> Optional[definitions.ImageFile]:
+        manager = managers.ImageFile(self.file_name_parser, str(self.path))
+        return manager.create_image()
 
 
 class FileExistenceModel(BaseModel):
@@ -88,7 +104,7 @@ class FileExistenceModel(BaseModel):
 
 
 @dataclass
-class FilePathValidator:
+class FilePathValidator(object):
     file_path: Path
 
     def validator(self) -> Path:
