@@ -55,7 +55,7 @@ class MagiskImage(AbstractImageTemplate):
 
 
 @dataclass
-class ImageFile:
+class ImageFile(object):
     file_name_parser: structures.FileNameParser
 
     path: str = field(default="")
@@ -63,10 +63,17 @@ class ImageFile:
     stock_image: structures.ImageFile = field(init=False)
     magisk_image: structures.ImageFile = field(init=False)
 
-    def __post_init__(self) -> None:
-        self.payload = self.create_image_file(PayloadImage)
-        self.stock = self.create_image_file(StockImage)
-        self.magisk = self.create_image_file(MagiskImage)
+    @property
+    def payload(self) -> structures.ImageFile:
+        return self.create_image_file(PayloadImage)
+
+    @property
+    def stock(self) -> structures.ImageFile:
+        return self.create_image_file(StockImage)
+
+    @property
+    def magisk(self) -> structures.ImageFile:
+        return self.create_image_file(MagiskImage)
 
     def create_image_file(
         self,
