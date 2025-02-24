@@ -19,11 +19,11 @@ class MagiskImageBooter(tasks.TaskFactoryTemplate):
 
     @property
     def magisk_struct(self) -> type:
-        return self.instance.boot_image_struct.magisk
+        return self.instance.boot_image.struct.magisk
 
     @property
     def device_name(self) -> str:
-        return self.instance.file_name_parser.device
+        return self.instance.file_name.parser.device
 
     @property
     def magisk_image_path(self) -> Path:

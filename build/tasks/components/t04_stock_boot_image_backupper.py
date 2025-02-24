@@ -21,11 +21,11 @@ class StockBootImageBackupper(tasks.TaskFactoryTemplate):
 
     @property
     def stock_image(self) -> structures.ImageFile:
-        return self.instance.boot_image_struct.stock
+        return self.instance.boot_image.struct.stock
 
     @property
     def device_name(self) -> str:
-        return self.instance.file_name_parser.device
+        return self.instance.file_name.parser.device
 
     @property
     def source_path(self) -> Path:

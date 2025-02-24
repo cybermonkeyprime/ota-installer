@@ -18,7 +18,7 @@ class MagiskImagePuller(tasks.TaskFactoryTemplate):
 
     @property
     def magisk_struct(self) -> type:
-        return self.instance.boot_image_struct.magisk
+        return self.instance.boot_image.struct.magisk
 
     @property
     def magisk_directory(self) -> type:

@@ -22,8 +22,8 @@ class BootImageExtractor(tasks.TaskFactoryTemplate):
 
     @property
     def command_string(self) -> str:
-        device: str = self.instance.file_name_parser.device
-        source: Path = Path.home() / self.instance.boot_image_struct.payload.file_name
+        device: str = self.instance.file_name.parser.device
+        source: Path = Path.home() / self.instance.boot_image.struct.payload.file_name
         options: str = (
             f"--images={self._image_handler(device)} " f"--out {Path.home() / "images"}"
         )
