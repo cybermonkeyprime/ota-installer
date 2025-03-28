@@ -7,9 +7,7 @@ from build.program_versioning.base_version import BaseVersion
 class DetailedVersion(BaseVersion):
     @property
     def version_info(self) -> str:
-        return (
-            f"{self.title} Build: {self.build_number}, Revision: {self.revision_number}"
-        )
+        return f"{self.title} Build: {self.tag}"
 
 
 if __name__ == "__main__":

@@ -1,14 +1,18 @@
 from collections.abc import Callable
-from typing import Union
+from typing import Optional, Union
+from pathlib import Path
+from dataclasses import field
+
+CollectionDictionary = Union[type, Path, None]
 
 
 class DispatcherTemplate:
-    collection: dict[str, type] = {}
+    collection: dict[str, CollectionDictionary] = field(default_factory=lambda: {})
 
-    def get_value(self, key: str) -> Union[type, None]:
+    def get_value(self, key: str) -> CollectionDictionary:
         return self.collection.get(key)
 
-    def get_instance(self, key: str) -> Callable | None:
+    def get_instance(self, key: str) -> Optional[Callable]:
         try:
             task = self.get_value(key)
             if task is not None:

@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 import build.structures as structures
 
@@ -20,13 +20,14 @@ class BootImage:
         return Path(f"{self.parent_directory}/magisk")
 
 
+@dataclass
 class MagiskImage:
     @property
-    def local_path(self):
+    def local_path(self) -> Path:
         return Path(magisk_instance.local_path)
 
     @property
-    def remote_path(self):
+    def remote_path(self) -> Path:
         return Path(magisk_instance.remote_path)
 
 
@@ -39,19 +40,24 @@ class Directory:
     )
 
     def __post_init__(self) -> None:
-        self.boot_image = self.create_structure(
-            structures.BootImageStruct, self.boot_image_file_name
-        )
         self.magisk_image = self.create_structure(structures.MagiskStruct)
 
-    def create_structure(self, structure_cls: type[Any], *args, **kwargs) -> Any:
+    @property
+    def boot_image(self) -> Any:
+        return self.create_structure(
+            structures.BootImageStruct, self.boot_image_file_name
+        )
+
+    def create_structure(
+        self, structure_cls: Callable, *args: Any, **kwargs: Any
+    ) -> Any:
         try:
             return structure_cls(*args, **kwargs)
         except Exception as e:
             raise ValueError(f"Failed to create structure: {e}")
 
 
-def main() -> None:
+def main() -> bool:
     # Example usage:
     directory_manager = Directory(
         parent_directory=Path("/path/to/directory"),
@@ -61,6 +67,7 @@ def main() -> None:
     print(f"Patched image path: {directory_manager.boot_image.patched_image_path}")
     print(f"Magisk local path: {directory_manager.magisk_image.local_path}")
     print(f"Magisk remote path: {directory_manager.magisk_image.remote_path}")
+    return True
 
 
 if __name__ == "__main__":

@@ -18,4 +18,4 @@ class ADBSideloader(tasks.TaskFactoryTemplate):
 
     @property
     def command_string(self) -> str:
-        return f"adb sideload {self.instance.path}"
+        return f"adb sideload {self.instance.file_path}"

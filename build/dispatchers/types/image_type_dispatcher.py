@@ -13,8 +13,9 @@ class DefaultImageType(object):
 class ImageTypeDispatcher(DispatcherTemplate):
     obj: str = field(default_factory=lambda: "")
 
-    def __post_init__(self) -> None:
-        self.collection = {}
+    @property
+    def collection(self):
+        return {}
 
     def get_key(self, key: str) -> type | DefaultImageType | str:
         return self.collection.get(key, DefaultImageType())

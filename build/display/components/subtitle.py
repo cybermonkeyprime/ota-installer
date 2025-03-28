@@ -10,19 +10,14 @@ class Subtitle(template.DisplayComponent):
     build: int = field(default=0)
     revision: int = field(default=0)
 
+    @Colorizer(style="version")
     def display(self) -> str:
-        build_str = self.build_formatter()
-        revision_str = self.revision_formatter()
-        return f"{build_str} {revision_str}"
+        return f"{self.build_string} {self.revision_string}"
 
-    @Colorizer(style="version")
-    def build_formatter(self) -> str:
-        subtitle = f"Build: {self.build}"
-        return f"{subtitle}"
+    @property
+    def build_string(self) -> str:
+        return f"Build: {self.build}"
 
-    @Colorizer(style="version")
-    def revision_formatter(self) -> str:
-        if self.revision > 0:
-            return f"\b (Rev: {self.revision})"
-        else:
-            return "\b"  # backspace
+    @property
+    def revision_string(self) -> str:
+        return f"\b (Rev: {self.revision})" if self.revision > 0 else "\b"  # backspace

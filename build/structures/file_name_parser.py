@@ -1,28 +1,37 @@
 from dataclasses import dataclass, field
 from pathlib import Path
 from pydantic import BaseModel, StringConstraints, ValidationError
-from typing import Annotated, Any
+from typing import Annotated, Any, Optional
+from build.exceptions.error_messages.error_messages import (
+    ActionMessage,
+)
 
 
 @dataclass
 class FileNameParser(object):
     raw_name: str
-    parts: list[str] = field(init=False)
     device: str = field(init=False)
     file_type: str = field(init=False)
     version: str = field(init=False)
-    extra: str | None = field(init=False)
+    extra: Optional[str] = field(init=False)
+
+    @property
+    def parts(self) -> list[str]:
+        return self.raw_name.split("-")
 
     def __post_init__(self) -> None:
         self.parse_file_name()
 
     def parse_file_name(self) -> None:
-        self.parts = self.raw_name.split("-")
         try:
             self.device, self.file_type, self.version, *extra_parts = self.parts
             self.extra = "-".join(extra_parts) if extra_parts else None
-        except ValueError as e:
-            raise ValueError(f"Error parsing file name: {self.raw_name}") from e
+        except ValueError as error:
+            raise ValueError(f"Error parsing file name: {self.raw_name}") from error
+            action_message = ActionMessage(
+                action="parsing", title="file", value=self.raw_name
+            )
+            # raise ValidationError(action_message) from error
 
     def __str__(self) -> str:
         return self.raw_name

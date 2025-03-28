@@ -10,7 +10,7 @@ class FileTypeDispatcher(DispatcherTemplate):
 
     def __post_init__(self) -> None:
         self.collection = {
-            "payload": self.obj.boot_image_struct.payload,
-            "stock": self.obj.boot_image_struct.stock,
-            "magisk": self.obj.boot_image_struct.magisk,
+            "payload": self.obj.boot_image.struct.payload,
+            "stock": self.obj.boot_image.struct.stock,
+            "magisk": self.obj.boot_image.struct.magisk,
         }

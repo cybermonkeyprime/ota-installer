@@ -1,6 +1,7 @@
 from dataclasses import dataclass, field
-from typing import Any
 from pathlib import Path
+from typing import Any
+
 from build.dispatchers.dispatcher_template import DispatcherTemplate
 
 
@@ -8,9 +9,10 @@ from build.dispatchers.dispatcher_template import DispatcherTemplate
 class VariableTypeDispatcher(DispatcherTemplate):
     obj: Any = field(default_factory=lambda: "")
 
-    def __post_init__(self) -> None:
-        self.collection = {
-            "path.name": Path(self.obj.path).name,
-            "path.parent": Path(self.obj.path).parent,
+    @property
+    def collection(self) -> dict[str, Any]:
+        return {
+            "path.name": Path(self.obj.file_path).name,
+            "path.parent": Path(self.obj.file_path).parent,
             "log_file": self.obj.log_file,
         }

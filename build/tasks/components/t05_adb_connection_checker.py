@@ -6,7 +6,7 @@ import build.variables as variables
 
 @dataclass
 class ADBConnectionChecker(tasks.TaskFactoryTemplate):
-    instance: type[variables.Manager] = field(default=variables.Manager)
+    instance: type[variables.VariableManager] = field(default=variables.VariableManager)
 
     @property
     def index(self) -> int:

@@ -21,7 +21,7 @@ class AbstractTaskFactory(ABC):
 
 @dataclass
 class TaskFactory(AbstractTaskFactory):
-    variable_manager: Optional[variables.Manager] = field(default=None)
+    variable_manager: Optional[variables.VariableManager] = field(default=None)
     task_mapping: dict[str, type[Any]] = field(
         init=False,
         default_factory=lambda: dict(

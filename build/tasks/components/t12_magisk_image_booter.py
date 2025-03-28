@@ -23,7 +23,7 @@ class MagiskImageBooter(tasks.TaskFactoryTemplate):
 
     @property
     def device_name(self) -> str:
-        return self.instance.file_name.parser.device
+        return self.instance.file_name.parts.device
 
     @property
     def magisk_image_path(self) -> Path:
@@ -38,7 +38,7 @@ class MagiskImageBooter(tasks.TaskFactoryTemplate):
     def _image_handler(self, key: str) -> DispatcherTemplate:
         try:
             dispatcher = MainDispatcher("image")
-            retriever = dispatcher.get_dispatcher()
+            retriever = dispatcher.receiver()
             return retriever.get_key(key)
         except AttributeError as e:
             raise ValueError("Invalid key for image handler") from e

@@ -10,7 +10,7 @@ import build.variables as variables
 
 @dataclass
 class BootImageExtractor(tasks.TaskFactoryTemplate):
-    instance: type[variables.Manager] = field(default=variables.Manager)
+    instance: type[variables.VariableManager] = field(default=variables.VariableManager)
 
     @property
     def index(self) -> int:
@@ -22,17 +22,17 @@ class BootImageExtractor(tasks.TaskFactoryTemplate):
 
     @property
     def command_string(self) -> str:
-        device: str = self.instance.file_name.parser.device
+        device: str = self.instance.file_name.parts.device
         source: Path = Path.home() / self.instance.boot_image.struct.payload.file_name
         options: str = (
-            f"--images={self._image_handler(device)} " f"--out {Path.home() / "images"}"
+            f"--images={self._image_handler(device)} --out {Path.home() / 'images'}"
         )
         return f"payload_dumper {source} {options}"
 
     def _image_handler(self, key: str) -> DispatcherTemplate:
         try:
             dispatcher = MainDispatcher("image")
-            retriever = dispatcher.get_dispatcher()
+            retriever = dispatcher.receiver()
             return retriever.get_key(key)
         except KeyError as e:
             raise ValueError(f"Invalid key for image handler: {key}") from e

@@ -7,7 +7,7 @@ import build.variables as variables
 
 @dataclass
 class StockBootImagePusher(tasks.TaskFactoryTemplate):
-    instance: type[variables.Manager] = field(default=variables.Manager)
+    instance: type[variables.VariableManager] = field(default=variables.VariableManager)
     comment_string: str = field(default="Patch boot image in Magisk app")
 
     @property

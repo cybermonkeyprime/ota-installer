@@ -9,7 +9,7 @@ from dispatchers import DispatcherTemplate, MainDispatcher
 
 @dataclass
 class StockBootImageBackupper(tasks.TaskFactoryTemplate):
-    instance: type[variables.Manager] = field(default=variables.Manager)
+    instance: type[variables.VariableManager] = field(default=variables.VariableManager)
 
     @property
     def index(self) -> int:
@@ -25,7 +25,7 @@ class StockBootImageBackupper(tasks.TaskFactoryTemplate):
 
     @property
     def device_name(self) -> str:
-        return self.instance.file_name.parser.device
+        return self.instance.file_name.parts.device
 
     @property
     def source_path(self) -> Path:
@@ -43,10 +43,11 @@ class StockBootImageBackupper(tasks.TaskFactoryTemplate):
     def command_string(self) -> str:
         return f"cp -v {self.source_path} {self.destination_path}"
 
-    def _image_handler(self, key: str) -> DispatcherTemplate:
+    def _image_handler(self, key: str) -> DispatcherTemplate | None:
         try:
             dispatcher = MainDispatcher("image")
-            retriever = dispatcher.get_dispatcher()
+            retriever = dispatcher.receiver()
             return retriever.get_key(key)
         except KeyError as e:
-            raise ValueError(f"Invalid key for image handler: {key}") from e
+            print(f"Invalid key for image handler: {key} from {e}")
+            # raise ValueError(f"Invalid key for image handler: {key}") from e

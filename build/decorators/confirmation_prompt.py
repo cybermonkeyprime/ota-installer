@@ -1,7 +1,7 @@
-from collections.abc import Callable
 from dataclasses import dataclass, field
 from functools import wraps
 from typing import Any, Optional, TypeVar
+from collections.abc import Callable
 
 from build.decorators import Colorizer, Indent, Printer
 from build.styles import Colors

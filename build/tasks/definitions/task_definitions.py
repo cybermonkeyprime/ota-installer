@@ -78,3 +78,20 @@ class ApplicationTaskDefinitions(TaskDefinitionsTemplate):
                 "boot_magisk_image",
             ]
         )
+
+
+def main() -> bool:
+    @PaddedFooterWrapper()
+    @ConfirmationPrompt(
+        comment="perform the Preparation Tasks",
+        char=" ",
+    )
+    def preparation() -> "PreparationTaskDefinitions":
+        return PreparationTaskDefinitions()
+
+    preparation()
+    return True
+
+
+if __name__ == "__main__":
+    main()

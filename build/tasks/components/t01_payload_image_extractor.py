@@ -7,7 +7,7 @@ import build.variables as variables
 
 @dataclass
 class PayloadImageExtractor(tasks.TaskFactoryTemplate):
-    instance: type[variables.Manager] = field(default=variables.Manager)
+    instance: type[variables.VariableManager] = field(default=variables.VariableManager)
 
     @property
     def index(self) -> int:
@@ -19,4 +19,4 @@ class PayloadImageExtractor(tasks.TaskFactoryTemplate):
 
     @property
     def command_string(self) -> str:
-        return f"unzip -o {self.instance.path} payload.bin -d {Path.home()}"
+        return f"unzip -o {self.instance.file_path} payload.bin -d {Path.home()}"

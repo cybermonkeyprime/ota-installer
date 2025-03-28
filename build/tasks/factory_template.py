@@ -22,7 +22,7 @@ class TaskFactoryTemplate(ABC):
     def command_string(self) -> str:
         raise NotImplementedError()
 
-    @decorators.DoublePaddedFooterWrapper(message="Finished")
+    @decorators.DoublePaddedFooterWrapper(message="Completed")
     def perform_task(self) -> None:
         self.index_and_title()
         self.return_command_string()
@@ -40,7 +40,7 @@ class TaskFactoryTemplate(ABC):
         return self.command_string
 
     @decorators.ConfirmationPrompt(comment="execute the command", indent=2, char=" ")
-    @decorators.ContinueOnKeyPress(indent=1, char=" ")
+    @decorators.ContinueOnKeyPress(indent=2, char=" ")
     @decorators.Encapsulate()
     def execute_command_string(self) -> None:
         run([self.command_string], shell=True)

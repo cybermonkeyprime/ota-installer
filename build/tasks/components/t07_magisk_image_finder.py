@@ -14,7 +14,7 @@ import build.decorators as decorators
 
 @dataclass
 class MagiskImageFinder(tasks.TaskFactoryTemplate):
-    instance: type = field(default=variables.Manager)
+    instance: type = field(default=variables.VariableManager)
 
     @property
     def index(self) -> int:

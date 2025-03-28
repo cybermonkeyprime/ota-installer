@@ -5,12 +5,12 @@ from build.tasks import Executor as TaskExecutor
 
 @dataclass
 class TaskExecutionHandler(object):
-    executor: TaskExecutor
+    executor: TaskExecutor = field(default_factory=TaskExecutor)
     arguments: Namespace = field(default_factory=Namespace)
 
     def execute(self) -> None:
         try:
-            self.executor(arguments=self.arguments)
+            self.executor(arguments=self.arguments)  # .initialize()
         except Exception as error:
             print(f"Task execution failed: {error}")
 
