@@ -4,5 +4,4 @@ from .factory import *
 from .formatter import *
 from .screen_manager import *
 from .template import *
-from .variable_item_processor import *
 from .variable_processor import *
