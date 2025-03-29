@@ -21,6 +21,9 @@ class VariableManager(object):
     def file_name(self) -> "variable_managers.FileNameManager":
         return variable_managers.FileNameManager(path=self.file_path)
 
+    def file_name_manager(self) -> "variable_managers.FileNameManager":
+        return variable_managers.FileNameManager(path=self.file_path)
+
     @property
     def boot_image(self) -> "variable_managers.BootImageManager":
         return variable_managers.BootImageManager(file_path=self.file_name.validator())
@@ -49,7 +52,7 @@ class VariableManager(object):
 
     def get_dispatcher(self, object_type: str) -> Optional[dispatchers.MainDispatcher]:
         dispatcher_manager = variable_managers.DispatcherManager(
-            Class=VariableManager, path=self.file_path
+            dispatcher_class=VariableManager, base_path=self.file_path
         )
         return dispatcher_manager.creator(object_type)
 
