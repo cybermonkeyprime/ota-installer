@@ -8,7 +8,7 @@ from build.exceptions.error_messages.error_messages import (
 
 
 @dataclass
-class FileNameParser(object):
+class FileNameParserStructure(object):
     raw_name: str
     device: str = field(init=False)
     file_type: str = field(init=False)

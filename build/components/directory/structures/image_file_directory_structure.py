@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 
 
 @dataclass
-class ImageFile:
+class ImageFileDirectoryStructure:
     file_name: str = field(default_factory=str)
     directory_path: str = field(default_factory=str)
 

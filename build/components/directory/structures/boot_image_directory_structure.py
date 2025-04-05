@@ -3,7 +3,7 @@ from pathlib import Path
 
 
 @dataclass
-class BootImage:
+class BootImageDirectoryStructure:
     parent_directory: str
 
     @property
