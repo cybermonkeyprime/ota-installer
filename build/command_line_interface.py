@@ -1,14 +1,23 @@
 import argparse
 from dataclasses import dataclass, field
+from typing import Optional
 
 
 @dataclass
 class CommandLineInterface(object):
-    task_group: str | None = field(default=None)
+    """Command Line Interface for OTA Firmware Installation.
+
+    Attributes:
+        task_group: An optional string specifying the task group to run.
+        list_paths: A boolean indicating whether to list paths and generated files.
+        ota_file_path: The path to the OTA file.
+    """
+    task_group: Optional[str] = field(default=None)
     list_paths: bool = field(default=False)
     ota_file_path: str = field(default="")
 
     def parse_arguments(self) -> argparse.Namespace:
+        """Parses command line arguments and updates the instance fields."""
         parser = self._create_argument_parser()
         args = self._try_parse_arguments(parser)
         self._update_fields_from_args(args)
@@ -16,6 +25,7 @@ class CommandLineInterface(object):
 
     @staticmethod
     def _create_argument_parser() -> argparse.ArgumentParser:
+        """Creates and configures the argument parser."""
         parser = argparse.ArgumentParser(
             prog="ota-installer",
             description="Manually Install Android Device OTA Firmware",
@@ -39,6 +49,7 @@ class CommandLineInterface(object):
     def _try_parse_arguments(
         self, parser: argparse.ArgumentParser
     ) -> argparse.Namespace:
+        """Attempts to parse the arguments, handling any errors."""
         try:
             return parser.parse_args()
         except argparse.ArgumentError as e:
@@ -47,6 +58,7 @@ class CommandLineInterface(object):
             raise
 
     def _update_fields_from_args(self, args: argparse.Namespace) -> None:
+        """Updates the dataclass fields with the parsed arguments."""
         self.task_group = args.task_group
         self.list_paths = args.list
         self.ota_file_path = args.path
