@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Optional
 
-from build.components.boot_image import BootImageVariableManager
+from build.components.boot_image.variables import BootImageVariableManager
 from build.components.directory.types import (
     DirectoryTypeDefinition,
     DirectoryTypeManager,
