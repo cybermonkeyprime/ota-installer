@@ -1,4 +1,3 @@
-from dataclasses import field
 from abc import ABC, abstractmethod
 from subprocess import run
 from typing import Optional
@@ -13,7 +12,7 @@ class TaskFactoryTemplate(ABC):
     Attributes:
         comment: An optional comment string to be printed after the task.
     """
-    comment: Optional[str] = field(default=None)
+    comment: Optional[str] = None
 
     @property
     @abstractmethod
