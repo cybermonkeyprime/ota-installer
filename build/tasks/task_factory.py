@@ -1,10 +1,9 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
-from typing import Any, Optional
+from typing import Any, Optional, Dict
 
-import build.tasks.components as task_components
-import build.variables as variables
-
+from build.tasks import components as task_components
+from build.variables import VariableManager
 
 class TaskCreationError(Exception):
     """Custom exception for task creation errors."""
@@ -21,8 +20,14 @@ class AbstractTaskFactory(ABC):
 
 @dataclass
 class TaskFactory(AbstractTaskFactory):
-    variable_manager: Optional[variables.VariableManager] = field(default=None)
-    task_mapping: dict[str, type[Any]] = field(
+    """Factory class to create task objects based on a given task name.
+
+    Attributes:
+        variable_manager: An instance of VariableManager to manage variables.
+        task_mapping: A dictionary mapping task names to their respective classes.
+    """
+    variable_manager: Optional[VariableManager] = field(default=None)
+    task_mapping: Dict[str, type] = field(
         init=False,
         default_factory=lambda: dict(
             extract_payload_image=task_components.PayloadImageExtractor,
@@ -38,9 +43,20 @@ class TaskFactory(AbstractTaskFactory):
             reboot_to_bootloader=task_components.BootloaderRebooter,
             boot_magisk_image=task_components.MagiskImageBooter,
         ),
-    )
+    ) # add task_components.TaskComponent as return type
 
-    def create_task(self, task_name: str) -> Any:
+    def create_task(self, task_name: str) -> Any: # add task_components.TaskComponent as return type
+        """Creates a task object based on the task name.
+
+        Args:
+            task_name: The name of the task to create.
+
+        Returns:
+            An instance of the task class associated with the task name.
+
+        Raises:
+            TaskCreationError: If the task name is not recognized.
+        """
         try:
             self.task_name = task_name
             task_class = self.task_mapping[task_name]

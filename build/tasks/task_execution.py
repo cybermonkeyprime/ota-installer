@@ -1,6 +1,6 @@
 from argparse import Namespace
 from dataclasses import dataclass, field
-from typing import Any
+from typing import Any, Optional
 
 from build.decorators import FooterWrapper
 from build.dispatchers import DispatcherTemplate, MainDispatcher
@@ -9,7 +9,6 @@ from build.styles.palette import Colors
 from build.tasks.definitions import TaskDefinitions
 from build.tasks.managers import TaskManager
 
-
 @dataclass
 class TaskHashes(object):
     task_items: tuple = field(
@@ -17,10 +16,27 @@ class TaskHashes(object):
     )
 
 
+@dataclass
+class CustomException(Exception):
+    operation: str
+    error: Exception
+
+    def __str__(self) -> str:
+        return f"{Colors.error}Error processing {self.operation}: {self.error}"
+
+
 @KeyboardInterruptHandler
 @FooterWrapper(message="Completed Successfully!\n")
 @dataclass
 class Executor:
+    """
+    TaskExecutor is responsible for executing tasks based on the provided arguments.
+
+    Attributes:
+        arguments: A Namespace object containing command-line arguments.
+        task_manager: An instance of TaskManager to manage tasks.
+        task_definitions: An instance of TaskDefinitions containing task definitions.
+    """
     arguments: Namespace = field(default_factory=Namespace)
     task_manager: TaskManager = field(default_factory=TaskManager)
     task_definitions: TaskDefinitions = field(default_factory=TaskDefinitions)
@@ -40,7 +56,7 @@ class Executor:
         return dispatcher.receiver()
 
     @property
-    def task_group(self) -> str | None:
+    def task_group(self) -> Optional[str]:
         try:
             if hasattr(self.arguments, "task_group"):
                 return self.arguments.task_group
@@ -50,8 +66,7 @@ class Executor:
             print(CustomException("arguments", e))
 
     def __post_init__(self) -> None:
-        self.task_manager.initiate_task(self.path)
-        self.execute_task_based_on_group()
+        self.initialize()
 
     def initialize(self) -> None:
         self.task_manager.initiate_task(self.path)
@@ -77,8 +92,6 @@ class Executor:
         except Exception as e:
             print(CustomException(task_group_key, e))
 
-    #            print(f"{Colors.error}Error processing {task_group_key}: {e}")
-
     def execute_single_task(self) -> None:
         if self.task_group:
             self.execute_task(self.task_group)
@@ -97,22 +110,22 @@ class Execution(object):
     def task_manager(self):
         return TaskManager()
 
-    def task_based_on_group(self) -> None:
-        if self.task_group in self.dispatcher.collection:
+    def execute_task_based_on_group(self) -> None:
+        if self.task_group and self.task_group in self.dispatcher.collection:
             self.single_task()
         else:
-            self.all_tasks()
+            self.execute_all_tasks()
 
     def single_task(self) -> None:
         if self.task_group:
-            self.task(self.task_group)
+            self.execute_task(self.task_group)
 
-    def all_tasks(self) -> None:
+    def execute_all_tasks(self) -> None:
         hashes = TaskHashes()
         for task_group_key in hashes.task_items:
-            self.task(task_group_key)
+            self.execute_task(task_group_key)
 
-    def task(self, task_group_key: str) -> None:
+    def execute_task(self, task_group_key: str) -> None:
         try:
             dispatcher_instance = self.get_dispatcher_instance(task_group_key)
             execution_function = self.task_manager.iteration.execute_iteration
@@ -123,13 +136,6 @@ class Execution(object):
     pass
 
 
-@dataclass
-class CustomException(Exception):
-    operation: str
-    error: Exception
-
-    def __str__(self) -> str:
-        return f"{Colors.error}Error processing {self.operation}: {self.error}"
 
 
 if __name__ == "__main__":

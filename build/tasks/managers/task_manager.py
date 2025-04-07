@@ -1,5 +1,6 @@
 from dataclasses import dataclass, field
 from pathlib import Path
+from typing import Tuple
 
 import build.display as display
 import build.variables as variables
@@ -11,23 +12,31 @@ import build.exceptions.error_messages as error_messages
 
 @dataclass
 class TaskIteration:
-    # instance: variables.VariableManager = field()
-    instance: VariableManager = field()
-    task_group: tuple[str, str] = field(default=("", ""))
+    """
+    Represents an iteration of tasks to be executed.
 
-    def execute_iteration(self, task_group: tuple[str, ...]) -> None:
+    Attributes:
+        variable_manager: An instance of VariableManager to manage variables.
+        task_group: A tuple of task names to be executed.
+    """
+    # instance: variables.VariableManager = field()
+    variable_manager: VariableManager = field()
+    task_group: Tuple[str, str] = field(default=("", ""))
+
+    def execute_iteration(self, task_group: Tuple[str, ...]) -> None:
         task_director = TaskDirector()
+        handle_task = task_director.handle_task
         try:
-            stack = list(task_group)
-            handle_task = task_director.handle_task
-            while stack:
-                handle_task(instance=self.instance, item=stack.pop(0))
-        except TypeError as e:
+            [ handle_task(self.variable_manager, task_name) for task_name in task_group ]
+        except TypeError as error:
             pass
 
 
 @dataclass
 class TaskDirector:
+    """
+    Directs the handling of tasks using a TaskFactory.
+    """
     def handle_task(
         self, instance: variables.VariableManager, item: str
     ) -> TaskFactory:
@@ -38,6 +47,13 @@ class TaskDirector:
 
 @dataclass
 class TaskManager:
+    """
+    Manages the execution of tasks based on a file name.
+
+    Attributes:
+        file_name: The name of the file to manage tasks for.
+        sub_tasks: A collection of task definitions.
+    """
     file_name: str = field(default="")
     sub_tasks: TaskDefinitions = field(default_factory=TaskDefinitions)
 
@@ -57,8 +73,8 @@ class TaskManager:
         try:
             self.file_name = args
             self.list_vars()
-        except Exception as e:
-            print(error_messages.ErrorMessage(error=e))
+        except Exception as error:
+            print(f"{error_messages.ErrorMessage(error=error)}")
 
     def list_vars(self) -> None:
         try:
