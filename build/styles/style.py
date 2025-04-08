@@ -12,6 +12,7 @@ from build.styles import Colors, Indentation
 class Decorators:
     @dataclass
     class Indent:
+        """Decorator to indent text."""
         interval: int = 0
         char = " "
 
@@ -27,6 +28,7 @@ class Decorators:
 
     @dataclass
     class Colorize:
+        """Decorator to colorize text."""
         style: str = ""
 
         def __call__(self, function):
@@ -57,6 +59,7 @@ class Decorators:
 
     @dataclass
     class Figletize:
+        """Decorator to apply figlet formatting to text."""
         font: str = "slant"
 
         def __call__(self, function):
@@ -69,6 +72,7 @@ class Decorators:
 
     @dataclass
     class Print:
+        """Decorator to print the result of a function."""
         begin: str = ""
         color: bool = False
         end: str = "\n"
@@ -82,41 +86,10 @@ class Decorators:
 
             return inner
 
-    @dataclass
-    class ColorizedFiglet:
-        style: str = "info"
-        font: str = "slant"
-
-        def __call__(self, function):
-            @Decorators.Colorize(style=self.style)
-            @Decorators.Figletize(font=self.font)
-            @wraps(function)
-            def inner(*args, **kwargs):
-                result = function(*args, **kwargs)
-                return result
-
-            return inner
-
-    @dataclass
-    class PrintColorizedFiglet:
-        color: bool = True
-        end: str = "\n"
-        style: str = "info"
-        font: str = "slant"
-
-        def __call__(self, function):
-            @Decorators.Print(color=False, end=self.end)
-            @Decorators.Colorize(style=self.style)
-            @Decorators.Figletize(font=self.font)
-            @wraps(function)
-            def inner(*args, **kwargs):
-                result = function(*args, **kwargs)
-                return result
-
-            return inner
 
     @dataclass
     class PrintColorize:
+        """Decorator to print the result of a function."""
         begin: str = ""
         end: str = ""
         style: str = "variable"
@@ -148,3 +121,45 @@ class Decorators:
                 return f"{result}"
 
             return inner
+
+    @dataclass
+    class ColorizedFiglet:
+        """Decorator to apply color and figlet formatting to text."""
+        style: str = "info"
+        font: str = "slant"
+
+        def __call__(self, function):
+            @Decorators.Colorize(style=self.style)
+            @Decorators.Figletize(font=self.font)
+            @wraps(function)
+            def inner(*args, **kwargs):
+                result = function(*args, **kwargs)
+                return result
+
+            return inner
+
+    @dataclass
+    class PrintColorizedFiglet:
+        """Decorator to print colorized and figlet formatted text."""
+        color: bool = True
+        end: str = "\n"
+        style: str = "info"
+        font: str = "slant"
+
+        def __call__(self, function):
+            @Decorators.Print(color=False, end=self.end)
+            @Decorators.Colorize(style=self.style)
+            @Decorators.Figletize(font=self.font)
+            @wraps(function)
+            def inner(*args, **kwargs):
+                result = function(*args, **kwargs)
+                return result
+
+            return inner
+
+if __name__ == '__main__':
+    # Example usage of the decorators
+
+    @Decorators.PrintColorizedFiglet(style="info", font="slant")
+    def display_message(message: str) -> str:
+        return message
