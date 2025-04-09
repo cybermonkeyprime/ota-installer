@@ -1,12 +1,11 @@
 from dataclasses import dataclass, field
+from typing import Tuple
 
-from build.dispatchers import MainDispatcher
+from build.dispatchers import DispatcherManager
 
 import build.display.base_classes as display_base_classes
 import build.display.processors as display_processors
 import build.variables as variables
-
-VariableManager = variables.VariableManager
 
 
 @dataclass
@@ -24,8 +23,8 @@ class DirectoryError(object):
 class DirectoryHandler:
     """Handles processing of a single directory."""
 
-    dispatch_handler: MainDispatcher = field(default_factory=MainDispatcher)
-    process_variable: VariableManager = field(default_factory=VariableManager)
+    dispatch_handler: DispatcherManager = field(default_factory=DispatcherManager)
+    process_variable: type = field(default_factory=lambda: variables.VariableManager)
     directory_name: str = field(default="")
     variable_prefix: str = field(default="")
 
@@ -57,9 +56,9 @@ class DirectoryHandler:
 class DirectoryProcessor(object):
     """Processes a group of directories using a dispatch handler and a processing function."""
 
-    directories: tuple[str, ...] = field(default_factory=tuple[str, ...])
-    dispatch_handler: MainDispatcher = field(default_factory=MainDispatcher)
-    process_variable: VariableManager = field(default_factory=VariableManager)
+    directories: Tuple[str, ...] = field(default_factory=Tuple[str, ...])
+    dispatch_handler: DispatcherManager = field(default_factory=DispatcherManager)
+    process_variable: type = field(default_factory=lambda: variables.VariableManager)
     variable_prefix: str = field(default="")
 
     def process_directories(self) -> None:
@@ -80,7 +79,7 @@ class DirectoryProcessor(object):
 
 if __name__ == "__main__":
     # Example usage
-    variable_manager = VariableManager()
+    variable_manager = variables.VariableManager()
     directories_to_process = ("/path/to/dir1", "/path/to/dir2")
     directory_iteration_processor = display_processors.DirectoryIterationProcessor(
         variable_manager=variable_manager, directories=directories_to_process

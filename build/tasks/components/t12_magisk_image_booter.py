@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 import build.tasks as tasks
-from build.dispatchers import DispatcherTemplate, MainDispatcher
+from build.dispatchers import DispatcherTemplate, DispatcherManager
 
 
 @dataclass
@@ -37,8 +37,8 @@ class MagiskImageBooter(tasks.TaskFactoryTemplate):
 
     def _image_handler(self, key: str) -> DispatcherTemplate:
         try:
-            dispatcher = MainDispatcher("image")
-            retriever = dispatcher.receiver()
+            dispatcher = DispatcherManager("image")
+            retriever = dispatcher.get_dispatcher()
             return retriever.get_key(key)
         except AttributeError as e:
             raise ValueError("Invalid key for image handler") from e

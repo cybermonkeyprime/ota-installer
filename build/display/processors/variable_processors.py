@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from decorators import ColorizedIndentPrinter
-from dispatchers import MainDispatcher
+from dispatchers import DispatcherManager
 
 import build.variables as variables
 from build.dispatchers import (
@@ -11,12 +11,10 @@ from build.dispatchers import (
 )
 from build.exceptions import error_messages
 
-VariableManager = variables.VariableManager
-
 
 @dataclass
 class VariableItemProcessor(object):
-    processing_function: VariableManager = field(default_factory=VariableManager)
+    processing_function: type = field(default_factory=lambda: variables.VariableManager)
     title: str = field(default="")
     value: str = field(default="")
     dispatcher_type: str = field(default="variable")
@@ -25,7 +23,7 @@ class VariableItemProcessor(object):
         self.process_item()
 
     @property
-    def dispatch_handler(self) -> MainDispatcher:
+    def dispatch_handler(self) -> DispatcherManager:
         dispatch_handler = DispatchHandler(
             self.dispatcher_type, self.processing_function
         )
@@ -48,11 +46,11 @@ class VariableItemProcessor(object):
 
 @dataclass
 class ValueValidation(object):
-    dispatch_handler: MainDispatcher = field(default_factory=MainDispatcher)
-    processing_function: VariableManager = field(default_factory=VariableManager)
+    dispatch_handler: DispatcherManager = field(default_factory=DispatcherManager)
+    processing_function: type = field(default_factory=lambda: variables.VariableManager)
 
     def fetcher(self) -> DispatcherTemplate:
-        return self.dispatch_handler.receiver()
+        return self.dispatch_handler.get_dispatcher()
 
     def evaluator(self, key: str) -> CollectionDictionary:
         value = self.fetcher().get_value(key=key)
@@ -74,11 +72,11 @@ class VariableOutputProcessor(object):
 @dataclass
 class DispatchHandler(object):
     dispatcher_type: str = field(default="")
-    processing_function: VariableManager = field(default_factory=VariableManager)
+    processing_function: type = field(default_factory=lambda: variables.VariableManager)
 
-    def retriever(self) -> MainDispatcher:
+    def retriever(self) -> DispatcherManager:
         # return self.processing_function.get_dispatcher(self.dispatcher_type)
-        return MainDispatcher(self.dispatcher_type, self.processing_function)
+        return DispatcherManager(self.dispatcher_type, self.processing_function)
 
     def __str__(self) -> str:
         return f"{self.retriever()}"

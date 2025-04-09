@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 from typing import Any, Optional
 
 from build.decorators import FooterWrapper
-from build.dispatchers import DispatcherTemplate, MainDispatcher
+from build.dispatchers import DispatcherTemplate, DispatcherManager
 from build.exceptions.handlers import KeyboardInterruptHandler
 from build.styles.palette import Colors
 from build.tasks.definitions import TaskDefinitions
@@ -52,8 +52,8 @@ class Executor:
 
     @property
     def dispatcher(self) -> DispatcherTemplate:
-        dispatcher = MainDispatcher("task_group", self.task_definitions)
-        return dispatcher.receiver()
+        dispatcher = DispatcherManager("task_group", self.task_definitions)
+        return dispatcher.get_dispatcher()
 
     @property
     def task_group(self) -> Optional[str]:

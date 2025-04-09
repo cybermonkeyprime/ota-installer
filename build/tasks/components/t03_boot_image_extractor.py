@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 
-from build.dispatchers import MainDispatcher, DispatcherTemplate
+from build.dispatchers import DispatcherManager, DispatcherTemplate
 
 import build.tasks as tasks
 import build.variables as variables
@@ -31,8 +31,8 @@ class BootImageExtractor(tasks.TaskFactoryTemplate):
 
     def _image_handler(self, key: str) -> DispatcherTemplate:
         try:
-            dispatcher = MainDispatcher("image")
-            retriever = dispatcher.receiver()
+            dispatcher = DispatcherManager("image")
+            retriever = dispatcher.get_dispatcher()
             return retriever.get_key(key)
         except KeyError as e:
             raise ValueError(f"Invalid key for image handler: {key}") from e

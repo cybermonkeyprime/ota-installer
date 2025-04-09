@@ -1,4 +1,5 @@
 from dataclasses import dataclass, field
+from typing import Tuple
 
 import build.display.base_classes as display_base_classes
 import build.display.processors as display_processors
@@ -16,13 +17,13 @@ class OTADirectoryProcessor(
 
 @dataclass
 class BootImageDirectoriesProcessor(display_processors.DirectoryIterationProcessor):
-    directories: tuple[str, ...] = field(default_factory=lambda: ("stock", "magisk"))
+    directories: Tuple[str, ...] = field(default_factory=lambda: ("stock", "magisk"))
     directory_type: str = "boot_image"
 
 
 @dataclass
 class MagiskImageDirectoriesProcessor(display_processors.DirectoryIterationProcessor):
-    directories: tuple[str, ...] = field(default_factory=lambda: ("local", "remote"))
+    directories: Tuple[str, ...] = field(default_factory=lambda: ("local", "remote"))
     directory_type: str = "magisk"
     variable_prefix: str = "magisk_"
 
@@ -32,7 +33,7 @@ class DirectoryIterationProcessor(object):
     """Iterates over directories and processes them using a specified dispatch handler."""
 
     variable_manager: type = field(default_factory=lambda: variables.VariableManager)
-    directories: tuple[str, ...] = field(default_factory=lambda: ("", ""))
+    directories: Tuple[str, ...] = field(default_factory=lambda: ("", ""))
     variable_prefix: str = field(default="")
     dispatcher_type: str = field(default="directory")
 
@@ -40,7 +41,7 @@ class DirectoryIterationProcessor(object):
         self.process_directories()
 
     @property
-    def dispatch_handler(self) -> dispatchers.MainDispatcher:
+    def dispatch_handler(self) -> dispatchers.DispatcherManager:
         dispatch_handler = display_base_classes.DispatchHandler(
             self.dispatcher_type, self.variable_manager
         )

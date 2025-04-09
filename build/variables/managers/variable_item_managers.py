@@ -3,10 +3,13 @@ from pathlib import Path
 from typing import Any, Callable, Optional
 
 import build.dispatchers as dispatchers
-import build.structures as structures
-import build.types.definitions as definitions
-import build.types.managers as type_managers
 import build.validation as validation
+
+from build.components.boot_image.types import (
+    BootImageTypeDefinition,
+    BootImageTypeManager,
+)
+from build.components.file.structures import FileNameParserStructure
 
 
 @dataclass
@@ -23,16 +26,24 @@ class BootImageManager(object):
     )
 
     @property
-    def file_name_parser(self) -> structures.FileNameParser:
+    def parsed_file_name(self) -> FileNameParserStructure:
         """Creates a FileNameParser instance for the boot image file."""
-        return structures.FileNameParser(self.file_path.stem)
+        return FileNameParserStructure(self.file_path.stem)
 
     @property
-    def struct(self) -> Optional[definitions.ImageFile]:
+    def image_structure(self) -> Optional[BootImageTypeDefinition]:
         """Attempts to create an ImageFile structure for the boot image."""
-        file_manager = type_managers.ImageFile(
-            self.file_name_parser, str(self.file_path)
-        )
+        file_manager = BootImageTypeManager(self.parsed_file_name, str(self.file_path))
+        try:
+            return file_manager.create_image()
+        except Exception as e:
+            print(f"Error creating image file: {e}")
+            return None
+
+    @property
+    def struct(self) -> Optional[BootImageTypeDefinition]:
+        """Attempts to create an ImageFile structure for the boot image."""
+        file_manager = BootImageTypeManager(self.parsed_file_name, str(self.file_path))
         try:
             return file_manager.create_image()
         except Exception as e:
@@ -57,7 +68,7 @@ class DispatcherManager(object):
         default_factory=lambda: {"directory", "file", "variable"}
     )
 
-    def creator(self, object_type) -> Optional[dispatchers.MainDispatcher]:
+    def creator(self, object_type) -> Optional[dispatchers.DispatcherManager]:
         """
         Creates a dispatcher for the given object type if allowed.
 
@@ -70,7 +81,7 @@ class DispatcherManager(object):
 
         try:
             if object_type in self.allowed_objects_types:
-                return dispatchers.MainDispatcher(
+                return dispatchers.DispatcherManager(
                     object_type, self.dispatcher_class(self.base_path)
                 )
         except Exception as err:
@@ -90,7 +101,7 @@ class FileNameManager(object):
     path: Path = field(default_factory=Path)
 
     @property
-    def parts(self) -> structures.FileNameParser:
+    def parts(self) -> FileNameParserStructure:
         """
         Parses the file name from the file path.
 
@@ -112,14 +123,14 @@ class FileNameManager(object):
         file_path_validation = validation.FilePathValidation(file_path=self.path)
         return file_path_validation.validator()
 
-    def parser(self) -> structures.FileNameParser:
+    def parser(self) -> FileNameParserStructure:
         """
         Parses the file name from the file path.
 
         Returns:
             FileNameParser: An instance of FileNameParser with parsed file name.
         """
-        return structures.FileNameParser(self.path.stem)
+        return FileNameParserStructure(self.path.stem)
 
 
 @dataclass
@@ -132,7 +143,7 @@ class LogFileManager(object):
         and version information for the log file name.
     """
 
-    parser: Any = field(default_factory=lambda: structures.FileNameParser)
+    parser: Any = field(default_factory=lambda: FileNameParserStructure)
 
     def __str__(self) -> str:
         """
@@ -155,3 +166,26 @@ class PatchedImageManager:
     """
 
     image_name: str = field(default="place_holder")
+
+
+def main():
+    # Example usage
+    boot_image_manager = BootImageManager()
+    print(boot_image_manager.image_structure)
+
+    dispatcher_manager = DispatcherManager()
+    dispatcher = dispatcher_manager.create_dispatcher("file")
+    print(dispatcher)
+
+    file_name_manager = FileNameManager(Path("/path/to/file.txt"))
+    print(file_name_manager.validator())
+
+    log_file_manager = LogFileManager(("device", "version"))
+    print(str(log_file_manager))
+
+    patched_image_manager = PatchedImageManager("new_image")
+    print(patched_image_manager.image_name)
+
+
+if __name__ == "__main__":
+    main()

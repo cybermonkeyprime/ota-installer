@@ -1,28 +1,25 @@
 from dataclasses import dataclass, field
 
-from dispatchers import MainDispatcher
+from dispatchers import DispatcherManager
 
-import build.variables as variables
 from build.dispatchers.dispatcher_template import (
     CollectionDictionary,
     DispatcherTemplate,
 )
-
-VariableManager = variables.VariableManager
 
 
 @dataclass
 class ValueValidation(object):
     """Validates values using a dispatch handler."""
 
-    dispatch_handler: MainDispatcher = field(default_factory=MainDispatcher)
+    dispatch_handler: DispatcherManager = field(default_factory=DispatcherManager)
 
     def fetcher(self) -> DispatcherTemplate:
-        return self.dispatch_handler.receiver()
+        return self.dispatch_handler.get_dispatcher()
 
     def validate_value(self, key: str) -> CollectionDictionary:
         value = self.fetcher().get_value(key=key)
-        value = self.dispatch_handler.receiver().get_value(key=key)
+        value = self.dispatch_handler.get_dispatcher().get_value(key=key)
         if value is None:
             print(f"{value=}")
         return value

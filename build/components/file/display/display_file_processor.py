@@ -1,31 +1,31 @@
 from dataclasses import dataclass, field
-from typing import Tuple
 
-from dispatchers import DispatcherManager
-
-import build.variables as variables
+import build.dispatchers as dispatchers
 import build.display.base_classes as display_base_classes
+import build.variables as variables
 
 
 @dataclass
-class FileProcesser(object):
-    function: type = field(default_factory=lambda: variables.VariableManager)
+class DisplayFileProcesser(object):
+    processing_function: type = field(default_factory=lambda: variables.VariableManager)
     data: tuple = field(default_factory=tuple)
 
     def iterate_files(self) -> list:
-        return [file_processor(self.function) for file_processor in self.data]
+        return [
+            file_processor(self.processing_function) for file_processor in self.data
+        ]
 
 
 @dataclass
-class FileIterationProcessor(object):
+class DisplayFileIterationProcessor(object):
     processing_function: type = field(default_factory=lambda: variables.VariableManager)
-    files: Tuple[str, ...] = field(default_factory=lambda: ("", ""))
+    files: tuple[str, ...] = field(default_factory=lambda: ("", ""))
 
     def __post_init__(self) -> None:
         self.process_files()
 
     @property
-    def dispatch_handler(self) -> DispatcherManager:
+    def dispatch_handler(self) -> dispatchers.DispatcherManager:
         dispatch_handler = display_base_classes.DispatchHandler(
             "file", self.processing_function
         )
@@ -43,4 +43,7 @@ class FileIterationProcessor(object):
             )
             processor.format_and_print()
         except Exception as error_msg:
-            print(f"?{display_base_classes.ErrorMessage('file', file_name, error_msg)}")
+            error_message = display_base_classes.ErrorMessage(
+                "file", file_name, error_msg
+            )
+            print(error_message)

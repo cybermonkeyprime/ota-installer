@@ -1,10 +1,11 @@
 from dataclasses import dataclass, field
 from pathlib import Path
 
-import build.structures as structures
 import build.tasks as tasks
 import build.variables as variables
-from dispatchers import DispatcherTemplate, MainDispatcher
+from dispatchers import DispatcherTemplate, DispatcherManager
+
+from build.components.directory.structures import ImageFileDirectoryStructure
 
 
 @dataclass
@@ -20,7 +21,7 @@ class StockBootImageBackupper(tasks.TaskFactoryTemplate):
         return "Backup Stock Boot Image"
 
     @property
-    def stock_image(self) -> structures.ImageFile:
+    def stock_image(self) -> ImageFileDirectoryStructure:
         return self.instance.boot_image.struct.stock
 
     @property
@@ -45,8 +46,8 @@ class StockBootImageBackupper(tasks.TaskFactoryTemplate):
 
     def _image_handler(self, key: str) -> DispatcherTemplate | None:
         try:
-            dispatcher = MainDispatcher("image")
-            retriever = dispatcher.receiver()
+            dispatcher = DispatcherManager("image")
+            retriever = dispatcher.get_dispatcher()
             return retriever.get_key(key)
         except KeyError as e:
             print(f"Invalid key for image handler: {key} from {e}")
