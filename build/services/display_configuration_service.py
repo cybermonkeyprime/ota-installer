@@ -4,7 +4,7 @@ from build.display import DisplayConfiguration
 
 
 @dataclass
-class DisplayDisplayConfigurationService(object):
+class DisplayConfigurationService(object):
     """
     Manages the configuration settings for a display.
 

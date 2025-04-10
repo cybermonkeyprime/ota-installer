@@ -1,36 +1,36 @@
 from dataclasses import dataclass
 
 
-from build.program_versioning import DetailedVersion
+from build.program_versioning import VersionDetails
 
 
 @dataclass
 class VersionManager(object):
     """
-    Manages the creation of DetailedVersion instances.
+    Manages the creation of VersionDetails instances.
     """
 
 
-    def create_detailed_version(self, build: int, revision: int) -> DetailedVersion:
+    def create_detailed_version(self, build: int, revision: int) -> VersionDetails:
         """
-        Creates a DetailedVersion instance with the given build and revision numbers.
+        Creates a VersionDetails instance with the given build and revision numbers.
 
         Args:
             build: The build number of the version.
             revision: The revision number of the version.
 
         Returns:
-            A DetailedVersion instance with the specified build and revision.
+            A VersionDetails instance with the specified build and revision.
         """
-        return DetailedVersion(build_number=build, revision_number=revision)
+        return VersionDetails(build_number=build, revision_number=revision)
 
 
-def display_version_info(version: DetailedVersion) -> None:
+def display_version_info(version: VersionDetails) -> None:
     """
-    Displays the version information of a DetailedVersion instance.
+    Displays the version information of a VersionDetails instance.
 
     Args:
-        version: The DetailedVersion instance whose information is to be displayed.
+        version: The VersionDetails instance whose information is to be displayed.
     """
     print(version.version_info)
 
@@ -40,7 +40,7 @@ def main(version_manager: VersionManager) -> None:
     The main function that creates and displays version information.
 
     Args:
-        version_manager: An instance of VersionManager to create DetailedVersion.
+        version_manager: An instance of VersionManager to create VersionDetails.
     """
     detailed_version = version_manager.create_detailed_version(1, 2)
     display_version_info(detailed_version)
