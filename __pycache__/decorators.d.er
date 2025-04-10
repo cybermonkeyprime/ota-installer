@@ -1,0 +1,19 @@
+##[pylyzer] failed /home/user/python/ota-installer/decorators.py 1702085899 12845
+.___v_desugar_1 = pyimport "dataclasses"
+.dataclass: {dataclasses.DataClass}
+.___v_desugar_2 = pyimport "functools"
+.wraps: Never
+.time = pyimport "time"
+
+.___v_desugar_3 = pyimport "rich"
+.rprint: Never
+.___v_desugar_4 = pyimport "style"
+.Indentation: {style.Indentation}
+.Colors: {style.Colors}
+.Decorators: {style.Decorators}
+.Decorator: ClassType
+.Decorator.__call__: () -> .Decorator
+
+.DecoratorTemplate: ClassType
+.DecoratorTemplate.__call__: () -> .DecoratorTemplate
+

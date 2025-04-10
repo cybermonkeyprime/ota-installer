@@ -1,0 +1,12 @@
+##[pylyzer] failed /home/user/python/ota-installer/control.py 1701247521 424
+.___v_desugar_1 = pyimport "dataclasses"
+.dataclass: {dataclasses.DataClass}
+.___v_desugar_2 = pyimport "os"
+.system: Never
+.name: Str
+.___v_desugar_3 = pyimport "functools"
+.wraps: Never
+.Control: ClassType
+.Control.__call__: () -> .Control
+
+

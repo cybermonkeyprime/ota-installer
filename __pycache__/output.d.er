@@ -1,0 +1,33 @@
+##[pylyzer] failed /home/user/python/ota-installer/output.py 1700301521 1560
+.___v_desugar_1 = pyimport "dataclasses"
+.dataclass: {dataclasses.DataClass}
+.___v_desugar_2 = pyimport "rich"
+.rprint: Never
+.___v_desugar_3 = pyimport "style"
+.Styles: {style.Colors}
+.Separator: {style.Separator}
+.Decorators: {style.Decorators}
+.Output: ClassType
+.Output.__call__: () -> .Output
+.Output.author: Str
+.Output.title: Str
+.Output.version: Int
+.Output.__post_init__: (self: .Output) -> NoneType
+.Output._title: (self: .Output) -> Str
+.Output._backtick: (self: .Output) -> Str
+.Output._separator: (self: .Output, indent := Int, char := Str) -> Str
+.Output._subtitle: (self: .Output) -> Str
+
+.Title: ClassType
+.Title.title: Str
+.Title.__call__: () -> .Title
+.Title.__str__: (self: .Title) -> Str
+
+.SubTitle: ClassType
+.SubTitle.version: Int
+.SubTitle.author: Str
+.SubTitle.__call__: () -> .SubTitle
+.SubTitle.__str__: (self: .SubTitle) -> Str
+.SubTitle._colorize_author: (self: .SubTitle) -> Str
+.SubTitle._colorize_version: (self: .SubTitle) -> Str
+

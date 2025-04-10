@@ -1,0 +1,8 @@
+##[pylyzer] failed /home/user/python/ota-installer/exceptions.py 1702085593 1197
+.___v_desugar_1 = pyimport "dataclasses"
+.dataclass: {dataclasses.DataClass}
+.___v_desugar_2 = pyimport "style"
+.Colors: {style.Colors}
+.Exceptions: ClassType
+.Exceptions.__call__: () -> .Exceptions
+

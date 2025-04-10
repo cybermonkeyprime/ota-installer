@@ -1,0 +1,45 @@
+[tool.black]
+line-length = 88
+target-version = ['py38']
+skip-string-normalization = false
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+
+[tool.ruff]
+line-length = 88
+target-version = "py38"
+select = ["E", "F", "W", "C90", "I", "N", "UP", "YTT", "B", "A", "PT", "SIM"]
+ignore = []
+exclude = [".git", "__pycache__", "build", "dist", ".venv"]
+
+[tool.ruff.isort]
+combine-as-imports = true
+force-single-line = false
+
+[tool.pyright]
+include = ["."]
+exclude = ["**/node_modules", "**/__pycache__"]
+reportMissingImports = true
+reportMissingTypeStubs = false
+typeCheckingMode = "basic"
+pythonVersion = "3.8"
+pythonPlatform = "Linux"
+defineConstant = { DEBUG = true }
+
+[tool.pycodestyle]
+max-line-length = 88
+ignore = []
+#exclude = .git,__pycache__,build,dist,.venv

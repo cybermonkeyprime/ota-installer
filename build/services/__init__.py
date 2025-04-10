@@ -1,3 +1,3 @@
-from build.services.argument_parser_service import ArgumentParserService
-from build.services.display_configuration_service import DisplayConfigurationService
-from build.services.screen_manager_service import ScreenManagerService
+from .argument_parser_service import *
+from .display_configuration_service import *
+from .screen_manager_service import *
