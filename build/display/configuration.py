@@ -2,12 +2,13 @@ from dataclasses import dataclass, field
 
 import build.display as display
 import build.program_versioning as versioning
+from build.program_versioning import VersionDetails
 
 
 @dataclass
-class Configuration(object):  # Display Configuration
-    software_version: versioning.DetailedVersion = field(
-        default_factory=versioning.DetailedVersion
+class DisplayConfiguration(object):
+    software_version: VersionDetails = field(
+        default_factory=VersionDetails
     )
     version_info: str = field(default_factory=str)
 
@@ -32,8 +33,8 @@ class Configuration(object):  # Display Configuration
 
 
 if __name__ == "__main__":
-    software_version = versioning.DetailedVersion(
+    software_version = VersionDetails(
         title="ExampleTitle", build_number=1, revision_number=2
     )
-    display_config = Configuration(software_version=software_version)
+    display_config = DisplayConfiguration(software_version=software_version)
     print(display_config)

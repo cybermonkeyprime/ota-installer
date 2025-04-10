@@ -1,10 +1,10 @@
 from dataclasses import dataclass
 
-from build.program_versioning import BaseVersion
+from build.program_versioning import SoftwareVersion
 
 
 @dataclass
-class DetailedVersion(BaseVersion): # Possibly rename to VersionDetails
+class VersionDetails(SoftwareVersion):
     """
     Represents detailed information about a version, including title and tag.
 
@@ -13,9 +13,9 @@ class DetailedVersion(BaseVersion): # Possibly rename to VersionDetails
     @property
     def version_info(self) -> str:
         """Constructs a detailed version string."""
-        return f"{self.title} Build: {self.tag}"
+        return f"{self.title} Build: {self.version_tag}"
 
-def display_version_info(version_details: DetailedVersion):
+def display_version_info(version_details: VersionDetails):
     """
     Prints the version information.
 
@@ -29,5 +29,5 @@ def display_version_info(version_details: DetailedVersion):
 
 
 if __name__ == "__main__":
-    version = DetailedVersion(title="My Application")
+    version = VersionDetails(title="My Application")
     display_version_info(version)

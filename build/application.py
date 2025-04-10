@@ -33,7 +33,7 @@ class Application(object):
         try:
             arguments = self.argument_parser.parse_cli_arguments()
             self.screen_manager.clear_screen()
-            display_config = self.display_configurator.get_display_configuration()
+            display_config = self.display_configurator.fetch_configuration()
 
             if arguments.version:
                 print(display_config)
