@@ -2,6 +2,7 @@ from dataclasses import dataclass, field
 
 import build.variables as variables
 import build.display.data_processors as display_data_processors
+import build.components.directory as directory_component
 
 VariableManager = variables.VariableManager
 
@@ -10,10 +11,10 @@ VariableManager = variables.VariableManager
 class DataProcessor(object):
     """A class that processes data using provided data processors."""
 
-    process_variable: VariableManager = field(default_factory=VariableManager)
+    process_variable: type = field(default_factory=lambda: VariableManager)
     data_processors: tuple = field(default_factory=tuple)
 
-    def iterate_data_processors(self) -> list:
+    def iterate_data_processors(self) -> list[type]:
         return [
             item_processor(self.process_variable)
             for item_processor in self.data_processors
@@ -24,15 +25,16 @@ class DataProcessor(object):
 class VariableProcessor(object):
     """A class that handles the processing of variables, files, and directories."""
 
-    variable_manager: VariableManager = field(default_factory=VariableManager)
+    variable_manager: type = field(default_factory=lambda: VariableManager)
+
     file_processors: tuple = (
         display_data_processors.OTAFileNameProcessor,
         display_data_processors.FileNamesProcessor,
     )
     directory_processors: tuple = (
-        display_data_processors.OTADirectoryProcessor,
-        display_data_processors.BootImageDirectoriesProcessor,
-        display_data_processors.MagiskImageDirectoriesProcessor,
+        directory_component.OTADirectoryProcessor,
+        directory_component.BootImageDirectoriesProcessor,
+        directory_component.MagiskImageDirectoriesProcessor,
     )
 
     def initiate_processing(self) -> None:

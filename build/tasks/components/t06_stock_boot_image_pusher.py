@@ -19,8 +19,9 @@ class StockBootImagePusher(tasks.TaskFactoryTemplate):
         return "Push Stock Boot Image"
 
     @property
+    def stock(self) -> str:
+        return self.instance.boot_image.struct.stock
+
+    @property
     def command_string(self) -> str:
-        stock = self.instance.boot_image.struct.stock
-        return (
-            f"adb push {Path.home() / stock.directory_path / stock.file_name} /sdcard/"
-        )
+        return f"adb push {Path.home() / self.stock.directory_path / self.stock.file_name} /sdcard/"

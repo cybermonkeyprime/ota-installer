@@ -11,7 +11,7 @@ import build.exceptions.error_messages as error_messages
 
 
 @dataclass
-class TaskIteration:
+class TaskIteration(object):
     """
     Represents an iteration of tasks to be executed.
 
@@ -19,9 +19,8 @@ class TaskIteration:
         variable_manager: An instance of VariableManager to manage variables.
         task_group: A tuple of task names to be executed.
     """
-    # instance: variables.VariableManager = field()
     variable_manager: VariableManager = field()
-    task_group: Tuple[str, str] = field(default=("", ""))
+    task_group: Tuple[str, ...] = field(default=("", ""))
 
     def execute_iteration(self, task_group: Tuple[str, ...]) -> None:
         task_director = TaskDirector()
@@ -33,7 +32,7 @@ class TaskIteration:
 
 
 @dataclass
-class TaskDirector:
+class TaskDirector(object):
     """
     Directs the handling of tasks using a TaskFactory.
     """
@@ -46,7 +45,7 @@ class TaskDirector:
 
 
 @dataclass
-class TaskManager:
+class TaskManager(object):
     """
     Manages the execution of tasks based on a file name.
 

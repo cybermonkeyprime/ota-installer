@@ -3,10 +3,6 @@ from pathlib import Path
 
 from build.decorators import ColorizedIndentPrinter
 
-import build.variables as variables
-
-VariableManager = variables.VariableManager
-
 
 @dataclass
 class OutputFormatter(object):

@@ -27,4 +27,4 @@ class DispatcherManager(object):
         return self.create_dispatcher()
 
     def get_value(self, key: str = "") -> Optional[Union[type, Path, None]]:
-        return self.create_dispatcher.get_value(key=key)
+        return self.get_dispatcher().get_value(key=key)

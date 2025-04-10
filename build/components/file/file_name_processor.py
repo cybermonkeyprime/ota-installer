@@ -1,11 +1,11 @@
 from dataclasses import dataclass, field
 
 import build.display.processors as display_processors
-import build.components.file as file_component
+from build.components.file.display import DisplayFileIterationProcessor
 
 
 @dataclass
-class FileNamesProcessor(file_component.DisplayFileIterationProcessor):
+class FileNamesProcessor(DisplayFileIterationProcessor):
     files: tuple[str, ...] = field(
         default_factory=lambda: ("payload", "stock", "magisk")
     )

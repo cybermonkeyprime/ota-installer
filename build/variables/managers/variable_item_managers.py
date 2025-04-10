@@ -174,7 +174,7 @@ def main():
     print(boot_image_manager.image_structure)
 
     dispatcher_manager = DispatcherManager()
-    dispatcher = dispatcher_manager.create_dispatcher("file")
+    dispatcher = dispatcher_manager.creator("file")
     print(dispatcher)
 
     file_name_manager = FileNameManager(Path("/path/to/file.txt"))

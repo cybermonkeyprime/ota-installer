@@ -22,7 +22,7 @@ class PayloadImageRenamer(tasks.TaskFactoryTemplate):
     def command_string(self) -> str:
         source_path = Path.home().joinpath("payload.bin")
         destination_path = Path.home().joinpath(
-            self.instance.boot_image.struct.payload.file_name
+            self.instance.boot_image.image_structure.payload.file_name
         )
 
         return f"mv -v {source_path} {destination_path}"

@@ -1,3 +1,3 @@
-from build.dispatchers.dispatcher_factory import *
-from build.dispatchers.dispatcher_template import *
-from build.dispatchers.main_dispatcher import *
+from .dispatcher_factory import *
+from .dispatcher_manager import *
+from .dispatcher_template import *

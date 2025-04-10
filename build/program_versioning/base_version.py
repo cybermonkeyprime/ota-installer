@@ -12,8 +12,8 @@ class BaseVersion(object): # Possibly rename to SoftwareVersion
         revision_number (int): The revision number in ddhhmm format.
     """
     title: str = "OTA-Installer"
-    build_number: int = field(default=20250328) # YYYYMMDD, Y = year, M = month, D = date
-    revision_number: int = field(default=280130) # DDhhmm, D = date, h = hour, m = minute
+    build_number: int = field(default=20250408) # YYYYMMDD, Y = year, M = month, D = date
+    revision_number: int = field(default=80430) # DDhhmm, D = date, h = hour, m = minute
 
     @property
     def tag(self) -> str: # possibly rename to version_tag

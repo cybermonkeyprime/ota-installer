@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import Annotated
 
 from pydantic import BaseModel, StringConstraints, ValidationError
-from build.structures.file_name_parser import FileNameParser
+from build.components.file.structures import FileNameParserStructure
 
 
 class VersionModel(BaseModel):
@@ -22,8 +22,8 @@ class Version(object):
         return Path(self.file_string).stem
 
     @property
-    def file_name_parser(self) -> FileNameParser:
-        return FileNameParser(raw_name=str(self.file_name))
+    def file_name_parser(self) -> FileNameParserStructure:
+        return FileNameParserStructure(raw_name=str(self.file_name))
 
     @property
     def populate_model(self) -> VersionModel:

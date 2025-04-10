@@ -10,7 +10,7 @@ from build.components.directory.types import (
 from build.components.file.variables import FileNameVariableManager
 from build.components.log_file import LogFileManager
 from build.components.magisk_image.variables import MagiskImageVariableManager
-from build.dispatchers import DispatcherManager
+from build.dispatchers import DispatcherManager as MainDispatcher
 from build.variables.managers import (
     DispatcherManager,
 )
@@ -52,7 +52,7 @@ class VariableManager(object):
         directory_manager = DirectoryTypeManager(Path.home())
         return directory_manager.create_directory()
 
-    def get_dispatcher(self, object_type: str) -> Optional[DispatcherManager]:
+    def get_dispatcher(self, object_type: str) -> Optional[MainDispatcher]:
         dispatcher_manager = DispatcherManager(
             dispatcher_class=VariableManager, base_path=self.file_path
         )

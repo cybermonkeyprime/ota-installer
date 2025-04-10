@@ -1,6 +1,7 @@
 from dataclasses import dataclass, field
 from typing import Tuple
 
+from build import dispatchers
 from dispatchers import DispatcherManager
 
 import build.variables as variables
