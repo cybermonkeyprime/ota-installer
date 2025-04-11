@@ -1,6 +1,7 @@
 from dataclasses import dataclass, field
 from pathlib import Path
 
+from build.components.directory.structures import BootImageDirectoryStructure
 
 @dataclass
 class MagiskImageDirectoryStructure:
@@ -13,6 +14,6 @@ class MagiskImageDirectoryStructure:
     """
 
     local_path: Path = field(
-        default_factory=lambda: Path.home() / "Android" / "boot-images" / "magisk"
+        default_factory=lambda: BootImageDirectoryStructure().magisk
     )
     remote_path: Path = field(default_factory=lambda: Path("/sdcard/Download/magisk"))

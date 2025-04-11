@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
+from pathlib import Path
 
 from build.components.file.structures import FileNameParserStructure
 from build.components.boot_image.structures import (
@@ -42,7 +43,8 @@ class StockImageFileNamer(AbstractImageTemplate):
         return f"{self.device}-boot-{self.version}.img"
 
     def generate_directory(self) -> str:
-        return f"{self.path}/stock"
+        boot_image_directory = BootImageDirectoryStructure()
+        return str(boot_image_directory.stock)
 
 
 @dataclass
@@ -55,7 +57,8 @@ class MagiskImageFileNamer(AbstractImageTemplate):
         return f"{self.device}-magisk-{self.version}.img"
 
     def generate_directory(self) -> str:
-        return f"{self.path}/magisk"
+        boot_image_directory = BootImageDirectoryStructure()
+        return str(boot_image_directory.magisk)
 
 
 @dataclass
