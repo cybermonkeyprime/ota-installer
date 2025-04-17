@@ -1,13 +1,10 @@
 #!/usr/bin/env python3
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
-from pathlib import Path
 
-from build.components.file.structures import FileNameParserStructure
-from build.components.boot_image.structures import (
-    BootImageFileStructure,
-)
+from build.components.boot_image.structures import BootImageFileStructure
 from build.components.directory.structures import BootImageDirectoryStructure
+from build.components.file.structures import FileNameParserStructure
 
 
 class AbstractImageTemplate(ABC):
@@ -63,9 +60,7 @@ class MagiskImageFileNamer(AbstractImageTemplate):
 
 @dataclass
 class BootImageTypeDefinition(object):
-    file_name_parser: type[FileNameParserStructure] = field(
-        default_factory=lambda: FileNameParserStructure
-    )
+    file_name_parser: type = field(default_factory=lambda: FileNameParserStructure)
 
     path: str = field(default="")
     payload_image: BootImageDirectoryStructure = field(init=False)
@@ -84,12 +79,7 @@ class BootImageTypeDefinition(object):
     def magisk(self) -> BootImageFileStructure:
         return self.create_image_file(MagiskImageFileNamer)
 
-    def create_image_file(
-        self,
-        image_template_class: type[
-            PayloadImageFileNamer | StockImageFileNamer | MagiskImageFileNamer
-        ],
-    ) -> BootImageFileStructure:
+    def create_image_file(self, image_template_class: type) -> BootImageFileStructure:
         device = self.file_name_parser.device
         version = self.file_name_parser.version
         try:
@@ -98,8 +88,8 @@ class BootImageTypeDefinition(object):
                 image_instance.generate_file_name(),
                 image_instance.generate_directory(),
             )
-        except Exception as e:
-            raise ValueError(f"Failed to create image structure: {e}")
+        except Exception as err:
+            raise ValueError(f"Failed to create image structure: {err}") from err
 
 
 def create_file_name_parser(variable: str) -> FileNameParserStructure:
