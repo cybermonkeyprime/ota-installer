@@ -10,8 +10,8 @@ class DirectoryTypeDispatcher(DispatcherTemplate):
 
     def __post_init__(self) -> None:
         self.collection = {
-            "stock": self.obj.directory.boot_image.stock,  # stock_path
-            "magisk": self.obj.directory.boot_image.magisk,  # magisk_path
-            "local": self.obj.directory.magisk_image.local_path,
-            "remote": self.obj.directory.magisk_image.remote_path,
+            "stock": self.obj.directory.boot_image_path.stock,
+            "magisk": self.obj.directory.boot_image_path.magisk,
+            "local": self.obj.directory.magisk_image_path.local_path,
+            "remote": self.obj.directory.magisk_image_path.remote_path,
         }

@@ -16,11 +16,12 @@ class DirectoryTypeDefinition:
         default_factory=MagiskImageDirectoryStructure
     )
 
-    def __post_init__(self) -> None:
-        self.magisk_image = self.create_structure(MagiskImageDirectoryStructure)
+    @property
+    def magisk_image_path(self) -> Callable:
+        return self.create_structure(MagiskImageDirectoryStructure)
 
     @property
-    def boot_image(self) -> Any:
+    def boot_image_path(self) -> Any:
         return self.create_structure(
             BootImageDirectoryStructure, self.boot_image_file_name
         )
@@ -30,8 +31,8 @@ class DirectoryTypeDefinition:
     ) -> Any:
         try:
             return structure_cls(*args, **kwargs)
-        except Exception as e:
-            raise ValueError(f"Failed to create structure: {e}")
+        except Exception as error:
+            raise ValueError("Failed to create structure") from error
 
 
 def main() -> bool:
@@ -40,8 +41,8 @@ def main() -> bool:
         parent_directory=Path("/path/to/directory"),
         boot_image_file_name="boot.img",
     )
-    print(f"Stock image path: {directory_manager.boot_image.stock_image_path}")
-    print(f"Patched image path: {directory_manager.boot_image.patched_image_path}")
+    print(f"Stock image path: {directory_manager.boot_image_path.stock_image_path}")
+    print(f"Patched image path: {directory_manager.boot_image_path.patched_image_path}")
     print(f"Magisk local path: {directory_manager.magisk_image.local_path}")
     print(f"Magisk remote path: {directory_manager.magisk_image.remote_path}")
     return True
