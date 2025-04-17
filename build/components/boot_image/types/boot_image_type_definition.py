@@ -7,7 +7,7 @@ from build.components.directory.structures import BootImageDirectoryStructure
 from build.components.file.structures import FileNameParserStructure
 
 
-class AbstractImageTemplate(ABC):
+class AbstractImageGenerator(ABC):
     @abstractmethod
     def generate_file_name(self) -> str:
         raise NotImplementedError()
@@ -18,7 +18,7 @@ class AbstractImageTemplate(ABC):
 
 
 @dataclass
-class PayloadImageFileNamer(AbstractImageTemplate):
+class PayloadImageFileGenerator(AbstractImageGenerator):
     device: str = field(default="")
     version: str = field(default="")
     path: str = field(default="")
@@ -31,7 +31,7 @@ class PayloadImageFileNamer(AbstractImageTemplate):
 
 
 @dataclass
-class StockImageFileNamer(AbstractImageTemplate):
+class StockImageFileGenerator(AbstractImageGenerator):
     device: str = field(default="")
     version: str = field(default="")
     path: str = field(default="")
@@ -45,7 +45,7 @@ class StockImageFileNamer(AbstractImageTemplate):
 
 
 @dataclass
-class MagiskImageFileNamer(AbstractImageTemplate):
+class MagiskImageFileGenerator(AbstractImageGenerator):
     device: str = field(default="")
     version: str = field(default="")
     path: str = field(default="")
@@ -69,15 +69,15 @@ class BootImageTypeDefinition(object):
 
     @property
     def payload(self) -> BootImageFileStructure:
-        return self.create_image_file(PayloadImageFileNamer)
+        return self.create_image_file(PayloadImageFileGenerator)
 
     @property
     def stock(self) -> BootImageFileStructure:
-        return self.create_image_file(StockImageFileNamer)
+        return self.create_image_file(StockImageFileGenerator)
 
     @property
     def magisk(self) -> BootImageFileStructure:
-        return self.create_image_file(MagiskImageFileNamer)
+        return self.create_image_file(MagiskImageFileGenerator)
 
     def create_image_file(self, image_template_class: type) -> BootImageFileStructure:
         device = self.file_name_parser.device
