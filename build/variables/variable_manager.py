@@ -37,10 +37,7 @@ class VariableManager(object):
 
     @patched_image_name.setter
     def patched_image_name(self, image_name: str) -> bool:
-        magisk_image_variable_manager = MagiskImageVariableManager(
-            image_name=image_name
-        )
-        self.patched_image_name = magisk_image_variable_manager.image_name
+        self.patched_image_name = image_name
         return True
 
     @property
