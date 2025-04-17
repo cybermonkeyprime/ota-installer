@@ -1,7 +1,0 @@
-##[pylyzer] failed /home/user/python/ota-installer/arguments.py 1698402350 610
-.argparse = pyimport "argparse"
-
-.ArgumentHandler: ClassType
-.ArgumentHandler.__call__: () -> .ArgumentHandler
-.ArgumentHandler.parser: (self: .ArgumentHandler) -> Never
-

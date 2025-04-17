@@ -1,8 +1,0 @@
-##[pylyzer] succeed /home/user/python/ota-installer-20231207/structures.py 1713945410 2578
-.___v_desugar_1 = pyimport "dataclasses"
-.dataclass: {dataclasses.DataClass}
-.___v_desugar_2 = pyimport "pathlib"
-.Path: {pathlib.Path}
-.Structure: ClassType
-.Structure.__call__: () -> .Structure
-

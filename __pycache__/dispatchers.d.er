@@ -1,8 +1,0 @@
-##[pylyzer] succeed /home/user/python/ota-installer/dispatchers.py 1702074091 2580
-.___v_desugar_1 = pyimport "dataclasses"
-.dataclass: {dataclasses.DataClass}
-.___v_desugar_2 = pyimport "typing"
-.Type: {Type}
-.Dispatcher: ClassType
-.Dispatcher.__call__: () -> .Dispatcher
-
