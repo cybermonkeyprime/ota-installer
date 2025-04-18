@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
+from pathlib import Path
 
 from build.components.boot_image.structures import BootImageFileStructure
 from build.components.directory.structures import BootImageDirectoryStructure
@@ -62,7 +63,7 @@ class MagiskImageFileGenerator(AbstractImageGenerator):
 class BootImageTypeDefinition(object):
     file_name_parser: type = field(default_factory=lambda: FileNameParserStructure)
 
-    path: str = field(default="")
+    path: Path = field(default_factory=Path)
     payload_image: BootImageDirectoryStructure = field(init=False)
     stock_image: BootImageDirectoryStructure = field(init=False)
     magisk_image: BootImageDirectoryStructure = field(init=False)
