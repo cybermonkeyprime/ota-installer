@@ -1,19 +1,21 @@
 from dataclasses import dataclass, field
 from subprocess import CalledProcessError, check_output
 
-from decorators import (
-    ConfirmationPrompt,
-    ContinueOnKeyPress,
-)
-
-import build.decorators as decorators
-import build.tasks as tasks
-import build.variables as variables
+from build.decorators import ConfirmationPrompt, ContinueOnKeyPress, Encapsulate
+from build.tasks import TaskFactoryTemplate
+from build.variables import VariableManager
 
 
 @dataclass
-class MagiskImageFinder(tasks.TaskFactoryTemplate):
-    instance: type = field(default=variables.VariableManager)
+class MagiskImageFinder(TaskFactoryTemplate):
+    """
+    A class responsible for finding the Magisk patched boot image on a remote path.
+
+    Attributes:
+        variable_manager: An instance of VariableManager to manage paths.
+    """
+
+    variable_manager: type = field(default=VariableManager)
 
     @property
     def index(self) -> int:
@@ -25,19 +27,27 @@ class MagiskImageFinder(tasks.TaskFactoryTemplate):
 
     @property
     def magisk_remote_path(self) -> type:
-        return self.instance.directory.magisk_image_path.remote_path
+        return self.variable_manager.directory.magisk_image_path.remote_path
 
     @property
     def command_string(self) -> str:
+        """Constructs the command string to find the Magisk patched boot image."""
         return f"adb shell ls {self.magisk_remote_path}/magisk_patched*.img | head -n1"
 
     @ConfirmationPrompt(comment="Execute the command", indent=2, char=" ")
     @ContinueOnKeyPress(indent=1, char=" ")
-    @decorators.Encapsulate()
+    @Encapsulate()
     def execute_command_string(self) -> None:
+        """Executes the command string to find the Magisk patched boot image."""
         try:
             result = check_output([self.command_string], shell=True).decode()
             print(f"{4 * ' '}Patched Boot Image = {result}")
-            self.instance.patched_image_name = result
+            self.variable_manager.patched_image_name = result
         except CalledProcessError as e:
             print(f"An error occurred while executing the command: {e}")
+
+
+if __name__ == "__main__":
+    # Dependency injection example
+    magisk_finder = MagiskImageFinder()
+    magisk_finder.execute_command_string()
