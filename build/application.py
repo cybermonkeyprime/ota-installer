@@ -44,7 +44,7 @@ class Application(object):
                 )
                 task_handler.execute()
         except Exception as error:
-            ExceptionError(f"An error occurred: {error}")
+            raise ExceptionError(f"An error occurred: {error}")
 
 class ExceptionError(Exception):
     pass
