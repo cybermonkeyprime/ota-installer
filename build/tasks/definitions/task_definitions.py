@@ -1,16 +1,17 @@
 from collections.abc import Iterator
-from typing import Callable, Tuple
 from dataclasses import dataclass, field
 
 from decorators import ConfirmationPrompt, PaddedFooterWrapper
 
-StrTuple = Tuple[str, ...]
+from build.tasks.task_questions import TaskGroupQuestions
+
 
 @dataclass
 class TaskDefinition(object):
     """
     A base class for task definitions.
     """
+
     pass
 
 
@@ -19,11 +20,11 @@ class TaskDefinitionSequence(TaskDefinition):
     """
     A class representing a sequence of tasks.
     """
-    tasks: Tuple[str, ...] = field(default_factory=tuple)
+
+    tasks: "tuple[str, ...]" = field(default_factory=tuple)
 
     def __iter__(self) -> Iterator[str]:
         return iter(self.tasks)
-
 
 
 @dataclass
@@ -31,6 +32,7 @@ class PreparationTaskDefinitions(TaskDefinitionSequence):
     """
     A class representing preparation tasks.
     """
+
     def __post_init__(self) -> None:
         self.tasks = tuple(
             [
@@ -47,6 +49,7 @@ class MigrationTaskDefinitions(TaskDefinitionSequence):
     """
     A class representing migration tasks.
     """
+
     def __post_init__(self) -> None:
         self.tasks = tuple(
             [
@@ -63,6 +66,7 @@ class ApplicationTaskDefinitions(TaskDefinitionSequence):
     """
     A class representing application tasks.
     """
+
     def __post_init__(self) -> None:
         self.tasks = tuple(
             [
@@ -73,54 +77,43 @@ class ApplicationTaskDefinitions(TaskDefinitionSequence):
             ]
         )
 
+
 @dataclass
 class TaskDefinitions(object):
     """
     A class to manage task sequences.
     """
+
+    task_group_questions: "type" = TaskGroupQuestions
+
     @PaddedFooterWrapper()
     @ConfirmationPrompt(
-        comment="perform the Preparation Tasks",
-        char=" ",
+        question=task_group_questions.PREPARATION.value,
+        confirmation_char=" ",
     )
     def preparation(self) -> "PreparationTaskDefinitions":
         return PreparationTaskDefinitions()
 
     @PaddedFooterWrapper()
-    @ConfirmationPrompt(comment="perform the Migration Tasks", char=" ")
+    @ConfirmationPrompt(
+        question=task_group_questions.MIGRATION.value,
+        confirmation_char=" ",
+    )
     def migration(self) -> "MigrationTaskDefinitions":
         return MigrationTaskDefinitions()
 
     @PaddedFooterWrapper()
-    @ConfirmationPrompt(comment="perform the Application Tasks", char=" ")
+    @ConfirmationPrompt(
+        question=task_group_questions.APPLICATION.value,
+        confirmation_char=" ",
+    )
     def application(self) -> "ApplicationTaskDefinitions":
         return ApplicationTaskDefinitions()
 
-    @PaddedFooterWrapper()
-    @ConfirmationPrompt(
-        comment="perform the Preparation Tasks",
-        char=" ",
-    )
-    def perform_preparation_tasks(self) -> Callable:
-        return self.preparation
-
-    @PaddedFooterWrapper()
-    @ConfirmationPrompt(comment="perform the Migration Tasks", char=" ")
-    def perform_migration_tasks(self) -> Callable:
-        return self.migration
-
-    @PaddedFooterWrapper()
-    @ConfirmationPrompt(comment="perform the Application Tasks", char=" ")
-    def perform_application_tasks(self) -> Callable:
-        return self.application
 
 def main() -> None:
-    task_definitions = TaskDefinitions(
-    )
+    pass
 
-    task_definitions.perform_preparation_tasks()
-    task_definitions.perform_migration_tasks()
-    task_definitions.perform_application_tasks()
 
 if __name__ == "__main__":
     main()
