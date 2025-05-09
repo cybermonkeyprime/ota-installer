@@ -9,7 +9,6 @@ from build.components.directory.types import (
 )
 from build.components.file.variables import FileNameVariableManager
 from build.components.log_file import LogFileManager
-from build.components.magisk_image.variables import MagiskImageVariableManager
 from build.dispatchers import DispatcherManager as MainDispatcher
 from build.variables.managers import (
     DispatcherManager,
@@ -21,6 +20,7 @@ class VariableManager(object):
     """Manages variables related to boot images and file operations."""
 
     file_path: Path = field(default_factory=Path)
+    patched_image_name: str = field(default="placeholder")
 
     @property
     def file_name(self) -> FileNameVariableManager:
@@ -29,16 +29,6 @@ class VariableManager(object):
     @property
     def boot_image(self) -> BootImageVariableManager:
         return BootImageVariableManager(file_path=self.file_name.validator())
-
-    @property
-    def patched_image_name(self) -> str:
-        magisk_image_variable_manager = MagiskImageVariableManager()
-        return magisk_image_variable_manager.image_name
-
-    @patched_image_name.setter
-    def patched_image_name(self, image_name: str) -> bool:
-        self.patched_image_name = image_name
-        return True
 
     @property
     def log_file(self) -> LogFileManager:
