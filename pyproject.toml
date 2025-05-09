@@ -1,6 +1,23 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+
+[project]
+name = "ota-installer-20241005-10050200"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+  "annotated-types==0.7.0",
+  "bsdiff4==1.2.4",
+  "colorama==0.4.6",
+  "protobuf==3.20.1",
+  "pydantic==2.10.6",
+  "pydantic-core==2.27.2",
+  "pyfiglet==1.0.2",
+  "six==1.16.0",
+]
 [tool.black]
-line-length = 88
 target-version = ['py38']
+line-length = 79
 skip-string-normalization = false
 include = '\.pyi?$'
 exclude = '''
@@ -19,11 +36,11 @@ exclude = '''
 '''
 
 [tool.ruff]
-line-length = 88
+line-length = 79
 target-version = "py38"
 select = ["E", "F", "W", "C90", "I", "N", "UP", "YTT", "B", "A", "PT", "SIM"]
-ignore = []
-exclude = [".git", "__pycache__", "build", "dist", ".venv"]
+ignore = ["UP004"]
+exclude = [".git", "__pycache__", "dist", ".venv"]
 
 [tool.ruff.isort]
 combine-as-imports = true
@@ -40,6 +57,6 @@ pythonPlatform = "Linux"
 defineConstant = { DEBUG = true }
 
 [tool.pycodestyle]
-max-line-length = 88
+max-line-length = 79
 ignore = []
 #exclude = .git,__pycache__,build,dist,.venv
