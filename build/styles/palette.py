@@ -52,11 +52,11 @@ def display_sample_text(style_palette: Colors) -> Optional[bool]:
             styled_text = style_palette.apply_style("Sample Text", style_name)
             print(styled_text)
         return True
-    except Exception as err:
-        raise ColorExceptionHandler(f"{style_palette.error}Error applying styles: {err}")
+    except ColorError as err:
+        print(f"{style_palette.error}Error applying styles: {err}")
         return None
 
-class ColorExceptionHandler(Exception):
+class ColorError(Exception):
     pass
 
 if __name__ == "__main__":
