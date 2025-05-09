@@ -13,7 +13,8 @@ class VersionDetails(SoftwareVersion):
     @property
     def version_info(self) -> str:
         """Constructs a detailed version string."""
-        return f"{self.title} Build: {self.version_tag}"
+        return f"{self.version_tag}"
+
 
 def display_version_info(version_details: VersionDetails):
     """
