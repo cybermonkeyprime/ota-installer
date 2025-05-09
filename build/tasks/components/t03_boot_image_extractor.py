@@ -1,38 +1,55 @@
 from dataclasses import dataclass, field
 from pathlib import Path
 
-
 from build.dispatchers import DispatcherManager, DispatcherTemplate
-
-import build.tasks as tasks
-import build.variables as variables
+from build.tasks import TaskFactoryTemplate
+from build.variables import VariableManager
 
 
 @dataclass
-class BootImageExtractor(tasks.TaskFactoryTemplate):
-    instance: type[variables.VariableManager] = field(default=variables.VariableManager)
+class BootImageExtractor(TaskFactoryTemplate):
+    """
+    Extracts boot images using a specified command string.
 
-    @property
-    def index(self) -> int:
-        return 3
+    Attributes:
+        variable_manager: A instance of VariableManager to manage variables.
+    """
 
-    @property
-    def title(self) -> str:
-        return "Boot Image Extractor"
+    variable_manager: "type[VariableManager]" = field(default=VariableManager)
+
+    index: int = 3
+    title: str = "Boot Image Extractor"
 
     @property
     def command_string(self) -> str:
-        device: str = self.instance.file_name.parts.device
-        source: Path = Path.home() / self.instance.boot_image.struct.payload.file_name
+        """Generates the command string to extract the boot image."""
+        device: str = self.variable_manager.file_name.parts.device
+        source: Path = (
+            Path.home()
+            / self.variable_manager.boot_image.struct.payload.file_name
+        )
+        output_dir: Path = Path.home() / "images"
         options: str = (
-            f"--images={self._image_handler(device)} --out {Path.home() / 'images'}"
+            f"--images={self._retrieve_image_key(device)} --out {output_dir}"
         )
         return f"payload_dumper {source} {options}"
 
-    def _image_handler(self, key: str) -> DispatcherTemplate:
+    def _retrieve_image_key(self, device: str) -> DispatcherTemplate:
         try:
             dispatcher = DispatcherManager("image")
-            retriever = dispatcher.get_dispatcher()
-            return retriever.get_key(key)
-        except KeyError as e:
-            raise ValueError(f"Invalid key for image handler: {key}") from e
+            image_retriever = dispatcher.get_dispatcher()
+            return image_retriever.get_key(device)
+        except KeyError as err:
+            raise ValueError(
+                f"Invalid device for image retrieval: {device}"
+            ) from err
+
+
+def extract_boot_image(variable_manager: "type[VariableManager]"):
+    extractor = BootImageExtractor(variable_manager=variable_manager)
+    print(extractor.command_string)
+
+
+if __name__ == "__main__":
+    variable_manager_instance = VariableManager()
+    extract_boot_image(variable_manager_instance)
