@@ -1,22 +1,29 @@
 from dataclasses import dataclass, field
 from pathlib import Path
 
-import build.tasks as tasks
-import build.variables as variables
+from build.tasks import TaskFactoryTemplate
+from build.variables import VariableManager
 
 
 @dataclass
-class PayloadImageExtractor(tasks.TaskFactoryTemplate):
-    instance: type[variables.VariableManager] = field(default=variables.VariableManager)
+class PayloadImageExtractor(TaskFactoryTemplate):
+    """
+    Extracts a payload image from a given file path and stores it in the user's
+    home directory.
+    """
 
-    @property
-    def index(self) -> int:
-        return 1
+    instance: VariableManager = field(default_factory=VariableManager)
 
-    @property
-    def title(self) -> str:
-        return "Payload Image Extracter"
+    index: int = 1
+    title: str = "Payload Image Extractor"
 
     @property
     def command_string(self) -> str:
-        return f"unzip -o {self.instance.file_path} payload.bin -d {Path.home()}"
+        """Generates the command string to extract the payload image."""
+        try:
+            file_path = self.instance.file_path
+            return f"unzip -o {file_path} payload.bin -d {Path.home()}"
+        except AttributeError as err:
+            raise ValueError(
+                "VariableManager must have a 'file_path' attribute"
+            ) from err
