@@ -1,11 +1,11 @@
 from dataclasses import dataclass, field
 
-import build.display.template as template
 from build.decorators import ColorizedFiglet
+from build.display.display_template import DisplayComponent
 
 
 @dataclass
-class Title(template.DisplayComponent):
+class Title(DisplayComponent):
     title: str = field(default="ota-installer")
 
     @ColorizedFiglet(style="title", font="slant")
