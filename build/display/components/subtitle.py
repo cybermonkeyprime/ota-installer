@@ -1,23 +1,18 @@
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 from build.decorators import Colorizer
-
-import build.display.template as template
+from build.display.display_template import DisplayComponent
+from build.program_versioning.version_details import VersionDetails
 
 
 @dataclass
-class Subtitle(template.DisplayComponent):
-    build: int = field(default=0)
-    revision: int = field(default=0)
-
+class Subtitle(DisplayComponent):
     @Colorizer(style="version")
-    def display(self) -> str:
-        return f"{self.build_string} {self.revision_string}"
+    def get_display(self) -> str:
+        version_details = VersionDetails()
+        return f"Build: {version_details.version_info}"
 
-    @property
-    def build_string(self) -> str:
-        return f"Build: {self.build}"
 
-    @property
-    def revision_string(self) -> str:
-        return f"\b (Rev: {self.revision})" if self.revision > 0 else "\b"  # backspace
+class DisplaySubtitle(Subtitle):
+    def __str__(self) -> str:
+        return self.get_display()
