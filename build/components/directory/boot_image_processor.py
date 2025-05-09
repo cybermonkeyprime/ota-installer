@@ -1,9 +1,9 @@
 from dataclasses import dataclass, field
 from typing import Tuple
 
+import build.dispatchers as dispatchers
 import build.display.base_classes as display_base_classes
 import build.display.processors as display_processors
-import build.dispatchers as dispatchers
 import build.variables as variables
 
 
@@ -18,7 +18,7 @@ class OTADirectoryProcessor(
 @dataclass
 class BootImageDirectoriesProcessor(display_processors.DirectoryIterationProcessor):
     directories: Tuple[str, ...] = field(default_factory=lambda: ("stock", "magisk"))
-    directory_type: str = "boot_image"
+    directory_type: str = "boot_image_path"
 
 
 @dataclass
