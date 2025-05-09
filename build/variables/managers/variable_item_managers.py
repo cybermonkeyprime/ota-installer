@@ -4,7 +4,6 @@ from typing import Any, Callable, Optional
 
 import build.dispatchers as dispatchers
 import build.validation as validation
-
 from build.components.boot_image.types import (
     BootImageTypeDefinition,
     BootImageTypeManager,
@@ -33,7 +32,7 @@ class BootImageManager(object):
     @property
     def image_structure(self) -> Optional[BootImageTypeDefinition]:
         """Attempts to create an ImageFile structure for the boot image."""
-        file_manager = BootImageTypeManager(self.parsed_file_name, str(self.file_path))
+        file_manager = BootImageTypeManager(self.parsed_file_name, self.file_path)
         try:
             return file_manager.create_image()
         except Exception as e:
@@ -43,7 +42,7 @@ class BootImageManager(object):
     @property
     def struct(self) -> Optional[BootImageTypeDefinition]:
         """Attempts to create an ImageFile structure for the boot image."""
-        file_manager = BootImageTypeManager(self.parsed_file_name, str(self.file_path))
+        file_manager = BootImageTypeManager(self.parsed_file_name, self.file_path)
         try:
             return file_manager.create_image()
         except Exception as e:
