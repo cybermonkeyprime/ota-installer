@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 
 
 @dataclass
-class SoftwareVersion(object): # Possibly rename to SoftwareVersion
+class SoftwareVersion(object):
     """
     Represents a base version with a title, build number, and revision number.
 
@@ -11,17 +11,19 @@ class SoftwareVersion(object): # Possibly rename to SoftwareVersion
         build_number (int): The build number in YYYYMMDD format.
         revision_number (int): The revision number in ddhhmm format.
     """
+
     title: str = "OTA-Installer"
-    build_number: int = field(default=20250408) # YYYYMMDD, Y = year, M = month, D = date
-    revision_number: int = field(default=80430) # DDhhmm, D = date, h = hour, m = minute
+    major_number: int = field(default=2025)
+    minor_number: int = field(default=5)
+    patch_number: int = field(default=1)
 
     @property
-    def version_tag(self) -> str: # possibly rename to version_tag
+    def version_tag(self) -> str:  # possibly rename to version_tag
         """Generates a version tag string."""
-        return f"v{self.build_number}.{self.revision_number}"
+        return f"{self.major_number}.{self.minor_number}.{self.patch_number}"
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     # Example usage
     software_version = SoftwareVersion()
     print(software_version.version_tag)
-
