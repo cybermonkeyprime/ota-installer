@@ -3,11 +3,11 @@ from typing import Any
 
 import styles
 
-import build.display.template as template
+from build.display.display_template import DisplayComponent
 
 
 @dataclass
-class Separator(template.DisplayComponent):
+class Separator(DisplayComponent):
     indent: int = field(default=0)
     char: str = field(default="")
 
