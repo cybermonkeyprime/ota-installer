@@ -12,5 +12,5 @@ class Title(DisplayComponent):
     def return_display(self) -> str:
         return f" {self.title}"
 
-    def display(self) -> str:
+    def get_display(self) -> str:
         return self.return_display()

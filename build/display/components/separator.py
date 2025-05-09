@@ -14,5 +14,5 @@ class Separator(DisplayComponent):
     def return_display(self) -> styles.Separator:
         return styles.Separator(self.indent, self.char)
 
-    def display(self) -> Any:
+    def get_display(self) -> Any:
         return self.return_display()
