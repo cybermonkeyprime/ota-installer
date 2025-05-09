@@ -1,6 +1,7 @@
 from dataclasses import dataclass, field
 
-from build.display.screen_manager import ScreenManager
+import logging
+from build.display.display_screen_manager import ScreenManager
 
 
 @dataclass
@@ -11,6 +12,7 @@ class ScreenManagerService(object):
     Attributes:
         screen_manager: An instance of ScreenManager to handle screen operations.
     """
+
     screen_manager: ScreenManager = field(default_factory=ScreenManager)
 
     def clear_screen(self) -> None:
@@ -19,4 +21,7 @@ class ScreenManagerService(object):
             self.screen_manager.clear_screen()
         except Exception as error:
             # Handle specific exceptions if needed
+            logging.error(
+                f"An error occurred while clearing the screen: {error}"
+            )
             print(f"An error occurred while clearing the screen: {error}")
