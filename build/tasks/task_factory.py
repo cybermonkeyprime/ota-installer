@@ -1,9 +1,11 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
-from typing import Any, Optional, Dict
+from typing import Any, Optional
 
-from build.tasks import components as task_components
+from build.tasks.factory_template import TaskFactoryTemplate
+from build.tasks.task_mappings import TaskNameMapping
 from build.variables import VariableManager
+
 
 class TaskCreationError(Exception):
     """Custom exception for task creation errors."""
@@ -24,28 +26,14 @@ class TaskFactory(AbstractTaskFactory):
 
     Attributes:
         variable_manager: An instance of VariableManager to manage variables.
-        task_mapping: A dictionary mapping task names to their respective classes.
+        task_mapping: A dictionary mapping task names to their respective
+        classes.
     """
-    variable_manager: Optional[VariableManager] = field(default=None)
-    task_mapping: Dict[str, type] = field(
-        init=False,
-        default_factory=lambda: dict(
-            extract_payload_image=task_components.PayloadImageExtractor,
-            rename_payload_image=task_components.PayloadImageRenamer,
-            extract_stock_boot_image=task_components.BootImageExtractor,
-            backup_stock_boot_image=task_components.StockBootImageBackupper,
-            check_adb_connection=task_components.ADBConnectionChecker,
-            push_stock_boot_image=task_components.StockBootImagePusher,
-            find_patched_boot_image=task_components.MagiskImageFinder,
-            pull_patched_boot_image=task_components.MagiskImagePuller,
-            reboot_to_recovery=task_components.RecoveryRebooter,
-            adb_sideload=task_components.ADBSideloader,
-            reboot_to_bootloader=task_components.BootloaderRebooter,
-            boot_magisk_image=task_components.MagiskImageBooter,
-        ),
-    ) # add task_components.TaskComponent as return type
 
-    def create_task(self, task_name: str) -> Any: # add task_components.TaskComponent as return type
+    variable_manager: Optional[VariableManager] = field(default=None)
+    task_mapping: TaskNameMapping = field(default_factory=TaskNameMapping)
+
+    def create_task(self, task_name: str) -> "type[TaskFactoryTemplate]":
         """Creates a task object based on the task name.
 
         Args:
@@ -58,8 +46,19 @@ class TaskFactory(AbstractTaskFactory):
             TaskCreationError: If the task name is not recognized.
         """
         try:
-            self.task_name = task_name
-            task_class = self.task_mapping[task_name]
+            task_class = self.task_mapping.task_map.get(
+                task_name, InvalidKeyException(task_name)
+            )
             return task_class(self.variable_manager)
-        except KeyError:
-            raise TaskCreationError(f"Task '{task_name}' is not recognized.")
+        except KeyError as error:
+            raise TaskCreationError(
+                f"Task '{task_name}' is not recognized."
+            ) from error
+
+
+@dataclass
+class InvalidKeyException(object):
+    task_name: str = field(default_factory=str)
+
+    def __str__(self) -> str:
+        return f"Invalid Key: {self.task_name}"
