@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from subprocess import run
+from subprocess import check_output, run
 from typing import Optional
 
 from build import decorators
@@ -12,6 +12,7 @@ class TaskFactoryTemplate(ABC):
     Attributes:
         comment: An optional comment string to be printed after the task.
     """
+
     comment: Optional[str] = None
 
     @property
@@ -32,7 +33,9 @@ class TaskFactoryTemplate(ABC):
         """Returns the command string to be executed."""
         raise NotImplementedError()
 
-    @decorators.DoublePaddedFooterWrapper(message="Completed")
+    @decorators.DoublePaddedFooterWrapper(
+        message="Completed task successfully."
+    )
     def perform_task(self) -> None:
         """Performs the task by executing the associated command."""
         self.index_and_title()
@@ -52,7 +55,11 @@ class TaskFactoryTemplate(ABC):
         """Returns the command string of the task."""
         return self.command_string
 
-    @decorators.ConfirmationPrompt(comment="execute the command", indent=2, char=" ")
+    @decorators.ConfirmationPrompt(
+        question="Do you want to execute the command?",
+        indentation_level=4,
+        confirmation_char=" ",
+    )
     @decorators.ContinueOnKeyPress(indent=2, char=" ")
     @decorators.Encapsulate()
     def execute_command_string(self) -> None:
@@ -62,8 +69,9 @@ class TaskFactoryTemplate(ABC):
         except Exception as e:
             print(f"An error occurred while executing the command: {e}")
 
-
-    @decorators.ColorizedIndentPrinter(indent=2, begin="", end="", style="warning")
+    @decorators.ColorizedIndentPrinter(
+        indent=2, begin="", end="", style="warning"
+    )
     def after_comment(self) -> str:
         """Returns the comment associated with the task."""
         return f"{self.comment}"

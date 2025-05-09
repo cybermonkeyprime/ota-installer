@@ -1,8 +1,6 @@
-#!/usr/bin/env python3
-
 from dataclasses import dataclass
-from typing import Union
 from pathlib import Path
+from typing import Union
 
 
 @dataclass
@@ -14,10 +12,10 @@ class Test(object):
 class TaskDictionary(object):
     instance: type
 
-    ItemDictionary = dict[str, Union[int, str, None]]
+    type ItemDictionary = dict[str, Union[int, str, None]]
 
     @property
-    def task_dictionary(self) -> dict[str, ItemDictionary]:
+    def task_dictionary(self) -> "dict[str, ItemDictionary]":
         return dict(
             payload_image_extractor=self.payload_image_extractor,
             adb_connection_checker=self.adb_connection_checker,
@@ -25,7 +23,7 @@ class TaskDictionary(object):
         )
 
     @property
-    def payload_image_extractor(self) -> ItemDictionary:
+    def payload_image_extractor(self) -> "ItemDictionary":
         return dict(
             index=1,
             title="Payload Image Extracter",
@@ -34,7 +32,7 @@ class TaskDictionary(object):
         )
 
     @property
-    def adb_connection_checker(self) -> ItemDictionary:
+    def adb_connection_checker(self) -> "ItemDictionary":
         return dict(
             index=1,
             title="Check ADB Connection",
@@ -43,7 +41,7 @@ class TaskDictionary(object):
         )
 
     @property
-    def magisk_image_booter(self) -> ItemDictionary:
+    def magisk_image_booter(self) -> "ItemDictionary":
         return dict(
             index=4,
             title="Boot to Magisk Image",
@@ -60,7 +58,9 @@ def main() -> None:
     td = TaskDictionary(test)
     for task in td.task_dictionary:
         index, header, command, comment = [*td.fetch_values(task).values()]
-        print(f"{index}. {header} | {command} | {comment if comment else "N/A"}")
+        print(
+            f"{index}. {header} | {command} | {comment if comment else 'N/A'}"
+        )
 
 
 if __name__ == "__main__":

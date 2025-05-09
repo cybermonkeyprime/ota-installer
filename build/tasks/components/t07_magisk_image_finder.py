@@ -1,7 +1,11 @@
 from dataclasses import dataclass, field
 from subprocess import CalledProcessError, check_output
 
-from build.decorators import ConfirmationPrompt, ContinueOnKeyPress, Encapsulate
+from build.decorators import (
+    ConfirmationPrompt,
+    ContinueOnKeyPress,
+    Encapsulate,
+)
 from build.tasks import TaskFactoryTemplate
 from build.variables import VariableManager
 
@@ -15,15 +19,9 @@ class MagiskImageFinder(TaskFactoryTemplate):
         variable_manager: An instance of VariableManager to manage paths.
     """
 
-    variable_manager: type = field(default=VariableManager)
-
-    @property
-    def index(self) -> int:
-        return 3
-
-    @property
-    def title(self) -> str:
-        return "Find Magisk Image"
+    variable_manager: "type[VariableManager]" = field(default=VariableManager)
+    index: int = 3
+    title: str = "Find Magisk Image"
 
     @property
     def magisk_remote_path(self) -> type:
@@ -34,7 +32,11 @@ class MagiskImageFinder(TaskFactoryTemplate):
         """Constructs the command string to find the Magisk patched boot image."""
         return f"adb shell ls {self.magisk_remote_path}/magisk_patched*.img | head -n1"
 
-    @ConfirmationPrompt(comment="Execute the command", indent=2, char=" ")
+    @ConfirmationPrompt(
+        question="Execute the command",
+        indentation_level=2,
+        confirmation_char=" ",
+    )
     @ContinueOnKeyPress(indent=1, char=" ")
     @Encapsulate()
     def execute_command_string(self) -> None:

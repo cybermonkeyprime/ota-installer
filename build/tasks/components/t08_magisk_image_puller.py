@@ -7,14 +7,8 @@ import build.tasks as tasks
 @dataclass
 class MagiskImagePuller(tasks.TaskFactoryTemplate):
     instance: type = field()
-
-    @property
-    def index(self) -> int:
-        return 4
-
-    @property
-    def title(self) -> str:
-        return "Pull Magisk Image:"
+    index: int = field(default=4)
+    title: str = field(default="Pull Magisk Image")
 
     @property
     def magisk_struct(self) -> type:
@@ -22,7 +16,7 @@ class MagiskImagePuller(tasks.TaskFactoryTemplate):
 
     @property
     def magisk_directory(self) -> type:
-        return self.instance.directory.magisk_image
+        return self.instance.directory.magisk_image_path
 
     @property
     def magisk_local_path(self) -> Path:

@@ -3,11 +3,12 @@ from dataclasses import dataclass, field
 from typing import Any, Optional
 
 from build.decorators import FooterWrapper
-from build.dispatchers import DispatcherTemplate, DispatcherManager
+from build.dispatchers import DispatcherManager, DispatcherTemplate
 from build.exceptions.handlers import KeyboardInterruptHandler
 from build.styles.palette import Colors
 from build.tasks.definitions import TaskDefinitions
 from build.tasks.managers import TaskManager
+
 
 @dataclass
 class TaskHashes(object):
@@ -26,17 +27,20 @@ class CustomException(Exception):
 
 
 @KeyboardInterruptHandler
-@FooterWrapper(message="Completed Successfully!\n")
+@FooterWrapper(message="Finished all tasks successfully!\n")
 @dataclass
 class Executor:
     """
-    TaskExecutor is responsible for executing tasks based on the provided arguments.
+    TaskExecutor is responsible for executing tasks based on the provided
+    arguments.
 
     Attributes:
         arguments: A Namespace object containing command-line arguments.
         task_manager: An instance of TaskManager to manage tasks.
-        task_definitions: An instance of TaskDefinitions containing task definitions.
+        task_definitions: An instance of TaskDefinitions containing
+        task definitions.
     """
+
     arguments: Namespace = field(default_factory=Namespace)
     task_manager: TaskManager = field(default_factory=TaskManager)
     task_definitions: TaskDefinitions = field(default_factory=TaskDefinitions)
@@ -44,10 +48,13 @@ class Executor:
     @property
     def path(self) -> str:
         try:
-            self.arguments
+            if self.arguments is not None:
+                pass
         except Exception as e:
             print(f"{e} Arguments must have 'path' attribute")
-        assert hasattr(self.arguments, "path"), "Arguments must have 'path' attribute"
+        assert hasattr(self.arguments, "path"), (
+            "Arguments must have 'path' attribute"
+        )
         return self.arguments.path
 
     @property
@@ -61,7 +68,9 @@ class Executor:
             if hasattr(self.arguments, "task_group"):
                 return self.arguments.task_group
             else:
-                raise AttributeError("Arguments must have 'task_group' attribute")
+                raise AttributeError(
+                    "Arguments must have 'task_group' attribute"
+                )
         except Exception as e:
             print(CustomException("arguments", e))
 
@@ -134,8 +143,6 @@ class Execution(object):
             print(CustomException(task_group_key, e))
 
     pass
-
-
 
 
 if __name__ == "__main__":
