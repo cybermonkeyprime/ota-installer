@@ -2,6 +2,7 @@ from .display_configuration import *
 from .display_data_processors import *
 from .display_factory import *
 from .display_formatter import *
+from .display_objects import *
 from .display_screen_manager import *
 from .display_template import *
 from .display_variable_processor import *
