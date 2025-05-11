@@ -14,10 +14,10 @@ class DisplayObjectDefinitions(object):
                 dc.DisplayTitle, self.display_title
             ),
             "display_separator": DisplayObjectAttributes(
-                dc.DisplaySeparator, ""
+                dc.DisplaySeparator, None
             ),
             "display_versioning": DisplayObjectAttributes(
-                dc.DisplaySubtitle, ""
+                dc.DisplaySubtitle, None
             ),
         }
 
@@ -51,7 +51,7 @@ class DisplayObjectAttributeProcessor(object):
         return self.object_attributes._type
 
     @property
-    def class_arguments(self) -> str:
+    def class_arguments(self) -> str | None:
         return self.object_attributes.argument
 
     def process_object_attributes(self):
@@ -70,4 +70,4 @@ class DisplayObjectAttributeProcessor(object):
 @dataclass
 class DisplayObjectAttributes(object):
     _type: type
-    argument: str
+    argument: str | None
