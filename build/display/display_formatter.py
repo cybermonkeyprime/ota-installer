@@ -32,7 +32,7 @@ class DisplayFormatter(object):
 
     @Printer(suffix="")
     def move_cursor_up(self) -> "CursorAdjustor":
-        return CursorAdjustor()
+        return CursorAdjustor("move_cursor_up")
 
     @Printer(suffix="")
     @Colorizer(style="title")
@@ -43,14 +43,17 @@ class DisplayFormatter(object):
     def display_versioning(self) -> "type":
         return self.process_display_object("display_versioning")
 
-    def process_display_object(self, object_title: str) -> type:
-        display_object_processor = DisplayObjectProcessor(object_title)
+    def process_display_object(self, obj_name: str) -> "type":
+        display_object_processor = DisplayObjectProcessor(obj_name)
         return display_object_processor.process_object()
 
 
+@dataclass()
 class CursorAdjustor(object):
+    position: str
+
     def __str__(self) -> str:
         escape_code_manager = EscapeCodeManager()
-        return escape_code_manager.fetch_escape_code("move_cursor_up")
+        return escape_code_manager.fetch_escape_code(self.position)
 
     pass
