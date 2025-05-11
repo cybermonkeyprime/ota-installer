@@ -1,12 +1,7 @@
 from dataclasses import dataclass, field
 
-import build.display.components as dc
 from build.decorators import Colorizer, FooterWrapper, Printer
-from build.display.display_objects import (
-    DisplayObjectTemplate,
-    DisplayObjectAttributes,
-    DisplayObjectProcessor,
-)
+from build.display.display_objects import DisplayObjectProcessor
 from build.styles.escape_code_manager import EscapeCodeManager
 
 
@@ -32,29 +27,30 @@ class DisplayFormatter(object):
         return True
 
     @Printer(suffix="")
-    def display_title(self) -> "DisplayObjectAttributes":
+    def display_title(self) -> "type":
         return self.process_display_object("display_title")
 
     @Printer(suffix="")
-    def move_cursor_up(self) -> str:
-        escape_code_manager = EscapeCodeManager()
-        move_cursor_up = escape_code_manager.fetch_escape_code(
-            "move_cursor_up"
-        )
-        return move_cursor_up
+    def move_cursor_up(self) -> "CursorAdjustor":
+        return CursorAdjustor()
 
     @Printer(suffix="")
     @Colorizer(style="title")
-    def display_separator(self) -> "DisplayObjectAttributes":
+    def display_separator(self) -> "type":
         return self.process_display_object("display_separator")
 
     @Printer()
-    def display_versioning(self) -> "DisplayObjectAttributes":
+    def display_versioning(self) -> "type":
         return self.process_display_object("display_versioning")
 
-    #    @Printer()
-    def process_display_object(
-        self, object_title: str
-    ) -> DisplayObjectAttributes:
+    def process_display_object(self, object_title: str) -> type:
         display_object_processor = DisplayObjectProcessor(object_title)
         return display_object_processor.process_object()
+
+
+class CursorAdjustor(object):
+    def __str__(self) -> str:
+        escape_code_manager = EscapeCodeManager()
+        return escape_code_manager.fetch_escape_code("move_cursor_up")
+
+    pass
