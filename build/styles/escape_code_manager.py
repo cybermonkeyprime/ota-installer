@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import Dict, Optional
+
 from colorama import Fore, Style
 
 from build.styles.palette import ColorFormatter
@@ -12,7 +12,8 @@ class EscapeCodeManager(object):
     Attributes:
         escape_codes: A dictionary mapping descriptive names to escape codes.
     """
-    escape_codes: Dict[str, str] = field(
+
+    escape_codes: "dict[str, str]" = field(
         default_factory=lambda: {
             "move_cursor_up": "\033[F",
             "title": str(ColorFormatter(Fore.GREEN, Style.BRIGHT)),
@@ -30,7 +31,8 @@ class EscapeCodeManager(object):
         """
         return self.escape_codes.get(key, "")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     # Example usage of EscapeCodeManager with dependency injection
     escape_code_manager = EscapeCodeManager()
     title_code = escape_code_manager.fetch_escape_code("title")
