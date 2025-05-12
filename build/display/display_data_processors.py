@@ -1,10 +1,9 @@
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Tuple
 
+# introduces a circlular import error if these are swapped
 import build.variables as variables
 import build.display.processors as display_processors
-# import build.components.directory as directory_component
 
 VariableManager = variables.VariableManager
 
@@ -19,16 +18,9 @@ class OTAFileNameProcessor(
 
 @dataclass
 class FileNamesProcessor(display_processors.FileIterationProcessor):
-    files: Tuple[str, ...] = field(
+    files: "tuple[str, ...]" = field(
         default_factory=lambda: ("payload", "stock", "magisk")
     )
-
-    # @dataclass
-    # class OTADirectoryProcessor(
-    display_processors.VariableItemProcessor
-    # takes vars from argparse
-    title: str = "ota_file_directory"
-    value: str = "path.parent"  # change for debugging
 
 
 @dataclass
