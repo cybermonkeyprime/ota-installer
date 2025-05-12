@@ -1,5 +1,6 @@
 from argparse import Namespace
 from dataclasses import dataclass, field
+
 from build.tasks import Executor as TaskExecutor
 
 
@@ -12,7 +13,8 @@ class TaskExecutionHandler(object):
         executor (TaskExecutor): The executor to run tasks.
         arguments (Namespace): The arguments to pass to the executor.
     """
-    executor: type[TaskExecutor] = field(default_factory=TaskExecutor)
+
+    executor: type = field(default_factory=TaskExecutor)
     arguments: Namespace = field(default_factory=Namespace)
 
     def execute(self) -> None:
@@ -22,11 +24,12 @@ class TaskExecutionHandler(object):
         except Exception as error:
             print(f"Task execution failed: {error}")
 
+
 def main() -> None:
     excecutor = TaskExecutor
-    arguments = None
     task_handler = TaskExecutionHandler(executor=excecutor)
     task_handler.execute()
+
 
 if __name__ == "__main__":
     main()

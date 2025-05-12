@@ -69,14 +69,29 @@ class TaskManager(object):
     def iteration(self) -> TaskIteration:
         return TaskIteration(self.variable)
 
-    def initiate_task(self, args: str) -> None:
+    def initiate_task(self, file_name: str) -> None:
+        self.file_name = file_name
+        TaskInitiationManager(self.variable)
+
+
+@dataclass
+class TaskInitiationManager(object):
+    variable: VariableManager
+
+    def __post_init__(self) -> None:
         try:
-            self.file_name = args
-            self.list_vars()
+            TaskVariableManager(self.variable)
         except Exception as error:
             print(f"{ErrorMessage(error=error)}")
 
-    def list_vars(self) -> None:
+    pass
+
+
+@dataclass
+class TaskVariableManager(object):
+    variable: VariableManager
+
+    def __post_init__(self) -> None:
         try:
             display_processor = DisplayVariableProcessor(self.variable)
             display_processor.initiate_processing()

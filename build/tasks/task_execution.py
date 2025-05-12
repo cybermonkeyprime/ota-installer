@@ -1,6 +1,7 @@
 from argparse import Namespace
+from collections.abc import Callable
 from dataclasses import dataclass, field
-from typing import Any, Optional
+from typing import Optional
 
 from build.decorators import FooterWrapper
 from build.dispatchers import DispatcherManager, DispatcherTemplate
@@ -18,7 +19,7 @@ class TaskHashes(object):
 
 
 @dataclass
-class CustomException(Exception):
+class CustomError(Exception):
     operation: str
     error: Exception
 
@@ -72,7 +73,7 @@ class Executor:
                     "Arguments must have 'task_group' attribute"
                 )
         except Exception as e:
-            print(CustomException("arguments", e))
+            print(CustomError("arguments", e))
 
     def __post_init__(self) -> None:
         self.initialize()
@@ -90,7 +91,7 @@ class Executor:
     def initialize_task_manager(self) -> None:
         self.task_manager.initiate_task(self.path)
 
-    def get_dispatcher_instance(self, key: str) -> Any:
+    def get_dispatcher_instance(self, key: str) -> Optional[Callable]:
         return self.dispatcher.get_instance(key)
 
     def execute_task(self, task_group_key: str) -> None:
@@ -99,7 +100,7 @@ class Executor:
             execution_function = self.task_manager.iteration.execute_iteration
             execution_function(task_group=dispatcher_instance)
         except Exception as e:
-            print(CustomException(task_group_key, e))
+            print(CustomError(task_group_key, e))
 
     def execute_single_task(self) -> None:
         if self.task_group:
@@ -140,7 +141,7 @@ class Execution(object):
             execution_function = self.task_manager.iteration.execute_iteration
             execution_function(task_group=dispatcher_instance)
         except Exception as e:
-            print(CustomException(task_group_key, e))
+            print(CustomError(task_group_key, e))
 
     pass
 
