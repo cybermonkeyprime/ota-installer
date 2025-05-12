@@ -17,7 +17,7 @@ class DisplayFormatter(object):
         try:
             self.header()
         except Exception as e:
-            Printer(f"An error occurred during initialization: {e}")
+            print(f"An error occurred during initialization: {e}")
 
     def header(self) -> bool:
         self.display_title()

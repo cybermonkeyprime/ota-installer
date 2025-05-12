@@ -15,16 +15,16 @@ class Colors(object):  # Rename StylePalette
     info: str = f"{Fore.GREEN}{Style.BRIGHT}"
     default: str = Fore.RESET
     debugging: str = Fore.CYAN
-    title: str = field(default_factory=lambda: f"{Fore.GREEN}{Style.BRIGHT}")
+    title: str = f"{Fore.GREEN}{Style.BRIGHT}"
     author: str = default
     version: str = warning
     separator: str = info
     variable: str = warning
 
-    def apply_style(self, text: str, style_name: str) -> str:
+    def apply_style(self, text: str, color: str) -> str:
         """Applies the given style to the text."""
-        style = getattr(self, style_name, self.default)
-        return f"{style}{text}{Style.RESET_ALL}"
+        style = getattr(self, color.lower(), self.default)
+        return f"{style}{text}{self.default}"
 
     def __str__(self) -> str:
         return self.debugging
@@ -48,7 +48,7 @@ class ColorFormatter(object):
 def display_sample_text(style_palette: Colors) -> Optional[bool]:
     """Displays sample text with all styles from the given palette."""
     try:
-        for style_name in style_palette.__annotations__.keys():
+        for style_name in style_palette.__dict__:
             styled_text = style_palette.apply_style("Sample Text", style_name)
             print(styled_text)
         return True
@@ -56,8 +56,10 @@ def display_sample_text(style_palette: Colors) -> Optional[bool]:
         print(f"{style_palette.error}Error applying styles: {err}")
         return None
 
+
 class ColorError(Exception):
     pass
+
 
 if __name__ == "__main__":
     style_palette = Colors()
