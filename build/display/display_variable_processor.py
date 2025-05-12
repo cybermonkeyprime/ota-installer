@@ -26,7 +26,7 @@ class VariableProcessor(object):
     """A class that handles the processing of variables, files,
     and directories."""
 
-    variable_manager: "type" = field(default_factory=lambda: VariableManager)
+    variable_manager: type = field(default_factory=lambda: VariableManager)
 
     file_processors: tuple = (
         display_data_processors.OTAFileNameProcessor,
@@ -60,5 +60,26 @@ class VariableProcessor(object):
         print()
 
     def process_log_file(self) -> None:
+        LogFileProcessManager(self.variable_manager)
+
+
+@dataclass
+class DirectoryProccessManager(object):
+    variable_manager: type = field(default_factory=lambda: VariableManager)
+    directory_processors: tuple = field(default_factory=tuple)
+
+    def __post_init__(self) -> None:
+        display_data_processor = DataProcessor(
+            self.variable_manager, self.directory_processors
+        )
+        display_data_processor.iterate_data_processors()
+        print()
+
+
+@dataclass
+class LogFileProcessManager(object):
+    variable_manager: type = field(default_factory=lambda: VariableManager)
+
+    def __post_init__(self) -> None:
         display_data_processors.LogFileProcessor(self.variable_manager)
         print()
