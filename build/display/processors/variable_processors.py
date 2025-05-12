@@ -14,7 +14,9 @@ from build.exceptions import error_messages
 
 @dataclass
 class VariableItemProcessor(object):
-    processing_function: type = field(default_factory=lambda: variables.VariableManager)
+    processing_function: type = field(
+        default_factory=lambda: variables.VariableManager
+    )
     title: str = field(default="")
     value: str = field(default="")
     dispatcher_type: str = field(default="variable")
@@ -31,10 +33,14 @@ class VariableItemProcessor(object):
 
     def process_item(self) -> None:
         try:
-            validation = ValueValidation(dispatch_handler=self.dispatch_handler)
+            validation = ValueValidation(
+                dispatch_handler=self.dispatch_handler
+            )
             value = validation.evaluator(key=self.value)
 
-            variable_output = VariableOutputProcessor(title=self.title, value=value)
+            variable_output = VariableOutputProcessor(
+                title=self.title, value=value
+            )
             variable_output.parser()
         except Exception as error:
             print(
@@ -46,8 +52,12 @@ class VariableItemProcessor(object):
 
 @dataclass
 class ValueValidation(object):
-    dispatch_handler: DispatcherManager = field(default_factory=DispatcherManager)
-    processing_function: type = field(default_factory=lambda: variables.VariableManager)
+    dispatch_handler: DispatcherManager = field(
+        default_factory=DispatcherManager
+    )
+    processing_function: type = field(
+        default_factory=lambda: variables.VariableManager
+    )
 
     def fetcher(self) -> DispatcherTemplate:
         return self.dispatch_handler.get_dispatcher()
@@ -72,11 +82,14 @@ class VariableOutputProcessor(object):
 @dataclass
 class DispatchHandler(object):
     dispatcher_type: str = field(default="")
-    processing_function: type = field(default_factory=lambda: variables.VariableManager)
+    processing_function: type = field(
+        default_factory=lambda: variables.VariableManager
+    )
 
     def retriever(self) -> DispatcherManager:
-        # return self.processing_function.get_dispatcher(self.dispatcher_type)
-        return DispatcherManager(self.dispatcher_type, self.processing_function)
+        return DispatcherManager(
+            self.dispatcher_type, self.processing_function
+        )
 
     def __str__(self) -> str:
         return f"{self.retriever()}"
