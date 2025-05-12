@@ -19,14 +19,19 @@ class Application(object):
         display_configurator: An instance of DisplayConfigurationService to manage display configurations.
         task_executor_cls: A class reference to TaskExecutor for executing tasks.
     """
-    screen_manager: ScreenManagerService = field(default_factory=ScreenManagerService)
+
+    screen_manager: ScreenManagerService = field(
+        default_factory=ScreenManagerService
+    )
     argument_parser: ArgumentParserService = field(
         default_factory=ArgumentParserService
     )
     display_configurator: DisplayConfigurationService = field(
         default_factory=DisplayConfigurationService
     )
-    task_executor_cli: TaskExecutor = field(default_factory=lambda: TaskExecutor)
+    task_executor_cli: "TaskExecutor" = field(
+        default_factory=lambda: TaskExecutor
+    )
 
     def run(self) -> None:
         """Executes the application logic."""
@@ -44,7 +49,8 @@ class Application(object):
                 )
                 task_handler.execute()
         except Exception as error:
-            raise ExceptionError(f"An error occurred: {error}")
+            raise ExceptionError(f"An error occurred: {error}") from error
+
 
 class ExceptionError(Exception):
     pass
