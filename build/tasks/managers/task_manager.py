@@ -1,9 +1,8 @@
-from contextlib import suppress
 from dataclasses import dataclass, field
 from pathlib import Path
 
 from build.display import VariableProcessor as DisplayVariableProcessor
-from build.exceptions.error_messages import CustomMessage, ErrorMessage
+from build.exceptions.error_messages import ErrorMessage
 from build.tasks.definitions import TaskDefinitions
 from build.tasks.task_factory import TaskFactory
 from build.variables import VariableManager
@@ -23,25 +22,10 @@ class TaskIteration(object):
     task_group: "tuple[str, ...]" = field(default=("", ""))
 
     def execute_iteration(self, task_group: "tuple[str, ...]") -> None:
-        task_director = TaskDirector()
-        handle_task = task_director.handle_task
-        with suppress(TypeError):
-            [
-                handle_task(self.variable_manager, task_name)
-                for task_name in task_group
-            ]
-
-
-@dataclass
-class TaskDirector(object):
-    """
-    Directs the handling of tasks using a TaskFactory.
-    """
-
-    def handle_task(self, instance: VariableManager, item: str) -> TaskFactory:
-        task_factory = TaskFactory(instance)
-        request = task_factory.create_task(task_name=item)
-        return request.perform_task()
+        for task_name in task_group:
+            task_factory = TaskFactory(self.variable_manager)
+            request = task_factory.create_task(task_name)
+            request.perform_task()
 
 
 @dataclass
@@ -80,20 +64,9 @@ class TaskInitiationManager(object):
 
     def __post_init__(self) -> None:
         try:
-            TaskVariableManager(self.variable)
+            display_processor = DisplayVariableProcessor(self.variable)
+            display_processor.initiate_processing()
         except Exception as error:
             print(f"{ErrorMessage(error=error)}")
 
     pass
-
-
-@dataclass
-class TaskVariableManager(object):
-    variable: VariableManager
-
-    def __post_init__(self) -> None:
-        try:
-            display_processor = DisplayVariableProcessor(self.variable)
-            display_processor.initiate_processing()
-        except Exception as e:
-            print(CustomMessage(e))
