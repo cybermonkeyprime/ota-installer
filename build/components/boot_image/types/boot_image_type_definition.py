@@ -21,7 +21,7 @@ class AbstractImageGenerator(ABC):
     def generate_directory(self) -> str:
         raise NotImplementedError()
 
-    def get_file_name(self, image_name: str, extension: str):
+    def set_file_name(self, image_name: str, extension: str):
         if image_name in ("boot", "magisk", "payload"):
             return f"{image_name}-{self.device}-{self.version}.{extension}"
         else:
@@ -35,7 +35,7 @@ class PayloadImageFileGenerator(AbstractImageGenerator):
     path: str = field(default="")
 
     def generate_file_name(self) -> str:
-        return self.get_file_name("payload", "bin")
+        return self.set_file_name("payload", "bin")
 
     def generate_directory(self) -> str:
         return ""
@@ -48,7 +48,7 @@ class StockImageFileGenerator(AbstractImageGenerator):
     path: str = field(default="")
 
     def generate_file_name(self) -> str:
-        return self.get_file_name("boot", "img")
+        return self.set_file_name("boot", "img")
 
     def generate_directory(self) -> str:
         boot_image_directory = BootImageDirectoryStructure()
@@ -62,7 +62,7 @@ class MagiskImageFileGenerator(AbstractImageGenerator):
     path: str = field(default="")
 
     def generate_file_name(self) -> str:
-        return self.get_file_name("magisk", "img")
+        return self.set_file_name("magisk", "img")
 
     def generate_directory(self) -> str:
         boot_image_directory = BootImageDirectoryStructure()
