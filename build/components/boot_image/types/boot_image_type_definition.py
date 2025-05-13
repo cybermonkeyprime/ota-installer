@@ -9,6 +9,10 @@ from build.components.file.structures import FileNameParserStructure
 
 
 class AbstractImageGenerator(ABC):
+    device: str = field(default="")
+    version: str = field(default="")
+    path: str = field(default="")
+
     @abstractmethod
     def generate_file_name(self) -> str:
         raise NotImplementedError()
@@ -16,6 +20,12 @@ class AbstractImageGenerator(ABC):
     @abstractmethod
     def generate_directory(self) -> str:
         raise NotImplementedError()
+
+    def get_file_name(self, image_name: str, extension: str):
+        if image_name in ("boot", "magisk", "payload"):
+            return f"{image_name}-{self.device}-{self.version}.{extension}"
+        else:
+            return "Invalid Item"
 
 
 @dataclass
@@ -25,7 +35,7 @@ class PayloadImageFileGenerator(AbstractImageGenerator):
     path: str = field(default="")
 
     def generate_file_name(self) -> str:
-        return f"{self.device}-payload-{self.version}.bin"
+        return self.get_file_name("payload", "bin")
 
     def generate_directory(self) -> str:
         return ""
@@ -38,7 +48,7 @@ class StockImageFileGenerator(AbstractImageGenerator):
     path: str = field(default="")
 
     def generate_file_name(self) -> str:
-        return f"{self.device}-boot-{self.version}.img"
+        return self.get_file_name("boot", "img")
 
     def generate_directory(self) -> str:
         boot_image_directory = BootImageDirectoryStructure()
@@ -52,7 +62,7 @@ class MagiskImageFileGenerator(AbstractImageGenerator):
     path: str = field(default="")
 
     def generate_file_name(self) -> str:
-        return f"{self.device}-magisk-{self.version}.img"
+        return self.get_file_name("magisk", "img")
 
     def generate_directory(self) -> str:
         boot_image_directory = BootImageDirectoryStructure()
@@ -61,7 +71,9 @@ class MagiskImageFileGenerator(AbstractImageGenerator):
 
 @dataclass
 class BootImageTypeDefinition(object):
-    file_name_parser: type = field(default_factory=lambda: FileNameParserStructure)
+    file_name_parser: type = field(
+        default_factory=lambda: FileNameParserStructure
+    )
 
     path: Path = field(default_factory=Path)
     payload_image: BootImageDirectoryStructure = field(init=False)
@@ -80,7 +92,9 @@ class BootImageTypeDefinition(object):
     def magisk(self) -> BootImageFileStructure:
         return self.create_image_file(MagiskImageFileGenerator)
 
-    def create_image_file(self, image_template_class: type) -> BootImageFileStructure:
+    def create_image_file(
+        self, image_template_class: type
+    ) -> BootImageFileStructure:
         device = self.file_name_parser.device
         version = self.file_name_parser.version
         try:
@@ -90,7 +104,9 @@ class BootImageTypeDefinition(object):
                 image_instance.generate_directory(),
             )
         except Exception as err:
-            raise ValueError(f"Failed to create image structure: {err}") from err
+            raise ValueError(
+                f"Failed to create image structure: {err}"
+            ) from err
 
 
 def create_file_name_parser(variable: str) -> FileNameParserStructure:
