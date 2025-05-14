@@ -43,6 +43,7 @@ class FileProcessor(object):
 
     @property
     def dispatcher(self) -> type:
+        return DispatchHandler(self.processing_function, "file")
         return self.processing_function.get_dispatcher("file")
 
     @property
@@ -62,6 +63,21 @@ class FileProcessor(object):
             processor.format_and_print()
         except Exception as error_msg:
             print(f"?{dbc.ErrorMessage('file', self.file_name, error_msg)}")
+
+
+@dataclass
+class DispatchHandler(object):
+    processing_function: type = field(
+        default_factory=lambda: variables.VariableManager
+    )
+    dispatcher_type: str = field(default="")
+
+    @property
+    def dispatcher(self) -> type:
+        return self.processing_function.get_dispatcher(self.dispatcher_type)
+
+    def __post_init__(self) -> type:
+        return self.dispatcher()
 
 
 def main():
