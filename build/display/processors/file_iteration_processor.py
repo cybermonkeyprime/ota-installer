@@ -5,6 +5,14 @@ import build.variables as variables
 
 @dataclass
 class FileIterationProcessor(object):
+    """
+    A class responsible for processing multiple files using a given function.
+
+    Attributes:
+        process_function: A callable that processes a file.
+        files: A tuple of file names to be processed.
+    """
+
     processing_function: type = field(
         default_factory=lambda: variables.VariableManager
     )
@@ -20,6 +28,14 @@ class FileIterationProcessor(object):
 
 @dataclass
 class FileProcessor(object):
+    """
+    A class responsible for processing a single file using a given function.
+
+    Attributes:
+        process_function: A callable that processes a file.
+        file_name: The name of the file to be processed.
+    """
+
     processing_function: type = field(
         default_factory=lambda: variables.VariableManager
     )
@@ -46,3 +62,11 @@ class FileProcessor(object):
             processor.format_and_print()
         except Exception as error_msg:
             print(f"?{dbc.ErrorMessage('file', self.file_name, error_msg)}")
+
+
+def main():
+    pass
+
+
+if __name__ == "__main__":
+    main()
