@@ -15,20 +15,20 @@ class FileIterationProcessor(object):
 
     def process_files(self) -> None:
         for file_name in self.files:
-            IndividualFileProcessor(self.processing_function, file_name)
+            FileProcessor(self.processing_function, file_name)
 
 
 @dataclass
-class IndividualFileProcessor(object):
+class FileProcessor(object):
     processing_function: type = field(
         default_factory=lambda: variables.VariableManager
     )
     file_name: str = field(default="")
 
     def __post_init__(self) -> None:
-        self.process_individual_file()
+        self.process_file()
 
-    def process_individual_file(self) -> None:
+    def process_file(self) -> None:
         import build.display.base_classes as dbc
 
         try:
