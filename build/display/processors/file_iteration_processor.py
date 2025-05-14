@@ -4,16 +4,6 @@ import build.variables as variables
 
 
 @dataclass
-class FileProcesser(object):
-    function: type = field(default_factory=lambda: variables.VariableManager)
-    data: tuple = field(default_factory=tuple)
-
-    def iterate_files(self) -> "list|None":
-        for file_processor in self.data:
-            return file_processor(self.function)
-
-
-@dataclass
 class FileIterationProcessor(object):
     processing_function: type = field(
         default_factory=lambda: variables.VariableManager
