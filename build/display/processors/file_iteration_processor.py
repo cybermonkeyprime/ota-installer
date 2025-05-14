@@ -1,6 +1,5 @@
 from dataclasses import dataclass, field
 
-import build.display.base_classes as dbc
 import build.variables as variables
 
 
@@ -40,6 +39,8 @@ class IndividualFileProcessor(object):
         self.process_individual_file()
 
     def process_individual_file(self) -> None:
+        import build.display.base_classes as dbc
+
         try:
             dispatcher = self.processing_function.get_dispatcher("file")
             value = dispatcher.get_value(key=self.file_name)
