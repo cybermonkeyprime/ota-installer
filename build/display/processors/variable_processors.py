@@ -61,7 +61,8 @@ class VariableValueValidation(object):
 
     Attributes:
         dispatch_handler (DispatcherManager): The dispatcher manager instance.
-        processing_function (type): The function used for processing the variable.
+        processing_function (type): The function used for processing
+        the variable.
     """
 
     from build.dispatchers import CollectionDictionary, DispatcherTemplate
@@ -89,7 +90,8 @@ class VariableOutputProcessor(object):
 
     Attributes:
         title (str): The title of the variable.
-        value (type | Path | None): The value of the variable, can be a type, Path, or None.
+        value (type | Path | None): The value of the variable,
+        can be a type, Path, or None.
     """
 
     title: str = field(default="")
