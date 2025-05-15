@@ -5,10 +5,6 @@ from decorators import ColorizedIndentPrinter
 from dispatchers import DispatcherManager
 
 import build.variables as variables
-from build.dispatchers import (
-    CollectionDictionary,
-    DispatcherTemplate,
-)
 from build.exceptions import error_messages
 
 
@@ -26,14 +22,14 @@ class VariableItemProcessor(object):
 
     @property
     def dispatch_handler(self) -> DispatcherManager:
-        dispatch_handler = DispatchHandler(
+        dispatch_handler = VariableDispatchHandler(
             self.dispatcher_type, self.processing_function
         )
         return dispatch_handler.retriever()
 
     def process_item(self) -> None:
         try:
-            validation = ValueValidation(
+            validation = VariableValueValidation(
                 dispatch_handler=self.dispatch_handler
             )
             value = validation.evaluator(key=self.value)
@@ -51,7 +47,9 @@ class VariableItemProcessor(object):
 
 
 @dataclass
-class ValueValidation(object):
+class VariableValueValidation(object):
+    from build.dispatchers import CollectionDictionary, DispatcherTemplate
+
     dispatch_handler: DispatcherManager = field(
         default_factory=DispatcherManager
     )
@@ -80,7 +78,7 @@ class VariableOutputProcessor(object):
 
 
 @dataclass
-class DispatchHandler(object):
+class VariableDispatchHandler(object):
     dispatcher_type: str = field(default="")
     processing_function: type = field(
         default_factory=lambda: variables.VariableManager
