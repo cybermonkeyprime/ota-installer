@@ -63,11 +63,18 @@ class TaskManager(object):
 
 @dataclass
 class TaskInitiationManager(object):
-    variable: VariableManager
+    """
+    Manages the initiation of task processing.
+
+    Attributes:
+        variable_manager: An instance of VariableManager to manage variables.
+    """
+
+    variable_name: VariableManager
 
     def __post_init__(self) -> None:
         try:
-            display_processor = DisplayVariableProcessor(self.variable)
+            display_processor = DisplayVariableProcessor(self.variable_name)
             display_processor.initiate_processing()
         except Exception as error:
             print(f"{ErrorMessage(error=error)}")
