@@ -8,10 +8,10 @@ VariableManager = variables.VariableManager
 
 
 @dataclass
-class DataProcessor(object):
+class DataProcessor:
     """A class that processes data using provided data processors."""
 
-    process_variable: type = field(default_factory=lambda: VariableManager)
+    process_variable: VariableManager = field(default_factory=VariableManager)
     data_processors: "tuple[type,...]" = field(default_factory=tuple)
 
     def iterate_data_processors(self) -> "list[type]":
@@ -26,7 +26,7 @@ class VariableProcessor(object):
     """A class that handles the processing of variables, files,
     and directories."""
 
-    variable_manager: type = field(default_factory=lambda: VariableManager)
+    variable_manager: VariableManager = field(default_factory=VariableManager)
 
     file_processors: tuple = (
         display_data_processors.OTAFileNameProcessor,
@@ -65,7 +65,7 @@ class VariableProcessor(object):
 
 @dataclass
 class DirectoryProccessManager(object):
-    variable_manager: type = field(default_factory=lambda: VariableManager)
+    variable_manager: VariableManager = field(default_factory=VariableManager)
     directory_processors: tuple = field(default_factory=tuple)
 
     def __post_init__(self) -> None:
@@ -78,7 +78,7 @@ class DirectoryProccessManager(object):
 
 @dataclass
 class LogFileProcessManager(object):
-    variable_manager: type = field(default_factory=lambda: VariableManager)
+    variable_manager: VariableManager = field(default_factory=VariableManager)
 
     def __post_init__(self) -> None:
         display_data_processors.LogFileProcessor(self.variable_manager)
