@@ -18,7 +18,7 @@ class TaskIteration(object):
         task_group: A tuple of task names to be executed.
     """
 
-    variable_manager: VariableManager = field()
+    variable_manager: VariableManager = field(default_factory=VariableManager)
     task_group: "tuple[str, ...]" = field(default=("", ""))
 
     def execute_iteration(self, task_group: "tuple[str, ...]") -> None:
@@ -49,16 +49,16 @@ class TaskManager(object):
         return Path(self.file_name)
 
     @property
-    def variable(self) -> VariableManager:
+    def variable_manager(self) -> VariableManager:
         return VariableManager(self.file_path)
 
     @property
     def iteration(self) -> TaskIteration:
-        return TaskIteration(self.variable)
+        return TaskIteration(self.variable_manager)
 
     def initiate_task(self, file_name: str) -> None:
         self.file_name = file_name
-        TaskInitiationManager(self.variable)
+        TaskInitiationManager(self.variable_manager)
 
 
 @dataclass
