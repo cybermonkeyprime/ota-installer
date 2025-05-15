@@ -22,10 +22,13 @@ class TaskIteration(object):
     task_group: "tuple[str, ...]" = field(default=("", ""))
 
     def execute_iteration(self, task_group: "tuple[str, ...]") -> None:
-        for task_name in task_group:
-            task_factory = TaskFactory(self.variable_manager)
-            request = task_factory.create_task(task_name)
-            request.perform_task()
+        try:
+            for task_name in task_group:
+                task_factory = TaskFactory(self.variable_manager)
+                request = task_factory.create_task(task_name)
+                request.perform_task()
+        except TypeError:
+            print("Iteration skipped", end="\n\n")
 
 
 @dataclass
