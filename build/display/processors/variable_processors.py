@@ -57,6 +57,13 @@ class VariableItemProcessor(object):
 
 @dataclass
 class VariableValueValidation(object):
+    """Validates the value of a variable using a dispatcher.
+
+    Attributes:
+        dispatch_handler (DispatcherManager): The dispatcher manager instance.
+        processing_function (type): The function used for processing the variable.
+    """
+
     from build.dispatchers import CollectionDictionary, DispatcherTemplate
 
     dispatch_handler: DispatcherManager = field(
@@ -78,6 +85,13 @@ class VariableValueValidation(object):
 
 @dataclass
 class VariableOutputProcessor(object):
+    """Processes and outputs the value of a variable.
+
+    Attributes:
+        title (str): The title of the variable.
+        value (type | Path | None): The value of the variable, can be a type, Path, or None.
+    """
+
     title: str = field(default="")
     value: type | Path | None = field(default=None)
 
