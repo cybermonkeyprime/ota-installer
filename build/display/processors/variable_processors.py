@@ -10,6 +10,15 @@ from build.exceptions import error_messages
 
 @dataclass
 class VariableItemProcessor(object):
+    """
+    Processes a variable item by validating and outputting its value.
+
+    Attributes:
+        title (str): The title of the variable.
+        value (str): The value of the variable.
+        dispatcher_manager (DispatcherManager): The dispatcher manager instance
+    """
+
     processing_function: type = field(
         default_factory=lambda: variables.VariableManager
     )
@@ -79,6 +88,14 @@ class VariableOutputProcessor(object):
 
 @dataclass
 class VariableDispatchHandler(object):
+    """
+    Handles the retrieval of a dispatcher based on the dispatcher type.
+
+    Attributes:
+        dispatcher_type (DispatcherType): The type of dispatcher to retrieve.
+        variable_manager_cls (Type[Callable]): The variable manager class.
+    """
+
     dispatcher_type: str = field(default="")
     processing_function: type = field(
         default_factory=lambda: variables.VariableManager
