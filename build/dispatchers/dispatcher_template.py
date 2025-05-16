@@ -6,8 +6,6 @@ CollectionValues = type | Path | None
 
 CollectionDictionary = dict[str, CollectionValues]
 
-ObjectType = type
-
 
 class DispatcherTemplate(object):
     """A template class for dispatching tasks based on a key-value collection.
@@ -17,7 +15,9 @@ class DispatcherTemplate(object):
         to their associated values or paths.
     """
 
-    collection: CollectionDictionary = field(default_factory=dict)
+    collection: CollectionDictionary = field(
+        default_factory=CollectionDictionary
+    )
 
     def get_value(self, key: str) -> CollectionValues:
         """Retrieve the value associated with the given key
@@ -56,4 +56,3 @@ class DispatcherTemplate(object):
                 raise ValueError(f"No task found for key: {key}")
         except ValueError as err:
             print(err)
-            return None
