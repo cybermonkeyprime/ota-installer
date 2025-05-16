@@ -1,6 +1,5 @@
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Optional, Union
 
 from build.dispatchers import DispatcherMapper, DispatcherTemplate
 
@@ -16,7 +15,7 @@ class DispatcherManager(object):
     """
 
     dispatcher_type: str = field(default_factory=str)
-    object_processer: Any = field(default_factory=lambda: "")
+    object_processer: type = field(default_factory=lambda: type)
 
     def create_dispatcher(self) -> DispatcherTemplate:
         """
@@ -42,7 +41,7 @@ class DispatcherManager(object):
 
         return self.create_dispatcher()
 
-    def get_value(self, key: str = "") -> Optional[Union[type, Path, None]]:
+    def get_value(self, key: str = "") -> type | Path | None:
         """
         Retrieves a value from the dispatcher based on the provided key.
 
