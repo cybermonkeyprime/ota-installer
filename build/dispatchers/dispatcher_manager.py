@@ -20,7 +20,8 @@ class DispatcherManager(object):
 
     def create_dispatcher(self) -> DispatcherTemplate:
         """
-        Creates a dispatcher instance using the specified dispatcher type and object processor.
+        Creates a dispatcher instance using the specified dispatcher type and
+        object processor.
 
         Returns:
             DispatcherTemplate: An instance of a dispatcher.
@@ -46,10 +47,12 @@ class DispatcherManager(object):
         Retrieves a value from the dispatcher based on the provided key.
 
         Args:
-            key (str, optional): The key for the value to be retrieved. Defaults to an empty string.
+            key (str, optional): The key for the value to be retrieved.
+                Defaults to an empty string.
 
         Returns:
-            Optional[Union[type, Path, None]]: The value associated with the key, or None if not found.
+            Optional[Union[type, Path, None]]: The value associated with the
+                key, or None if not found.
         """
 
         return self.get_dispatcher().get_value(key=key)
