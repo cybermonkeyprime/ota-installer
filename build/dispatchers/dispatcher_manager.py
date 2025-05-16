@@ -1,8 +1,8 @@
 from dataclasses import dataclass, field
-from typing import Any, Optional, Union
 from pathlib import Path
+from typing import Any, Optional, Union
 
-from build.dispatchers import DispatcherTemplate, DispatcherFactory
+from build.dispatchers import DispatcherMapper, DispatcherTemplate
 
 
 @dataclass
@@ -14,11 +14,12 @@ class DispatcherManager(object):
         dispatcher_type: The type of dispatcher to be created.
         processor: The processor object to be used by the dispatcher.
     """
+
     dispatcher_type: str = field(default_factory=str)
     object_processer: Any = field(default_factory=lambda: "")
 
     def create_dispatcher(self) -> DispatcherTemplate:
-        dispatcher = DispatcherFactory()
+        dispatcher = DispatcherMapper()
         return dispatcher.create_dispatcher(
             dispatcher_type=self.dispatcher_type, obj=self.object_processer
         )
