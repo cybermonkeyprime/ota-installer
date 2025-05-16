@@ -7,6 +7,7 @@ from build.dispatchers.dispatcher_template import DispatcherTemplate
 @dataclass
 class FileTypeDispatcher(DispatcherTemplate):
     obj: Any = field(default_factory=lambda: "")
+    collection: dict[str, str | type] = field(init=False)
 
     def __post_init__(self) -> None:
         self.collection = {
