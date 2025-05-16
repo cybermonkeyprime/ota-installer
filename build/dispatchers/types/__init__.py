@@ -1,5 +1,1 @@
-from build.dispatchers.types.directory_type_dispatcher import DirectoryTypeDispatcher
-from build.dispatchers.types.file_type_dispatcher import FileTypeDispatcher
-from build.dispatchers.types.image_type_dispatcher import ImageTypeDispatcher
-from build.dispatchers.types.task_group_type_dispatcher import TaskGroupTypeDispatcher
-from build.dispatchers.types.variable_type_dispatcher import VariableTypeDispatcher
+from .type_dispatchers import *
