@@ -50,7 +50,7 @@ class DispatcherManager(object):
                 Defaults to an empty string.
 
         Returns:
-            Optional[Union[type, Path, None]]: The value associated with the
+            type | Path | None: The value associated with the
                 key, or None if not found.
         """
 
