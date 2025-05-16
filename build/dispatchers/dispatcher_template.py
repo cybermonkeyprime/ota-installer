@@ -4,6 +4,8 @@ from pathlib import Path
 
 CollectionValues = type | Path | None
 
+CollectionDictionary = dict[str, CollectionValues]
+
 
 class DispatcherTemplate:
     """A template class for dispatching tasks based on a key-value collection.
@@ -13,7 +15,7 @@ class DispatcherTemplate:
         to their associated values or paths.
     """
 
-    collection: dict[str, CollectionValues] = field(default_factory=dict)
+    collection: CollectionDictionary = field(default_factory=dict)
 
     def get_value(self, key: str) -> CollectionValues:
         """Retrieve the value associated with the given key
