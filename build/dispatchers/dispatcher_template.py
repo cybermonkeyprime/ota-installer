@@ -6,8 +6,10 @@ CollectionValues = type | Path | None
 
 CollectionDictionary = dict[str, CollectionValues]
 
+ObjectType = type
 
-class DispatcherTemplate:
+
+class DispatcherTemplate(object):
     """A template class for dispatching tasks based on a key-value collection.
 
     Attributes:
