@@ -1,6 +1,7 @@
 from dataclasses import dataclass, field
 
 from build.decorators import Colorizer, FooterWrapper, Printer
+from build.display.display_object_types import DisplayObjectType
 from build.display.display_objects import DisplayObjectProcessor
 from build.styles.escape_code_manager import EscapeCodeManager
 
@@ -28,7 +29,7 @@ class DisplayFormatter(object):
 
     @Printer(suffix="")
     def display_title(self) -> "type":
-        return self.process_display_object("display_title")
+        return self.process_display_object(DisplayObjectType.TITLE)
 
     @Printer(suffix="")
     def move_cursor_up(self) -> "CursorAdjustor":
@@ -37,15 +38,15 @@ class DisplayFormatter(object):
     @Printer(suffix="")
     @Colorizer(style="title")
     def display_separator(self) -> "type":
-        return self.process_display_object("display_separator")
+        return self.process_display_object(DisplayObjectType.SEPARATOR)
 
     @Printer()
     def display_versioning(self) -> "type":
-        return self.process_display_object("display_versioning")
+        return self.process_display_object(DisplayObjectType.SUBTITLE)
 
-    def process_display_object(self, obj_name: str) -> "type":
-        display_object_processor = DisplayObjectProcessor(obj_name)
-        return display_object_processor.process_object()
+    def process_display_object(self, obj_name: DisplayObjectType) -> "type":
+        display_object_processor = DisplayObjectProcessor()
+        return display_object_processor.process_display_object(obj_name)
 
 
 @dataclass()
