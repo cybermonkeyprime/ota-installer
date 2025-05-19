@@ -15,10 +15,10 @@ class SoftwareVersion(object):
     title: str = "OTA-Installer"
     major_number: int = field(default=2025)
     minor_number: int = field(default=5)
-    patch_number: int = field(default=1)
+    patch_number: int = field(default=3)
 
     @property
-    def version_tag(self) -> str:  # possibly rename to version_tag
+    def version_tag(self) -> str:
         """Generates a version tag string."""
         return f"{self.major_number}.{self.minor_number}.{self.patch_number}"
 
