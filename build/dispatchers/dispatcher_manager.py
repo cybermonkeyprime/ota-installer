@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from build.dispatchers import DispatcherMapper, DispatcherTemplate
+GetValueTypes = type | Path | None
 
 
 @dataclass
@@ -14,6 +14,8 @@ class DispatcherManager(object):
         processor: The processor object to be used by the dispatcher.
     """
 
+    from build.dispatchers.dispatcher_template import DispatcherTemplate
+
     dispatcher_type: str = field(default_factory=str)
     object_processer: type = field(default_factory=lambda: type)
 
@@ -25,6 +27,7 @@ class DispatcherManager(object):
         Returns:
             DispatcherTemplate: An instance of a dispatcher.
         """
+        from build.dispatchers.dispatcher_mapper import DispatcherMapper
 
         dispatcher = DispatcherMapper()
         return dispatcher.create_dispatcher(
@@ -41,7 +44,7 @@ class DispatcherManager(object):
 
         return self.create_dispatcher()
 
-    def get_value(self, key: str = "") -> type | Path | None:
+    def get_value(self, key: str = "") -> GetValueTypes:
         """
         Retrieves a value from the dispatcher based on the provided key.
 
