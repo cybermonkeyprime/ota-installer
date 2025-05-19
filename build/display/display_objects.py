@@ -1,39 +1,48 @@
 from dataclasses import dataclass, field
 
 import build.display.components as dc
+from build.display.display_object_types import DisplayObjectType
 
-DisplayObjectDictionary = dict[str, "DisplayObjectAttributes"]
+# Type alias for better readability
+DisplayObjectDictionary = dict["DisplayObjectType", "DisplayObjectAttributes"]
+
+
+@dataclass
+class DisplayObjectAttributes(object):
+    """
+    Data class for holding display object attributes.
+
+    Attributes:
+        _type (type): The type of the display object.
+        argument (str | None): The argument for the display object, if any.
+    """
+
+    object_type: type
+    argument: str | None
 
 
 @dataclass
 class DisplayObjectDefinitions(object):
-    """
-    Class for defining display object attributes.
-
-    Attributes:
-        display_title (str): The title to be displayed. Defaults to
-            "OTA-Installer".
-    """
-
     display_title: str = field(default="OTA-Installer")
 
     @property
     def display_objects(self) -> DisplayObjectDictionary:
         """
-        Property that returns a dictionary of display object attributes.
+        Property that returns a dictionary of display object types to their
+            attributes.
 
         Returns:
-            DisplayObjectDictionary: A dictionary with keys as display
-                object names and values as `DisplayObjectAttributes`.
+            DisplayObjectDictionary: A dictionary mapping display object types
+                to their attributes.
         """
         return {
-            "display_title": DisplayObjectAttributes(
+            DisplayObjectType.TITLE: DisplayObjectAttributes(
                 dc.DisplayTitle, self.display_title
             ),
-            "display_separator": DisplayObjectAttributes(
+            DisplayObjectType.SEPARATOR: DisplayObjectAttributes(
                 dc.DisplaySeparator, None
             ),
-            "display_versioning": DisplayObjectAttributes(
+            DisplayObjectType.SUBTITLE: DisplayObjectAttributes(
                 dc.DisplaySubtitle, None
             ),
         }
@@ -42,7 +51,7 @@ class DisplayObjectDefinitions(object):
 @dataclass
 class DisplayObjectGetter(object):
     """
-    Class for getting display object definitions.
+    Class responsible for getting display object definitions.
 
     Attributes:
         display_object_definitions (DisplayObjectDefinitions): The definitions
@@ -58,7 +67,8 @@ class DisplayObjectGetter(object):
         Method to get the display objects from the definitions.
 
         Returns:
-            DisplayObjectDictionary: A dictionary of display objects.
+            DisplayObjectDictionary: A dictionary of display object types to
+                their attributes.
         """
         return self.display_object_definitions.display_objects
 
@@ -66,20 +76,20 @@ class DisplayObjectGetter(object):
 @dataclass
 class DisplayObjectProcessor(object):
     """
-    Class for processing display objects.
+    Class responsible for processing display objects.
 
     Attributes:
-        object_title (str): The title of the object to process.
-        display_title (str): The title to be displayed. Defaults to
-            "OTA-Installer".
-        display_object_getter (DisplayObjectGetter): The getter for
-            display objects.
+        display_objects (DisplayObjectDictionary): A dictionary of display
+            object types to their attributes.
+        display_object_getter (DisplayObjectGetter): An instance of
+            DisplayObjectGetter to retrieve display objects.
     """
 
-    object_title: str = field(default="")
-    display_title: str = field(default="OTA-Installer")
+    display_objects: DisplayObjectDictionary = field(
+        default_factory=DisplayObjectDictionary, init=False
+    )
     display_object_getter: "DisplayObjectGetter" = field(
-        default_factory=DisplayObjectGetter
+        default_factory=DisplayObjectGetter, init=False
     )
 
     def __post_init__(self) -> None:
@@ -88,84 +98,43 @@ class DisplayObjectProcessor(object):
         """
         self.display_objects = self.display_object_getter.get_display_objects()
 
-    def get_object_values(self, key: str) -> "DisplayObjectAttributes | str":
+    def get_object_attributes(
+        self, object_type: DisplayObjectType
+    ) -> "DisplayObjectAttributes":
         """
-        Method to get the value of a display object by key.
+        Method to get the attributes of a specific display object type.
 
         Args:
-            key (str): The key of the display object.
+            object_type (DisplayObjectType): The type of the display object.
 
         Returns:
-            DisplayObjectAttributes | str: The attributes of the display object
-                or "Invalid Key" if not found.
-        """
-        return self.display_objects.get(key, "Invalid Key")
+            DisplayObjectAttributes: The attributes of the specified display
+                object type.
 
-    def process_object(self) -> str | type:
+        Raises:
+            ValueError: If the object type is invalid.
         """
-        Method to process the display object based on the object title.
+        try:
+            return self.display_objects[object_type]
+        except KeyError:
+            raise ValueError(f"Invalid object type: {object_type}") from None
+
+    def process_display_object(self, object_type: DisplayObjectType):
+        """
+        Method to process and return an instance of a display object.
+
+        Args:
+            object_type (DisplayObjectType): The type of the display object to
+                process.
 
         Returns:
-            str | type: The processed object or the type of the object.
+            An instance of the specified display object type.
         """
-        obj = self.get_object_values(self.object_title)
-
-        object_attribute_processor = DisplayObjectAttributeProcessor(obj)
-        return object_attribute_processor.process_object_attributes()
-
-
-@dataclass
-class DisplayObjectAttributeProcessor(object):
-    """
-    Class for processing attributes of a display object.
-
-    Attributes:
-        object_attributes (DisplayObjectAttributes | str): The attributes of
-            the display object.
-    """
-
-    object_attributes: "DisplayObjectAttributes | str"
-    class_object: type = field(init=False)
-    class_arguments: str | None = field(init=False)
-
-    def __post_init__(self) -> None:
-        """
-        Post-initialization method to set up class object and arguments.
-        """
-        self.class_object = self.object_attributes._type
-        self.class_arguments = self.object_attributes.argument
-
-    def process_object_attributes(self):
-        """
-        Method to process object attributes with or without arguments.
-
-        Returns:
-            The processed object.
-        """
-        if self.class_arguments:
-            return self.process_object_attributes_with_arguments()
+        attributes = self.get_object_attributes(object_type)
+        if attributes.argument:
+            return attributes.object_type(attributes.argument)
         else:
-            return self.process_object_attributes_without_arguments()
-
-    def process_object_attributes_with_arguments(self) -> str:
-        return self.class_object(self.class_arguments)
-
-    def process_object_attributes_without_arguments(self) -> type:
-        return self.class_object()
-
-
-@dataclass
-class DisplayObjectAttributes(object):
-    """
-    Data class for holding display object attributes.
-
-    Attributes:
-        _type (type): The type of the display object.
-        argument (str | None): The argument for the display object, if any.
-    """
-
-    _type: type
-    argument: str | None
+            return attributes.object_type()
 
 
 def main() -> None:
