@@ -10,6 +10,8 @@ from build.components.boot_image.types import (
 )
 from build.components.file.structures import FileNameParserStructure
 
+DispatcherType = dispatchers.DispatcherType
+
 
 @dataclass
 class BootImageManager(object):
@@ -32,7 +34,9 @@ class BootImageManager(object):
     @property
     def image_structure(self) -> Optional[BootImageTypeDefinition]:
         """Attempts to create an ImageFile structure for the boot image."""
-        file_manager = BootImageTypeManager(self.parsed_file_name, self.file_path)
+        file_manager = BootImageTypeManager(
+            self.parsed_file_name, self.file_path
+        )
         try:
             return file_manager.create_image()
         except Exception as e:
@@ -42,7 +46,9 @@ class BootImageManager(object):
     @property
     def struct(self) -> Optional[BootImageTypeDefinition]:
         """Attempts to create an ImageFile structure for the boot image."""
-        file_manager = BootImageTypeManager(self.parsed_file_name, self.file_path)
+        file_manager = BootImageTypeManager(
+            self.parsed_file_name, self.file_path
+        )
         try:
             return file_manager.create_image()
         except Exception as e:
@@ -64,7 +70,11 @@ class DispatcherManager(object):
     dispatcher_class: Callable = field(default_factory=lambda: type)
     base_path: Path = field(default_factory=Path)
     allowed_objects_types: set = field(
-        default_factory=lambda: {"directory", "file", "variable"}
+        default_factory=lambda: {
+            DispatcherType.DIRECTORY,
+            DispatcherType.FILE,
+            DispatcherType.VARIABLE,
+        }
     )
 
     def creator(self, object_type) -> Optional[dispatchers.DispatcherManager]:
@@ -119,7 +129,9 @@ class FileNameManager(object):
         """
 
         """Validates the file path."""
-        file_path_validation = validation.FilePathValidation(file_path=self.path)
+        file_path_validation = validation.FilePathValidation(
+            file_path=self.path
+        )
         return file_path_validation.validator()
 
     def parser(self) -> FileNameParserStructure:
