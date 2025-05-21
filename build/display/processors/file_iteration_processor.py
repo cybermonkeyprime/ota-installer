@@ -1,6 +1,7 @@
 from dataclasses import dataclass, field
 
 import build.variables as variables
+from build.dispatchers import DispatcherType
 
 
 @dataclass
@@ -43,7 +44,7 @@ class FileProcessor(object):
 
     @property
     def dispatcher(self) -> type:
-        return self.processing_function.get_dispatcher("file")
+        return self.processing_function.get_dispatcher(DispatcherType.FILE)
 
     @property
     def value(self) -> type:
@@ -61,7 +62,9 @@ class FileProcessor(object):
             )
             processor.format_and_print()
         except Exception as error_msg:
-            print(f"?{dbc.ErrorMessage('file', self.file_name, error_msg)}")
+            print(
+                f"?{dbc.ErrorMessage(DispatcherType.FILE, self.file_name, error_msg)}"
+            )
 
 
 def main():
