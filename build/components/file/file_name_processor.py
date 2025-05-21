@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
 
-import build.display.processors as display_processors
 from build.components.file.display import DisplayFileIterationProcessor
+from build.display.processors.variable_processors import VariableItemProcessor
 
 
 @dataclass
@@ -12,7 +12,7 @@ class FileNamesProcessor(DisplayFileIterationProcessor):
 
     # @dataclass
     # class OTADirectoryProcessor(
-    display_processors.VariableItemProcessor
+    VariableItemProcessor
     # takes vars from argparse
     title: str = "ota_file_directory"
     value: str = "path.parent"  # change for debugging
