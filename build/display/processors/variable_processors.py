@@ -2,10 +2,12 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from decorators import ColorizedIndentPrinter
-from dispatchers import DispatcherManager
 
+import build.dispatchers as dispatchers
 import build.variables as variables
 from build.exceptions import error_messages
+
+DispatcherType = dispatchers.DispatcherType
 
 
 @dataclass
@@ -24,13 +26,15 @@ class VariableItemProcessor(object):
     )
     title: str = field(default="")
     value: str = field(default="")
-    dispatcher_type: str = field(default="variable")
+    dispatcher_type: DispatcherType = field(
+        default_factory=lambda: DispatcherType.VARIABLE
+    )
 
     def __post_init__(self) -> None:
         self.process_item()
 
     @property
-    def dispatch_handler(self) -> DispatcherManager:
+    def dispatch_handler(self) -> dispatchers.DispatcherManager:
         dispatch_handler = VariableDispatchHandler(
             self.dispatcher_type, self.processing_function
         )
@@ -50,7 +54,7 @@ class VariableItemProcessor(object):
         except Exception as error:
             print(
                 error_messages.MessageWithTitleAndValue(
-                    title="variable item", value=self.title, error=error
+                    title="vvariable item", value=self.title, error=error
                 )
             )
 
@@ -65,19 +69,15 @@ class VariableValueValidation(object):
         the variable.
     """
 
-    from build.dispatchers import CollectionDictionary, DispatcherTemplate
-
-    dispatch_handler: DispatcherManager = field(
-        default_factory=DispatcherManager
+    dispatch_handler: dispatchers.DispatcherManager = field(
+        default_factory=dispatchers.DispatcherManager
     )
-    processing_function: type = field(
-        default_factory=lambda: variables.VariableManager
-    )
+    processing_function: type = field(default_factory=lambda: type)
 
-    def fetcher(self) -> DispatcherTemplate:
+    def fetcher(self) -> dispatchers.DispatcherTemplate:
         return self.dispatch_handler.get_dispatcher()
 
-    def evaluator(self, key: str) -> CollectionDictionary:
+    def evaluator(self, key: str) -> dispatchers.CollectionValues:
         value = self.fetcher().get_value(key=key)
         if value is None:
             print(f"{value=}")
@@ -112,13 +112,13 @@ class VariableDispatchHandler(object):
         variable_manager_cls (Type[Callable]): The variable manager class.
     """
 
-    dispatcher_type: str = field(default="")
-    processing_function: type = field(
-        default_factory=lambda: variables.VariableManager
+    dispatcher_type: DispatcherType = field(
+        default_factory=lambda: DispatcherType.VARIABLE
     )
+    processing_function: type = field(default_factory=lambda: type)
 
-    def retriever(self) -> DispatcherManager:
-        return DispatcherManager(
+    def retriever(self) -> dispatchers.DispatcherManager:
+        return dispatchers.DispatcherManager(
             self.dispatcher_type, self.processing_function
         )
 
