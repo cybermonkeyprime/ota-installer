@@ -1,11 +1,6 @@
 from dataclasses import dataclass, field
-from pathlib import Path
 
-# introduces a circlular import error if these are swapped
-import build.variables as variables
 import build.display.processors as display_processors
-
-VariableManager = variables.VariableManager
 
 
 @dataclass
@@ -18,7 +13,7 @@ class OTAFileNameProcessor(
 
 @dataclass
 class FileNamesProcessor(display_processors.FileIterationProcessor):
-    files: "tuple[str, ...]" = field(
+    files: "tuple" = field(
         default_factory=lambda: ("payload", "stock", "magisk")
     )
 
@@ -30,6 +25,7 @@ class LogFileProcessor(display_processors.VariableItemProcessor):
 
 
 if __name__ == "__main__":
-    variable_manager = VariableManager(Path("some_directory/some_file"))
+    pass
+#    variable_manager = VariableManager(Path("some_directory/some_file"))
 #    display_processor = VariableProcessor(variable_manager)
 #    display_processor.initiate_processing()
