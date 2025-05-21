@@ -1,9 +1,8 @@
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from build.validation import FilePathValidation
-
 from build.components.file.structures import FileNameParserStructure
+from build.validation import FilePathValidation
 
 
 @dataclass
@@ -24,7 +23,8 @@ class FileNameVariableManager(object):
         Parses the file name from the file path.
 
         Returns:
-            FileNameParser: An instance of FileNameParser with parsed file name.
+            FileNameParser: An instance of FileNameParser with parsed
+                file name.
         """
 
         return self.parser()
@@ -46,6 +46,7 @@ class FileNameVariableManager(object):
         Parses the file name from the file path.
 
         Returns:
-            FileNameParser: An instance of FileNameParser with parsed file name.
+            FileNameParser: An instance of FileNameParser with parsed
+                file name.
         """
         return FileNameParserStructure(self.path.stem)
