@@ -1,10 +1,15 @@
 from argparse import Namespace
 from collections.abc import Callable
 from dataclasses import dataclass, field
+from os import name
 from typing import Optional
 
 from build.decorators import FooterWrapper
-from build.dispatchers import DispatcherManager, DispatcherTemplate
+from build.dispatchers import (
+    DispatcherManager,
+    DispatcherTemplate,
+    DispatcherType,
+)
 from build.exceptions.handlers import KeyboardInterruptHandler
 from build.styles.palette import Colors
 from build.tasks.definitions import TaskDefinitions
@@ -44,7 +49,7 @@ class Executor:
 
     arguments: Namespace = field(default_factory=Namespace)
     task_manager: TaskManager = field(default_factory=TaskManager)
-    task_definitions: TaskDefinitions = field(default_factory=TaskDefinitions)
+    task_definitions: type = field(default_factory=lambda: TaskDefinitions)
 
     @property
     def path(self) -> str:
@@ -60,7 +65,9 @@ class Executor:
 
     @property
     def dispatcher(self) -> DispatcherTemplate:
-        dispatcher = DispatcherManager("task_group", self.task_definitions)
+        dispatcher = DispatcherManager(
+            DispatcherType.TASK_GROUP, self.task_definitions
+        )
         return dispatcher.get_dispatcher()
 
     @property
