@@ -1,21 +1,22 @@
 from dataclasses import dataclass, field
-
 from typing import Tuple
-from build.dispatchers import DispatcherManager
 
 import build.display.base_classes as display_base_classes
 import build.display.processors as display_processors
-import build.variables as variables
+from build.dispatchers import DispatcherManager
+from build.dispatchers.dispatcher_mapper import DispatcherType
 
 
 @dataclass
 class DirectoryIterationProcessor(object):
-    """Iterates over directories and processes them using a specified dispatch handler."""
+    """Iterates over directories and processes them using a specified dispatch
+    handler.
+    """
 
-    variable_manager: type = field(default_factory=lambda: variables.VariableManager)
+    variable_manager: type = field(default_factory=lambda: type)
     directories: Tuple[str, ...] = field(default_factory=lambda: ("", ""))
     variable_prefix: str = field(default="")
-    dispatcher_type: str = field(default="directory")
+    dispatcher_type: DispatcherType = field(default=DispatcherType.DIRECTORY)
 
     def __post_init__(self) -> None:
         self.process_directories()
@@ -36,7 +37,7 @@ class DirectoryIterationProcessor(object):
 
 def main():
     # Example usage
-    variable_manager = variables.VariableManager()
+    variable_manager = "variables.VariableManager()"
     directory_processor = DirectoryIterationProcessor(
         variable_manager=variable_manager,
         directories=("/path/to/dir1", "/path/to/dir2"),
