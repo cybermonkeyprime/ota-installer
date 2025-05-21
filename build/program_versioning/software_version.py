@@ -15,7 +15,7 @@ class SoftwareVersion(object):
     title: str = "OTA-Installer"
     major_number: int = field(default=2025)
     minor_number: int = field(default=5)
-    patch_number: int = field(default=3)
+    patch_number: int = field(default=4)
 
     @property
     def version_tag(self) -> str:
