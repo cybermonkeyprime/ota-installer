@@ -1,6 +1,10 @@
 from dataclasses import dataclass, field
 from pathlib import Path
 
+from build.dispatchers.dispatcher_mapper import DispatcherType
+from build.dispatchers.dispatcher_template import DispatcherTemplate
+# from build.variables import VariableManager
+
 GetValueTypes = type | Path | None
 
 
@@ -14,9 +18,9 @@ class DispatcherManager(object):
         processor: The processor object to be used by the dispatcher.
     """
 
-    from build.dispatchers.dispatcher_template import DispatcherTemplate
-
-    dispatcher_type: str = field(default_factory=str)
+    dispatcher_type: DispatcherType = field(
+        default_factory=lambda: DispatcherType.FILE
+    )
     object_processer: type = field(default_factory=lambda: type)
 
     def create_dispatcher(self) -> DispatcherTemplate:
