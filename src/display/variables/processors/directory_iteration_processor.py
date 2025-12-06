@@ -1,6 +1,9 @@
 from dataclasses import dataclass, field
 from typing import Self
 
+from rich.console import Console
+from rich.table import Table
+
 import src.dispatchers.mappings as dispatcher_mappings
 import src.display.variables.processors as processors
 import src.variables as variables
