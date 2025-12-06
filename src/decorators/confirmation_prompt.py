@@ -5,9 +5,12 @@ from functools import wraps
 from typing import cast
 
 import pyinputplus as pyip
+from rich.console import Console
 
-from src.styles.palette import Colors
+from src.styles.palette import RichColors
 from src.types.decorators import GenericDecorator
+
+console = Console()
 
 
 @dataclass
@@ -27,10 +30,9 @@ class ConfirmationPrompt(GenericDecorator):
         @wraps(function)
         def wrapper(*args: P.args, **kwargs: P.kwargs) -> R | None:
             try:
-                self.display_prompt()
+                console.print(self.display_prompt(), end="")
                 if not self.auto_confirm:
                     confirm = pyip.inputYesNo(
-                        prompt=self.display_prompt(),
                         default="no",
                         limit=3,
                         blank=True,
@@ -49,7 +51,7 @@ class ConfirmationPrompt(GenericDecorator):
     def display_prompt(self) -> str:
         message = "Do you want to "
         prompt_message = (
-            f"{self.begin}{message}{self.comment}? {self.ending()}]: "
+            f"{self.beginning()}{message}{self.comment}? [{self.ending()}]: "
         )
         return prompt_message
 
@@ -72,7 +74,8 @@ class ConfirmationPrompt(GenericDecorator):
         return f"{self.comment}"
 
     def ending(self) -> str:
-        return f"{Colors.reset}[{self.key_options()}{Colors.reset}"
+        style = RichColors["non_error".upper()]
+        return f"{style.beginnning()}{self.key_options()}{style.ending()}"
 
 
 """ Example usage:"""
