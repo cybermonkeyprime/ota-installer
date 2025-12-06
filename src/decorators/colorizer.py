@@ -4,7 +4,7 @@ from dataclasses import dataclass, field
 from functools import wraps
 from typing import cast
 
-from src.styles.palette import Colors
+from src.styles.palette import RichColors
 from src.types.decorators import StringReturningDecorator
 
 type R = str
@@ -18,7 +18,9 @@ class Colorizer(StringReturningDecorator):
     """
 
     style: str = field(default="")
-    color_palette: Colors = field(default_factory=Colors)
+
+    def __post_init__(self) -> None:
+        self.color = RichColors[self.style.upper()]
 
     def __call__[**P](self, function: Callable[P, R]) -> Callable[P, R]:
         @wraps(function)
@@ -26,29 +28,13 @@ class Colorizer(StringReturningDecorator):
             try:
                 result = function(*args, **kwargs)
                 styled_result = (
-                    f"{self.apply_style_prefix()}"
-                    f"{result}"
-                    f"{self.apply_style_suffix()}"
+                    f"{self.color.beginnning()}{result}{self.color.ending()}"
                 )
             except AttributeError as error:
                 raise ValueError("Invalid style attribute: ") from error
             return styled_result
 
         return cast(Callable[P, R], wrapper)
-
-    def apply_style_prefix(self):
-        return self.fetch_style_code(self.style)
-
-    def apply_style_suffix(self):
-        return self.fetch_style_code("reset")
-
-    def fetch_style_code(self, style_name):
-        try:
-            return getattr(self.color_palette, style_name)
-        except AttributeError as err:
-            raise ValueError(
-                f"Style '{style_name}' not found in color palette."
-            ) from err
 
 
 if __name__ == "__main__":
