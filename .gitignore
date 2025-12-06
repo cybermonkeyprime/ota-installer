@@ -1,6 +1,5 @@
-**/__pycache__
+__pycache__
+*.pyc
 
 clipboard.py
-**/clipboard.py
-**.pyc
 generate_git_changes_and_commits.sh chatbox.sh
