@@ -11,7 +11,8 @@ def file_path_validator(file_path: Path | str) -> Path:
     if file_path.is_file() and file_path.suffix == ".zip":
         return file_path
     console.print(
-        f"[yellow]Warning:[/yellow] '{file_path.name}' is not a valid .zip file or does not exist."
+        f"[yellow]Warning:[/yellow] '{file_path.name}'"
+        " is not a valid .zip file or does not exist."
     )
     return file_path
 
