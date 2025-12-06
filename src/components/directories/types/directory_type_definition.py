@@ -1,6 +1,7 @@
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import object, Callable, TypeVar
+from typing import TypeVar
+from collections.abc import Callable
 
 from src.components.directories.structures import (
     BootImageDirectoryStructure,
