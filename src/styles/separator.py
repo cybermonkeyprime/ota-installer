@@ -1,12 +1,18 @@
 from dataclasses import dataclass
+from enum import Enum
 
-from .indentation import Indentation
+
+class SeparatorConstants(Enum):
+    CHAR = "-"
+    SPACING = 4
+    INDENT = 10
 
 
 @dataclass
-class Separator:
+class Separator(object):
     increment: int = 1
     char: str = "-"
 
     def __str__(self) -> str:
-        return f"{Indentation(char=self.char[0], interval=self.increment)}"
+        constants = SeparatorConstants
+        return f"{constants.CHAR.value[0] * constants.SPACING.value * constants.INDENT.value}"
