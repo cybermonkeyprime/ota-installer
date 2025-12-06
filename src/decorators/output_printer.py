@@ -4,31 +4,30 @@ from dataclasses import dataclass, field
 from functools import wraps
 from typing import cast
 
+from rich.console import Console
+
+console = Console()
+
 
 @dataclass
 class OutputPrinter(object):
     prefix: str = field(default="")
     use_color: bool = field(default=False)
     suffix: str = field(default="\n")
-    color: str | None = field(default=None)
-
-    def __post_init__(self):
-        from src.styles import Colors
-
-        if self.use_color and self.color is None:
-            self.color = Colors.variable  # Default color
+    color: str = field(default="non_error")
 
     def __call__[R, **P](self, function: Callable[P, R]) -> Callable[P, R]:
         @wraps(function)
         def wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
-            from src.styles import Colors
+            from src.styles import RichColors
+
+            style = RichColors[self.color.upper()]
 
             try:
                 result = function(*args, **kwargs)
-                color_prefix = self.color if self.use_color else ""
-                color_suffix = Colors.reset if self.use_color else ""
-                print(
-                    f"{color_prefix}{self.prefix}{result}{color_suffix}",
+                console.print(
+                    f"{style.beginnning()}{self.prefix}{result}{style.ending()}",
+                    highlight=False,
                     end=self.suffix,
                 )
                 return result
