@@ -19,7 +19,6 @@ class VariableProcessor(object):
     def process_file_names(self) -> Self:
         for process_item in {set_ota_file_name, set_image_file_names}:
             process_item(self.processing_function)
-        print()
         return self
 
     def process_directory_names(self) -> Self:
