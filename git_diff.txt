@@ -1,0 +1,459 @@
+diff --git a/src/decorators/colorizer.py b/src/decorators/colorizer.py
+index c3d52ad..bba8d82 100644
+--- a/src/decorators/colorizer.py
++++ b/src/decorators/colorizer.py
+@@ -4,7 +4,7 @@ from dataclasses import dataclass, field
+ from functools import wraps
+ from typing import cast
+ 
+-from src.styles.palette import Colors
++from src.styles.palette import RichColors
+ from src.types.decorators import StringReturningDecorator
+ 
+ type R = str
+@@ -18,7 +18,9 @@ class Colorizer(StringReturningDecorator):
+     """
+ 
+     style: str = field(default="")
+-    color_palette: Colors = field(default_factory=Colors)
++
++    def __post_init__(self) -> None:
++        self.color = RichColors[self.style.upper()]
+ 
+     def __call__[**P](self, function: Callable[P, R]) -> Callable[P, R]:
+         @wraps(function)
+@@ -26,9 +28,7 @@ class Colorizer(StringReturningDecorator):
+             try:
+                 result = function(*args, **kwargs)
+                 styled_result = (
+-                    f"{self.apply_style_prefix()}"
+-                    f"{result}"
+-                    f"{self.apply_style_suffix()}"
++                    f"{self.color.beginnning()}{result}{self.color.ending()}"
+                 )
+             except AttributeError as error:
+                 raise ValueError("Invalid style attribute: ") from error
+@@ -36,20 +36,6 @@ class Colorizer(StringReturningDecorator):
+ 
+         return cast(Callable[P, R], wrapper)
+ 
+-    def apply_style_prefix(self):
+-        return self.fetch_style_code(self.style)
+-
+-    def apply_style_suffix(self):
+-        return self.fetch_style_code("reset")
+-
+-    def fetch_style_code(self, style_name):
+-        try:
+-            return getattr(self.color_palette, style_name)
+-        except AttributeError as err:
+-            raise ValueError(
+-                f"Style '{style_name}' not found in color palette."
+-            ) from err
+-
+ 
+ if __name__ == "__main__":
+     # Example usage
+diff --git a/src/decorators/confirmation_prompt.py b/src/decorators/confirmation_prompt.py
+index 08a7f01..8fae37a 100644
+--- a/src/decorators/confirmation_prompt.py
++++ b/src/decorators/confirmation_prompt.py
+@@ -5,10 +5,13 @@ from functools import wraps
+ from typing import cast
+ 
+ import pyinputplus as pyip
++from rich.console import Console
+ 
+-from src.styles.palette import Colors
++from src.styles.palette import RichColors
+ from src.types.decorators import GenericDecorator
+ 
++console = Console()
++
+ 
+ @dataclass
+ class ConfirmationPrompt(GenericDecorator):
+@@ -27,10 +30,9 @@ class ConfirmationPrompt(GenericDecorator):
+         @wraps(function)
+         def wrapper(*args: P.args, **kwargs: P.kwargs) -> R | None:
+             try:
+-                self.display_prompt()
++                console.print(self.display_prompt(), end="")
+                 if not self.auto_confirm:
+                     confirm = pyip.inputYesNo(
+-                        prompt=self.display_prompt(),
+                         default="no",
+                         limit=3,
+                         blank=True,
+@@ -49,7 +51,7 @@ class ConfirmationPrompt(GenericDecorator):
+     def display_prompt(self) -> str:
+         message = "Do you want to "
+         prompt_message = (
+-            f"{self.begin}{message}{self.comment}? {self.ending()}]: "
++            f"{self.beginning()}{message}{self.comment}? [{self.ending()}]: "
+         )
+         return prompt_message
+ 
+@@ -72,7 +74,8 @@ class ConfirmationPrompt(GenericDecorator):
+         return f"{self.comment}"
+ 
+     def ending(self) -> str:
+-        return f"{Colors.reset}[{self.key_options()}{Colors.reset}"
++        style = RichColors["non_error".upper()]
++        return f"{style.beginnning()}{self.key_options()}{style.ending()}"
+ 
+ 
+ """ Example usage:"""
+diff --git a/src/decorators/double_padded_footer_wrapper.py b/src/decorators/double_padded_footer_wrapper.py
+index d09fdc9..ef27ea7 100644
+--- a/src/decorators/double_padded_footer_wrapper.py
++++ b/src/decorators/double_padded_footer_wrapper.py
+@@ -4,6 +4,7 @@ from dataclasses import dataclass, field
+ from functools import wraps
+ from typing import cast
+ 
++from src.logger import logger
+ from src.types.decorators import GenericDecorator
+ 
+ 
+@@ -22,6 +23,7 @@ class DoublePaddedFooterWrapper(GenericDecorator):
+         def wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
+             result = function(*args, **kwargs)
+             self.string_output(self.beginning)
++            # logger.info(self.message)
+             self.string_output(self.message)
+             self.string_output(self.ending)
+             return result
+diff --git a/src/decorators/output_printer.py b/src/decorators/output_printer.py
+index 3be73f1..be04602 100644
+--- a/src/decorators/output_printer.py
++++ b/src/decorators/output_printer.py
+@@ -4,31 +4,30 @@ from dataclasses import dataclass, field
+ from functools import wraps
+ from typing import cast
+ 
++from rich.console import Console
++
++console = Console()
++
+ 
+ @dataclass
+ class OutputPrinter(object):
+     prefix: str = field(default="")
+     use_color: bool = field(default=False)
+     suffix: str = field(default="\n")
+-    color: str | None = field(default=None)
+-
+-    def __post_init__(self):
+-        from src.styles import Colors
+-
+-        if self.use_color and self.color is None:
+-            self.color = Colors.variable  # Default color
++    color: str = field(default="non_error")
+ 
+     def __call__[R, **P](self, function: Callable[P, R]) -> Callable[P, R]:
+         @wraps(function)
+         def wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
+-            from src.styles import Colors
++            from src.styles import RichColors
++
++            style = RichColors[self.color.upper()]
+ 
+             try:
+                 result = function(*args, **kwargs)
+-                color_prefix = self.color if self.use_color else ""
+-                color_suffix = Colors.reset if self.use_color else ""
+-                print(
+-                    f"{color_prefix}{self.prefix}{result}{color_suffix}",
++                console.print(
++                    f"{style.beginnning()}{self.prefix}{result}{style.ending()}",
++                    highlight=False,
+                     end=self.suffix,
+                 )
+                 return result
+diff --git a/src/display/components/separator.py b/src/display/components/separator.py
+index 2431eeb..a797d38 100644
+--- a/src/display/components/separator.py
++++ b/src/display/components/separator.py
+@@ -1,23 +1,14 @@
+ from dataclasses import dataclass, field
+ 
+-from src.display.templates.display_template import DisplayComponent
++from rich.control import Control
++
+ import styles
++from src.display.templates.display_template import DisplayComponent
+ 
+ 
+ @dataclass
+ class Separator(DisplayComponent):
+-    """
+-    A class representing a separator component in a display.
+-
+-    Attributes:
+-        indent (int): The indentation level for the separator.
+-        char (str): The character used to create the separator line.
+-
+-    Methods:
+-        return_display: Creates a styles.Separator object with the specified
+-            indent and char.
+-        get_display: Returns the styles.Separator object.
+-    """
++    """A class representing a separator component in a display."""
+ 
+     indent: int = field(default=0)
+     char: str = field(default="")
+@@ -26,45 +17,28 @@ class Separator(DisplayComponent):
+         """
+         Creates and returns a styles.Separator object with the current indent
+             and char.
+-
+-        Returns:
+-            styles.Separator: The created styles.Separator object.
+         """
+         return styles.Separator(self.indent, self.char)
+ 
+     def get_display(self) -> object:
+-        """
+-        Returns the display representation of the separator.
+-
+-        Returns:
+-            object: The display representation of the separator.
+-        """
++        """The display representation of the separator."""
+         return self.return_display()
+ 
+ 
+ @dataclass
+ class DisplaySeparator(object):
+     """
+-    A class for creating a display separator with a specified indentation
+-        and character.
+-
+-    Attributes:
+-        indent (int): The indentation level for the separator.
+-        char (str): The character used to create the separator line.
+-
+-    Methods:
+-        __str__: Returns a string representation of the display separator.
++    A class for creating a display separator with a specified indentation and
++        character.
+     """
+ 
+     indent: int = field(default=9)
+     char: str = field(default="-")
+ 
+-    def __str__(self) -> str:
+-        """
+-        Returns a string representation of the display separator.
++    def move_cursor_up(self) -> str:
++        return str(Control.move(y=-1))
+ 
+-        Returns:
+-            str: The string representation of the display separator.
+-        """
++    def __str__(self) -> str:
++        """Returns a string representation of the display separator."""
+         component = Separator(self.indent, self.char[0])
+         return f"{component.get_display()}> "
+diff --git a/src/display/display_variable_processor.py b/src/display/display_variable_processor.py
+index b4e0d44..55efcaf 100644
+--- a/src/display/display_variable_processor.py
++++ b/src/display/display_variable_processor.py
+@@ -19,7 +19,6 @@ class VariableProcessor(object):
+     def process_file_names(self) -> Self:
+         for process_item in {set_ota_file_name, set_image_file_names}:
+             process_item(self.processing_function)
+-        print()
+         return self
+ 
+     def process_directory_names(self) -> Self:
+diff --git a/src/display/formatters/display_formatter.py b/src/display/formatters/display_formatter.py
+index 28096d0..763caa7 100644
+--- a/src/display/formatters/display_formatter.py
++++ b/src/display/formatters/display_formatter.py
+@@ -1,6 +1,8 @@
+ from dataclasses import dataclass, field
+ from typing import NamedTuple
+ 
++from rich.control import Control
++
+ import src.display.objects as display_object_types
+ import src.display.objects as display_objects
+ from src.decorators import Colorizer, FooterWrapper, OutputPrinter
+@@ -44,11 +46,7 @@ class DisplayFormatter(object):
+ 
+     @OutputPrinter(suffix="")
+     def move_cursor_up(self) -> str:
+-        escape_code_manager = EscapeCodeManager()
+-        move_cursor_up = escape_code_manager.fetch_escape_code(
+-            "move_cursor_up"
+-        )
+-        return move_cursor_up
++        return str(Control.move(y=-1))
+ 
+     @OutputPrinter(suffix="")
+     @Colorizer(style="title")
+diff --git a/src/display/functions/display_formatter.py b/src/display/functions/display_formatter.py
+index 4fea06d..8031f21 100644
+--- a/src/display/functions/display_formatter.py
++++ b/src/display/functions/display_formatter.py
+@@ -1,5 +1,7 @@
+ from dataclasses import dataclass, field
+ 
++from rich.control import Control
++
+ from src.decorators import Colorizer, FooterWrapper, OutputPrinter
+ 
+ from ..components import DisplaySubtitle, DisplayTitle, Separator
+@@ -17,7 +19,7 @@ class DisplayFormatter:
+             self.display_title()
+             self.move_cursor_up()
+             self.display_separator()
+-            self.display_separator()
++            # self.display_separator()
+             self.display_subtitle()
+         except Exception as e:
+             print(f"An error occurred during initialization: {e}")
+@@ -28,8 +30,10 @@ class DisplayFormatter:
+         return component.get_display()
+ 
+     @OutputPrinter(suffix="")
+-    def move_cursor_up(self) -> str:
+-        return "\033[F"
++    def move_cursor_up(self) -> Control:
++        control = Control()
++        control.move(y=-1)
++        return control  # control
+ 
+     @OutputPrinter(suffix="")
+     @Colorizer(style="title")
+diff --git a/src/display/variables/processors/base_processor.py b/src/display/variables/processors/base_processor.py
+index fd89ac3..98ed136 100644
+--- a/src/display/variables/processors/base_processor.py
++++ b/src/display/variables/processors/base_processor.py
+@@ -11,7 +11,7 @@ class BaseProcessor(object):
+     processing_function: variables.VariableManager = field(
+         default_factory=variables.VariableManager
+     )
+-    dispatcher: DispatcherProtocol = field(init=False)
++    dispatcher: DispatcherProtocol | None = field(init=False)
+     dispatcher_type: str | None = None  # To be set in subclasses
+ 
+     def __post_init__(self):
+diff --git a/src/display/variables/processors/directory_iteration_processor.py b/src/display/variables/processors/directory_iteration_processor.py
+index 182e559..c85203b 100644
+--- a/src/display/variables/processors/directory_iteration_processor.py
++++ b/src/display/variables/processors/directory_iteration_processor.py
+@@ -1,6 +1,9 @@
+ from dataclasses import dataclass, field
+ from typing import Self
+ 
++from rich.console import Console
++from rich.table import Table
++
+ import src.dispatchers.mappings as dispatcher_mappings
+ import src.display.variables.processors as processors
+ import src.variables as variables
+diff --git a/src/styles/escape_code_manager.py b/src/styles/escape_code_manager.py
+index 99859a7..65e60cd 100644
+--- a/src/styles/escape_code_manager.py
++++ b/src/styles/escape_code_manager.py
+@@ -1,18 +1,17 @@
+ from dataclasses import dataclass, field
++from enum import Enum
+ 
+ from colorama import Fore, Style
+ 
+ from .palette import ColorFormatter
+ 
+ 
++class EscapeCodeConstants(Enum):
++    MOVE_CURSOR_UP = "Bib"  # "\033[F",
++    TITLE = str(ColorFormatter(Fore.GREEN, Style.BRIGHT))
++
++
+ @dataclass
+ class EscapeCodeManager(object):
+-    escape_codes: dict[str, str] = field(
+-        default_factory=lambda: {
+-            "move_cursor_up": "\033[F",
+-            "title": str(ColorFormatter(Fore.GREEN, Style.BRIGHT)),
+-        }
+-    )
+-
+     def fetch_escape_code(self, key: str) -> str:
+-        return self.escape_codes.get(key, "")
++        return EscapeCodeConstants[key.upper()].value
+diff --git a/src/styles/palette.py b/src/styles/palette.py
+index 9036e91..d39f7da 100755
+--- a/src/styles/palette.py
++++ b/src/styles/palette.py
+@@ -1,6 +1,6 @@
+ #!/usr/bin/env python3
+ from dataclasses import dataclass, field
+-from typing import Dict
++from enum import Enum
+ 
+ from colorama import Fore, Style
+ 
+@@ -19,6 +19,24 @@ class Colors(object):
+     non_error: str = f"{Fore.WHITE}"
+ 
+ 
++class RichColors(Enum):
++    TITLE = "green bold"
++    AUTHOR = "white"
++    VERSION = "yellow"
++    SEPARATOR = "green bold"
++    TASK = "green bold"
++    VARIABLE = "yellow"
++    ERROR = "red bold"
++    WARNING = "yellow"
++    NON_ERROR = "white"
++
++    def beginnning(self):
++        return f"[{self.value}]"
++
++    def ending(self):
++        return f"[/{self.value}]"
++
++
+ @dataclass
+ class ColorFormatter(object):
+     foreground: str = field(default="")
+@@ -29,7 +47,7 @@ class ColorFormatter(object):
+ 
+ 
+ class StylePalette(ColorFormatter):
+-    styles: Dict[str, ColorFormatter] = field(
++    styles: dict[str, ColorFormatter] = field(
+         default_factory=lambda: {
+             "title": ColorFormatter(Fore.GREEN, Style.BRIGHT),
+             "author": ColorFormatter(Fore.WHITE, Style.DIM),
+diff --git a/src/styles/separator.py b/src/styles/separator.py
+index 1c9edf0..df2ee4b 100644
+--- a/src/styles/separator.py
++++ b/src/styles/separator.py
+@@ -1,12 +1,18 @@
+ from dataclasses import dataclass
++from enum import Enum
+ 
+-from .indentation import Indentation
++
++class SeparatorConstants(Enum):
++    CHAR = "-"
++    SPACING = 4
++    INDENT = 10
+ 
+ 
+ @dataclass
+-class Separator:
++class Separator(object):
+     increment: int = 1
+     char: str = "-"
+ 
+     def __str__(self) -> str:
+-        return f"{Indentation(char=self.char[0], interval=self.increment)}"
++        constants = SeparatorConstants
++        return f"{constants.CHAR.value[0] * constants.SPACING.value * constants.INDENT.value}"
