@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from dataclasses import dataclass, field
-from typing import Dict
+from enum import Enum
 
 from colorama import Fore, Style
 
@@ -19,6 +19,24 @@ class Colors(object):
     non_error: str = f"{Fore.WHITE}"
 
 
+class RichColors(Enum):
+    TITLE = "green bold"
+    AUTHOR = "white"
+    VERSION = "yellow"
+    SEPARATOR = "green bold"
+    TASK = "green bold"
+    VARIABLE = "yellow"
+    ERROR = "red bold"
+    WARNING = "yellow"
+    NON_ERROR = "white"
+
+    def beginnning(self):
+        return f"[{self.value}]"
+
+    def ending(self):
+        return f"[/{self.value}]"
+
+
 @dataclass
 class ColorFormatter(object):
     foreground: str = field(default="")
@@ -29,7 +47,7 @@ class ColorFormatter(object):
 
 
 class StylePalette(ColorFormatter):
-    styles: Dict[str, ColorFormatter] = field(
+    styles: dict[str, ColorFormatter] = field(
         default_factory=lambda: {
             "title": ColorFormatter(Fore.GREEN, Style.BRIGHT),
             "author": ColorFormatter(Fore.WHITE, Style.DIM),
