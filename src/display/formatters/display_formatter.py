@@ -1,6 +1,8 @@
 from dataclasses import dataclass, field
 from typing import NamedTuple
 
+from rich.control import Control
+
 import src.display.objects as display_object_types
 import src.display.objects as display_objects
 from src.decorators import Colorizer, FooterWrapper, OutputPrinter
@@ -44,11 +46,7 @@ class DisplayFormatter(object):
 
     @OutputPrinter(suffix="")
     def move_cursor_up(self) -> str:
-        escape_code_manager = EscapeCodeManager()
-        move_cursor_up = escape_code_manager.fetch_escape_code(
-            "move_cursor_up"
-        )
-        return move_cursor_up
+        return str(Control.move(y=-1))
 
     @OutputPrinter(suffix="")
     @Colorizer(style="title")
