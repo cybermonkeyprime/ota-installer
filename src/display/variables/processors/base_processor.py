@@ -11,7 +11,7 @@ class BaseProcessor(object):
     processing_function: variables.VariableManager = field(
         default_factory=variables.VariableManager
     )
-    dispatcher: DispatcherProtocol = field(init=False)
+    dispatcher: DispatcherProtocol | None = field(init=False)
     dispatcher_type: str | None = None  # To be set in subclasses
 
     def __post_init__(self):
