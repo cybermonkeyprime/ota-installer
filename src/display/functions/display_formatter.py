@@ -1,5 +1,7 @@
 from dataclasses import dataclass, field
 
+from rich.control import Control
+
 from src.decorators import Colorizer, FooterWrapper, OutputPrinter
 
 from ..components import DisplaySubtitle, DisplayTitle, Separator
@@ -17,7 +19,7 @@ class DisplayFormatter:
             self.display_title()
             self.move_cursor_up()
             self.display_separator()
-            self.display_separator()
+            # self.display_separator()
             self.display_subtitle()
         except Exception as e:
             print(f"An error occurred during initialization: {e}")
@@ -28,8 +30,10 @@ class DisplayFormatter:
         return component.get_display()
 
     @OutputPrinter(suffix="")
-    def move_cursor_up(self) -> str:
-        return "\033[F"
+    def move_cursor_up(self) -> Control:
+        control = Control()
+        control.move(y=-1)
+        return control  # control
 
     @OutputPrinter(suffix="")
     @Colorizer(style="title")
