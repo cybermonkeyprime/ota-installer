@@ -6,7 +6,6 @@ from rich.control import Control
 import src.display.objects as display_object_types
 import src.display.objects as display_objects
 from src.decorators import Colorizer, FooterWrapper, OutputPrinter
-from src.styles.escape_code_manager import EscapeCodeManager
 
 DisplayObjectTypes = display_object_types.DisplayObjectTypes
 DisplayObjectProcessor = display_objects.DisplayObjectProcessor
