@@ -1,23 +1,14 @@
 from dataclasses import dataclass, field
 
-from src.display.templates.display_template import DisplayComponent
+from rich.control import Control
+
 import styles
+from src.display.templates.display_template import DisplayComponent
 
 
 @dataclass
 class Separator(DisplayComponent):
-    """
-    A class representing a separator component in a display.
-
-    Attributes:
-        indent (int): The indentation level for the separator.
-        char (str): The character used to create the separator line.
-
-    Methods:
-        return_display: Creates a styles.Separator object with the specified
-            indent and char.
-        get_display: Returns the styles.Separator object.
-    """
+    """A class representing a separator component in a display."""
 
     indent: int = field(default=0)
     char: str = field(default="")
@@ -26,45 +17,28 @@ class Separator(DisplayComponent):
         """
         Creates and returns a styles.Separator object with the current indent
             and char.
-
-        Returns:
-            styles.Separator: The created styles.Separator object.
         """
         return styles.Separator(self.indent, self.char)
 
     def get_display(self) -> object:
-        """
-        Returns the display representation of the separator.
-
-        Returns:
-            object: The display representation of the separator.
-        """
+        """The display representation of the separator."""
         return self.return_display()
 
 
 @dataclass
 class DisplaySeparator(object):
     """
-    A class for creating a display separator with a specified indentation
-        and character.
-
-    Attributes:
-        indent (int): The indentation level for the separator.
-        char (str): The character used to create the separator line.
-
-    Methods:
-        __str__: Returns a string representation of the display separator.
+    A class for creating a display separator with a specified indentation and
+        character.
     """
 
     indent: int = field(default=9)
     char: str = field(default="-")
 
-    def __str__(self) -> str:
-        """
-        Returns a string representation of the display separator.
+    def move_cursor_up(self) -> str:
+        return str(Control.move(y=-1))
 
-        Returns:
-            str: The string representation of the display separator.
-        """
+    def __str__(self) -> str:
+        """Returns a string representation of the display separator."""
         component = Separator(self.indent, self.char[0])
         return f"{component.get_display()}> "
