@@ -28,7 +28,7 @@ class MagiskImageFinder(BaseTask):
         )
 
     @decorators.DoublePaddedFooterWrapper(
-        message=f'Task: "{ENUM_VALUES.TITLE.value}" Completed'
+        message=f"{ENUM_VALUES.TITLE.value} finished sucessfully!"
     )
     def perform_task(self) -> None:
         self.task.show_index_and_title()
