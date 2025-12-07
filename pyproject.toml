@@ -3,13 +3,13 @@ requires = ["setuptools", "wheel"]
 
 [project]
 name = "ota-installer"
-version = "2025.10.14"
+version = "2025.12.05"
 requires-python = ">=3.14"
 dependencies = [
   "bsdiff4==1.2.4",
-  "colorama==0.4.4",
   "protobuf==3.20.1",
   "pyfiglet==1.0.2",
+  "rich==14.2.0",
   "six==1.16.0",
   "typer==0.20.0",
 ]
@@ -17,7 +17,7 @@ dependencies = [
 [tool.pyright]
 include = ["."]
 exclude = ["**/node_modules", "**/__pycache__"]
-reportMissingImports = true                     #"none"                   # or "warning" to downgrade to a warning
+reportMissingImports = true                     #"none" or "warning" to downgrade to a warning
 reportMissingTypeStubs = false
 typeCheckingMode = "basic"
 pythonVersion = "3.14"
