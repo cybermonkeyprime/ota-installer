@@ -4,18 +4,17 @@ from enum import Enum
 from pathlib import Path
 from typing import Self
 
-import src.components.directory.types.definitions as directory_type_defs
-import src.components.directory.types.managers as directory_type_mgrs
 import src.dispatchers as dispatchers
 import src.structures as structures
 import src.types.boot_image as boot_image
+import src.types.directory as directory_types
 import src.validation as validation
 from src.logger import logger
 
 magisk_instance = structures.MagiskStruct()
 
-DirectoryTypeDefinition = directory_type_defs.DefaultTypeDefinition
-DirectoryTypeManager = directory_type_mgrs.DefaultTypeManager
+DirectoryTypeDefinition = directory_types.DefaultTypeDefinition
+DirectoryTypeManager = directory_types.DefaultTypeManager
 
 
 @dataclass
@@ -113,14 +112,6 @@ class DispatcherTypes(Enum):
 @dataclass
 class DispatcherRetriever(object):
     process_type: str
-
-    class DispatcherTypes(Enum):
-        DIRECTORY = "directory"
-        FILE = "file"
-        VARIABLE = "variable"
-
-        def __str__(self) -> str:
-            return self.value
 
     def allowed_dispatchers(self) -> tuple:
         return tuple(enum.value for enum in DispatcherTypes)
