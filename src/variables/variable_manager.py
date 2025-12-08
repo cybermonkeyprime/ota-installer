@@ -11,6 +11,8 @@ import src.types.directory as directory_types
 import src.validation as validation
 from src.logger import logger
 
+from .classes import DispatcherRetriever
+
 magisk_instance = structures.MagiskStruct()
 
 DirectoryTypeDefinition = directory_types.DefaultTypeDefinition
@@ -30,6 +32,7 @@ class VariableManager(object):
         init=False, default=magisk_instance.remote_path
     )
     path: Path = field(default_factory=Path)
+    files: type = field(init=False)
     variables: dict = field(default_factory=dict)
     directories: dict = field(default_factory=dict)
 
@@ -45,19 +48,11 @@ class VariableManager(object):
         self.patched_image_name = "place_holder"
         self.file_stem = Path(self._file_path.stem)
         self.file_name_parser = parse_file_name(self.file_stem)
-        self.variables["patched_image_name"] = "place_holder"
         return self
 
     def define_files(self) -> Self:
         from src.variables.functions import set_log_file
 
-        self.boot_image_enum = Enum(
-            "BootImages", {"MAGISK": Path(self.boot_image_path / "magisk")}
-        )
-        self.boot_image_struct = boot_image.DefaultImageTypeManager(
-            self.file_name_parser,
-            str(self.boot_image_path),
-        )
         self.boot_image_paths = boot_image.DefaultImageTypeManager(
             self.file_name_parser,
             str(self.boot_image_path),
@@ -67,6 +62,7 @@ class VariableManager(object):
         self.stock_image_path = self.boot_image_paths.stock.file_path
         self.magisk_image_path = self.boot_image_paths.magisk.file_path
         self.log_file = set_log_file(self.file_name_parser)
+
         return self
 
     def define_directories(self) -> Self:
@@ -98,36 +94,6 @@ class VariableManager(object):
             .set_function_call(function_call)
             .get_dispatcher()
         )
-
-
-class DispatcherTypes(Enum):
-    DIRECTORY = "directory"
-    FILE = "file"
-    VARIABLE = "variable"
-
-    def __str__(self) -> str:
-        return self.value
-
-
-@dataclass
-class DispatcherRetriever(object):
-    process_type: str
-
-    def allowed_dispatchers(self) -> tuple:
-        return tuple(enum.value for enum in DispatcherTypes)
-
-    def set_function_call(self, function_call) -> Self:
-        self.function_call = function_call
-        return self
-
-    def get_dispatcher(self) -> dispatchers.DispatcherInterface | None:
-        if self.process_type in self.allowed_dispatchers():
-            return (
-                dispatchers.DispatcherInterface(
-                    self.process_type, self.function_call
-                )
-                or None
-            )
 
 
 if __name__ == "__main__":
