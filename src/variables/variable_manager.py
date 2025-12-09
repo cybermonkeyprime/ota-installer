@@ -69,6 +69,8 @@ class VariableManager(object):
         self.directory = DirectoryTypeManager(
             self._file_path.parent
         ).create_directory()
+        self.magisk_image_local_path = self.directory.magisk_image.local_path
+        self.magisk_image_remote_path = self.directory.magisk_image.remote_path
         return self
 
     def create_directory(self) -> DirectoryTypeDefinition | None:
