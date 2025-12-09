@@ -54,7 +54,6 @@ class TaskOperationProcessor(object):
             f"{self.get_item('index')}. {self.get_item('title')}:"
         ).show_header()
 
-    @decorators.FooterWrapper()
     @decorators.ColorizedIndentPrinter(
         indent=DescriptionConstants.INDENT.value,
         end="",
