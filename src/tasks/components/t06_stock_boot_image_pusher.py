@@ -18,10 +18,8 @@ class StockBootImagePusher(BaseTask):
     )
 
     def __post_init__(self) -> None:
-        stock_image = self.instance.boot_image_paths.stock
-        stock_path = (
-            Path.home() / stock_image.directory_path / stock_image.file_name
-        )
+        stock_image_path = str(self.instance.boot_image_paths.stock)
+        stock_path = Path.home() / stock_image_path
         command_string = f'adb push "{stock_path}" /sdcard/'
 
         super().__init__(
