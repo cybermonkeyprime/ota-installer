@@ -1,5 +1,5 @@
+from collections.abc import Iterator
 from dataclasses import dataclass, field
-from typing import Iterator
 
 from decorators import ConfirmationPrompt, PaddedFooterWrapper
 
@@ -8,7 +8,7 @@ StrIterator = Iterator[str]
 
 
 @dataclass
-class TaskDefinitions:
+class TaskDefinitions(object):
     @PaddedFooterWrapper()
     @ConfirmationPrompt(
         comment="perform the Preparation Tasks",
@@ -29,7 +29,7 @@ class TaskDefinitions:
 
 
 @dataclass
-class TaskDefinitionsTemplate:
+class TaskDefinitionsTemplate(object):
     _tasks: StrTuple = field(default_factory=tuple)
 
     @property
