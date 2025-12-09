@@ -8,7 +8,7 @@ import src.types.boot_image as boot_image
 # Centralized manager
 @dataclass
 class DefaultImageTypeManager(object):
-    file_name_parser: structures.FileNameParser
+    file_name_bits: structures.FileNameParser
     path: str = field(default="")
 
     payload_image: structures.ImageFile = field(init=False)
@@ -16,8 +16,8 @@ class DefaultImageTypeManager(object):
     magisk_image: structures.ImageFile = field(init=False)
 
     def __post_init__(self):
-        self.device = self.file_name_parser.device
-        self.version = self.file_name_parser.version
+        self.device = self.file_name_bits.device
+        self.version = self.file_name_bits.version
 
         self.payload = self.create_image("payload", "bin")
         self.stock = self.create_image("boot", "img")
