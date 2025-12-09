@@ -80,8 +80,10 @@ class VariableManager(object):
                 str(self.boot_image_path),
                 self.remote_magisk_path,
             )
-        except Exception as e:
-            logger.error(f"[Error] Directory Creation Failed: {e}")
+        except Exception as err:
+            logger.error(
+                f"[{type(err).__name__}] Directory Creation Failed: {err}"
+            )
             return None
 
     def get_dispatcher(
