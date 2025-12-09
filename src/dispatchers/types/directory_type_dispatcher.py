@@ -15,6 +15,6 @@ class DirectoryTypeDispatcher(DispatcherTemplate):
         self.collection = {
             dt.STOCK.value: boot_image.stock,  # stock_path
             dt.MAGISK.value: boot_image.magisk,  # magisk_path
-            dt.LOCAL.value: self.obj.magisk_image.local_path,
+            dt.LOCAL.value: self.obj.magisk_image_local_path,
             dt.REMOTE.value: self.obj.magisk_image_remote_path,
         }
