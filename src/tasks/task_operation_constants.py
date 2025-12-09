@@ -26,7 +26,7 @@ class ExecutorConstants(Enum):
 
 class ReminderConstants(Enum):
     INDENT = 2
-    STYLE = TaskOpsConstants.TASK_STYLE.value
+    STYLE = "warning"
 
 
 class TaskOpsItemTypeConstants(Enum):
