@@ -1,6 +1,6 @@
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from os import name, system
-from typing import Callable
 
 
 def default_clear_screen_command() -> int:
