@@ -1,6 +1,5 @@
 # src/variables/variable_manager.py
 from dataclasses import dataclass, field
-from enum import Enum
 from pathlib import Path
 from typing import Self
 
