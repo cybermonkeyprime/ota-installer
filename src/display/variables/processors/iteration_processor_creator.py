@@ -11,6 +11,7 @@ from src.logger import logger
 DispatcherTypeMapping = dispatcher_mappings.DispatcherTypeMapping
 
 
+@dataclass
 class IterationProcessorCreator(object):
     processing_function: variables.VariableManager = field(
         default_factory=variables.VariableManager
@@ -26,7 +27,7 @@ class IterationProcessorCreator(object):
         return self
 
     def process_items(self) -> None:
-        for items in self.iteration:
+        for _ in self.iteration:
             try:
                 data_enum = Enum(
                     "DataEnum",
@@ -37,8 +38,6 @@ class IterationProcessorCreator(object):
                 )
                 functions.parse_output(data_enum)
             except Exception as e:
-                name = type(self.iteration).__name__.capitalize()
-                value = self.iteration
                 logger.error(
                     f"[Error] Processing {self.title} {self.iteration} failed: {e}"
                 )
