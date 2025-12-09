@@ -23,7 +23,7 @@ class DoublePaddedFooterWrapper(GenericDecorator):
         def wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
             result = function(*args, **kwargs)
             self.string_output(self.beginning)
-            # logger.info(self.message)
+            logger.info(self.message)
             self.string_output(self.message)
             self.string_output(self.ending)
             return result
