@@ -1,6 +1,8 @@
+from decorators import indent_wrapper
 import src.decorators as decorators
 import src.display.variables.processors as dvp
 import src.variables as variables
+import styles
 
 """ directory names """
 
@@ -77,6 +79,20 @@ def set_log_file(processing_function: variables.VariableManager) -> None:
 """ output """
 
 
-@decorators.ColorizedIndentPrinter(indent=1)
-def parse_output(data_enum: type) -> str:
-    return f"{data_enum.TITLE.value.upper()}: {data_enum.VALUE.value}"
+def parse_output(data_enum: type) -> None:
+    from rich.console import Console
+    from rich.padding import Padding
+    from rich.table import Table
+
+    from src.styles.palette import RichColors
+
+    table = Table(title="", show_header=False, box=None)
+    table.add_column("Title", no_wrap=True, style=RichColors.VARIABLE.value)
+    table.add_column("Value", style=RichColors.VARIABLE.value)
+    table.add_row(
+        f"{data_enum.TITLE.value.upper()}:",
+        f"{data_enum.VALUE.value}",
+    )
+    indented_table = Padding(table, (0, 0, 0, 3))
+    console = Console()
+    console.print(indented_table)
