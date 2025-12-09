@@ -1,10 +1,10 @@
 # src/application.py
 from dataclasses import dataclass, field
 
+import src.services as services
 from display.configurations.display_configuration import Configuration
 from src.decorators import FooterWrapper
 from src.exceptions.handlers import KeyboardInterruptHandler
-import src.services as services
 
 from .tasks.task_execution import CLIArguments, TaskExecutor
 
@@ -37,6 +37,11 @@ class Application(object):
 @KeyboardInterruptHandler
 @FooterWrapper(message="All Done!\n")
 def task_execution(arguments: CLIArguments):
-    TaskExecutor(
-        arguments
-    ).set_path().initialize_task_manager().assign_task_group().initialize_task_dispatcher().execute_task_based_on_group()
+    (
+        TaskExecutor(arguments)
+        .set_path()
+        .initialize_task_manager()
+        .assign_task_group()
+        .initialize_task_dispatcher()
+        .execute_task_based_on_group()
+    )
