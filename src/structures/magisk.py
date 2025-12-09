@@ -1,3 +1,4 @@
+# src/structures/magisk.py
 from dataclasses import dataclass, field
 from enum import Enum
 from pathlib import Path
@@ -9,7 +10,7 @@ class MagiskDirectories(Enum):
 
 
 @dataclass
-class Magisk(object):
+class _Magisk(object):
     local_path: Path = field(
         default_factory=lambda: MagiskDirectories.LOCAL.value
     )
