@@ -4,9 +4,9 @@ from src.structures import FileNameParser
 from src.tasks import image_handler
 
 
-def set_log_file(file_name_parser: FileNameParser) -> str:
-    device = file_name_parser.device
-    version = file_name_parser.version
+def set_log_file(file_name_bits: FileNameParser) -> str:
+    device = file_name_bits.device
+    version = file_name_bits.version
     return f"/tmp/ota_variables_{device}_{version}.txt"
 
 
@@ -18,7 +18,7 @@ def get_image_path(device_name) -> Path:
     return image_handler(device_name)
 
 
-def set_variable_manager(path: Path) -> "VariableManager":
+def set_variable_manager(path: Path) -> "VariableManager":  # type: ignore[return-value]
     from src.variables import VariableManager
 
     return VariableManager(path)
