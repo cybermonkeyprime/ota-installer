@@ -1,6 +1,5 @@
 # src/tasks/task_operation_processor.py
 from dataclasses import dataclass, field
-from enum import Enum
 from pathlib import Path
 from typing import Self
 
@@ -9,9 +8,6 @@ from src import decorators
 
 from . import (
     CommandStringConstants,
-    DescriptionConstants,
-    ExecutorConstants,
-    ReminderConstants,
     TaskOperationExecutor,
     TaskOpsConstants,
     TaskOpsItemTypeConstants,
