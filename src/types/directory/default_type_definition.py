@@ -4,9 +4,8 @@ from pathlib import Path
 from typing import TypeVar
 
 import src.structures as structures
-from src.structures.magisk import Magisk
 
-magisk_instance = structures.MagiskStruct()
+magisk_struct = structures.MagiskStruct()
 
 T = TypeVar("T", structures.BootImageStruct, structures.MagiskStruct)
 
@@ -72,7 +71,7 @@ class DefaultTypeDefinition(object):
 def main() -> None:
     # Example usage:
     boot_image = BootImage()
-    magisk_image = Magisk()
+    magisk_image = structures.MagiskStruct()
 
     print(f"Stock image path: {boot_image.stock_image_path}")
     print(f"Patched image path: {boot_image.patched_image_path}")
