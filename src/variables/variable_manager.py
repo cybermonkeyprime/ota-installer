@@ -22,7 +22,7 @@ DirectoryTypeManager = directory_types.DefaultTypeManager
 class VariableManager(object):
     _file_path: Path = field(init=False, repr=False)
     file_stem: Path = field(init=False)
-    file_name_parser: structures.FileNameParser = field(init=False)
+    file_name_bits: structures.FileNameParser = field(init=False)
     log_file: str = field(init=False)
     ota_parent_path: Path = field(init=False)
     boot_image_path: Path = field(init=False, default_factory=Path)
@@ -46,21 +46,21 @@ class VariableManager(object):
         self._file_path = validation.file_path_validator(self.path)
         self.patched_image_name = "place_holder"
         self.file_stem = Path(self._file_path.stem)
-        self.file_name_parser = parse_file_name(self.file_stem)
+        self.file_name_bits = parse_file_name(self.file_stem)
         return self
 
     def define_files(self) -> Self:
         from src.variables.functions import set_log_file
 
         self.boot_image_paths = boot_image.DefaultImageTypeManager(
-            self.file_name_parser,
+            self.file_name_bits,
             str(self.boot_image_path),
         )
-        self.device_name = self.file_name_parser.device
+        self.device_name = self.file_name_bits.device
         self.payload_image_path = self.boot_image_paths.payload.file_path
         self.stock_image_path = self.boot_image_paths.stock.file_path
         self.magisk_image_path = self.boot_image_paths.magisk.file_path
-        self.log_file = set_log_file(self.file_name_parser)
+        self.log_file = set_log_file(self.file_name_bits)
 
         return self
 
