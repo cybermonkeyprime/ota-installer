@@ -22,9 +22,7 @@ class BootImageExtractor(BaseTask):
 
     def __post_init__(self) -> None:
         device = self.instance.file_name_parser.device
-        source_path = (
-            Path.home() / self.instance.boot_image_paths.payload.file_name
-        )
+        source_path = self.instance.boot_image_paths.payload
         destination_path = Path.home() / "images"
         image_key = image_handler(device)
         options = f'--images="{image_key}" --out "{destination_path}"'
