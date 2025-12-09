@@ -30,7 +30,7 @@ useLibraryCodeForTypes = true
 line-length = 79
 target-version = "py312"
 select = ["B", "E", "F", "I", "UP", "W"]
-ignore = ["B008", "B018", "UP004"]                 #["E501"]
+ignore = ["B008", "B018", "UP004", "E501"]
 exclude = [".git", "__pycache__", "dist", ".venv"]
 
 [tool.ruff.per-file-ignores]
