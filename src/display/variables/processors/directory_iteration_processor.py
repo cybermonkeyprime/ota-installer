@@ -34,18 +34,11 @@ class DirectoryIterationProcessor(processors.BaseProcessor):
         return self
 
     def process_items(self) -> None:
+        from ..classes import VariableTableBuilder
+
+        builder = VariableTableBuilder(indent=3)
         for directory in self.directory_names:
-            directory_title = (
-                f"{self.directory_type}"
-                f"{self.variable_prefix}"
-                f"{directory}_directory"
-            )
-            directory_value = f"{self.get_value_by_key(directory)}"
-            (
-                processors.ItemProcessor()
-                .set_item_title("Directory")
-                .set_item_name(directory)
-                .set_enum_title(directory_title)
-                .set_enum_value(directory_value)
-                .process_item()
-            )
+            title = f"{self.directory_type}{self.variable_prefix}{directory}_directory"
+            value = f"{self.get_value_by_key(directory)}"
+            builder.add(f"{title.upper()}", f"{value}")
+        builder.render()
