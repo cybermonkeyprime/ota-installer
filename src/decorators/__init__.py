@@ -1,4 +1,3 @@
-from .colorized_figlet import *
 from .colorized_figlet_printer import *
 from .colorized_indent_printer import *
 from .colorized_printer import *
@@ -15,5 +14,7 @@ from .indent_wrapper import *
 from .multiply_string import *
 from .output_printer import *
 from .padded_footer_wrapper import *
+from .style_wrapper import *
+from .styled_figlet_printer import *
 from .template import *
 from .timeit import *
