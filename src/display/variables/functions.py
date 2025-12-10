@@ -1,3 +1,5 @@
+import enum
+from os import name
 from decorators import indent_wrapper
 import src.decorators as decorators
 import src.display.variables.processors as dvp
@@ -74,25 +76,3 @@ def set_log_file(processing_function: variables.VariableManager) -> None:
         .set_value("log_file")
         .process_items()
     )
-
-
-""" output """
-
-
-def parse_output(data_enum: type) -> None:
-    from rich.console import Console
-    from rich.padding import Padding
-    from rich.table import Table
-
-    from src.styles.palette import RichColors
-
-    table = Table(title="", show_header=False, box=None)
-    table.add_column("Title", no_wrap=True, style=RichColors.VARIABLE.value)
-    table.add_column("Value", style=RichColors.VARIABLE.value)
-    table.add_row(
-        f"{data_enum.TITLE.value.upper()}:",
-        f"{data_enum.VALUE.value}",
-    )
-    indented_table = Padding(table, (0, 0, 0, 3))
-    console = Console()
-    console.print(indented_table)
