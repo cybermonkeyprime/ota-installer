@@ -25,13 +25,12 @@ class FileIterationProcessor(processors.BaseProcessor):
         super().__post_init__()  # initialize dispatcher
 
     def process_items(self) -> None:
+        from ..classes import VariableTableBuilder
+
+        builder = VariableTableBuilder(indent=3)
         for file in self.file_names:
             file_path = self.get_value_by_key(key=file).file_path
-            (
-                processors.ItemProcessor()
-                .set_item_title("File Iteration")
-                .set_item_name(file)
-                .set_enum_title(f"{file}_name")
-                .set_enum_value(file_path.name)
-                .process_item()
-            )
+            title = f"{file}_name"
+            value = f"{file_path.name}"
+            builder.add(f"{title.upper()}", f"{value}")
+        builder.render()
