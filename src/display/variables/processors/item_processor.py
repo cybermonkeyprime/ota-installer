@@ -2,7 +2,6 @@
 from dataclasses import dataclass
 from typing import Self
 
-import src.display.variables.classes as classes
 from src.logger import logger
 
 
@@ -25,14 +24,14 @@ class ItemProcessor(object):
         return self
 
     def process_item(self) -> Self:
+        from ..classes import VariableTableBuilder
+
         try:
-            (
-                classes.EnumBuilder()
-                .set_title(self.enum_title)
-                .set_value(self.enum_value)
-                .set_data_enum()
-                .show_output()
-            )
+            builder = VariableTableBuilder(indent=3)
+            if self.enum_title == "log_file":
+                builder.add("[dim]", "")  # Subtle, clean break
+            builder.add(self.enum_title.upper(), self.enum_value)
+            builder.render()
         except AttributeError as error:
             logger.error(
                 f"Processing {self.item_title.capitalize()}"
