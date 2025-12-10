@@ -30,12 +30,12 @@ class VariableFileProcessor(processors.BaseProcessor):
         return self
 
     def process_items(self) -> Self | None:
-        variable_value = str(self.get_value_by_key(self.value))
-        (
-            processors.ItemProcessor()
-            .set_item_title("Variable file")
-            .set_item_name(self.title)
-            .set_enum_title(self.title)
-            .set_enum_value(variable_value)
-            .process_item()
-        )
+        from ..classes import VariableTableBuilder
+
+        builder = VariableTableBuilder(indent=3)
+        title = self.title
+        value = str(self.get_value_by_key(self.value))
+        if title == "log_file":
+            builder.newline()
+        builder.add(f"{title.upper()}", f"{value}")
+        builder.render()
