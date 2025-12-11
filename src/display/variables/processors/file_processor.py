@@ -1,5 +1,6 @@
 # src/display/variables/processors/file_processor.py
 from dataclasses import dataclass, field
+from enum import Enum
 from typing import Self
 
 import src.dispatchers.mappings as dispatcher_mappings
@@ -7,6 +8,11 @@ import src.display.variables.processors as processors
 import src.variables as variables
 
 DispatcherTypeMapping = dispatcher_mappings.DispatcherTypeMapping
+
+
+class VariableFileConstants(Enum):
+    TITLE = str
+    VALUE = str
 
 
 @dataclass
@@ -30,12 +36,13 @@ class VariableFileProcessor(processors.BaseProcessor):
         return self
 
     def process_items(self) -> Self | None:
-        from ..classes import VariableTableBuilder
+        from ..classes import VariableItemDict, VariableTableBuilder
 
         builder = VariableTableBuilder(indent=3)
-        title = self.title
-        value = str(self.get_value_by_key(self.value))
-        if title == "log_file":
+        data = VariableItemDict(
+            title=self.title, value=str(self.get_value_by_key(self.value))
+        )
+        if self.title == "log_file":
             builder.newline()
-        builder.add(f"{title.upper()}", f"{value}")
+        builder.add(f"{data.get('title').upper()}", data.get("value"))
         builder.render()
