@@ -34,11 +34,13 @@ class DirectoryIterationProcessor(processors.BaseProcessor):
         return self
 
     def process_items(self) -> None:
-        from ..classes import VariableTableBuilder
+        from ..classes import VariableItemDict, VariableTableBuilder
 
         builder = VariableTableBuilder(indent=3)
         for directory in self.directory_names:
-            title = f"{self.directory_type}{self.variable_prefix}{directory}_directory"
-            value = f"{self.get_value_by_key(directory)}"
-            builder.add(f"{title.upper()}", f"{value}")
+            data = VariableItemDict(
+                title=f"{self.directory_type}{self.variable_prefix}{directory}_directory",
+                value=str(self.get_value_by_key(directory)),
+            )
+            builder.add(data.get("title").upper(), data.get("value"))
         builder.render()
