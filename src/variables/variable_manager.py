@@ -1,4 +1,5 @@
 # src/variables/variable_manager.py
+from collections import defaultdict, namedtuple
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Self
@@ -9,10 +10,7 @@ import src.types.boot_image as boot_image
 import src.types.directory as directory_types
 import src.validation as validation
 from src.logger import logger
-
-from .classes import DispatcherRetriever
-
-magisk_instance = structures.MagiskStruct()
+from src.paths.constants import MagiskImagePaths
 
 DirectoryTypeDefinition = directory_types.DefaultTypeDefinition
 DirectoryTypeManager = directory_types.DefaultTypeManager
@@ -28,10 +26,10 @@ class VariableManager(object):
     boot_image_path: Path = field(init=False, default_factory=Path)
     directory: DirectoryTypeDefinition | None = field(init=False)
     remote_magisk_path: Path = field(
-        init=False, default=magisk_instance.remote_path
+        init=False, default=MagiskImagePaths.REMOTE_PATH.value
     )
     path: Path = field(default_factory=Path)
-    files: type = field(init=False)
+    files: dict = field(init=False)
     variables: dict = field(default_factory=dict)
     directories: dict = field(default_factory=dict)
 
@@ -41,12 +39,12 @@ class VariableManager(object):
         self.define_files()
 
     def define_variables(self) -> Self:
-        from src.variables.functions import parse_file_name
+        variables = VariableDefiner(self.path).data_tuple
 
-        self._file_path = validation.file_path_validator(self.path)
-        self.patched_image_name = "place_holder"
-        self.file_stem = Path(self._file_path.stem)
-        self.file_name_bits = parse_file_name(self.file_stem)
+        self._file_path = variables.file_path
+        self.patched_image_name = variables.magisk_image_name
+        self.file_stem = variables.file_path_stem
+        self.file_name_bits = variables.file_parts
         return self
 
     def define_files(self) -> Self:
@@ -71,6 +69,14 @@ class VariableManager(object):
         ).create_directory()
         self.magisk_image_local_path = self.directory.magisk_image.local_path
         self.magisk_image_remote_path = self.directory.magisk_image.remote_path
+
+        self.directories = defaultdict(dict)
+        self.directories["magisk"]["local_path"] = (
+            self.directory.magisk_image.local_path
+        )
+        self.directories["magisk"]["remote_path"] = (
+            self.directory.magisk_image.remote_path
+        )
         return self
 
     def create_directory(self) -> DirectoryTypeDefinition | None:
@@ -91,12 +97,37 @@ class VariableManager(object):
     ) -> dispatchers.DispatcherInterface | None:
         from src.variables.functions import set_variable_manager
 
+        from .classes.dispatch_retriever import DispatchRetriever
+
         function_call = set_variable_manager(self.path)
         return (
-            DispatcherRetriever(process_type)
+            DispatchRetriever(process_type)
             .set_function_call(function_call)
             .get_dispatcher()
         )
+
+
+VariableTypeTuple = namedtuple(
+    "VariableTypeTuple",
+    ["file_path", "magisk_image_name", "file_path_stem", "file_parts"],
+)
+
+
+@dataclass
+class VariableDefiner(object):
+    file_path: Path
+
+    def __post_init__(self) -> Self:
+        from src.variables.functions import parse_file_name
+
+        valid_path = validation.file_path_validator(self.file_path)
+        self.data_tuple = VariableTypeTuple(
+            file_path=valid_path,
+            magisk_image_name="place_holder",
+            file_path_stem=Path(valid_path.stem),
+            file_parts=parse_file_name(valid_path.stem),
+        )
+        return self
 
 
 if __name__ == "__main__":
