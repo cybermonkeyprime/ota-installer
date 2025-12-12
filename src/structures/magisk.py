@@ -1,29 +1,15 @@
 # src/structures/magisk.py
 from dataclasses import dataclass, field
-from enum import Enum
 from pathlib import Path
 
-
-class MagiskDirectories(Enum):
-    LOCAL = Path.home() / "Android" / "boot-images" / "magisk"
-    REMOTE = Path("/sdcard") / "Download" / "magisk"
-
-
-@dataclass
-class _Magisk(object):
-    local_path: Path = field(
-        default_factory=lambda: MagiskDirectories.LOCAL.value
-    )
-    remote_path: Path = field(
-        default_factory=lambda: MagiskDirectories.REMOTE.value
-    )
+from src.paths.constants import MagiskImagePaths
 
 
 @dataclass
 class MagiskStruct(object):
     local_path: Path = field(
-        default_factory=lambda: MagiskDirectories.LOCAL.value
+        default_factory=lambda: MagiskImagePaths.LOCAL_PATH.value
     )
     remote_path: Path = field(
-        default_factory=lambda: MagiskDirectories.REMOTE.value
+        default_factory=lambda: MagiskImagePaths.REMOTE_PATH.value
     )
