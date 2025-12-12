@@ -38,6 +38,8 @@ class Directory(object):
         default_factory=structures.MagiskStruct
     )
 
+    from src.paths.constants import BootImagePaths, MagiskPaths
+
     def __post_init__(self) -> None:
         self.boot_image = self.create_structure(
             structures.BootImageStruct, self.boot_image_file_name
