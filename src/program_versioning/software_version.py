@@ -27,8 +27,12 @@ class SoftwareVersion(object):
 
     def set_version_tag(self) -> None:
         """Property that generates a version tag string."""
-        versioning = SoftwareVersionConstants
-        self.version_tag = f"{versioning.MAJOR_NUMBER.value}.{versioning.MINOR_NUMBER.value}.{versioning.PATCH_NUMBER.value}"
+        self.version_tag = f"{self.constants.MAJOR_NUMBER.value}.{self.constants.MINOR_NUMBER.value}.{self.constants.PATCH_NUMBER.value}"
 
     def display_title(self):
-        return f"{self.constants.TITLE}: {self.version_tag}"
+        return (
+            f"{self.constants.TITLE}: "
+            f"{self.constants.MAJOR_NUMBER.value}."
+            f"{self.constants.MINOR_NUMBER.value}."
+            f"{self.constants.PATCH_NUMBER.value}"
+        )
