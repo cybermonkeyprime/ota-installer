@@ -4,6 +4,7 @@ from pathlib import Path
 from typing import TypeVar
 
 import src.structures as structures
+from src.paths.constants.magisk_image_paths import MagiskImagePaths
 
 magisk_struct = structures.MagiskStruct()
 
@@ -31,22 +32,6 @@ class BootImage(object):
         return BootImageTypes.MAGISK.path(self.parent_directory)
 
 
-class MagiskImageDirectories(Enum):
-    LOCAL = Path.home() / "Android" / "boot_images" / "magisk"
-    REMOTE = Path.home() / "sdcard" / "Download" / "magisk"
-
-
-@dataclass
-class MagiskImage(object):
-    @property
-    def local_path(self) -> Path:
-        return MagiskImageDirectories.LOCAL.value
-
-    @property
-    def remote_path(self) -> Path:
-        return MagiskImageDirectories.REMOTE.value
-
-
 @dataclass
 class DefaultTypeDefinition(object):
     parent_directory: Path
@@ -71,12 +56,12 @@ class DefaultTypeDefinition(object):
 def main() -> None:
     # Example usage:
     boot_image = BootImage()
-    magisk_image = structures.MagiskStruct()
+    magisk_image = MagiskImagePaths
 
     print(f"Stock image path: {boot_image.stock_image_path}")
     print(f"Patched image path: {boot_image.patched_image_path}")
-    print(f"Magisk local path: {magisk_image.local_path}")
-    print(f"Magisk remote path: {magisk_image.remote_path}")
+    print(f"Magisk local path: {magisk_image.LOCAL_PATH.value}")
+    print(f"Magisk remote path: {magisk_image.REMOTE_PATH.value}")
 
 
 if __name__ == "__main__":
