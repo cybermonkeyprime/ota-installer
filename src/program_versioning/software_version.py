@@ -23,18 +23,12 @@ class SoftwareVersion(object):
     version: list = field(init=False)
 
     def __post_init__(self) -> None:
-        self.set_version()
         self.set_version_tag()
-
-    def set_version(self) -> None:
-        self.version = [
-            enum_member.value for enum_member in SoftwareVersionConstants
-        ]
 
     def set_version_tag(self) -> None:
         """Property that generates a version tag string."""
-        _, major_number, minor_number, patch_number = self.version
-        self.version_tag = f"{major_number}.{minor_number}.{patch_number}"
+        versioning = SoftwareVersionConstants
+        self.version_tag = f"{versioning.MAJOR_NUMBER.value}.{versioning.MINOR_NUMBER.value}.{versioning.PATCH_NUMBER.value}"
 
     def display_title(self):
         return f"{self.constants.TITLE}: {self.version_tag}"
