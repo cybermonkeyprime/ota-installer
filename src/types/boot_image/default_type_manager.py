@@ -1,8 +1,24 @@
+from collections import namedtuple
 from dataclasses import dataclass, field
+from enum import Enum
 from pathlib import Path
 
 import src.structures as structures
-import src.types.boot_image as boot_image
+from paths.constants.boot_image_paths import BootImagePaths
+
+ImageAttributeTuple = namedtuple("AttributeTuple", ["title", "extension"])
+
+
+class ImageAttributes(Enum):
+    PAYLOAD = ImageAttributeTuple(title="payload", extension="bin")
+    STOCK = ImageAttributeTuple(title="boot", extension="img")
+    MAGISK = ImageAttributeTuple(title="magisk", extension="img")
+
+    def set_file_name(self, device: str, version: str) -> str:
+        return (
+            f"{BootImagePaths[self.name].value}/"
+            f"{device}-{self.value.title}-{version}.{self.value.extension}"
+        )
 
 
 # Centralized manager
@@ -19,34 +35,22 @@ class DefaultImageTypeManager(object):
         self.device = self.file_name_bits.device
         self.version = self.file_name_bits.version
 
-        self.payload = self.create_image("payload", "bin")
-        self.stock = self.create_image("boot", "img")
-        self.magisk = self.create_image("magisk", "img")
+        self.payload = self.create_image(ImageAttributes.PAYLOAD.value)
+        self.stock = self.create_image(ImageAttributes.STOCK.value)
+        self.magisk = self.create_image(ImageAttributes.MAGISK.value)
 
-    def create_image(self, title: str, ext: str) -> structures.ImageFile:
-        manager = boot_image.DynamicImageTypeManager(
-            device=self.device,
-            version=self.version,
-            path=self.path,
-            title=title,
-            extension=ext,
+    def create_image(self, data: tuple) -> structures.ImageFile:
+        enum = "stock" if data.title == "boot" else data.title
+        path = Path(
+            ImageAttributes[enum.upper()].set_file_name(
+                self.device, self.version
+            )
         )
         return structures.ImageFile(
-            Path(str(manager.generate_file_name())),
-            Path(manager.generate_directory()),
+            file_path=Path(path.name), directory_path=path.parent
         )
 
 
 # Optional test function
 def create_file_name_parser(variable: Path) -> structures.FileNameParser:
     return structures.FileNameParser(variable)
-
-
-if __name__ == "__main__":
-    variable = Path("pixelpro-global-2.0")
-    parser = create_file_name_parser(variable)
-    manager = DefaultImageTypeManager(parser, path="")
-
-    print(manager.payload_image)
-    print(manager.stock_image)
-    print(manager.magisk_image)
