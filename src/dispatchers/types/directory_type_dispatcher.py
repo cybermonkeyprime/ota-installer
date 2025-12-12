@@ -11,10 +11,11 @@ class DirectoryTypeDispatcher(DispatcherTemplate):
 
     def __post_init__(self) -> None:
         boot_image = self.obj.directory.boot_image
+        magisk = self.obj.directories["magisk"]
         dt = DirectoryTypeMapping
         self.collection = {
             dt.STOCK.value: boot_image.stock,  # stock_path
             dt.MAGISK.value: boot_image.magisk,  # magisk_path
-            dt.LOCAL.value: self.obj.magisk_image_local_path,
-            dt.REMOTE.value: self.obj.magisk_image_remote_path,
+            dt.LOCAL.value: self.obj.directories["magisk"]["local_path"],
+            dt.REMOTE.value: self.obj.directories["magisk"]["remote_path"],
         }
