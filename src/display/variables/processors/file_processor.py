@@ -36,13 +36,13 @@ class VariableFileProcessor(processors.BaseProcessor):
         return self
 
     def process_items(self) -> Self | None:
-        from ..classes import VariableItemDict, VariableTableBuilder
+        from ..classes import VariableItem, VariableTableBuilder
 
         builder = VariableTableBuilder(indent=3)
-        data = VariableItemDict(
+        data = VariableItem(
             title=self.title, value=str(self.get_value_by_key(self.value))
         )
         if self.title == "log_file":
             builder.newline()
-        builder.add(f"{data.get('title').upper()}", data.get("value"))
+        builder.add(f"{data.title.upper()}", data.value)
         builder.render()
