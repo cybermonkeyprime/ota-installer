@@ -3,8 +3,8 @@ from enum import Enum
 from pathlib import Path
 from typing import TypeVar
 
+from paths.constants.magisk_image_paths import MagiskImagePaths
 import src.structures as structures
-from src.paths.constants.magisk_image_paths import MagiskImagePaths
 
 magisk_struct = structures.MagiskStruct()
 
