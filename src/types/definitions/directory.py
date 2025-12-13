@@ -1,8 +1,9 @@
-from dataclasses import dataclass, field
+from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import TypeVar
 
 import src.structures as structures
+from src.structures import MagiskImageStruct
 
 magisk_instance = structures.MagiskStruct()
 
@@ -10,52 +11,28 @@ T = TypeVar("T")
 
 
 @dataclass
-class BootImage(object):
-    parent_directory: Path = field(default_factory=Path)
-    stock_image_path: Path = field(init=False)
-    patched_image_path: Path = field(init=False)
-
-    def __post_init__(self) -> None:
-        self.stock_image_path = Path(f"{self.parent_directory}/stock")
-        self.patched_image_path = Path(f"{self.parent_directory}/magisk")
-
-
-@dataclass
-class MagiskImage(object):
-    local_path: Path = field(
-        default_factory=lambda: Path(magisk_instance.local_path)
-    )
-    remote_path: Path = field(
-        default_factory=lambda: Path(magisk_instance.remote_path)
-    )
-
-
-@dataclass
-class Directory(object):
+class _Directory(object):
     parent_directory: Path
     boot_image_file_name: str = field(default="")
-    magisk_image: structures.MagiskStruct = field(
-        default_factory=structures.MagiskStruct
-    )
-
-    from src.paths.constants import BootImagePaths, MagiskPaths
+    magisk_image: MagiskImageStruct = field(default_factory=MagiskImageStruct)
 
     def __post_init__(self) -> None:
         self.boot_image = self.create_structure(
             structures.BootImageStruct, self.boot_image_file_name
         )
-        self.magisk_image = self.create_structure(structures.MagiskStruct)
+
+        self.magisk_image = self.create_structure(MagiskImageStruct)
 
     def create_structure(self, structure_cls: type[T], *args, **kwargs) -> T:
         try:
             return structure_cls(*args, **kwargs)
-        except Exception as e:
-            raise ValueError(f"Failed to create structure: {e}") from e
+        except Exception as err:
+            raise ValueError(f"Failed to create structure: {err}") from err
 
 
 def main() -> None:
     # Example usage:
-    directory_manager = Directory(
+    directory_manager = _Directory(
         parent_directory=Path("/path/to/directory"),
         boot_image_file_name="boot.img",
     )
