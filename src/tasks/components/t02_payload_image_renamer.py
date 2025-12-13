@@ -2,27 +2,24 @@
 from dataclasses import dataclass, field
 from pathlib import Path
 
-import src.variables as variables
 from src import decorators
 from src.tasks.task_operation_details import TaskOperationDetails
+from src.variables import VariableManager
 
 from .base_task import BaseTask
 
 ENUM_VALUES = TaskOperationDetails.PAYLOAD_IMAGE_RENAMER.value
 
-print(f"{ENUM_VALUES=}")
-
 
 @dataclass
 class PayloadImageRenamer(BaseTask):
-    instance: variables.VariableManager = field(
-        default_factory=variables.VariableManager
-    )
+    instance: VariableManager = field(default_factory=VariableManager)
 
     def __post_init__(self) -> None:
         source_path: Path = Path.home() / "payload.bin"
-        destination_path = self.instance.boot_image_paths.payload
-        command_string: str = f"mv -v {source_path} {destination_path}"
+        command_string: str = (
+            f"mv -v {source_path} {self.instance.paths['payload']}"
+        )
 
         super().__init__(
             enum_values=ENUM_VALUES,
