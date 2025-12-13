@@ -21,12 +21,13 @@ class BootImageExtractor(BaseTask):
     )
 
     def __post_init__(self) -> None:
-        device = self.instance.file_name_bits.device
-        source_path = self.instance.payload_image_path
+        device = self.instance.file_name_parts.device
         destination_path = Path.home() / "images"
         image_key = image_handler(device)
         options = f'--images="{image_key}" --out "{destination_path}"'
-        command_string = f"payload_dumper {source_path} {options}"
+        command_string = (
+            f"payload_dumper {self.instance.paths['payload']} {options}"
+        )
 
         super().__init__(
             enum_values=ENUM_VALUES,
