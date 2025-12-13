@@ -99,9 +99,9 @@ class TaskExecutor(object):
     def execute_task(self, task_group_key: str) -> None:
         try:
             self.task_iteration(task_group_key)
-        except Exception as e:
+        except AttributeError as e:
             logger.error(
-                f"[Error] Processing {task_group_key} failed: {type(e).__name__} {e}"
+                f"[{type(e).__name__}] Processing {task_group_key} failed: {e}"
             )
 
     def task_iteration(self, task_group_key: str) -> None:
