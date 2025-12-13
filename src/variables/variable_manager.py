@@ -10,7 +10,10 @@ import src.types.boot_image as boot_image
 import src.types.directory as directory_types
 import src.validation as validation
 from src.logger import logger
-from src.paths.constants import MagiskImagePaths
+from src.paths.constants import (
+    BootImagePaths,
+    MagiskImagePaths,
+)
 
 DirectoryTypeDefinition = directory_types.DefaultTypeDefinition
 DirectoryTypeManager = directory_types.DefaultTypeManager
@@ -32,6 +35,8 @@ class VariableManager(object):
     files: dict = field(init=False)
     variables: dict = field(default_factory=dict)
     directories: dict = field(default_factory=dict)
+    paths: dict = field(default_factory=dict)
+    file_name: dict = field(default_factory=dict)
 
     def __post_init__(self) -> None:
         self.define_variables()
@@ -45,20 +50,23 @@ class VariableManager(object):
         self.patched_image_name = variables.magisk_image_name
         self.file_stem = variables.file_path_stem
         self.file_name_bits = variables.file_parts
+        self.file_name_parts = variables.file_parts
+        self.file_name["parts"] = variables.file_parts
+        self.file_name["device"] = self.file_name["parts"].device
+        self.file_name["version"] = self.file_name["parts"].version
         return self
 
     def define_files(self) -> Self:
-        from src.variables.functions import set_log_file
+        from src.structures import ImageFileData
+        from src.variables.functions import get_file_image_path, set_log_file
 
-        self.boot_image_paths = boot_image.DefaultImageTypeManager(
-            self.file_name_bits,
-            str(self.boot_image_path),
+        image_data = ImageFileData(
+            self.file_name["device"], self.file_name["version"]
         )
-        self.device_name = self.file_name_bits.device
-        self.payload_image_path = self.boot_image_paths.payload.file_path
-        self.stock_image_path = self.boot_image_paths.stock.file_path
-        self.magisk_image_path = self.boot_image_paths.magisk.file_path
-        self.log_file = set_log_file(self.file_name_bits)
+        self.paths["payload"] = get_file_image_path("payload", *image_data)
+        self.paths["stock"] = get_file_image_path("stock", *image_data)
+        self.paths["magisk"] = get_file_image_path("magisk", *image_data)
+        self.paths["log_file"] = set_log_file(self.file_name_parts)
 
         return self
 
@@ -67,15 +75,15 @@ class VariableManager(object):
         self.directory = DirectoryTypeManager(
             self._file_path.parent
         ).create_directory()
-        self.magisk_image_local_path = self.directory.magisk_image.local_path
-        self.magisk_image_remote_path = self.directory.magisk_image.remote_path
+        self.magisk_image_local_path = MagiskImagePaths.REMOTE_PATH.value
+        self.magisk_image_remote_path = MagiskImagePaths.REMOTE_PATH.value
 
         self.directories = defaultdict(dict)
         self.directories["magisk"]["local_path"] = (
-            self.directory.magisk_image.local_path
+            MagiskImagePaths.LOCAL_PATH.value
         )
         self.directories["magisk"]["remote_path"] = (
-            self.directory.magisk_image.remote_path
+            MagiskImagePaths.REMOTE_PATH.value
         )
         return self
 
