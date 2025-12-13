@@ -1,5 +1,6 @@
 # src/display/variables/processors/file_iteration_processor.py
 from dataclasses import dataclass, field
+from pathlib import Path
 from typing import Self
 
 import src.dispatchers.mappings as dispatcher_mappings
@@ -29,7 +30,9 @@ class FileIterationProcessor(processors.BaseProcessor):
 
         builder = VariableTableBuilder(indent=3)
         for file in self.file_names:
-            file_path = self.get_value_by_key(key=file).file_path
-            data = VariableItem(title=f"{file}_name", value=file_path.name)
+            file_path = str(self.get_value_by_key(key=file))
+            data = VariableItem(
+                title=f"{file}_name", value=Path(file_path).name
+            )
             builder.add(data.title.upper(), data.value)
         builder.render()
