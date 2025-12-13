@@ -2,3 +2,5 @@
 from collections import namedtuple
 
 ImageFile = namedtuple("ImageFile", ["file_path", "directory_path"])
+
+ImageFileData = namedtuple("ImageFileData", ["device", "version"])
