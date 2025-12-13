@@ -1,6 +1,5 @@
 # src/tasks/components/t06_stock_boot_image_pusher.py
 from dataclasses import dataclass, field
-from pathlib import Path
 
 import src.variables as variables
 from src import decorators
@@ -18,9 +17,7 @@ class StockBootImagePusher(BaseTask):
     )
 
     def __post_init__(self) -> None:
-        stock_image_path = str(self.instance.boot_image_paths.stock)
-        stock_path = Path.home() / stock_image_path
-        command_string = f'adb push "{stock_path}" /sdcard/'
+        command_string = f'adb push "{self.instance.paths["stock"]}" /sdcard/'
 
         super().__init__(
             enum_values=ENUM_VALUES,
