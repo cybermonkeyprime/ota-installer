@@ -1,16 +1,18 @@
+from collections.abc import Callable
 from pathlib import Path
 
-from src.structures import FileNameParser
 from src.tasks import image_handler
 
 
-def set_log_file(file_name_bits: FileNameParser) -> str:
-    device = file_name_bits.device
-    version = file_name_bits.version
+def set_log_file(file_name_parts: Callable) -> str:
+    device = file_name_parts.device
+    version = file_name_parts.version
     return f"/tmp/ota_variables_{device}_{version}.txt"
 
 
 def parse_file_name(path):
+    from src.structures import FileNameParser
+
     return FileNameParser(path)  # .set_raw_name(path).parse_file_name())
 
 
@@ -22,3 +24,14 @@ def set_variable_manager(path: Path) -> "VariableManager":  # type: ignore[retur
     from src.variables import VariableManager
 
     return VariableManager(path)
+
+
+def get_file_image_path(name: str, device: str, version) -> str:
+    from src.paths.constants import ImageFileAttributes
+
+    return (
+        ImageFileAttributes[name.upper()]
+        .set_device(device)
+        .set_version(version)
+        .set_file_path()
+    )
