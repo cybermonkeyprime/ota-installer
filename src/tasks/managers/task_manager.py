@@ -26,9 +26,12 @@ class TaskIteration(object):
             handle_task = task_director.handle_task
             while stack:
                 handle_task(instance=self.instance, item=stack.pop(0))
-        except TypeError as err:
-            # logger.error(f"TaskIteration Error: {type(err).__name__} {err}")
+        except TypeError:
             pass
+        except Exception as err:
+            logger.exception(
+                f"[{type(err).__name__}] TaskIteration Error: {err}"
+            )
 
 
 @dataclass
@@ -85,7 +88,9 @@ class TaskDirector(object):
         try:
             task.perform_task()
         except AttributeError as err:
-            logger.exception(f"Task {item!r} is missing perform_task(): {err}")
+            logger.error(
+                f"[AttributeError]: Task {item!r} is missing perform_task(): {err}"
+            )
         except Exception as err:
             logger.exception(
                 f"Unexpected error while executing {item!r}: {err}"
