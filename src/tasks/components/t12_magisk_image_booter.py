@@ -18,10 +18,11 @@ class MagiskImageBooter(BaseTask):
     )
 
     def __post_init__(self) -> None:
-        magisk = self.instance.boot_image_paths.magisk
-        device = self.instance.file_name_bits.device
+        device = self.instance.file_name_parts.device
         partition = image_handler(device).stem
-        command_string = f"fastboot flash {partition} {magisk}"
+        command_string = (
+            f"fastboot flash {partition} {self.instance.paths['magisk']}"
+        )
 
         super().__init__(
             enum_values=ENUM_VALUES,
