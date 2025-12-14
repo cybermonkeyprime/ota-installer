@@ -20,8 +20,10 @@ class StockBootImageBackupper(BaseTask):
     )
 
     def __post_init__(self) -> None:
-        image_path = image_handler(self.instance.device_name)
-        command_string = f"cp -v {image_path} {self.instance.paths['stock']}"
+        image_path = image_handler(self.instance.file_name["device"])
+        command_string = (
+            f"cp -v {image_path} {self.instance.file_paths['stock']}"
+        )
 
         super().__init__(
             enum_values=ENUM_VALUES,
