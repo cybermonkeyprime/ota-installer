@@ -18,7 +18,7 @@ class PayloadImageRenamer(BaseTask):
     def __post_init__(self) -> None:
         source_path: Path = Path.home() / "payload.bin"
         command_string: str = (
-            f"mv -v {source_path} {self.instance.paths['payload']}"
+            f"mv -v {source_path} {self.instance.file_paths['payload']}"
         )
 
         super().__init__(
