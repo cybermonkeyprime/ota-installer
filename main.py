@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from src.command_line_interface import cli
+from src.ota_installer.command_line_interface import cli
 
 
 def main() -> None:
