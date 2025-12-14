@@ -17,7 +17,9 @@ class StockBootImagePusher(BaseTask):
     )
 
     def __post_init__(self) -> None:
-        command_string = f'adb push "{self.instance.paths["stock"]}" /sdcard/'
+        command_string = (
+            f'adb push "{self.instance.file_paths["stock"]}" /sdcard/'
+        )
 
         super().__init__(
             enum_values=ENUM_VALUES,
