@@ -20,10 +20,11 @@ class MagiskImagePuller(BaseTask):
     def __post_init__(self) -> None:
         source = (
             MagiskImagePaths.REMOTE_PATH.value
-            / self.instance.patched_image_name
+            / self.instance.image_name["patched"]
         )
         destination = (
-            MagiskImagePaths.LOCAL_PATH.value / self.instance.paths["magisk"]
+            MagiskImagePaths.LOCAL_PATH.value
+            / self.instance.file_paths["magisk"]
         )
 
         command_string = f'adb pull "{source}" "{destination}"'
