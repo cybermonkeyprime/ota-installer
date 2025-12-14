@@ -18,10 +18,10 @@ class MagiskImageBooter(BaseTask):
     )
 
     def __post_init__(self) -> None:
-        device = self.instance.file_name_parts.device
+        device = self.instance.file_name["device"]
         partition = image_handler(device).stem
         command_string = (
-            f"fastboot flash {partition} {self.instance.paths['magisk']}"
+            f"fastboot flash {partition} {self.instance.file_paths['magisk']}"
         )
 
         super().__init__(
