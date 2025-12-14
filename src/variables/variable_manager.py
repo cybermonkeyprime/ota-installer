@@ -5,13 +5,10 @@ from pathlib import Path
 from typing import Self
 
 import src.dispatchers as dispatchers
-import src.structures as structures
-import src.types.boot_image as boot_image
 import src.types.directory as directory_types
 import src.validation as validation
 from src.logger import logger
 from src.paths.constants import (
-    BootImagePaths,
     MagiskImagePaths,
 )
 
@@ -21,78 +18,81 @@ DirectoryTypeManager = directory_types.DefaultTypeManager
 
 @dataclass
 class VariableManager(object):
-    _file_path: Path = field(init=False, repr=False)
-    file_stem: Path = field(init=False)
-    file_name_bits: structures.FileNameParser = field(init=False)
-    log_file: str = field(init=False)
-    ota_parent_path: Path = field(init=False)
-    boot_image_path: Path = field(init=False, default_factory=Path)
-    directory: DirectoryTypeDefinition | None = field(init=False)
-    remote_magisk_path: Path = field(
-        init=False, default=MagiskImagePaths.REMOTE_PATH.value
-    )
+    """Defines all variables"""
+
+    """main entry point"""
     path: Path = field(default_factory=Path)
-    files: dict = field(init=False)
-    variables: dict = field(default_factory=dict)
-    directories: dict = field(default_factory=dict)
-    paths: dict = field(default_factory=dict)
-    file_name: dict = field(default_factory=dict)
+
+    """ directory type validation"""
+    directory: DirectoryTypeDefinition | None = field(init=False)
+
+    """dicts"""
+    file_paths: dict = field(default_factory=dict[str, str], init=False)
+    file_name: dict = field(default_factory=dict[str, str], init=False)
+    image_name: dict = field(default_factory=dict[str, str], init=False)
+    directories: dict = field(
+        default_factory=lambda: defaultdict(dict[str, str]), init=False
+    )
 
     def __post_init__(self) -> None:
-        self.define_variables()
-        self.define_directories()
-        self.define_files()
+        self.variables = VariableDefiner(self.path).data_tuple
+        self.define_file_name_attributes()
+        self.define_file_paths()
+        self.define_directory_paths()
+        self.define_image_names()
 
-    def define_variables(self) -> Self:
-        variables = VariableDefiner(self.path).data_tuple
-
-        self._file_path = variables.file_path
-        self.patched_image_name = variables.magisk_image_name
-        self.file_stem = variables.file_path_stem
-        self.file_name_bits = variables.file_parts
-        self.file_name_parts = variables.file_parts
-        self.file_name["parts"] = variables.file_parts
-        self.file_name["device"] = self.file_name["parts"].device
-        self.file_name["version"] = self.file_name["parts"].version
+    def define_file_name_attributes(self) -> Self:
+        self.file_name = {
+            "path": self.variables.file_path,
+            "stem": self.variables.file_path_stem,
+            "parts": self.variables.file_parts,
+            "device": self.variables.file_parts.device,
+            "version": self.variables.file_parts.version,
+        }
         return self
 
-    def define_files(self) -> Self:
+    def define_file_paths(self) -> Self:
         from src.structures import ImageFileData
         from src.variables.functions import get_file_image_path, set_log_file
 
         image_data = ImageFileData(
             self.file_name["device"], self.file_name["version"]
         )
-        self.paths["payload"] = get_file_image_path("payload", *image_data)
-        self.paths["stock"] = get_file_image_path("stock", *image_data)
-        self.paths["magisk"] = get_file_image_path("magisk", *image_data)
-        self.paths["log_file"] = set_log_file(self.file_name_parts)
-
+        self.file_paths = {
+            "stock": get_file_image_path("stock", *image_data),
+            "magisk": get_file_image_path("magisk", *image_data),
+            "payload": get_file_image_path("payload", *image_data),
+            "log_file": set_log_file(self.file_name["parts"]),
+        }
         return self
 
-    def define_directories(self) -> Self:
-        self.ota_parent_directory = self._file_path.parent
+    def define_directory_paths(self) -> Self:
+        self.ota_parent_directory = self.path.parent
         self.directory = DirectoryTypeManager(
-            self._file_path.parent
+            self.file_name["path"].parent
         ).create_directory()
-        self.magisk_image_local_path = MagiskImagePaths.REMOTE_PATH.value
-        self.magisk_image_remote_path = MagiskImagePaths.REMOTE_PATH.value
 
-        self.directories = defaultdict(dict)
-        self.directories["magisk"]["local_path"] = (
-            MagiskImagePaths.LOCAL_PATH.value
-        )
-        self.directories["magisk"]["remote_path"] = (
-            MagiskImagePaths.REMOTE_PATH.value
-        )
+        self.directories = {
+            "magisk": {
+                "local_path": MagiskImagePaths.LOCAL_PATH.value,
+                "remote_path": MagiskImagePaths.REMOTE_PATH.value,
+            }
+        }
+        return self
+
+    def define_image_names(self) -> Self:
+        self.image_name = {
+            "patched": self.variables.magisk_image_name,
+        }
+
         return self
 
     def create_directory(self) -> DirectoryTypeDefinition | None:
         try:
             return DirectoryTypeDefinition(
-                self.ota_parent_path,
-                str(self.boot_image_path),
-                self.remote_magisk_path,
+                self.path.parent,
+                str(self.file_paths["stock"].parent),
+                self.directories["magisk"]["remote_path"],
             )
         except Exception as err:
             logger.error(
