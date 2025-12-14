@@ -24,7 +24,7 @@ class FileTypeDispatcher(object):
 
     def __post_init__(self) -> None:
         for element in {"PAYLOAD", "STOCK", "MAGISK"}:
-            self.collection[element] = self.obj.paths.get(element.lower())
+            self.collection[element] = self.obj.file_paths.get(element.lower())
 
     def get_value(self, key: str) -> object | None:
         """Retrieve the value associated with the given key
