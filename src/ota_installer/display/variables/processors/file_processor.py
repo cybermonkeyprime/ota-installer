@@ -3,11 +3,9 @@ from dataclasses import dataclass, field
 from enum import Enum
 from typing import Self
 
-import src.ota_installer.dispatchers.mappings as dispatcher_mappings
-import src.ota_installer.display.variables.processors as processors
-import src.ota_installer.variables as variables
-
-DispatcherTypeMapping = dispatcher_mappings.DispatcherTypeMapping
+from ....dispatchers.mappings import DispatcherTypeMapping
+from ....variables import VariableManager
+from ...variables.processors import BaseProcessor
 
 
 class VariableFileConstants(Enum):
@@ -16,9 +14,9 @@ class VariableFileConstants(Enum):
 
 
 @dataclass
-class VariableFileProcessor(processors.BaseProcessor):
-    processing_function: variables.VariableManager = field(
-        default_factory=variables.VariableManager
+class VariableFileProcessor(BaseProcessor):
+    processing_function: VariableManager = field(
+        default_factory=VariableManager
     )
     title: str = field(init=False)
     value: str = field(init=False)
