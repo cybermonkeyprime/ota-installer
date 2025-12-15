@@ -3,16 +3,21 @@ requires = ["setuptools", "wheel"]
 
 [project]
 name = "ota-installer"
-version = "2025.12.05"
+version = "2025.12.14"
 requires-python = ">=3.14"
 dependencies = [
   "bsdiff4==1.2.4",
   "protobuf==3.20.1",
   "pyfiglet==1.0.2",
+  "pyinputplus==0.2.12",
   "rich==14.2.0",
   "six==1.16.0",
   "typer==0.20.0",
 ]
+
+[project.scripts]
+ota-installer = "__main__:main"
+
 
 [tool.pyright]
 include = ["."]
