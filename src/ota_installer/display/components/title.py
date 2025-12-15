@@ -1,12 +1,12 @@
 # src/ota_installer/display/components/title.py
 from dataclasses import dataclass, field
 
-import src.ota_installer.display.templates as templates
-from src.ota_installer.decorators import StyledFigletPrinter
+from ...decorators import StyledFigletPrinter
+from ..templates import DisplayComponent
 
 
 @dataclass
-class Title(templates.DisplayComponent):
+class Title(DisplayComponent):
     """
     A class representing a title component that can be displayed with special
         formatting.
