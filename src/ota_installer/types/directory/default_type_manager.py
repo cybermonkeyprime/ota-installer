@@ -2,7 +2,7 @@
 from dataclasses import dataclass
 from pathlib import Path
 
-from ...logger import logger
+from ...log_setup import logger
 from ...paths.constants import BootImagePaths
 from ...types.directory import DefaultTypeDefinition
 
