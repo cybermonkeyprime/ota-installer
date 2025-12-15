@@ -4,7 +4,7 @@ from enum import Enum
 from functools import singledispatchmethod
 from typing import NamedTuple
 
-import src.ota_installer.display.components as dc
+from ..components import DisplaySeparator, DisplaySubtitle, DisplayTitle
 
 
 # Type alias for better readability
@@ -56,9 +56,9 @@ class DisplayObjectProcessor(object):
 class DisplayObjectTypes(Enum):
     """Enum representing different types of display objects."""
 
-    TITLE = DisplayObjectTuple("title", dc.DisplayTitle, "OTA-Installer")
-    SEPARATOR = DisplayObjectTuple("separator", dc.DisplaySeparator, None)
-    SUBTITLE = DisplayObjectTuple("subtitle", dc.DisplaySubtitle, None)
+    TITLE = DisplayObjectTuple("title", DisplayTitle, "OTA-Installer")
+    SEPARATOR = DisplayObjectTuple("separator", DisplaySeparator, None)
+    SUBTITLE = DisplayObjectTuple("subtitle", DisplaySubtitle, None)
 
     def __str__(self) -> str:
         """String representation of the DisplayObjectTypes enum."""
