@@ -6,7 +6,7 @@ from typing import Self
 from ..dispatchers import DispatcherInterface, DispatcherTemplate
 from ..dispatchers.mappings import DispatcherTypeMapping
 from ..dispatchers.templates.dispatcher_template import CollectionValues
-from ..logger import logger
+from ..log_setup import logger
 from .definitions import TaskDefinitions
 from .managers.task_manager import TaskManager
 
