@@ -7,8 +7,8 @@ from typing import cast
 import pyinputplus as pyip
 from rich.console import Console
 
-from src.ota_installer.styles.palette import RichColors
-from src.ota_installer.types.decorators import GenericDecorator
+from ..styles.palette import RichColors
+from ..types.decorators import GenericDecorator
 
 console = Console()
 
