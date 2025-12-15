@@ -1,9 +1,8 @@
 # src/ota_installer.tasks/components/04_stock_boot_image_backuppper.py
 from dataclasses import dataclass, field
 
-import src.ota_installer.variables as variables
-
 from ... import decorators
+from ...variables import VariableManager
 from ..task_operation_details import TaskOperationDetails
 from ..task_operation_processor import (
     image_handler,
@@ -15,9 +14,7 @@ ENUM_VALUES = TaskOperationDetails.BACKUP_STOCK_BOOT_IMAGE.value
 
 @dataclass
 class StockBootImageBackupper(BaseTask):
-    instance: variables.VariableManager = field(
-        default_factory=variables.VariableManager
-    )
+    instance: VariableManager = field(default_factory=VariableManager)
 
     def __post_init__(self) -> None:
         image_path = image_handler(self.instance.file_name["device"])
