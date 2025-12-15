@@ -3,7 +3,7 @@ from collections import namedtuple
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from src.ota_installer.paths.constants import MagiskImagePaths
+from ..paths.constants import MagiskImagePaths
 
 
 @dataclass
