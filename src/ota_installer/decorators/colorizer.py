@@ -4,8 +4,8 @@ from dataclasses import dataclass, field
 from functools import wraps
 from typing import cast
 
-from src.ota_installer.styles.palette import RichColors
-from src.ota_installer.types.decorators import StringReturningDecorator
+from ..styles.palette import RichColors
+from ..types.decorators import StringReturningDecorator
 
 type R = str
 
