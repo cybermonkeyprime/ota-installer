@@ -3,8 +3,8 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from typing import cast
 
-from src.ota_installer.styles.indentation import Indentation
-from src.ota_installer.types.decorators import StringReturningDecorator
+from ..styles.indentation import Indentation
+from ..types.decorators import StringReturningDecorator
 
 type R = str
 
