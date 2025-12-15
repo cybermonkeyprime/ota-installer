@@ -5,7 +5,7 @@ from rich.console import Console
 from rich.padding import Padding
 from rich.table import Table
 
-from src.ota_installer.styles.palette import RichColors
+from ....styles.palette import RichColors
 
 
 @dataclass
