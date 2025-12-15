@@ -67,19 +67,7 @@ def exception_handler_factory(*exception_types: type[BaseException]):
     return decorator
 
 
-@exception_handler_factory(TypeError)
-@dataclass
-class TypeErrorHandler(BaseExceptionHandler):
-    default_message: str = "Type error occurred, quitting!"
-
-
 @exception_handler_factory(KeyboardInterrupt)
 @dataclass
 class KeyboardInterruptHandler(BaseExceptionHandler):
     default_message: str = "Keyboard interrupt detected, quitting!"
-
-
-@exception_handler_factory(FileNotFoundError)
-@dataclass
-class FileNotFoundExceptionHandler(BaseExceptionHandler):
-    default_message: str = "File not found, quitting!"
