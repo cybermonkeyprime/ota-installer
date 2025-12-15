@@ -2,7 +2,7 @@
 from collections.abc import Callable
 from dataclasses import dataclass, field
 
-from src.ota_installer.decorators import (
+from ...decorators import (
     Colorizer,
     IndentWrapper,
     OutputPrinter,
