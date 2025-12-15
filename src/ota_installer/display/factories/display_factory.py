@@ -1,7 +1,7 @@
 # src/ota_installer/display/factories/display_factory.py
 from dataclasses import field
 
-import src.ota_installer.display.formatters as display_formatters
+from ..formatters import DisplayFormatter
 
 
 class DisplayFactory(object):
@@ -11,8 +11,8 @@ class DisplayFactory(object):
         major_number: int = field(default=1),
         minor_number: int = field(default=1),
         patch_number: int = field(default=1),
-    ) -> display_formatters.DisplayFormatter:
-        return display_formatters.DisplayFormatter(
+    ) -> DisplayFormatter:
+        return DisplayFormatter(
             title=title,
             major_number=major_number,
             minor_number=minor_number,
