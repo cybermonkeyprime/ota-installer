@@ -2,26 +2,26 @@
 
 from dataclasses import dataclass
 
-import src.ota_installer.decorators.colorizer as colorizer
-import src.ota_installer.display.templates as display_templates
-import src.ota_installer.program_versioning.software_version as software_version
+from ...decorators.colorizer import Colorizer
+from ...program_versioning.software_version import SoftwareVersion
+from ..templates import DisplayComponent
 
 
 @dataclass
-class Subtitle(display_templates.DisplayComponent):
+class Subtitle(DisplayComponent):
     """
     Subtitle class that inherits from DisplayComponent and is responsible for
     creating a subtitle display element with version details.
     """
 
-    @colorizer.Colorizer(style="version")
+    @Colorizer(style="version")
     def get_display(self) -> str:
         """
         Apply colorization to the subtitle text and return the display string
         with the software version tag.
         """
 
-        version_details = software_version.SoftwareVersion()
+        version_details = SoftwareVersion()
         return f"Build: {version_details.version_tag}"
 
 
