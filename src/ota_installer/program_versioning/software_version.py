@@ -9,7 +9,7 @@ class SoftwareVersionConstants(Enum):
     TITLE = "OTA-Installer"
     MAJOR_NUMBER = 2025
     MINOR_NUMBER = 12
-    PATCH_NUMBER = 14
+    PATCH_NUMBER = 15
 
     def __str__(self) -> str:
         return str(self.value)
