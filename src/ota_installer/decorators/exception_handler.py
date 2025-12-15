@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from functools import wraps
 from typing import cast
 
-from src.ota_installer.types.decorators import GenericDecorator
+from ..types.decorators import GenericDecorator
 
 
 @dataclass
@@ -12,7 +12,7 @@ class ExceptionHandler(GenericDecorator):
     def __call__[R, **P](self, function: Callable[P, R]) -> Callable[P, R]:
         @wraps(function)
         def wrapper(*args: P.args, **kwargs: P.kwargs) -> R | None:
-            from src.ota_installer.logger import logger
+            from ..log_setup import logger
 
             try:
                 return function(*args, **kwargs)
