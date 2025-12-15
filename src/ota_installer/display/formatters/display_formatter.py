@@ -4,16 +4,12 @@ from typing import NamedTuple
 
 from rich.control import Control
 
-import src.ota_installer.display.objects as display_object_types
-import src.ota_installer.display.objects as display_objects
-from src.ota_installer.decorators import (
+from ...decorators import (
     Colorizer,
     FooterWrapper,
     OutputPrinter,
 )
-
-DisplayObjectTypes = display_object_types.DisplayObjectTypes
-DisplayObjectProcessor = display_objects.DisplayObjectProcessor
+from ..objects import DisplayObjectTypes
 
 
 class DisplayFormatterTypes(NamedTuple):
