@@ -3,17 +3,15 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Self
 
-import src.ota_installer.dispatchers.mappings as dispatcher_mappings
-import src.ota_installer.display.variables.processors as processors
-import src.ota_installer.variables as variables
-
-DispatcherTypeMapping = dispatcher_mappings.DispatcherTypeMapping
+from ....dispatchers.mappings import DispatcherTypeMapping
+from ....variables import VariableManager
+from ...variables.processors import BaseProcessor
 
 
 @dataclass
-class FileIterationProcessor(processors.BaseProcessor):
-    processing_function: variables.VariableManager = field(
-        default_factory=variables.VariableManager
+class FileIterationProcessor(BaseProcessor):
+    processing_function: VariableManager = field(
+        default_factory=VariableManager
     )
     file_names: tuple = field(init=False)
 
