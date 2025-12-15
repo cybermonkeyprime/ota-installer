@@ -3,25 +3,26 @@ from dataclasses import dataclass, field
 
 from rich.control import Control
 
-import src.ota_installer.styles as styles
-from src.ota_installer.display.templates.display_template import (
+from ...styles import Separator
+
+from ..templates.display_template import (
     DisplayComponent,
 )
 
 
 @dataclass
-class Separator(DisplayComponent):
+class _Separator(DisplayComponent):
     """A class representing a separator component in a display."""
 
     indent: int = field(default=0)
     char: str = field(default="")
 
-    def return_display(self) -> styles.Separator:
+    def return_display(self) -> Separator:
         """
         Creates and returns a styles.Separator object with the current indent
             and char.
         """
-        return styles.Separator(self.indent, self.char)
+        return Separator(self.indent, self.char)
 
     def get_display(self) -> object:
         """The display representation of the separator."""
@@ -43,5 +44,5 @@ class DisplaySeparator(object):
 
     def __str__(self) -> str:
         """Returns a string representation of the display separator."""
-        component = Separator(self.indent, self.char[0])
+        component = _Separator(self.indent, self.char[0])
         return f"{component.get_display()}> "
