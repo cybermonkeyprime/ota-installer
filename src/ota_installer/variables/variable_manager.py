@@ -4,12 +4,11 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Self
 
-from src.ota_installer.logger import logger
-from src.ota_installer.paths.constants import (
+from ..dispatchers import DispatcherInterface
+from ..log_setup import logger
+from ..paths.constants import (
     MagiskImagePaths,
 )
-
-from ..dispatchers import DispatcherInterface
 from ..types.directory import DefaultTypeDefinition, DefaultTypeManager
 
 DirectoryTypeDefinition = DefaultTypeDefinition
@@ -52,8 +51,8 @@ class VariableManager(object):
         return self
 
     def define_file_paths(self) -> Self:
-        from src.ota_installer.structures import ImageFileData
-        from src.ota_installer.variables.functions import (
+        from ..structures import ImageFileData
+        from ..variables.functions import (
             get_file_image_path,
             set_log_file,
         )
@@ -104,8 +103,7 @@ class VariableManager(object):
             return None
 
     def get_dispatcher(self, process_type) -> DispatcherInterface | None:
-        from src.ota_installer.variables.functions import set_variable_manager
-
+        from ..variables.functions import set_variable_manager
         from .classes.dispatch_retriever import DispatchRetriever
 
         function_call = set_variable_manager(self.path)
