@@ -3,10 +3,11 @@ requires = ["setuptools", "wheel"]
 
 [project]
 name = "ota-installer"
-version = "2025.12.14"
+version = "2025.12.15"
 requires-python = ">=3.14"
 dependencies = [
   "bsdiff4==1.2.4",
+  "loguru==0.7.3",
   "protobuf==3.20.1",
   "pyfiglet==1.0.2",
   "pyinputplus==0.2.12",
@@ -14,10 +15,14 @@ dependencies = [
   "six==1.16.0",
   "typer==0.20.0",
 ]
+[tool.setuptools]
+package-dir = { "" = "src" }
 
 [project.scripts]
-ota-installer = "__main__:main"
+ota-installer = "ota_installer.main:main"
 
+[tool.setuptools.packages.find]
+where = ["src"]
 
 [tool.pyright]
 include = ["."]
@@ -52,6 +57,7 @@ skip-magic-trailing-comma = false
 line-ending = "auto"
 #docstring-code-format = false
 #docstring-code-line-length = "dynamic"
+
 
 [tool.isort]
 profile = "black"
