@@ -5,7 +5,7 @@ from enum import Enum
 from functools import wraps
 from typing import cast
 
-from src.ota_installer.types.decorators import GenericDecorator
+from ..types.decorators import GenericDecorator
 
 
 class SeparatorSpecs(Enum):
