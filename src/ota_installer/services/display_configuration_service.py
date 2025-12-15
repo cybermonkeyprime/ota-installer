@@ -1,14 +1,12 @@
 # src/ota_installer/services/display_configuration_service.py
 from dataclasses import dataclass, field
 
-import src.ota_installer.display.configurations as display_configs
+from ..display.configurations import Configuration
 
 
 @dataclass
 class DisplayConfigurationService(object):
-    display_conf: display_configs.Configuration = field(
-        default_factory=display_configs.Configuration
-    )
+    display_conf: Configuration = field(default_factory=Configuration)
 
-    def get_display_configuration(self) -> display_configs.Configuration:
+    def get_display_configuration(self) -> Configuration:
         return self.display_conf
