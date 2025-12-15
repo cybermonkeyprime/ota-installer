@@ -1,7 +1,7 @@
 # src/ota_installer/services/screen_manager_service.py
 from dataclasses import dataclass, field
 
-from src.ota_installer.display.managers import ScreenManager
+from ..display.managers import ScreenManager
 
 
 @dataclass
