@@ -2,8 +2,7 @@
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from src.ota_installer import decorators
-
+from ... import decorators
 from ...tasks import TaskOperationDetails
 from ...variables import VariableManager
 from ..task_operation_processor import (
