@@ -2,8 +2,6 @@
 from collections.abc import Callable
 from pathlib import Path
 
-from ..tasks import image_handler
-
 
 def set_log_file(file_name_parts: Callable) -> str:
     device = file_name_parts.device
@@ -15,10 +13,6 @@ def parse_file_name(path):
     from ..structures import FileNameParser
 
     return FileNameParser(path)  # .set_raw_name(path).parse_file_name())
-
-
-def get_image_path(device_name) -> Path:
-    return image_handler(device_name)
 
 
 def set_variable_manager(path: Path) -> "VariableManager":  # type: ignore[return-value]
