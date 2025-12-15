@@ -19,7 +19,7 @@ class OutputPrinter(object):
     def __call__[R, **P](self, function: Callable[P, R]) -> Callable[P, R]:
         @wraps(function)
         def wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
-            from src.ota_installer.styles import RichColors
+            from ..styles import RichColors
 
             style = RichColors[self.color.upper()]
 
