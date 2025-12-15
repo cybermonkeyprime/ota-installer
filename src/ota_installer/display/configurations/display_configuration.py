@@ -1,14 +1,14 @@
 # src/ota_installer/display/configurations/display_configuration.py
 from dataclasses import dataclass, field
 
-import src.ota_installer.display.factories as display_factories
-import src.ota_installer.program_versioning.software_version as software_version
+from ...program_versioning.software_version import SoftwareVersion
+from ..factories import DisplayFactory
 
 
 @dataclass
 class Configuration(object):  # Display Configuration
-    software_version: "software_version.SoftwareVersion" = field(
-        default_factory=software_version.SoftwareVersion
+    software_version: "SoftwareVersion" = field(
+        default_factory=SoftwareVersion
     )
     version_info: str = field(default_factory=str)
 
@@ -17,7 +17,7 @@ class Configuration(object):  # Display Configuration
 
     def create_version_display(self) -> None:
         try:
-            display_factories.DisplayFactory.create_formatter(
+            DisplayFactory.create_formatter(
                 title=self.software_version.constants.TITLE,
                 major_number=self.software_version.constants.MAJOR_NUMBER,
                 minor_number=self.software_version.constants.MINOR_NUMBER,
