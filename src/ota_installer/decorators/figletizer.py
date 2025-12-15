@@ -6,7 +6,7 @@ from typing import cast
 
 from pyfiglet import figlet_format
 
-from src.ota_installer.types.decorators import StringReturningDecorator
+from ..types.decorators import StringReturningDecorator
 
 type R = str
 
