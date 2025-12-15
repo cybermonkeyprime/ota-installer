@@ -2,7 +2,7 @@
 from dataclasses import dataclass
 from pathlib import Path
 
-from src.ota_installer.paths.constants import BootImagePaths
+from ..paths.constants import BootImagePaths
 
 
 @dataclass
