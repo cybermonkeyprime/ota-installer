@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Literal, TypeVar
 
-from src.ota_installer.dispatchers.templates import DispatcherCreator
+from ...dispatchers.templates import DispatcherCreator
 
 T = TypeVar("T")
 
