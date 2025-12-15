@@ -4,8 +4,8 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import TypeVar
 
-import src.ota_installer.dispatchers.mappings as dispatcher_mappings
-from src.ota_installer.logger import logger
+from ...dispatchers.mappings import TaskGroupTypeMapping
+from ...log_setup import logger
 
 T = TypeVar("T")
 
@@ -17,11 +17,11 @@ CollectionDictionary = dict[CollectionKeys, CollectionValues]
 @dataclass
 class TaskGroupTypeDispatcher(object):
     obj: type = field(default_factory=lambda: type)
-    data_enum: dispatcher_mappings.TaskGroupTypeMapping = field(init=False)
+    data_enum: TaskGroupTypeMapping = field(init=False)
     collection = {}
 
     def __post_init__(self) -> None:
-        for enum in dispatcher_mappings.TaskGroupTypeMapping:
+        for enum in TaskGroupTypeMapping:
             self.collection[enum.name.lower()] = enum._value(self.obj)
 
     def get_instance(self, key: str) -> CollectionValues | None:
