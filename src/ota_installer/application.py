@@ -28,6 +28,7 @@ class Application(object):
 
     def run(self) -> None:
         self.screen_manager.clear_screen()
+
         self.display_title()
 
     def display_title(self):
