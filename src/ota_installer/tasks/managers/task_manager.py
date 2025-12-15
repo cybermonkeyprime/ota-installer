@@ -1,11 +1,12 @@
 # src/ota_installer/tasks/managers/task_manager.py
 from collections.abc import Callable
 from dataclasses import dataclass, field
+from os import error
 from pathlib import Path
 from typing import Self
 
 from ...display import VariableProcessor
-from ...logger import logger
+from ...log_setup import logger
 from ...variables import VariableManager
 from ..factories import TaskFactory
 
@@ -26,8 +27,8 @@ class TaskIteration(object):
             handle_task = task_director.handle_task
             while stack:
                 handle_task(instance=self.instance, item=stack.pop(0))
-        except TypeError:
-            pass
+        except TypeError as err:
+            logger.error(f"[{type(err).__name__}] TaskIteration Error: {err}")
         except Exception as err:
             logger.exception(
                 f"[{type(err).__name__}] TaskIteration Error: {err}"
@@ -48,7 +49,10 @@ class TaskManager(object):
         return self
 
     def set_variable(self) -> Self:
-        self.variable = VariableManager(self.file_name)
+        try:
+            self.variable = VariableManager(self.file_name)
+        except Exception as err:
+            print(f"[{type(err).__name__}] {err}")
         return self
 
     def set_iteration(self) -> Self:
