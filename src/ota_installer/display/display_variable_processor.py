@@ -2,8 +2,7 @@
 from dataclasses import dataclass
 from typing import Self
 
-import src.ota_installer.variables as variables
-
+from ..variables import VariableManager
 from .variables import (
     set_boot_image_directories,
     set_image_file_names,
@@ -16,7 +15,7 @@ from .variables import (
 
 @dataclass
 class VariableProcessor(object):
-    processing_function: variables.VariableManager
+    processing_function: VariableManager
 
     def process_file_names(self) -> Self:
         for process_item in {set_ota_file_name, set_image_file_names}:
