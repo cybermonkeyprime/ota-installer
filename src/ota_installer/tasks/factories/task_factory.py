@@ -6,10 +6,11 @@ from loguru import logger
 
 from ...variables import VariableManager
 from ..mappings import TASK_CLASS_MAP, TaskName
+from ..plugin_registry import TASK_PLUGINS
 
 
 @dataclass
-class TaskFactory(object):
+class TaskFactory_(object):
     variable_manager: VariableManager | None = field(default=None)
 
     def factory_rules(self, task_name: str) -> type | None:
@@ -31,3 +32,15 @@ class TaskFactory(object):
         task = self.factory_rules(task_name)
         if isinstance(task, type):
             return task(self.variable_manager)
+
+
+@dataclass
+class TaskFactory(object):
+    variable_manager: VariableManager | None = field(default=None)
+
+    def create_task(self, task_name: str):
+        task_class = TASK_PLUGINS.get(task_name)
+        if not task_class:
+            logger.error(f"No plugin task registered for: {task_name!r}")
+            return None
+        return task_class(self.variable_manager)
