@@ -11,7 +11,7 @@ from .base_task import BaseTask
 ENUM_VALUES = TaskOperationDetails.FIND_MAGISK_IMAGE.value
 
 
-@task_plugin(TaskName.FIND_PATCHED_BOOT_IMAGE.under_case)
+@task_plugin(TaskName.FIND_PATCHED_BOOT_IMAGE.lower_case)
 @dataclass
 class MagiskImageFinder(BaseTask):
     instance: VariableManager = field(default_factory=VariableManager)
