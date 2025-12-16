@@ -21,3 +21,7 @@ class TaskName(Enum):
     ADB_SIDELOAD = "ADB_SIDELOAD"
     REBOOT_TO_BOOTLOADER = "REBOOT_TO_BOOTLOADER"
     BOOT_MAGISK_IMAGE = "BOOT_MAGISK_IMAGE"
+
+    @property
+    def under_case(self) -> str:
+        return self.value.lower()
