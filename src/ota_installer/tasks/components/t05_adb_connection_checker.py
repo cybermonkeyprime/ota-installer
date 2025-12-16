@@ -11,7 +11,7 @@ from .base_task import BaseTask
 ENUM_VALUES = TaskOperationDetails.CHECK_ADB_CONNECTION.value
 
 
-@task_plugin(TaskName.CHECK_ADB_CONNECTION.under_case)
+@task_plugin(TaskName.CHECK_ADB_CONNECTION.lower_case)
 @dataclass
 class ADBConnectionChecker(BaseTask):
     instance: VariableManager = field(default_factory=VariableManager)
