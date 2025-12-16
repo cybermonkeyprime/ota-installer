@@ -3,6 +3,8 @@ from dataclasses import dataclass, field
 
 from ... import decorators
 from ...variables import VariableManager
+from ..mappings.constants import TaskName
+from ..plugin_registry import task_plugin
 from ..task_operation_details import TaskOperationDetails
 from ..task_operation_processor import image_handler
 from .base_task import BaseTask
@@ -10,6 +12,7 @@ from .base_task import BaseTask
 ENUM_VALUES = TaskOperationDetails.BOOT_TO_MAGISK_IMAGE.value
 
 
+@task_plugin(TaskName.BOOT_MAGISK_IMAGE.under_case)
 @dataclass
 class MagiskImageBooter(BaseTask):
     instance: VariableManager = field(default_factory=VariableManager)
