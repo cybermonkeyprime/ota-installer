@@ -12,7 +12,7 @@ from .base_task import BaseTask
 ENUM_VALUES = TaskOperationDetails.PAYLOAD_IMAGE_RENAMER.value
 
 
-@task_plugin(TaskName.RENAME_PAYLOAD_IMAGE.under_case)
+@task_plugin(TaskName.RENAME_PAYLOAD_IMAGE.lower_case)
 @dataclass
 class PayloadImageRenamer(BaseTask):
     instance: VariableManager = field(default_factory=VariableManager)
