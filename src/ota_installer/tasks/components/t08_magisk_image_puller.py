@@ -4,12 +4,15 @@ from dataclasses import dataclass, field
 from ... import decorators
 from ...paths.constants import MagiskImagePaths
 from ...variables import VariableManager
+from ..mappings.constants import TaskName
+from ..plugin_registry import task_plugin
 from ..task_operation_details import TaskOperationDetails
 from .base_task import BaseTask
 
 ENUM_VALUES = TaskOperationDetails.PULL_MAGISK_IMAGE.value
 
 
+@task_plugin(TaskName.PULL_PATCHED_BOOT_IMAGE.under_case)
 @dataclass
 class MagiskImagePuller(BaseTask):
     instance: VariableManager = field(default_factory=VariableManager)
