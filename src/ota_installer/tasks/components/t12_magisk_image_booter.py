@@ -12,7 +12,7 @@ from .base_task import BaseTask
 ENUM_VALUES = TaskOperationDetails.BOOT_TO_MAGISK_IMAGE.value
 
 
-@task_plugin(TaskName.BOOT_MAGISK_IMAGE.under_case)
+@task_plugin(TaskName.BOOT_MAGISK_IMAGE.lower_case)
 @dataclass
 class MagiskImageBooter(BaseTask):
     instance: VariableManager = field(default_factory=VariableManager)
