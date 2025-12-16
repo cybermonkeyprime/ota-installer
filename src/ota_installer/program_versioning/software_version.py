@@ -9,10 +9,7 @@ class SoftwareVersionConstants(Enum):
     TITLE = "OTA-Installer"
     MAJOR_NUMBER = 2025
     MINOR_NUMBER = 12
-    PATCH_NUMBER = 15
-
-    def __str__(self) -> str:
-        return str(self.value)
+    PATCH_NUMBER = 16
 
 
 @dataclass
@@ -31,7 +28,7 @@ class SoftwareVersion(object):
 
     def display_title(self):
         return (
-            f"{self.constants.TITLE}: "
+            f"{self.constants.TITLE.value}: "
             f"{self.constants.MAJOR_NUMBER.value}."
             f"{self.constants.MINOR_NUMBER.value}."
             f"{self.constants.PATCH_NUMBER.value}"
