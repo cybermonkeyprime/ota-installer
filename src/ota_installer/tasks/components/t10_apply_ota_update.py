@@ -11,7 +11,7 @@ from .base_task import BaseTask
 ENUM_VALUES = TaskOperationDetails.APPLY_OTA_UPDATE.value
 
 
-@task_plugin(TaskName.ADB_SIDELOAD.under_case)
+@task_plugin(TaskName.ADB_SIDELOAD.lower_case)
 @dataclass
 class ADBSideloader(BaseTask):
     instance: VariableManager = field(default_factory=VariableManager)
