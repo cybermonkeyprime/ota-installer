@@ -1,14 +1,15 @@
 from dataclasses import dataclass, field
-from enum import Enum
 from pathlib import Path
 from typing import Self
 
-from ..dispatchers import DispatcherInterface, DispatcherTemplate
+from ..dispatchers import DispatcherInterface
 from ..dispatchers.mappings import DispatcherTypeMapping
+from ..dispatchers.templates import DispatcherTemplate
 from ..dispatchers.templates.dispatcher_template import CollectionValues
 from ..log_setup import logger
 from .definitions import TaskDefinitions
 from .managers.task_manager import TaskManager
+from .mappings.constants import TaskGroup as TaskGroupNames
 
 
 @dataclass
@@ -17,15 +18,6 @@ class CLIArguments(object):
     task_group: str | None = None
     list: bool = False
     version = False
-
-
-class TaskGroupNames(Enum):
-    PREPARATION = "preparation"
-    MIGRATION = "migration"
-    APPLICATION = "application"
-
-    def __str__(self) -> str:
-        return self.value
 
 
 @dataclass
