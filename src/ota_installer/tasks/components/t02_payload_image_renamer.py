@@ -4,12 +4,15 @@ from pathlib import Path
 
 from ... import decorators
 from ...variables import VariableManager
+from ..mappings.constants import TaskName
+from ..plugin_registry import task_plugin
 from ..task_operation_details import TaskOperationDetails
 from .base_task import BaseTask
 
 ENUM_VALUES = TaskOperationDetails.PAYLOAD_IMAGE_RENAMER.value
 
 
+@task_plugin(TaskName.RENAME_PAYLOAD_IMAGE.under_case)
 @dataclass
 class PayloadImageRenamer(BaseTask):
     instance: VariableManager = field(default_factory=VariableManager)
