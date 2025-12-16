@@ -19,12 +19,10 @@ class SoftwareVersion(object):
     constants: type = field(default_factory=lambda: SoftwareVersionConstants)
     version: list = field(init=False)
 
-    def __post_init__(self) -> None:
-        self.set_version_tag()
-
-    def set_version_tag(self) -> None:
+    @property
+    def version_tag(self) -> str:
         """Property that generates a version tag string."""
-        self.version_tag = f"{self.constants.MAJOR_NUMBER.value}.{self.constants.MINOR_NUMBER.value}.{self.constants.PATCH_NUMBER.value}"
+        return f"{self.constants.MAJOR_NUMBER.value}.{self.constants.MINOR_NUMBER.value}.{self.constants.PATCH_NUMBER.value}"
 
     def display_title(self):
         return (
