@@ -23,5 +23,5 @@ class TaskName(Enum):
     BOOT_MAGISK_IMAGE = "BOOT_MAGISK_IMAGE"
 
     @property
-    def under_case(self) -> str:
+    def lower_case(self) -> str:
         return self.value.lower()
