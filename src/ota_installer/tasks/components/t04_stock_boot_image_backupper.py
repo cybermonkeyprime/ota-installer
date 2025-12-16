@@ -14,7 +14,7 @@ from .base_task import BaseTask
 ENUM_VALUES = TaskOperationDetails.BACKUP_STOCK_BOOT_IMAGE.value
 
 
-@task_plugin(TaskName.BACKUP_STOCK_BOOT_IMAGE.under_case)
+@task_plugin(TaskName.BACKUP_STOCK_BOOT_IMAGE.lower_case)
 @dataclass
 class StockBootImageBackupper(BaseTask):
     instance: VariableManager = field(default_factory=VariableManager)
