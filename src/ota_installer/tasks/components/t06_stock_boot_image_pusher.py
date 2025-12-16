@@ -3,12 +3,15 @@ from dataclasses import dataclass, field
 
 from ... import decorators
 from ...variables import VariableManager
+from ..mappings.constants import TaskName
+from ..plugin_registry import task_plugin
 from ..task_operation_details import TaskOperationDetails
 from .base_task import BaseTask
 
 ENUM_VALUES = TaskOperationDetails.PUSH_STOCK_BOOT_IMAGE.value
 
 
+@task_plugin(TaskName.PUSH_STOCK_BOOT_IMAGE.under_case)
 @dataclass
 class StockBootImagePusher(BaseTask):
     instance: VariableManager = field(default_factory=VariableManager)
