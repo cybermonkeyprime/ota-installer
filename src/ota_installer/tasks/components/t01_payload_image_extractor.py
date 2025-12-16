@@ -10,7 +10,7 @@ from .base_task import BaseTask
 ENUM_VALUES = TaskOperationDetails.PAYLOAD_IMAGE_EXTRACTOR.value
 
 
-@task_plugin(TaskName.EXTRACT_PAYLOAD_IMAGE.under_case)
+@task_plugin(TaskName.EXTRACT_PAYLOAD_IMAGE.lower_case)
 class PayloadImageExtractor(BaseTask):
     def __init__(self, instance):
         self.instance = instance
