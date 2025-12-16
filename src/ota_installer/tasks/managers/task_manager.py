@@ -1,8 +1,8 @@
 # src/ota_installer/tasks/managers/task_manager.py
 from collections.abc import Callable
 from dataclasses import dataclass, field
-from os import error
 from pathlib import Path
+from types import NoneType
 from typing import Self
 
 from ...display import VariableProcessor
@@ -25,10 +25,17 @@ class TaskIteration(object):
         try:
             stack = list(task_group)
             handle_task = task_director.handle_task
-            while stack:
-                handle_task(instance=self.instance, item=stack.pop(0))
+            for task in stack:
+                handle_task(instance=self.instance, item=task)
         except TypeError as err:
-            logger.error(f"[{type(err).__name__}] TaskIteration Error: {err}")
+            # Check if this is likely due to a NoneType or signature mismatch
+            if isinstance(task_group, NoneType) or "NoneType" in str(err):
+                logger.warning("Task group skipped")
+            else:
+                logger.error(
+                    f"[{type(err).__name__}] TaskIteration Error: {err}"
+                )
+            pass
         except Exception as err:
             logger.exception(
                 f"[{type(err).__name__}] TaskIteration Error: {err}"
