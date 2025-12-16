@@ -30,7 +30,7 @@ class TaskIteration(object):
         except TypeError as err:
             # Check if this is likely due to a NoneType or signature mismatch
             if isinstance(task_group, NoneType) or "NoneType" in str(err):
-                logger.warning("Task group skipped")
+                print("Task group skipped\n")
             else:
                 logger.error(
                     f"[{type(err).__name__}] TaskIteration Error: {err}"
