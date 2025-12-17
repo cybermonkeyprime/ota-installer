@@ -1,6 +1,11 @@
 # src/ota_installer/program_versioning/software_version.py
+from collections import namedtuple
 from dataclasses import dataclass, field
 from enum import Enum
+
+SoftwareStruct = namedtuple(
+    "SoftwareStruct", ["title", "major_number", "minor_number", "patch_number"]
+)
 
 
 class SoftwareVersionConstants(Enum):
@@ -9,7 +14,7 @@ class SoftwareVersionConstants(Enum):
     TITLE = "OTA-Installer"
     MAJOR_NUMBER = 2025
     MINOR_NUMBER = 12
-    PATCH_NUMBER = 16
+    PATCH_NUMBER = 17
 
 
 @dataclass
@@ -20,14 +25,10 @@ class SoftwareVersion(object):
     version: list = field(init=False)
 
     @property
-    def version_tag(self) -> str:
-        """Property that generates a version tag string."""
-        return f"{self.constants.MAJOR_NUMBER.value}.{self.constants.MINOR_NUMBER.value}.{self.constants.PATCH_NUMBER.value}"
+    def data(self):
+        return [enum_member.value for enum_member in SoftwareVersionConstants]
 
+    @property
     def display_title(self):
-        return (
-            f"{self.constants.TITLE.value}: "
-            f"{self.constants.MAJOR_NUMBER.value}."
-            f"{self.constants.MINOR_NUMBER.value}."
-            f"{self.constants.PATCH_NUMBER.value}"
-        )
+        software = SoftwareStruct(*self.data)
+        return f"Build: {software.major_number}.{software.minor_number}.{software.patch_number}"
