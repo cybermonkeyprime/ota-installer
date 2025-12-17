@@ -19,19 +19,23 @@ from ..components.t09_recovery_rebooter import RecoveryRebooter
 from ..components.t10_apply_ota_update import ADBSideloader
 from ..components.t11_bootloader_rebooter import BootloaderRebooter
 from ..components.t12_magisk_image_booter import MagiskImageBooter
-from .constants import TaskName
+from .constants import (
+    ApplicationTasks,
+    MigrationTasks,
+    PreparationTasks,
+)
 
 TASK_CLASS_MAP = {
-    TaskName.EXTRACT_PAYLOAD_IMAGE: PayloadImageExtractor,
-    TaskName.RENAME_PAYLOAD_IMAGE: PayloadImageRenamer,
-    TaskName.EXTRACT_STOCK_BOOT_IMAGE: BootImageExtractor,
-    TaskName.BACKUP_STOCK_BOOT_IMAGE: StockBootImageBackupper,
-    TaskName.CHECK_ADB_CONNECTION: ADBConnectionChecker,
-    TaskName.PUSH_STOCK_BOOT_IMAGE: StockBootImagePusher,
-    TaskName.FIND_PATCHED_BOOT_IMAGE: MagiskImageFinder,
-    TaskName.PULL_PATCHED_BOOT_IMAGE: MagiskImagePuller,
-    TaskName.REBOOT_TO_RECOVERY: RecoveryRebooter,
-    TaskName.ADB_SIDELOAD: ADBSideloader,
-    TaskName.REBOOT_TO_BOOTLOADER: BootloaderRebooter,
-    TaskName.BOOT_MAGISK_IMAGE: MagiskImageBooter,
+    PreparationTasks.EXTRACT_PAYLOAD_IMAGE.name: PayloadImageExtractor,
+    PreparationTasks.RENAME_PAYLOAD_IMAGE.name: PayloadImageRenamer,
+    PreparationTasks.EXTRACT_STOCK_BOOT_IMAGE.name: BootImageExtractor,
+    PreparationTasks.BACKUP_STOCK_BOOT_IMAGE.name: StockBootImageBackupper,
+    MigrationTasks.CHECK_ADB_CONNECTION: ADBConnectionChecker,
+    MigrationTasks.PUSH_STOCK_BOOT_IMAGE: StockBootImagePusher,
+    MigrationTasks.FIND_PATCHED_BOOT_IMAGE: MagiskImageFinder,
+    MigrationTasks.PULL_PATCHED_BOOT_IMAGE: MagiskImagePuller,
+    ApplicationTasks.REBOOT_TO_RECOVERY: RecoveryRebooter,
+    ApplicationTasks.APPLY_OTA_UPDATE: ADBSideloader,
+    ApplicationTasks.REBOOT_TO_BOOTLOADER: BootloaderRebooter,
+    ApplicationTasks.BOOT_TO_MAGISK_IMAGE: MagiskImageBooter,
 }
