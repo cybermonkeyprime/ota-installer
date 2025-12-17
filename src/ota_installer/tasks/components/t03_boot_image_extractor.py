@@ -12,7 +12,7 @@ from ..task_operation_processor import (
 )
 from .base_task import BaseTask
 
-ENUM_VALUES = TaskOperationDetails.BOOT_IMAGE_EXTRACTOR.value
+ENUM_VALUES = TaskOperationDetails.EXTRACT_STOCK_BOOT_IMAGE.value
 
 
 @task_plugin(PreparationTasks.EXTRACT_STOCK_BOOT_IMAGE.value)
