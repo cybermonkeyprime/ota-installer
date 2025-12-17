@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 
 from ... import decorators
 from ...variables import VariableManager
-from ..mappings.constants import TaskName
+from ..mappings.constants import MigrationTasks
 from ..plugin_registry import task_plugin
 from ..task_operation_details import TaskOperationDetails
 from .base_task import BaseTask
@@ -11,7 +11,7 @@ from .base_task import BaseTask
 ENUM_VALUES = TaskOperationDetails.FIND_MAGISK_IMAGE.value
 
 
-@task_plugin(TaskName.FIND_PATCHED_BOOT_IMAGE.lower_case)
+@task_plugin(MigrationTasks.FIND_PATCHED_BOOT_IMAGE.value)
 @dataclass
 class MagiskImageFinder(BaseTask):
     instance: VariableManager = field(default_factory=VariableManager)
