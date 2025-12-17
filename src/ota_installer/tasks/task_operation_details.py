@@ -3,7 +3,7 @@ from enum import Enum
 
 
 class TaskOperationDetails(Enum):
-    PAYLOAD_IMAGE_EXTRACTOR = Enum(
+    EXTRACT_PAYLOAD_IMAGE = Enum(
         "01",
         {
             "INDEX": 1,
@@ -11,7 +11,7 @@ class TaskOperationDetails(Enum):
             "DESCRIPTION": "📦 Extracting payload.bin to access OTA image files.",
         },
     )
-    PAYLOAD_IMAGE_RENAMER = Enum(
+    RENAME_PAYLOAD_IMAGE = Enum(
         "02",
         {
             "INDEX": 2,
@@ -19,7 +19,7 @@ class TaskOperationDetails(Enum):
             "DESCRIPTION": "📝 Renaming the extracted image file for clarity.",
         },
     )
-    BOOT_IMAGE_EXTRACTOR = Enum(
+    EXTRACT_STOCK_BOOT_IMAGE = Enum(
         "03",
         {
             "INDEX": 3,
