@@ -27,9 +27,9 @@ class MigrationTasks(Enum):
 
 class ApplicationTasks(Enum):
     REBOOT_TO_RECOVERY = "reboot_to_recovery"
-    ADB_SIDELOAD = "adb_sideload"
+    APPLY_OTA_UPDATE = "apply_ota_update"
     REBOOT_TO_BOOTLOADER = "reboot_to_bootloader"
-    BOOT_MAGISK_IMAGE = "boot_magisk_image"
+    BOOT_TO_MAGISK_IMAGE = "boot_to_magisk_image"
 
 
 class TaskGroupInfo(Enum):
@@ -56,9 +56,9 @@ class TaskName(Enum):
     FIND_PATCHED_BOOT_IMAGE = MigrationTasks.FIND_PATCHED_BOOT_IMAGE.value
     PULL_PATCHED_BOOT_IMAGE = MigrationTasks.PULL_PATCHED_BOOT_IMAGE.value
     REBOOT_TO_RECOVERY = ApplicationTasks.REBOOT_TO_RECOVERY.value
-    ADB_SIDELOAD = ApplicationTasks.ADB_SIDELOAD.value
+    APPLY_OTA_UPDATE = ApplicationTasks.APPLY_OTA_UPDATE.value
     REBOOT_TO_BOOTLOADER = ApplicationTasks.REBOOT_TO_BOOTLOADER.value
-    BOOT_MAGISK_IMAGE = ApplicationTasks.BOOT_MAGISK_IMAGE.value
+    BOOT_MAGISK_IMAGE = ApplicationTasks.BOOT_TO_MAGISK_IMAGE.value
 
     @property
     def lower_case(self) -> str:
