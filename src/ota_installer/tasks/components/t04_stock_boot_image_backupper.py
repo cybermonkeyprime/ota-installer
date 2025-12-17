@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 
 from ... import decorators
 from ...variables import VariableManager
-from ..mappings.constants import TaskName
+from ..mappings.constants import PreparationTasks
 from ..plugin_registry import task_plugin
 from ..task_operation_details import TaskOperationDetails
 from ..task_operation_processor import (
@@ -14,7 +14,7 @@ from .base_task import BaseTask
 ENUM_VALUES = TaskOperationDetails.BACKUP_STOCK_BOOT_IMAGE.value
 
 
-@task_plugin(TaskName.BACKUP_STOCK_BOOT_IMAGE.lower_case)
+@task_plugin(PreparationTasks.BACKUP_STOCK_BOOT_IMAGE.value)
 @dataclass
 class StockBootImageBackupper(BaseTask):
     instance: VariableManager = field(default_factory=VariableManager)
