@@ -9,7 +9,7 @@ from ..plugin_registry import task_plugin
 from ..task_operation_details import TaskOperationDetails
 from .base_task import BaseTask
 
-ENUM_VALUES = TaskOperationDetails.PAYLOAD_IMAGE_RENAMER.value
+ENUM_VALUES = TaskOperationDetails.RENAME_PAYLOAD_IMAGE.value
 
 
 @task_plugin(PreparationTasks.RENAME_PAYLOAD_IMAGE.value)
