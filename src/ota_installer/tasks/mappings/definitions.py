@@ -19,7 +19,7 @@ class TaskDefinitions:
                 TaskName.REBOOT_TO_RECOVERY,
             ],
             TaskGroup.APPLICATION.value: [
-                TaskName.ADB_SIDELOAD,
+                TaskName.APPLY_OTA_UPDATE,
                 TaskName.REBOOT_TO_BOOTLOADER,
                 TaskName.BOOT_MAGISK_IMAGE,
             ],
