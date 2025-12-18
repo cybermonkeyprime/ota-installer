@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 
 from ... import decorators
 from ...variables import VariableManager
-from ..mappings.constants import MigrationTasks
+from ..constants.migration_task_constants import MigrationTaskConstants
 from ..plugin_registry import task_plugin
 from ..task_operation_details import TaskOperationDetails
 from .base_task import BaseTask
@@ -11,7 +11,7 @@ from .base_task import BaseTask
 ENUM_VALUES = TaskOperationDetails.CHECK_ADB_CONNECTION.value
 
 
-@task_plugin(MigrationTasks.CHECK_ADB_CONNECTION.value)
+@task_plugin(MigrationTaskConstants.CHECK_ADB_CONNECTION.value)
 @dataclass
 class ADBConnectionChecker(BaseTask):
     instance: VariableManager = field(default_factory=VariableManager)
