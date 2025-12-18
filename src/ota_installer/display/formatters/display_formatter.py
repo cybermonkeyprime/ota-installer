@@ -1,6 +1,6 @@
 # src/ota_installer/display/formatters/display_formatter.py
+from collections import namedtuple
 from dataclasses import dataclass, field
-from typing import NamedTuple
 
 from rich.control import Control
 
@@ -11,12 +11,10 @@ from ...decorators import (
 )
 from ..objects import DisplayObjectTypes
 
-
-class DisplayFormatterTypes(NamedTuple):
-    title: str
-    major_number: int
-    minor_number: int
-    patch_number: int
+DisplayFormatterTypes = namedtuple(
+    "DisplayFormatterTypes",
+    ["title", "major_number", "minor_number", "patch_number"],
+)
 
 
 @dataclass
@@ -34,14 +32,14 @@ class DisplayFormatter(object):
             print(f"An error occurred during initialization: {e}")
 
     def header(self) -> bool:
-        self.display_title()
+        self.show_title()
         self.move_cursor_up()
-        self.display_separator()
-        self.display_versioning()
+        self.show_separator()
+        self.show_subtitle()
         return True
 
     @OutputPrinter(suffix="")
-    def display_title(self) -> str:
+    def show_title(self) -> str:
         return self.process_display_object(DisplayObjectTypes.TITLE)
 
     @OutputPrinter(suffix="")
@@ -50,11 +48,11 @@ class DisplayFormatter(object):
 
     @OutputPrinter(suffix="")
     @Colorizer(style="title")
-    def display_separator(self) -> str:
+    def show_separator(self) -> str:
         return self.process_display_object(DisplayObjectTypes.SEPARATOR)
 
     @OutputPrinter()
-    def display_versioning(self) -> str:
+    def show_subtitle(self) -> str:
         return self.process_display_object(DisplayObjectTypes.SUBTITLE)
 
     def process_display_object(self, _object: DisplayObjectTypes) -> str:
