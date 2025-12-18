@@ -1,9 +1,14 @@
 # src/ota_installer/tasks/definitions/task_definitions.py
 from collections.abc import Iterator
-from dataclasses import dataclass, field
+from dataclasses import asdict, dataclass, field
 
 from ...decorators import ConfirmationPrompt, PaddedFooterWrapper
-from ..mappings import TaskName
+from ..mappings.constants import (
+    ApplicationTasks,
+    MigrationTasks,
+    PreparationTasks,
+    TaskName,
+)
 
 StrTuple = tuple[str, ...]
 StrIterator = Iterator[str]
@@ -50,12 +55,7 @@ class TaskDefinitionsTemplate(object):
 class PreparationTaskDefinitions(TaskDefinitionsTemplate):
     def __post_init__(self) -> None:
         self.tasks = tuple(
-            [
-                TaskName.EXTRACT_PAYLOAD_IMAGE.lower_case,
-                TaskName.RENAME_PAYLOAD_IMAGE.lower_case,
-                TaskName.EXTRACT_STOCK_BOOT_IMAGE.lower_case,
-                TaskName.BACKUP_STOCK_BOOT_IMAGE.lower_case,
-            ]
+            [enum_member.value for enum_member in PreparationTasks]
         )
 
 
@@ -63,12 +63,7 @@ class PreparationTaskDefinitions(TaskDefinitionsTemplate):
 class MigrationTaskDefinitions(TaskDefinitionsTemplate):
     def __post_init__(self) -> None:
         self.tasks = tuple(
-            [
-                TaskName.CHECK_ADB_CONNECTION.lower_case,
-                TaskName.PUSH_STOCK_BOOT_IMAGE.lower_case,
-                TaskName.FIND_PATCHED_BOOT_IMAGE.lower_case,
-                TaskName.PULL_PATCHED_BOOT_IMAGE.lower_case,
-            ]
+            [enum_member.value for enum_member in MigrationTasks]
         )
 
 
@@ -76,10 +71,5 @@ class MigrationTaskDefinitions(TaskDefinitionsTemplate):
 class ApplicationTaskDefinitions(TaskDefinitionsTemplate):
     def __post_init__(self) -> None:
         self.tasks = tuple(
-            [
-                TaskName.REBOOT_TO_RECOVERY.lower_case,
-                TaskName.ADB_SIDELOAD.lower_case,
-                TaskName.REBOOT_TO_BOOTLOADER.lower_case,
-                TaskName.BOOT_MAGISK_IMAGE.lower_case,
-            ]
+            [enum_member.value for enum_member in ApplicationTasks]
         )

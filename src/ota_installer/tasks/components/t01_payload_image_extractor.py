@@ -2,15 +2,15 @@
 from pathlib import Path
 
 from ... import decorators
-from ..mappings.constants import TaskName
+from ..constants.preparation_task_constants import PreparationTaskConstants
 from ..plugin_registry import task_plugin
 from ..task_operation_details import TaskOperationDetails
 from .base_task import BaseTask
 
-ENUM_VALUES = TaskOperationDetails.PAYLOAD_IMAGE_EXTRACTOR.value
+ENUM_VALUES = TaskOperationDetails.EXTRACT_PAYLOAD_IMAGE.value
 
 
-@task_plugin(TaskName.EXTRACT_PAYLOAD_IMAGE.lower_case)
+@task_plugin(PreparationTaskConstants.EXTRACT_PAYLOAD_IMAGE.value)
 class PayloadImageExtractor(BaseTask):
     def __init__(self, instance):
         self.instance = instance

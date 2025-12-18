@@ -5,17 +5,17 @@ from pathlib import Path
 from ... import decorators
 from ...tasks import TaskOperationDetails
 from ...variables import VariableManager
-from ..mappings.constants import TaskName
+from ..constants.preparation_task_constants import PreparationTaskConstants
 from ..plugin_registry import task_plugin
 from ..task_operation_processor import (
     image_handler,
 )
 from .base_task import BaseTask
 
-ENUM_VALUES = TaskOperationDetails.BOOT_IMAGE_EXTRACTOR.value
+ENUM_VALUES = TaskOperationDetails.EXTRACT_STOCK_BOOT_IMAGE.value
 
 
-@task_plugin(TaskName.EXTRACT_STOCK_BOOT_IMAGE.lower_case)
+@task_plugin(PreparationTaskConstants.EXTRACT_STOCK_BOOT_IMAGE.value)
 @dataclass
 class BootImageExtractor(BaseTask):
     instance: VariableManager = field(default_factory=VariableManager)

@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 
 from ... import decorators
 from ...variables import VariableManager
-from ..mappings.constants import TaskName
+from ..constants.application_task_constants import ApplicationTaskConstants
 from ..plugin_registry import task_plugin
 from ..task_operation_details import TaskOperationDetails
 from .base_task import BaseTask
@@ -11,7 +11,7 @@ from .base_task import BaseTask
 ENUM_VALUES = TaskOperationDetails.REBOOT_TO_RECOVERY.value
 
 
-@task_plugin(TaskName.REBOOT_TO_RECOVERY.lower_case)
+@task_plugin(ApplicationTaskConstants.REBOOT_TO_RECOVERY.value)
 @dataclass
 class RecoveryRebooter(BaseTask):
     instance: VariableManager = field(default_factory=VariableManager)
