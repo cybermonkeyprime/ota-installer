@@ -22,7 +22,7 @@ class Subtitle(DisplayComponent):
         """
 
         version_details = SoftwareVersion()
-        return f"Build: {version_details.version_tag}"
+        return version_details.subtitle
 
 
 class DisplaySubtitle(Subtitle):
