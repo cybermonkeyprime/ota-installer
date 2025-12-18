@@ -4,7 +4,7 @@ from dataclasses import dataclass, field
 from ... import decorators
 from ...paths.constants import MagiskImagePaths
 from ...variables import VariableManager
-from ..mappings.constants import MigrationTasks
+from ..constants.migration_task_constants import MigrationTaskConstants
 from ..plugin_registry import task_plugin
 from ..task_operation_details import TaskOperationDetails
 from .base_task import BaseTask
@@ -12,7 +12,7 @@ from .base_task import BaseTask
 ENUM_VALUES = TaskOperationDetails.PULL_MAGISK_IMAGE.value
 
 
-@task_plugin(MigrationTasks.PULL_PATCHED_BOOT_IMAGE.value)
+@task_plugin(MigrationTaskConstants.PULL_PATCHED_BOOT_IMAGE.value)
 @dataclass
 class MagiskImagePuller(BaseTask):
     instance: VariableManager = field(default_factory=VariableManager)
