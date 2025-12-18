@@ -12,7 +12,7 @@ cli = typer.Typer(help="Manually Install Android Device OTA Firmware")
 
 def version_callback(value: bool):
     if value:
-        typer.echo(SoftwareVersion().display_title())  # Customize as needed
+        typer.echo(SoftwareVersion().sub_title)  # Customize as needed
         raise typer.Exit()
 
 
