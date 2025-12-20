@@ -1,4 +1,4 @@
-# src/tasks/operations/constants.py
+# src/tasks/task_operation_constants.py
 from enum import Enum
 
 
@@ -20,13 +20,13 @@ class CommandStringConstants(Enum):
 
 class ExecutorConstants(Enum):
     INDENT = 2
-    MESSAGE = "execute the queen"
+    MESSAGE = "execute the task"
     KEYPRESS_INDENT = 1
 
 
 class ReminderConstants(Enum):
     INDENT = 2
-    STYLE = TaskOpsConstants.TASK_STYLE.value
+    STYLE = "warning"
 
 
 class TaskOpsItemTypeConstants(Enum):
