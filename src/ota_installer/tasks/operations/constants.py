@@ -19,7 +19,7 @@ class CommandStringConstants(Enum):
 
 
 class ExecutorConstants(Enum):
-    INDENT = 2
+    INDENT = 3
     MESSAGE = "execute the task"
     KEYPRESS_INDENT = 1
 
