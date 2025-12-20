@@ -3,15 +3,14 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Self
 
-from dispatchers import DispatcherInterface
-from src import decorators
-
-from . import (
+from ... import decorators
+from ...dispatchers import DispatcherInterface
+from .constants import (
     CommandStringConstants,
-    TaskOperationExecutor,
     TaskOpsConstants,
     TaskOpsItemTypeConstants,
 )
+from .task_operation_executor import TaskOperationExecutor
 
 
 @dataclass
