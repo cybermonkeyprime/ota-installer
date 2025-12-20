@@ -5,6 +5,7 @@ from pathlib import Path
 from types import NoneType
 from typing import Self
 
+from ...decorators import StylizedIndentPrinter
 from ...display import VariableProcessor
 from ...log_setup import logger
 from ...variables import VariableManager
@@ -30,7 +31,7 @@ class TaskIteration(object):
         except TypeError as err:
             # Check if this is likely due to a NoneType or signature mismatch
             if isinstance(task_group, NoneType) or "NoneType" in str(err):
-                print("Task group skipped\n")
+                skipped_task_group_msg()
             else:
                 logger.error(
                     f"[{type(err).__name__}] TaskIteration Error: {err}"
@@ -40,6 +41,11 @@ class TaskIteration(object):
             logger.exception(
                 f"[{type(err).__name__}] TaskIteration Error: {err}"
             )
+
+
+@StylizedIndentPrinter(indent=2, style="variable", end="\n\n", use_output=True)
+def skipped_task_group_msg() -> str:
+    return "Task Group skipped"
 
 
 @dataclass
