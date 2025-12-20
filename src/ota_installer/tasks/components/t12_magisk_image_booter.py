@@ -4,9 +4,9 @@ from dataclasses import dataclass, field
 from ... import decorators
 from ...variables import VariableManager
 from ..constants.application_task_constants import ApplicationTaskConstants
+from ..operations.task_operation_details import TaskOperationDetails
+from ..operations.task_operation_processor import image_handler
 from ..plugin_registry import task_plugin
-from ..task_operation_details import TaskOperationDetails
-from ..task_operation_processor import image_handler
 from .base_task import BaseTask
 
 ENUM_VALUES = TaskOperationDetails.BOOT_TO_MAGISK_IMAGE.value
