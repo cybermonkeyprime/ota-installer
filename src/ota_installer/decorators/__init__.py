@@ -12,6 +12,7 @@ from .indent_wrapper import *
 from .multiply_string import *
 from .output_printer import *
 from .padded_footer_wrapper import *
+from .styled_indent_printer import StylizedIndentPrinter
 from .styled_figlet_printer import *
 from .template import *
 from .timeit import *
