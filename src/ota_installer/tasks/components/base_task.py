@@ -1,7 +1,7 @@
 # src/ota_installer/tasks/components/base_task.py
 from dataclasses import dataclass
 
-from ..task_operation_processor import TaskOperationProcessor
+from ..operations.task_operation_processor import TaskOperationProcessor
 
 
 @dataclass
