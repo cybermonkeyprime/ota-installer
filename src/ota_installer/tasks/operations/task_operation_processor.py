@@ -1,4 +1,4 @@
-# src/tasks/task_operation_processor.py
+# src/ota_installer/tasks/operations/task_operation_processor.py
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Self
@@ -108,7 +108,7 @@ def image_handler(key: str) -> Path:
         dispatcher = DispatcherInterface("image")
         retriever = dispatcher.get_dispatcher()
         # return retriever.get_key(key)
-        return Path.home() / "images" / f"{retriever.get_key(key)}.img"
+        return Path.home() / "images" / f"{retriever.get_key(key)}.img"  # type: ignore[return-value]
     except KeyError as e:
         raise ValueError(f"Invalid key for image handler: {key}") from e
 
