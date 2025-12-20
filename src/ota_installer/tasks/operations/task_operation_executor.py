@@ -2,8 +2,7 @@ from dataclasses import dataclass
 from subprocess import CalledProcessError, check_output, run
 from typing import Self
 
-from src import decorators
-
+from ... import decorators
 from .constants import ExecutorConstants
 
 
