@@ -125,7 +125,7 @@ class TaskAspectParser(object):
 
     @decorators.ColorizedIndentPrinter(indent=1, end=":", style="task")
     def show_header(self) -> str:
-        return f"{self.value}:"
+        return f"{self.value}"
 
 
 def main():
