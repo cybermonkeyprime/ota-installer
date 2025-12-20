@@ -1,4 +1,4 @@
-# src/tasks/operations/task_operation_details.py
+# src/ota_installer/tasks/operations/task_operation_details.py
 from enum import Enum
 
 
