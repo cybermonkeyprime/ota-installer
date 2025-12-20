@@ -5,8 +5,8 @@ from ... import decorators
 from ...paths.constants import MagiskImagePaths
 from ...variables import VariableManager
 from ..constants.migration_task_constants import MigrationTaskConstants
+from ..operations.task_operation_details import TaskOperationDetails
 from ..plugin_registry import task_plugin
-from ..task_operation_details import TaskOperationDetails
 from .base_task import BaseTask
 
 ENUM_VALUES = TaskOperationDetails.PULL_MAGISK_IMAGE.value
