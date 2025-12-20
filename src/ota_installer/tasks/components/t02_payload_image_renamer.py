@@ -5,8 +5,8 @@ from pathlib import Path
 from ... import decorators
 from ...variables import VariableManager
 from ..constants.preparation_task_constants import PreparationTaskConstants
+from ..operations.task_operation_details import TaskOperationDetails
 from ..plugin_registry import task_plugin
-from ..task_operation_details import TaskOperationDetails
 from .base_task import BaseTask
 
 ENUM_VALUES = TaskOperationDetails.RENAME_PAYLOAD_IMAGE.value
