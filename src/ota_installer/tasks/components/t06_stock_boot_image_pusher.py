@@ -4,8 +4,8 @@ from dataclasses import dataclass, field
 from ... import decorators
 from ...variables import VariableManager
 from ..constants.migration_task_constants import MigrationTaskConstants
+from ..operations.task_operation_details import TaskOperationDetails
 from ..plugin_registry import task_plugin
-from ..task_operation_details import TaskOperationDetails
 from .base_task import BaseTask
 
 ENUM_VALUES = TaskOperationDetails.PUSH_STOCK_BOOT_IMAGE.value
