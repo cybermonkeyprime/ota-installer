@@ -29,7 +29,7 @@ class TaskGroupTypeDispatcher(object):
         Attempt to retrieve and instantiate the value associated with
             the given key.
         """
-        logger.debug(key)
+
         try:
             task = self.collection.get(key)
             if isinstance(task, Callable):

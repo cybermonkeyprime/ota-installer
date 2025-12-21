@@ -7,9 +7,11 @@ from ..dispatchers.mappings import DispatcherTypeMapping
 from ..dispatchers.templates import DispatcherTemplate
 from ..dispatchers.templates.dispatcher_template import CollectionValues
 from ..log_setup import logger
+from ..task_groups.constants.task_group_names import (
+    TaskGroups as TaskGroupNames,
+)
 from .definitions import TaskDefinitions
 from .managers.task_manager import TaskManager
-from .mappings.constants import TaskGroup as TaskGroupNames
 
 
 @dataclass
@@ -83,6 +85,7 @@ class TaskExecutor(object):
         return self
 
     def get_dispatcher_instance(self, key: str) -> CollectionValues | None:
+        logger.debug(key)
         return self.dispatcher.get_instance(key)
 
     def execute_task(self, task_group_key: str) -> None:

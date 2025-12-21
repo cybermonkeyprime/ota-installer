@@ -19,8 +19,9 @@ class TaskDefinitions:
                 TaskName.REBOOT_TO_RECOVERY,
             ],
             TaskGroup.APPLICATION.value: [
+                TaskName.REBOOT_TO_RECOVERY,
                 TaskName.APPLY_OTA_UPDATE,
                 TaskName.REBOOT_TO_BOOTLOADER,
-                TaskName.BOOT_MAGISK_IMAGE,
+                TaskName.BOOT_TO_MAGISK_IMAGE,
             ],
         }

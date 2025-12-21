@@ -2,8 +2,8 @@
 from dataclasses import dataclass, field
 
 from ... import decorators
+from ...task_groups.constants.application_tasks import ApplicationTasks
 from ...variables import VariableManager
-from ..constants.application_task_constants import ApplicationTaskConstants
 from ..operations.task_operation_details import TaskOperationDetails
 from ..plugin_registry import task_plugin
 from .base_task import BaseTask
@@ -11,7 +11,7 @@ from .base_task import BaseTask
 ENUM_VALUES = TaskOperationDetails.REBOOT_TO_BOOTLOADER.value
 
 
-@task_plugin(ApplicationTaskConstants.REBOOT_TO_BOOTLOADER.value)
+@task_plugin(ApplicationTasks.REBOOT_TO_BOOTLOADER.task_name)
 @dataclass
 class BootloaderRebooter(BaseTask):
     instance: VariableManager = field(default_factory=VariableManager)

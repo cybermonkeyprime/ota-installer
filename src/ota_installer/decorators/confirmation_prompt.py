@@ -4,6 +4,7 @@ from dataclasses import dataclass, field
 from functools import wraps
 from typing import cast
 
+from loguru import logger
 import pyinputplus as pyip
 from rich.console import Console
 
@@ -41,7 +42,9 @@ class ConfirmationPrompt(GenericDecorator):
                         return None
                 return function(*args, **kwargs)
             except Exception as err:
-                print(f"{function.__name__} raised an exception: {err}")
+                logger.exception(
+                    f"{function.__name__} raised an exception: {err}"
+                )
                 return None
 
         return cast(Callable[P, R], wrapper)

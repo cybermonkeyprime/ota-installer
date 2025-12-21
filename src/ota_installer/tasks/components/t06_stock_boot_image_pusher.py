@@ -2,8 +2,8 @@
 from dataclasses import dataclass, field
 
 from ... import decorators
+from ...task_groups.constants.migration_tasks import MigrationTasks
 from ...variables import VariableManager
-from ..constants.migration_task_constants import MigrationTaskConstants
 from ..operations.task_operation_details import TaskOperationDetails
 from ..plugin_registry import task_plugin
 from .base_task import BaseTask
@@ -11,7 +11,7 @@ from .base_task import BaseTask
 ENUM_VALUES = TaskOperationDetails.PUSH_STOCK_BOOT_IMAGE.value
 
 
-@task_plugin(MigrationTaskConstants.PUSH_STOCK_BOOT_IMAGE.value)
+@task_plugin(MigrationTasks.PUSH_STOCK_BOOT_IMAGE.task_name)
 @dataclass
 class StockBootImagePusher(BaseTask):
     instance: VariableManager = field(default_factory=VariableManager)

@@ -1,13 +1,18 @@
 # src/ota_installer/tasks/definitions/task_definitions.py
-from collections.abc import Iterator
-from dataclasses import asdict, dataclass, field
+from collections.abc import Iterable, Iterator
+from dataclasses import dataclass, field
+
+from loguru import logger
 
 from ...decorators import ConfirmationPrompt, PaddedFooterWrapper
-from ..mappings.constants import (
+from ...task_groups.constants.application_tasks import (
     ApplicationTasks,
+)
+from ...task_groups.constants.migration_tasks import (
     MigrationTasks,
+)
+from ...task_groups.constants.preparation_tasks import (
     PreparationTasks,
-    TaskName,
 )
 
 StrTuple = tuple[str, ...]
@@ -51,25 +56,25 @@ class TaskDefinitionsTemplate(object):
         return iter(self._tasks)
 
 
+def enum_name_list(enum: Iterable) -> list:
+    result = [enum_member.value.value for enum_member in enum]
+    logger.debug(result)
+    return result
+
+
 @dataclass
 class PreparationTaskDefinitions(TaskDefinitionsTemplate):
     def __post_init__(self) -> None:
-        self.tasks = tuple(
-            [enum_member.value for enum_member in PreparationTasks]
-        )
+        self.tasks = tuple(enum_name_list(PreparationTasks))
 
 
 @dataclass
 class MigrationTaskDefinitions(TaskDefinitionsTemplate):
     def __post_init__(self) -> None:
-        self.tasks = tuple(
-            [enum_member.value for enum_member in MigrationTasks]
-        )
+        self.tasks = tuple(enum_name_list(MigrationTasks))
 
 
 @dataclass
 class ApplicationTaskDefinitions(TaskDefinitionsTemplate):
     def __post_init__(self) -> None:
-        self.tasks = tuple(
-            [enum_member.value for enum_member in ApplicationTasks]
-        )
+        self.tasks = tuple(enum_name_list(ApplicationTasks))

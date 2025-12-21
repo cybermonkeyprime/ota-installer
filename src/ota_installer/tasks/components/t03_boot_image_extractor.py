@@ -3,8 +3,8 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from ... import decorators
+from ...task_groups.constants.preparation_tasks import PreparationTasks
 from ...variables import VariableManager
-from ..constants.preparation_task_constants import PreparationTaskConstants
 from ..operations.task_operation_details import TaskOperationDetails
 from ..operations.task_operation_processor import image_handler
 from ..plugin_registry import task_plugin
@@ -13,7 +13,7 @@ from .base_task import BaseTask
 ENUM_VALUES = TaskOperationDetails.EXTRACT_STOCK_BOOT_IMAGE.value
 
 
-@task_plugin(PreparationTaskConstants.EXTRACT_STOCK_BOOT_IMAGE.value)
+@task_plugin(PreparationTasks.EXTRACT_STOCK_BOOT_IMAGE.task_name)
 @dataclass
 class BootImageExtractor(BaseTask):
     instance: VariableManager = field(default_factory=VariableManager)

@@ -10,6 +10,7 @@ from .constants import (
     TaskOpsConstants,
     TaskOpsItemTypeConstants,
 )
+from .task_item_parser import TaskItemParser
 from .task_operation_executor import TaskOperationExecutor
 
 
@@ -52,7 +53,7 @@ class TaskOperationProcessor(object):
         return getattr(self, field_name.lower(), None)
 
     def show_index_and_title(self) -> str:
-        return TaskAspectParser(f"{self.index}. {self.title}:").show_header()
+        return TaskItemParser(f"{self.index}. {self.title}:").show_header()
 
     @decorators.FooterWrapper()
     @decorators.ColorizedIndentPrinter(indent=3, end="", style="warning")
@@ -69,10 +70,10 @@ class TaskOperationProcessor(object):
         return self.command_string
 
     def show_comment(self) -> str:
-        return TaskAspectParser(self.comment).show_aspect()
+        return TaskItemParser(self.comment).show_aspect()
 
     def show_reminder(self) -> str:
-        return TaskAspectParser(self.reminder).show_aspect()
+        return TaskItemParser(self.reminder).show_aspect()
 
     def execute_command_string(self) -> None:
         TaskOperationExecutor(self.command_string).execute()
@@ -111,21 +112,6 @@ def image_handler(key: str) -> Path:
         return Path.home() / "images" / f"{retriever.get_key(key)}.img"  # type: ignore[return-value]
     except KeyError as e:
         raise ValueError(f"Invalid key for image handler: {key}") from e
-
-
-@dataclass
-class TaskAspectParser(object):
-    value: str
-
-    @decorators.ColorizedIndentPrinter(
-        indent=2, begin="", end="", style="task"
-    )
-    def show_aspect(self) -> str:
-        return f"{self.value}"
-
-    @decorators.ColorizedIndentPrinter(indent=1, end=":", style="task")
-    def show_header(self) -> str:
-        return f"{self.value}"
 
 
 def main():

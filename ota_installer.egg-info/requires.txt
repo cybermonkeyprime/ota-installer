@@ -1,0 +1,8 @@
+bsdiff4==1.2.4
+loguru==0.7.3
+protobuf==3.20.1
+pyfiglet==1.0.2
+pyinputplus==0.2.12
+rich==14.2.0
+six==1.16.0
+typer==0.20.0

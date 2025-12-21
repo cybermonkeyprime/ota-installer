@@ -23,6 +23,7 @@ class TaskIteration(object):
 
     def execute_iteration(self, task_group: StringTuple) -> object | None:
         task_director = TaskDirector()
+        logger.debug(task_group)
         try:
             stack = list(task_group)
             handle_task = task_director.handle_task
@@ -96,6 +97,7 @@ class TaskDirector(object):
     """Manages the initiation of task processing."""
 
     def handle_task(self, instance: VariableManager, item: str) -> None:
+        logger.debug(item)
         task = TaskFactory(instance).create_task(task_name=item)
         if task is None:
             logger.error(

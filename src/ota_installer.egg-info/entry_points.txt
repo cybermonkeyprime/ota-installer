@@ -1,0 +1,2 @@
+[console_scripts]
+ota-installer = ota_installer.main:main

@@ -47,18 +47,21 @@ class TaskGroupInfo(Enum):
 
 
 class TaskName(Enum):
-    EXTRACT_PAYLOAD_IMAGE = PreparationTasks.EXTRACT_PAYLOAD_IMAGE.value
-    RENAME_PAYLOAD_IMAGE = PreparationTasks.RENAME_PAYLOAD_IMAGE.value
-    EXTRACT_STOCK_BOOT_IMAGE = PreparationTasks.EXTRACT_STOCK_BOOT_IMAGE.value
-    BACKUP_STOCK_BOOT_IMAGE = PreparationTasks.BACKUP_STOCK_BOOT_IMAGE.value
-    CHECK_ADB_CONNECTION = MigrationTasks.CHECK_ADB_CONNECTION.value
-    PUSH_STOCK_BOOT_IMAGE = MigrationTasks.PUSH_STOCK_BOOT_IMAGE.value
-    FIND_PATCHED_BOOT_IMAGE = MigrationTasks.FIND_PATCHED_BOOT_IMAGE.value
-    PULL_PATCHED_BOOT_IMAGE = MigrationTasks.PULL_PATCHED_BOOT_IMAGE.value
-    REBOOT_TO_RECOVERY = ApplicationTasks.REBOOT_TO_RECOVERY.value
-    APPLY_OTA_UPDATE = ApplicationTasks.APPLY_OTA_UPDATE.value
-    REBOOT_TO_BOOTLOADER = ApplicationTasks.REBOOT_TO_BOOTLOADER.value
-    BOOT_MAGISK_IMAGE = ApplicationTasks.BOOT_TO_MAGISK_IMAGE.value
+    # preparation
+    EXTRACT_PAYLOAD_IMAGE = "extract_stock_boot_image"
+    RENAME_PAYLOAD_IMAGE = "rename_payload_image"
+    EXTRACT_STOCK_BOOT_IMAGE = "extract_stock_boot_image"
+    BACKUP_STOCK_BOOT_IMAGE = "backup_stock_boot_image"
+    # migration
+    CHECK_ADB_CONNECTION = "check_adb_connection"
+    PUSH_STOCK_BOOT_IMAGE = "push_stock_boot_image"
+    FIND_PATCHED_BOOT_IMAGE = "find_patched_boot_image"
+    PULL_PATCHED_BOOT_IMAGE = "pull_patched_boot_image"
+    # application
+    REBOOT_TO_RECOVERY = "reboot_to_recovery"
+    APPLY_OTA_UPDATE = "apply_ota_update"
+    REBOOT_TO_BOOTLOADER = "reboot_to_bootloader"
+    BOOT_TO_MAGISK_IMAGE = "boot_to_magisk_image"
 
     @property
     def lower_case(self) -> str:

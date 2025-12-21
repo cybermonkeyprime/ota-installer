@@ -22,6 +22,7 @@ class TaskItemAspectConstants(Enum):
 @dataclass
 class TaskItemParser(object):
     value: str
+    constants = TaskItemAspectConstants
 
     @decorators.ColorizedIndentPrinter(
         indent=TaskItemAspectConstants.INDENT.value,
