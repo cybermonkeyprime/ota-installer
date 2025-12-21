@@ -15,7 +15,7 @@ class SoftwareVersionConstants(Enum):
     TITLE = "OTA-Installer"
     MAJOR_NUMBER = 2025
     MINOR_NUMBER = 12
-    PATCH_NUMBER = 20
+    PATCH_NUMBER = 21
 
 
 @dataclass
@@ -27,6 +27,6 @@ class SoftwareVersion(object):
         return [enum_member.value for enum_member in SoftwareVersionConstants]
 
     @property
-    def sub_title(self):
+    def display(self):
         sc = SoftwareContainer(*self.data)
         return f"Build: {sc.major_number}.{sc.minor_number}.{sc.patch_number}"
