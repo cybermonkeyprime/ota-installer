@@ -21,7 +21,7 @@ class Subtitle(DisplayComponent):
         with the software version tag.
         """
 
-        return SoftwareVersion().sub_title
+        return SoftwareVersion().display
 
 
 class DisplaySubtitle(Subtitle):
