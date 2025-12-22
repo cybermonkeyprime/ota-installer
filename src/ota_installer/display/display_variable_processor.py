@@ -18,19 +18,23 @@ class VariableProcessor(object):
     processing_function: VariableManager
 
     def process_file_names(self) -> Self:
-        for process_item in {set_ota_file_name, set_image_file_names}:
-            process_item(self.processing_function)
+        file_types = {set_ota_file_name, set_image_file_names}
+        self.process_items(file_types)
         return self
 
     def process_directory_names(self) -> Self:
-        for process_item in {
+        directory_types = {
             set_ota_file_directory,
             set_boot_image_directories,
             set_magisk_image_directories,
-        }:
-            process_item(self.processing_function)
+        }
+        self.process_items(directory_types)
         print()
         return self
+
+    def process_items(self, iterator: set) -> None:
+        function = self.processing_function
+        {process_item(function) for process_item in iterator}
 
     def process_log_file(self) -> Self:
         set_log_file(self.processing_function)
