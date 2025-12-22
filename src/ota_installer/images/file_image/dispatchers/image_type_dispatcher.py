@@ -1,8 +1,8 @@
-# src/ota_installer/dispatchers/types/image_type_dispatcher.py
+# src/ota_installer/images/file_image/dispatchers/image_type_dispatcher.py
 from dataclasses import dataclass, field
 from enum import Enum
 
-from ..templates import DispatcherTemplate
+from ....dispatchers.templates import DispatcherTemplate
 
 
 class ImageTypes(Enum):
