@@ -4,9 +4,11 @@ from enum import Enum
 from ...dispatchers.types import (
     DirectoryTypeDispatcher,
     FileTypeDispatcher,
-    ImageTypeDispatcher,
     TaskGroupTypeDispatcher,
     VariableTypeDispatcher,
+)
+from ...images.boot_image.dispatchers.boot_image_dispatcher import (
+    ImageTypeDispatcher,
 )
 
 DispatcherTypes = (
