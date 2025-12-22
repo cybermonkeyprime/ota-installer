@@ -1,5 +1,4 @@
 # src/ota_installer/display/formatters/display_formatter.py
-from collections import namedtuple
 from dataclasses import dataclass, field
 
 from rich.control import Control
@@ -9,12 +8,7 @@ from ...decorators import (
     FooterWrapper,
     OutputPrinter,
 )
-from ..objects import DisplayObjectTypes
-
-DisplayFormatterTypes = namedtuple(
-    "DisplayFormatterTypes",
-    ["title", "major_number", "minor_number", "patch_number"],
-)
+from ..objects.constants.display_object_constants import DisplayObjectConstants
 
 
 @dataclass
@@ -40,7 +34,7 @@ class DisplayFormatter(object):
 
     @OutputPrinter(suffix="")
     def show_title(self) -> str:
-        return self.process_display_object(DisplayObjectTypes.TITLE)
+        return self.process_display_object(DisplayObjectConstants.TITLE)
 
     @OutputPrinter(suffix="")
     def move_cursor_up(self) -> str:
@@ -49,11 +43,11 @@ class DisplayFormatter(object):
     @OutputPrinter(suffix="")
     @Colorizer(style="title")
     def show_separator(self) -> str:
-        return self.process_display_object(DisplayObjectTypes.SEPARATOR)
+        return self.process_display_object(DisplayObjectConstants.SEPARATOR)
 
     @OutputPrinter()
     def show_subtitle(self) -> str:
-        return self.process_display_object(DisplayObjectTypes.SUBTITLE)
+        return self.process_display_object(DisplayObjectConstants.SUBTITLE)
 
-    def process_display_object(self, _object: DisplayObjectTypes) -> str:
-        return DisplayObjectTypes[_object.name].processor
+    def process_display_object(self, _object: DisplayObjectConstants) -> str:
+        return DisplayObjectConstants[_object.name].processor
