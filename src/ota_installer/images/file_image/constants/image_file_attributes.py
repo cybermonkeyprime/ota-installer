@@ -3,7 +3,7 @@ from collections import namedtuple
 from enum import Enum
 from typing import Self
 
-from ...boot_image.constants.paths.boot_image_paths import BootImagePaths
+from ....images.boot_image.constants.boot_image_paths import BootImagePaths
 
 ImageFileStruct = namedtuple("ImageFileStruct", ["title", "extension"])
 
