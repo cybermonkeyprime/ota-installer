@@ -1,7 +1,7 @@
 # src/ota_installer/variables/constants.py
 from enum import Enum
 
-from ..paths.constants.magisk_image_paths import MagiskImagePaths
+from ..images.magisk_image.constants.magisk_image_paths import MagiskImagePaths
 
 
 class DispatcherTypes(Enum):
