@@ -1,9 +1,13 @@
 # src/ota_installer/tasks/constants/bindings.py
 from enum import Enum
 
-from ...task_groups.constants import (
+from ...task_groups.constants.application_tasks import (
     ApplicationTasks,
+)
+from ...task_groups.constants.migration_tasks import (
     MigrationTasks,
+)
+from ...task_groups.constants.preparation_tasks import (
     PreparationTasks,
 )
 from ..components.t01_payload_image_extractor import (
@@ -30,8 +34,8 @@ from ..components.t12_magisk_image_booter import MagiskImageBooter
 Preparation = PreparationTasks
 
 TASK_CLASS_MAP = {
-    PreparationTasks.EXTRACT_PAYLOAD_IMAGE.lower_case: PreparationTasks.EXTRACT_PAYLOAD_IMAGE.Class,
-    PreparationTasks.RENAME_PAYLOAD_IMAGE.lower_case: PayloadImageRenamer,
+    PreparationTasks.EXTRACT_PAYLOAD_IMAGE.name: PayloadImageExtractor,
+    PreparationTasks.RENAME_PAYLOAD_IMAGE.name: PayloadImageRenamer,
     PreparationTasks.EXTRACT_STOCK_BOOT_IMAGE.name: BootImageExtractor,
     PreparationTasks.BACKUP_STOCK_BOOT_IMAGE.name: StockBootImageBackupper,
     MigrationTasks.CHECK_ADB_CONNECTION.name: ADBConnectionChecker,
@@ -48,7 +52,7 @@ TASK_CLASS_MAP = {
 class TaskClassMap(Enum):
     """preparation"""
 
-    EXTRACT_PAYLOAD_IMAGE = PreparationTasks.EXTRACT_PAYLOAD_IMAGE.Class
+    EXTRACT_PAYLOAD_IMAGE = PayloadImageExtractor
     RENAME_PAYLOAD_IMAGE = PayloadImageRenamer
     EXTRACT_STOCK_BOOT_IMAGE = BootImageExtractor
     BACKUP_STOCK_BOOT_IMAGE = StockBootImageBackupper
