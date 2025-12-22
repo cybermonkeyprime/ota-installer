@@ -2,7 +2,9 @@
 from dataclasses import dataclass, field
 
 from ... import decorators
-from ...paths.constants import MagiskImagePaths
+from ...images.magisk_image.constants.magisk_image_paths import (
+    MagiskImagePaths,
+)
 from ...task_groups.constants.migration_tasks import MigrationTasks
 from ...variables import VariableManager
 from ..operations.task_operation_details import TaskOperationDetails
