@@ -34,7 +34,8 @@ class VariableFileProcessor(BaseProcessor):
         return self
 
     def process_items(self) -> Self | None:
-        from ..classes import VariableItem, VariableTableBuilder
+        from ..classes.variable_table_builder import VariableTableBuilder
+        from ..containers.variable_item import VariableItem
 
         builder = VariableTableBuilder(indent=3)
         data = VariableItem(
