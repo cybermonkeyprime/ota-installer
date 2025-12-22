@@ -1,9 +1,9 @@
-# src/ota_installer/structures/magisk.py
+# src/ota_installer/images/magisk_image/containers/magisk.py
 from collections import namedtuple
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from ..paths.constants import MagiskImagePaths
+from ..constants.magisk_image_paths import MagiskImagePaths
 
 
 @dataclass
