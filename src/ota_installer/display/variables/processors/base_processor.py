@@ -10,9 +10,7 @@ class BaseProcessor(object):
     dispatcher: DispatcherProtocol | None = field(init=False)
     dispatcher_type: str | None = None  # To be set in subclasses
 
-    def __post_init__(self):
-        from ...variables import VariableManager
-
+    def __post_init__(self) -> None:
         if not self.dispatcher_type:
             raise ValueError(
                 "dispatcher_type must be set in subclass before __post_init__"
