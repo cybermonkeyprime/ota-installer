@@ -10,12 +10,12 @@ def set_log_file(file_name_parts: Callable) -> str:
 
 
 def parse_file_name(path):
-    from ..structures import FileNameParser
+    from ..structures.file_name_parser import FileNameParser
 
     return FileNameParser(path)  # .set_raw_name(path).parse_file_name())
 
 
-def set_variable_manager(path: Path) -> "VariableManager":  # type: ignore[return-value]
+def set_variable_manager(path: Path) -> "VariableManager":  # noqa: F821 # pyright: ignore[reportUndefinedVariable]
     from ..variables import VariableManager
 
     return VariableManager(path)
