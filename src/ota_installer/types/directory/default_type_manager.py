@@ -2,8 +2,10 @@
 from dataclasses import dataclass
 from pathlib import Path
 
+from ...images.boot_image.constants.paths.boot_image_paths import (
+    BootImagePaths,
+)
 from ...log_setup import logger
-from ...paths.constants import BootImagePaths
 from ...types.directory import DefaultTypeDefinition
 
 

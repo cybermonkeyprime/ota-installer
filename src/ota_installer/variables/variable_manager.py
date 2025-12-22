@@ -51,7 +51,7 @@ class VariableManager(object):
         return self
 
     def define_file_paths(self) -> Self:
-        from ..structures import ImageFileData
+        from ..images.file_image.containers.image_file import ImageFileData
         from ..variables.functions import (
             get_file_image_path,
             set_log_file,

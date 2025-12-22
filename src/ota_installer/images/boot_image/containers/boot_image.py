@@ -1,8 +1,8 @@
-# src/ota_installer/structures/boot_image.py
+# src/ota_installer/boot_image/containers/boot_image.py
 from dataclasses import dataclass
 from pathlib import Path
 
-from ..paths.constants import BootImagePaths
+from ..constants.paths.boot_image_paths import BootImagePaths
 
 
 @dataclass

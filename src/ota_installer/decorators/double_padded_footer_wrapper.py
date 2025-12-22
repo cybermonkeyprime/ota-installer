@@ -4,7 +4,7 @@ from dataclasses import dataclass, field
 from functools import wraps
 from typing import cast
 
-# from src.ota_installer.logger import logger
+from ..log_setup import logger
 from ..types.decorators import GenericDecorator
 
 

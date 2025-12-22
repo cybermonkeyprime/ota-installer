@@ -27,7 +27,7 @@ class TaskManager(object):
         try:
             self.variable = VariableManager(self.file_name)
         except Exception as err:
-            print(f"[{type(err).__name__}] {err}")
+            logger.exception(f"[{type(err).__name__}] {err}")
         return self
 
     def set_iteration(self) -> Self:

@@ -22,7 +22,9 @@ def set_variable_manager(path: Path) -> "VariableManager":  # type: ignore[retur
 
 
 def get_file_image_path(name: str, device: str, version) -> str:
-    from ..paths.constants import ImageFileAttributes
+    from ..images.file_image.constants.image_file_attributes import (
+        ImageFileAttributes,
+    )
 
     return (
         ImageFileAttributes[name.upper()]

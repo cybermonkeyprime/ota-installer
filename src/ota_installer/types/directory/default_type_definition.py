@@ -4,8 +4,9 @@ from enum import Enum
 from pathlib import Path
 from typing import TypeVar
 
+from ...images.boot_image.containers.boot_image import BootImageStruct
 from ...paths.constants.magisk_image_paths import MagiskImagePaths
-from ...structures import BootImageStruct, MagiskStruct
+from ...structures import MagiskStruct
 
 magisk_struct = MagiskStruct()
 
