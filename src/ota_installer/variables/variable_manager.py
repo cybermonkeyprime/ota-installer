@@ -5,10 +5,10 @@ from pathlib import Path
 from typing import Self
 
 from ..dispatchers import DispatcherInterface
-from ..log_setup import logger
-from ..paths.constants import (
+from ..images.magisk_image.constants.magisk_image_paths import (
     MagiskImagePaths,
 )
+from ..log_setup import logger
 from ..types.directory import DefaultTypeDefinition, DefaultTypeManager
 
 DirectoryTypeDefinition = DefaultTypeDefinition
