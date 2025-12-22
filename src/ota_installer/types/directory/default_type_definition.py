@@ -5,8 +5,10 @@ from pathlib import Path
 from typing import TypeVar
 
 from ...images.boot_image.containers.boot_image import BootImageStruct
-from ...paths.constants.magisk_image_paths import MagiskImagePaths
-from ...structures import MagiskStruct
+from ...images.magisk_image.constants.magisk_image_paths import (
+    MagiskImagePaths,
+)
+from ...images.magisk_image.containers.magisk import MagiskStruct
 
 magisk_struct = MagiskStruct()
 
