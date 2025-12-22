@@ -15,7 +15,7 @@ class SoftwareVersionConstants(Enum):
     TITLE = "OTA-Installer"
     MAJOR_NUMBER = 2025
     MINOR_NUMBER = 12
-    PATCH_NUMBER = 21
+    PATCH_NUMBER = 22
 
 
 @dataclass
