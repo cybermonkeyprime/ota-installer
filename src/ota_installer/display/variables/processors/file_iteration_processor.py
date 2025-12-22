@@ -24,7 +24,8 @@ class FileIterationProcessor(BaseProcessor):
         super().__post_init__()  # initialize dispatcher
 
     def process_items(self) -> None:
-        from ..classes import VariableItem, VariableTableBuilder
+        from ..classes.variable_table_builder import VariableTableBuilder
+        from ..containers.variable_item import VariableItem
 
         builder = VariableTableBuilder(indent=3)
         for file in self.file_names:
