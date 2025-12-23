@@ -1,5 +1,6 @@
 __pycache__
 *.pyc
+ota-installer.egg-info
 
 clipboard.py
 generate_git_changes_and_commits.sh chatbox.sh
