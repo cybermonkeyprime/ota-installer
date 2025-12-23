@@ -10,7 +10,7 @@ from .services import (
     DisplayConfigurationService,
     ScreenManagerService,
 )
-from .tasks.task_execution import CLIArguments, TaskExecutor
+from .tasks.execution.task_execution import CLIArguments, TaskExecutor
 
 
 @dataclass

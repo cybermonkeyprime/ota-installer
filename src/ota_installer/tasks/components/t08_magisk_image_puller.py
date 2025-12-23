@@ -1,10 +1,13 @@
 # src/ota_installer/tasks/components/t08_magisk_image_puller.py
 from dataclasses import dataclass, field
 
+from loguru import logger
+
 from ... import decorators
 from ...images.magisk_image.constants.magisk_image_paths import (
     MagiskImagePaths,
 )
+from ...task_groups.constants.application_tasks import ApplicationTasks
 from ...task_groups.constants.migration_tasks import MigrationTasks
 from ...variables import VariableManager
 from ..operations.task_operation_details import TaskOperationDetails
@@ -41,3 +44,4 @@ class MagiskImagePuller(BaseTask):
     )
     def perform_task(self) -> None:
         self.task.run_with_output()
+        logger.debug(f"{ApplicationTasks.REBOOT_TO_BOOTLOADER.task_name=}")

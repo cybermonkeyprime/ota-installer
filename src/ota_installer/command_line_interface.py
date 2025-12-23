@@ -5,14 +5,15 @@ import typer
 
 from .application import Application, task_execution
 from .program_versioning import SoftwareVersion
-from .tasks.task_execution import CLIArguments, TaskGroupNames
+from .tasks.execution.cli_arguments import CLIArguments
+from .tasks.execution.task_execution import TaskGroupNames
 
 cli = typer.Typer(help="Manually Install Android Device OTA Firmware")
 
 
 def version_callback(value: bool):
     if value:
-        typer.echo(SoftwareVersion().sub_title)  # Customize as needed
+        typer.echo(SoftwareVersion().display)  # Customize as needed
         raise typer.Exit()
 
 

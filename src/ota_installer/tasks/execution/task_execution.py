@@ -2,24 +2,17 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Self
 
-from ..dispatchers import DispatcherInterface
-from ..dispatchers.mappings import DispatcherTypeMapping
-from ..dispatchers.templates import DispatcherTemplate
-from ..dispatchers.templates.dispatcher_template import CollectionValues
-from ..log_setup import logger
-from ..task_groups.constants.task_group_names import (
+from ...dispatchers import DispatcherInterface
+from ...dispatchers.mappings import DispatcherTypeMapping
+from ...dispatchers.templates import DispatcherTemplate
+from ...dispatchers.templates.dispatcher_template import CollectionValues
+from ...log_setup import logger
+from ...task_groups.constants.task_group_names import (
     TaskGroups as TaskGroupNames,
 )
-from .definitions import TaskDefinitions
-from .managers.task_manager import TaskManager
-
-
-@dataclass
-class CLIArguments(object):
-    path: Path
-    task_group: str | None = None
-    list: bool = False
-    version = False
+from ..definitions import TaskDefinitions
+from ..managers.task_manager import TaskManager
+from .cli_arguments import CLIArguments
 
 
 @dataclass
@@ -106,6 +99,7 @@ class TaskExecutor(object):
 
     def execute_all_tasks(self) -> None:
         for task_group_key in self.task_group_keys:
+            logger.debug(f"{task_group_key=}")
             self.execute_task(task_group_key)
 
 

@@ -11,6 +11,7 @@ logger.add(
 )
 logger.remove()  # remove default handler
 logger.add(sys.stderr, level="WARNING")  # suppress INFO and DEBUG
+# logger.add(sys.stderr, level="DEBUG")
 
 
 def main():
