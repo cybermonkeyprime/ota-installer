@@ -1,2 +1,0 @@
-[console_scripts]
-ota-installer = src.ota_installer.main:main
