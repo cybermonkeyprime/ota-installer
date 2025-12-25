@@ -5,7 +5,7 @@ from os import name, system
 
 
 def default_clear_screen_command() -> int:
-    return system("cls" if name == "nt" else "clear")
+    return system("clear" if not name == "nt" else "cls")
 
 
 @dataclass
