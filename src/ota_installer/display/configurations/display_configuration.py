@@ -2,11 +2,13 @@
 from dataclasses import dataclass, field
 
 from ...log_setup import logger
-from ...program_versioning.software_version import (
-    SoftwareContainer,
-    SoftwareVersion,
-    SoftwareVersionConstants,
+from ...program_versioning.constants.software_constants import (
+    SoftwareConstants,
 )
+from ...program_versioning.containers.software_container import (
+    SoftwareContainer,
+)
+from ...program_versioning.software_version import SoftwareVersion
 from ..factories import DisplayFactory
 
 
@@ -18,10 +20,10 @@ class Configuration(object):  # Display Configuration
     version_info: str = field(default_factory=str)
 
     def render_version_text(self) -> None:
-        self.version_info = self.software_version.sub_title
+        self.version_info = self.software_version.display
 
     def create_version_display(self) -> None:
-        data = [enum_member.value for enum_member in SoftwareVersionConstants]
+        data = [enum_member.value for enum_member in SoftwareConstants]
 
         try:
             DisplayFactory.create_formatter(SoftwareContainer(*data))
@@ -33,10 +35,6 @@ class Configuration(object):  # Display Configuration
     def __str__(self) -> str:
         self.render_version_text()
         return ""
-
-        # return f"""
-        # SoftwareVersion: {self.software_version.title}-{self.version_info}
-        # """
 
 
 if __name__ == "__main__":

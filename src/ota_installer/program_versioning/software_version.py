@@ -1,21 +1,8 @@
 # src/ota_installer/program_versioning/software_version.py
-from collections import namedtuple
 from dataclasses import dataclass
-from enum import Enum
 
-SoftwareContainer = namedtuple(
-    "SoftwareContainer",
-    ["title", "major_number", "minor_number", "patch_number"],
-)
-
-
-class SoftwareVersionConstants(Enum):
-    """Enumeration for software version constants."""
-
-    TITLE = "OTA-Installer"
-    MAJOR_NUMBER = 2025
-    MINOR_NUMBER = 12
-    PATCH_NUMBER = 23
+from .constants.software_constants import SoftwareConstants
+from .containers.software_container import SoftwareContainer
 
 
 @dataclass
@@ -24,7 +11,7 @@ class SoftwareVersion(object):
 
     @property
     def data(self):
-        return [enum_member.value for enum_member in SoftwareVersionConstants]
+        return [enum_member.value for enum_member in SoftwareConstants]
 
     @property
     def display(self):
