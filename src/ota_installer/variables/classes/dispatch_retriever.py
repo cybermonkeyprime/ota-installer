@@ -18,8 +18,6 @@ class DispatchRetriever(object):
         return self
 
     def get_dispatcher(self) -> DispatcherInterface | None:
-        if self.process_type in self.allowed_dispatchers():
-            return (
-                DispatcherInterface(self.process_type, self.function_call)
-                or None
-            )
+        if self.process_type not in self.allowed_dispatchers():
+            return None
+        return DispatcherInterface(self.process_type, self.function_call)
