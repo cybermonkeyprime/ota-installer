@@ -4,7 +4,7 @@ from dataclasses import dataclass, field
 
 from loguru import logger
 
-from ...decorators import ConfirmationPrompt, PaddedFooterWrapper
+from ... import decorators
 from ...task_groups.constants.application_tasks import (
     ApplicationTasks,
 )
@@ -21,21 +21,25 @@ StrIterator = Iterator[str]
 
 @dataclass
 class TaskDefinitions(object):
-    @PaddedFooterWrapper()
-    @ConfirmationPrompt(
+    @decorators.PaddedFooterWrapper()
+    @decorators.ConfirmationPrompt(
         comment="perform the Preparation Tasks",
         char=" ",
     )
     def preparation(self) -> "PreparationTaskDefinitions":
         return PreparationTaskDefinitions()
 
-    @PaddedFooterWrapper()
-    @ConfirmationPrompt(comment="perform the Migration Tasks", char=" ")
+    @decorators.PaddedFooterWrapper()
+    @decorators.ConfirmationPrompt(
+        comment="perform the Migration Tasks", char=" "
+    )
     def migration(self) -> "MigrationTaskDefinitions":
         return MigrationTaskDefinitions()
 
-    @PaddedFooterWrapper()
-    @ConfirmationPrompt(comment="perform the Application Tasks", char=" ")
+    @decorators.PaddedFooterWrapper()
+    @decorators.ConfirmationPrompt(
+        comment="perform the Application Tasks", char=" "
+    )
     def application(self) -> "ApplicationTaskDefinitions":
         return ApplicationTaskDefinitions()
 
