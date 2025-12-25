@@ -6,6 +6,7 @@ from .display.configurations.display_configuration import (
     Configuration,
 )
 from .exceptions.handlers import KeyboardInterruptHandler
+from .program_versioning.software_version import SoftwareVersionConstants
 from .services import (
     DisplayConfigurationService,
     ScreenManagerService,
@@ -40,7 +41,9 @@ class Application(object):
 
 
 @KeyboardInterruptHandler
-@FooterWrapper(message="All Done!\n")
+@FooterWrapper(
+    message=f"{SoftwareVersionConstants.TITLE.value} is all finished!🎉\n"
+)
 def task_execution(arguments: CLIArguments):
     (
         TaskExecutor(arguments)
