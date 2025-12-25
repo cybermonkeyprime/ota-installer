@@ -42,7 +42,7 @@ class Application(object):
 
 @KeyboardInterruptHandler
 @FooterWrapper(
-    message=f"{SoftwareVersionConstants.TITLE.value} is all finished!🎉\n"
+    message=f"{SoftwareVersionConstants.TITLE.value} is all finished! 🎉\n"
 )
 def task_execution(arguments: CLIArguments):
     (
