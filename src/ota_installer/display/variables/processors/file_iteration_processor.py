@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Self
 
-from ....dispatchers.mappings import DispatcherTypeMapping
+from ....dispatchers.constants.dispatcher_constants import DispatcherConstants
 from ....variables import VariableManager
 from ...variables.processors import BaseProcessor
 
@@ -20,7 +20,7 @@ class FileIterationProcessor(BaseProcessor):
         return self
 
     def __post_init__(self) -> None:
-        self.dispatcher_type = DispatcherTypeMapping.FILE.value
+        self.dispatcher_type = DispatcherConstants.FILE.value
         super().__post_init__()  # initialize dispatcher
 
     def process_items(self) -> None:

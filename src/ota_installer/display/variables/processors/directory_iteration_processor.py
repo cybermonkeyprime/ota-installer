@@ -2,7 +2,7 @@
 from dataclasses import dataclass, field
 from typing import Self
 
-from ....dispatchers.mappings import DispatcherTypeMapping
+from ....dispatchers.constants.dispatcher_constants import DispatcherConstants
 from ....variables import VariableManager
 from ...variables.processors import BaseProcessor
 
@@ -17,7 +17,7 @@ class DirectoryIterationProcessor(BaseProcessor):
     variable_prefix: str = field(init=False)
 
     def __post_init__(self):
-        self.dispatcher_type = DispatcherTypeMapping.DIRECTORY.value
+        self.dispatcher_type = DispatcherConstants.DIRECTORY.value
         super().__post_init__()  # initialize dispatcher
 
     def set_directory_names(self, directory_names: tuple) -> Self:
@@ -38,7 +38,11 @@ class DirectoryIterationProcessor(BaseProcessor):
 
         builder = VariableTableBuilder(indent=3)
         for directory in self.directory_names:
-            title_string = f"{self.directory_type}{self.variable_prefix}{directory}_directory"
+            title_string = (
+                f"{self.directory_type}"
+                f"{self.variable_prefix}"
+                f"{directory}_directory"
+            )
             value_string = str(self.get_value_by_key(directory))
             data = VariableItem(title=title_string, value=value_string)
             builder.add(data.title.upper(), data.value)

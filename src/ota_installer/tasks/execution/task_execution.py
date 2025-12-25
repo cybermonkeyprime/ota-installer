@@ -3,7 +3,7 @@ from pathlib import Path
 from typing import Self
 
 from ...dispatchers import DispatcherInterface
-from ...dispatchers.mappings import DispatcherTypeMapping
+from ...dispatchers.constants.dispatcher_constants import DispatcherConstants
 from ...dispatchers.templates import DispatcherTemplate
 from ...dispatchers.templates.dispatcher_template import CollectionValues
 from ...log_setup import logger
@@ -72,7 +72,7 @@ class TaskExecutor(object):
 
     def initialize_task_dispatcher(self) -> Self:
         dispatcher = DispatcherInterface(
-            DispatcherTypeMapping.TASK_GROUP.value, self.task_definitions
+            DispatcherConstants.TASK_GROUP.value, self.task_definitions
         )
         self.dispatcher = dispatcher.get_dispatcher()
         return self

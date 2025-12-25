@@ -1,8 +1,8 @@
-# src/ota_installer/dispatchers/constants/dispatcher_type_constants.py
+# src/ota_installer/dispatchers/constants/dispatcher_constants.py
 from enum import Enum
 
 
-class DispatcherTypeConstants(Enum):
+class DispatcherConstants(Enum):
     DIRECTORY = "directory"
     IMAGE = "image"
     FILE = "file"

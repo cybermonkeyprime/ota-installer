@@ -1,8 +1,8 @@
 # src/ota_installer/dispatchers/factories/dispatcher_factory.py
 from enum import Enum
 
-from ...dispatchers.types.directory_type_dispatcher import (
-    DirectoryTypeDispatcher,
+from ...directory.dispatchers.directory_dispatcher import (
+    DirectoryDispatcher,
 )
 from ...dispatchers.types.file_type_dispatcher import (
     FileTypeDispatcher,
@@ -18,7 +18,7 @@ from ...task_groups.dispatchers.task_group_type_dispatcher import (
 )
 
 DispatcherTypes = (
-    DirectoryTypeDispatcher
+    DirectoryDispatcher
     | FileTypeDispatcher
     | ImageTypeDispatcher
     | TaskGroupTypeDispatcher
@@ -36,7 +36,7 @@ class DispatcherFactory(object):
 
 class DispatcherFactoryMapping(Enum):
     FILE = FileTypeDispatcher
-    DIRECTORY = DirectoryTypeDispatcher
+    DIRECTORY = DirectoryDispatcher
     IMAGE = ImageTypeDispatcher
     TASK_GROUP = TaskGroupTypeDispatcher
     VARIABLE = VariableTypeDispatcher

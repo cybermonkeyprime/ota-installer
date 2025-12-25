@@ -1,8 +1,8 @@
-# src/ota_installer/dispatchers/constants/directory_type_constants.py
+# src/ota_installer/dispatchers/constants/_directory_type_mapping.py
 from enum import Enum
 
 
-class DirectoryTypeConstants(Enum):
+class DirectoryConstants(Enum):
     STOCK = "stock"
     MAGISK = "magisk"
     LOCAL = "local"

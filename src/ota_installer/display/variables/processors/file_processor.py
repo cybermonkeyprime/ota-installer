@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 from enum import Enum
 from typing import Self
 
-from ....dispatchers.mappings import DispatcherTypeMapping
+from ....dispatchers.constants.dispatcher_constants import DispatcherConstants
 from ....variables import VariableManager
 from ...variables.processors import BaseProcessor
 
@@ -22,7 +22,7 @@ class VariableFileProcessor(BaseProcessor):
     value: str = field(init=False)
 
     def __post_init__(self) -> object | None:
-        self.dispatcher_type = DispatcherTypeMapping.VARIABLE.value
+        self.dispatcher_type = DispatcherConstants.VARIABLE.value
         super().__post_init__()  # initialize dispatcher
 
     def set_title(self, name: str) -> Self:
