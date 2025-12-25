@@ -1,4 +1,4 @@
-# src/ota_installer/dispatchers/types/task_group_type_dispatcher.py
+# src/ota_installer/task_groups/dispatchers/task_group_type_dispatcher.py
 from collections.abc import Callable
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -9,28 +9,29 @@ from ..constants.task_group_names import TaskGroupTypeConstants
 
 T = TypeVar("T")
 
-CollectionKeys = TypeVar("CollectionKeys")
-CollectionValues = TypeVar("CollectionValues", type, Path, str)
-CollectionDictionary = dict[CollectionKeys, CollectionValues]
+K = TypeVar("K")
+V = TypeVar("V", type, Path, str)
+CollectionDictionary = dict[K, V]
 
 
 @dataclass
 class TaskGroupTypeDispatcher(object):
     obj: type = field(default_factory=lambda: type)
     data_enum: TaskGroupTypeConstants = field(init=False)
-    collection = {}
+    collection: dict = field(default_factory=dict, init=False)
 
     def __post_init__(self) -> None:
-        collection = {
+        self.collection = self.populate_collection()
+
+        logger.debug(f"{self.collection=}")
+
+    def populate_collection(self) -> dict:
+        return {
             enum_member.name.lower(): enum_member._value(self.obj)
             for enum_member in TaskGroupTypeConstants
         }
-        logger.debug(f"{collection=}")
-        logger.debug(f"{self.collection=}")
-        for enum in TaskGroupTypeConstants:
-            self.collection[enum.name.lower()] = enum._value(self.obj)
 
-    def get_instance(self, key: str) -> CollectionValues | None:
+    def get_instance(self, key: str) -> V | None:
         """
         Attempt to retrieve and instantiate the value associated with
             the given key.
@@ -38,10 +39,10 @@ class TaskGroupTypeDispatcher(object):
 
         try:
             task = self.collection.get(key)
-            if isinstance(task, Callable):
-                return task()
-            else:
+            if not isinstance(task, Callable):
                 raise ValueError(f"No task found for key: {key}")
+            else:
+                return task()
         except ValueError as err:
             logger.exception(f"{type(err).__name__} occurred at: {err}")
             return None
