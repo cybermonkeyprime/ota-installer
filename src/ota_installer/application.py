@@ -34,10 +34,10 @@ class Application(object):
 
     def display_title(self):
         arguments = CLIArguments
-        if arguments.version:
-            print(self.display_config)
-        else:
+        if not arguments.version:
             self.display_config.create_version_display()
+        else:
+            print(self.display_config)
 
 
 @KeyboardInterruptHandler
