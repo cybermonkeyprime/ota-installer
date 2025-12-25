@@ -1,11 +1,10 @@
 # src/ota_installer/command_line_interface.py
-import sys
 from pathlib import Path
 
 import typer
 
 from .application import Application, task_execution
-from .log_setup import logger
+from .log_setup import show_debug
 from .program_versioning import SoftwareVersion
 from .tasks.execution.cli_arguments import CLIArguments
 from .tasks.execution.task_execution import TaskGroupNames
@@ -21,8 +20,7 @@ def version_callback(value: bool) -> None:
 
 def debug_callback(value: bool) -> None:
     if value:
-        logger.remove()  # remove default handler
-        logger.add(sys.stderr, level="DEBUG")
+        show_debug()
 
 
 @cli.command()
