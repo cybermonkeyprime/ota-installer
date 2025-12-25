@@ -14,6 +14,11 @@ logger.add(sys.stderr, level="WARNING")  # suppress INFO and DEBUG
 # logger.add(sys.stderr, level="DEBUG")
 
 
+def show_debug() -> None:
+    logger.remove()  # remove default handler
+    logger.add(sys.stderr, level="DEBUG")
+
+
 def main():
     logger.trace("A trace message.")
     logger.debug("A debug message.")
