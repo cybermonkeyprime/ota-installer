@@ -1,14 +1,20 @@
 # src/ota_installer/dispatchers/factories/dispatcher_factory.py
 from enum import Enum
 
-from ...dispatchers.types import (
+from ...dispatchers.types.directory_type_dispatcher import (
     DirectoryTypeDispatcher,
+)
+from ...dispatchers.types.file_type_dispatcher import (
     FileTypeDispatcher,
-    TaskGroupTypeDispatcher,
+)
+from ...dispatchers.types.variable_type_dispatcher import (
     VariableTypeDispatcher,
 )
 from ...images.boot_image.dispatchers.boot_image_dispatcher import (
     ImageTypeDispatcher,
+)
+from ...task_groups.dispatchers.task_group_type_dispatcher import (
+    TaskGroupTypeDispatcher,
 )
 
 DispatcherTypes = (
