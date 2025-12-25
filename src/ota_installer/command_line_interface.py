@@ -1,9 +1,11 @@
 # src/ota_installer/command_line_interface.py
+import sys
 from pathlib import Path
 
 import typer
 
 from .application import Application, task_execution
+from .log_setup import logger
 from .program_versioning import SoftwareVersion
 from .tasks.execution.cli_arguments import CLIArguments
 from .tasks.execution.task_execution import TaskGroupNames
@@ -11,10 +13,16 @@ from .tasks.execution.task_execution import TaskGroupNames
 cli = typer.Typer(help="Manually Install Android Device OTA Firmware")
 
 
-def version_callback(value: bool):
+def version_callback(value: bool) -> None:
     if value:
         typer.echo(SoftwareVersion().display)  # Customize as needed
         raise typer.Exit()
+
+
+def debug_callback(value: bool) -> None:
+    if value:
+        logger.remove()  # remove default handler
+        logger.add(sys.stderr, level="DEBUG")
 
 
 @cli.command()
@@ -41,6 +49,14 @@ def ota_installerer(
         "-v",
         help="Lists version information.",
         callback=version_callback,
+        is_eager=True,
+    ),
+    debug: bool = typer.Option(
+        False,
+        "--debug",
+        "-d",
+        help="Displays debug loggers",
+        callback=debug_callback,
         is_eager=True,
     ),
 ):
