@@ -22,7 +22,9 @@ class ImageTypeDispatcher(DispatcherTemplate):
     def get_key(self, key: str) -> object:
         key_to_upper = key.upper()
         evaluated_key = (
-            key_to_upper if key_to_upper in self.allowed_keys else "DEFAULT"
+            "DEFAULT"
+            if key_to_upper not in self.allowed_keys
+            else key_to_upper
         )
         key_object = ImageTypes[evaluated_key]
         return key_object.value
