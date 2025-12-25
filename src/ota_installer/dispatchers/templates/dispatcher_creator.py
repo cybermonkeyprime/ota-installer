@@ -33,7 +33,7 @@ class DispatcherCreator(object):
             the given key.
         """
         task = self.collection[key]
-        if isinstance(task, Callable):
-            return task()
-        else:
+        if not isinstance(task, Callable):
             raise ValueError(f"No task found for key: {key}")
+        else:
+            return task()
