@@ -1,18 +1,22 @@
 # src/ota_installer/types/directory/default_type_definition.py
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from enum import Enum
 from pathlib import Path
-from typing import TypeVar
+import types
+from typing import cast
 
-from ...images.boot_image.containers.boot_image import BootImageStruct
+from ...images.boot_image.containers.boot_image_container import (
+    BootImageContainer,
+)
 from ...images.magisk_image.constants.magisk_image_paths import (
     MagiskImagePaths,
 )
-from ...images.magisk_image.containers.magisk import MagiskStruct
+from ...images.magisk_image.containers.magisk_image_container import (
+    MagiskImageContainer,
+)
 
-magisk_struct = MagiskStruct()
-
-T = TypeVar("T", BootImageStruct, MagiskStruct)
+magisk_struct = MagiskImageContainer()
 
 
 class BootImageTypes(Enum):
@@ -40,19 +44,24 @@ class BootImage(object):
 class DefaultTypeDefinition(object):
     parent_directory: Path
     boot_image_file_name: str = field(default="")
-    magisk_image: Path | MagiskStruct = field(default_factory=MagiskStruct)
+    magisk_image: Path | MagiskImageContainer = field(
+        default_factory=MagiskImageContainer
+    )
 
     def __post_init__(self) -> None:
-        self.boot_image = self.create_structure(
-            BootImageStruct, self.boot_image_file_name
+        self.boot_image = create_structure(
+            BootImageContainer, self.boot_image_file_name
         )
-        self.magisk_image = self.create_structure(MagiskStruct)
+        self.magisk_image = create_structure(MagiskImageContainer)
 
-    def create_structure(self, structure_cls: T, *args, **kwargs) -> T:
-        try:
-            return structure_cls(*args, **kwargs)
-        except Exception as e:
-            raise ValueError("Failed to create structure: ") from e
+
+def create_structure[R, **P](
+    structure_cls: R, *args: P.args, **kwargs: P.kwargs
+) -> R:
+    try:
+        return structure_cls(*args, **kwargs)
+    except Exception as e:
+        raise ValueError("Failed to create structure: ") from e
 
 
 def main() -> None:
