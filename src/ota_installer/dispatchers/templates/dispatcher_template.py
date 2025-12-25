@@ -35,10 +35,10 @@ class DispatcherTemplate(object):
 
         try:
             task = self.get_value(key)
-            if isinstance(task, Callable):
-                return task()
-            else:
+            if not isinstance(task, Callable):
                 raise ValueError(f"No task found for key: {key}")
+            else:
+                return task()
         except ValueError as err:
             print(f"Error occurred at: {err}")
             return None
