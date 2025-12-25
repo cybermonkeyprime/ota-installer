@@ -18,7 +18,7 @@ class ContinueOnKeyPress(GenericDecorator):
     indent: int = field(default=1)
     char: str = field(default=" ")
 
-    from . import Colorizer
+    from .colorizer import Colorizer
     from .exception_handler import ExceptionHandler
     from .multiply_string import MultiplyString
     from .output_printer import OutputPrinter
