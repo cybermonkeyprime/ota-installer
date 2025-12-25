@@ -19,8 +19,8 @@ from .cli_arguments import CLIArguments
 class TaskExecutor(object):
     arguments: CLIArguments
     task_manager: TaskManager = field(default_factory=lambda: TaskManager())
-    dispatcher: DispatcherTemplate = field(default_factory=DispatcherTemplate)
-    task_group: str = field(default="")
+    dispatcher: DispatcherTemplate = field(init=False)
+    task_group: str | None = field(init=False)
     task_definitions: TaskDefinitions = field(
         default_factory=lambda: TaskDefinitions()
     )
@@ -40,10 +40,10 @@ class TaskExecutor(object):
         return tuple(enum.value for enum in TaskGroupNames)
 
     def execute_task_based_on_group(self) -> None:
-        if self.task_group_rules:
-            self.execute_single_task()
-        else:
+        if not self.task_group_rules:
             self.execute_all_tasks()
+        else:
+            self.execute_single_task()
 
     def set_path(self) -> Self:
         self.path = self.arguments.path
@@ -78,7 +78,7 @@ class TaskExecutor(object):
         return self
 
     def get_dispatcher_instance(self, key: str) -> CollectionValues | None:
-        logger.debug(key)
+        logger.debug(f"{key=}")
         return self.dispatcher.get_instance(key)
 
     def execute_task(self, task_group_key: str) -> None:
@@ -90,11 +90,13 @@ class TaskExecutor(object):
             )
 
     def task_iteration(self, task_group_key: str) -> None:
+        logger.debug(f"{task_group_key=}")
         dispatcher_instance = self.get_dispatcher_instance(task_group_key)
         self.task_manager.execute_iteration(task_group=dispatcher_instance)
 
     def execute_single_task(self) -> None:
         if self.task_group:
+            logger.debug(f"{self.task_group=}")
             self.execute_task(self.task_group)
 
     def execute_all_tasks(self) -> None:
