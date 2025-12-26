@@ -46,21 +46,13 @@ class TaskDefinitions(object):
 
 @dataclass
 class TaskDefinitionsTemplate(object):
-    _tasks: StrTuple = field(default_factory=tuple)
-
-    @property
-    def tasks(self) -> StrTuple:
-        return self._tasks
-
-    @tasks.setter
-    def tasks(self, value: StrTuple) -> None:
-        self._tasks = value
+    tasks: StrTuple = field(default_factory=tuple)
 
     def __iter__(self) -> StrIterator:
-        return iter(self._tasks)
+        return iter(self.tasks)
 
 
-def enum_name_list(enum: Iterable) -> list:
+def enum_task_names(enum: Iterable) -> list:
     result = [enum_member.value.value for enum_member in enum]
     logger.debug(result)
     return result
@@ -69,16 +61,16 @@ def enum_name_list(enum: Iterable) -> list:
 @dataclass
 class PreparationTaskDefinitions(TaskDefinitionsTemplate):
     def __post_init__(self) -> None:
-        self.tasks = tuple(enum_name_list(PreparationTasks))
+        self.tasks = tuple(enum_task_names(PreparationTasks))
 
 
 @dataclass
 class MigrationTaskDefinitions(TaskDefinitionsTemplate):
     def __post_init__(self) -> None:
-        self.tasks = tuple(enum_name_list(MigrationTasks))
+        self.tasks = tuple(enum_task_names(MigrationTasks))
 
 
 @dataclass
 class ApplicationTaskDefinitions(TaskDefinitionsTemplate):
     def __post_init__(self) -> None:
-        self.tasks = tuple(enum_name_list(ApplicationTasks))
+        self.tasks = tuple(enum_task_names(ApplicationTasks))

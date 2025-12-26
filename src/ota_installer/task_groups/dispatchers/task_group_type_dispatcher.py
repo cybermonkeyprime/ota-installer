@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import TypeVar
 
 from ...log_setup import logger
-from ..constants.task_group_names import TaskGroupTypeConstants
+from ..constants.task_group_names import TaskGroupNames
 
 T = TypeVar("T")
 
@@ -17,7 +17,7 @@ CollectionDictionary = dict[K, V]
 @dataclass
 class TaskGroupTypeDispatcher(object):
     obj: type = field(default_factory=lambda: type)
-    data_enum: TaskGroupTypeConstants = field(init=False)
+    data_enum: TaskGroupNames = field(init=False)
     collection: dict = field(default_factory=dict, init=False)
 
     def __post_init__(self) -> None:
@@ -28,7 +28,7 @@ class TaskGroupTypeDispatcher(object):
     def populate_collection(self) -> dict:
         return {
             enum_member.name.lower(): enum_member._value(self.obj)
-            for enum_member in TaskGroupTypeConstants
+            for enum_member in TaskGroupNames
         }
 
     def get_instance(self, key: str) -> V | None:

@@ -40,8 +40,26 @@ class Application(object):
             print(self.display_config)
 
 
+def random_exit_message() -> str:
+    from random import choice
+
+    CELEBRATIONS = [
+        "All tasks completed successfully!",
+        "You did it, tech wizard!",
+        "Mission complete—well done!",
+        "Everything's in place.",
+        f"{SoftwareConstants.TITLE.value} says: Great job!",
+        f"{SoftwareConstants.TITLE.value} is complete!",
+    ]
+
+    emoji = choice(["🎉", "✅", "🚀", "✨", "🎯", "💻"])
+    message = choice(CELEBRATIONS)
+
+    return f"{message} {emoji}\n"
+
+
 @KeyboardInterruptHandler
-@FooterWrapper(message=f"{SoftwareConstants.TITLE.value} is complete! 🎉\n")
+@FooterWrapper(message=random_exit_message())
 def task_execution(arguments: CLIArguments):
     (
         TaskExecutor(arguments)
