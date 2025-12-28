@@ -6,11 +6,13 @@ from typing import cast
 
 from rich.console import Console
 
+from ..protocols.decorator_protocols import GenericDecorator
+
 console = Console()
 
 
 @dataclass
-class OutputPrinter(object):
+class OutputPrinter(GenericDecorator):
     prefix: str = field(default="")
     use_color: bool = field(default=False)
     suffix: str = field(default="\n")

@@ -4,9 +4,7 @@ from dataclasses import dataclass
 from functools import wraps
 from typing import cast
 
-from ..types.decorators import GenericDecorator
-
-type R = str
+from ..protocols.decorator_protocols import GenericDecorator
 
 
 @dataclass
@@ -17,11 +15,11 @@ class StylizedIndentPrinter(GenericDecorator):
     end: str = ""
     use_output: bool = False
 
-    def __call__[**P](self, function: Callable[P, R]) -> Callable[P, R]:
+    def __call__[R, **P](self, function: Callable[P, R]) -> Callable[P, R]:
         from . import Colorizer, IndentWrapper
         from .output_printer import OutputPrinter
 
-        decorated = IndentWrapper(interval=self.indent)(function)  # type: ignore[reportArgumentType]
+        decorated = IndentWrapper(interval=self.indent)(function)  # pyright: ignore[reportArgumentType]
         decorated = Colorizer(style=self.style)(decorated)
 
         if self.use_output:

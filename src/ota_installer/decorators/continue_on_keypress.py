@@ -5,7 +5,7 @@ from enum import Enum
 from functools import wraps
 from typing import cast
 
-from ..types.decorators import GenericDecorator
+from ..protocols.decorator_protocols import GenericDecorator
 
 
 class Specs(Enum):

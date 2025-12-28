@@ -4,11 +4,13 @@ from dataclasses import dataclass
 from functools import wraps
 from typing import cast
 
+from ..protocols.decorator_protocols import GenericDecorator
+
 type R = object
 
 
 @dataclass
-class Example(object):
+class Example(GenericDecorator):
     func: Callable
 
     def __call__[**P](self, *args: P.args, **kwargs: P.kwargs) -> R:
@@ -19,7 +21,7 @@ class Example(object):
 
 
 @dataclass
-class ExampleWithArgs(object):
+class ExampleWithArgs(GenericDecorator):
     begin: str = "Beginning"
     end: str = "Ending"
 

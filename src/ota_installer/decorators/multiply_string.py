@@ -4,11 +4,13 @@ from dataclasses import dataclass
 from functools import wraps
 from typing import cast
 
+from ..protocols.decorator_protocols import GenericDecorator
+
 type R = str
 
 
 @dataclass
-class MultiplyString(object):
+class MultiplyString(GenericDecorator):
     interval: int = 0
 
     def __call__[**P](self, function: Callable[P, R]) -> Callable[P, R]:

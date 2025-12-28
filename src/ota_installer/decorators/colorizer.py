@@ -4,8 +4,8 @@ from dataclasses import dataclass, field
 from functools import wraps
 from typing import cast
 
+from ..protocols.decorator_protocols import StringReturningDecorator
 from ..styles.palette import RichColors
-from ..types.decorators import StringReturningDecorator
 
 type R = str
 

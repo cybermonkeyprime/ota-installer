@@ -3,8 +3,8 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from typing import cast
 
+from ..protocols.decorator_protocols import StringReturningDecorator
 from ..styles.indentation import Indentation
-from ..types.decorators import StringReturningDecorator
 
 type R = str
 

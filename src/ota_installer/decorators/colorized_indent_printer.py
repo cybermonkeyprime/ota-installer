@@ -4,13 +4,13 @@ from dataclasses import dataclass
 from functools import wraps
 from typing import cast
 
-from ..types.decorators import GenericDecorator
+from ..protocols.decorator_protocols import StringReturningDecorator
 
 type R = str
 
 
 @dataclass
-class ColorizedIndentPrinter(GenericDecorator):
+class ColorizedIndentPrinter(StringReturningDecorator):
     indent: int = 0
     begin: str = ""
     end: str = ""

@@ -4,9 +4,11 @@ from dataclasses import dataclass
 from functools import wraps
 from typing import cast
 
+from ..protocols.decorator_protocols import GenericDecorator
+
 
 @dataclass
-class StyledFigletPrinter(object):
+class StyledFigletPrinter(GenericDecorator):
     style: str = "variable"
     font: str = "slant"
     end: str = "\n"
