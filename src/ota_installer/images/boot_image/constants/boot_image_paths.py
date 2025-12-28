@@ -1,4 +1,4 @@
-# src/ota_installer/boot_image/constants/paths.py
+# src/ota_installer/images/boot_image/constants/boot_image_paths.py
 from enum import Enum
 from pathlib import Path
 

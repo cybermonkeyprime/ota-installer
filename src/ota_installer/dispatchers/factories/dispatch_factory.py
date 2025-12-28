@@ -4,14 +4,14 @@ from enum import Enum
 from ...directory.dispatchers.directory_dispatcher import (
     DirectoryDispatcher,
 )
-from ...dispatchers.types.file_type_dispatcher import (
-    FileTypeDispatcher,
-)
 from ...dispatchers.types.variable_type_dispatcher import (
     VariableTypeDispatcher,
 )
 from ...images.boot_image.dispatchers.boot_image_dispatcher import (
     ImageTypeDispatcher,
+)
+from ...images.file_image.dispatchers.file_type_dispatcher import (
+    FileTypeDispatcher,
 )
 from ...task_groups.dispatchers.task_group_type_dispatcher import (
     TaskGroupTypeDispatcher,

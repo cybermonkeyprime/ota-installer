@@ -1,9 +1,11 @@
-# src/ota_installer/dispatchers/types/file_type_dispatcher.py
+# src/ota_installer/images/file_image/dispatchers/file_type_dispatcher.py
+import enum
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Literal, TypeVar
 
-from ...dispatchers.templates import DispatcherCreator
+from ....dispatchers.templates import DispatcherCreator
+from ....images.file_image.constants.file_image_names import FileImageNames
 
 T = TypeVar("T")
 
@@ -24,8 +26,10 @@ class FileTypeDispatcher(object):
     """
 
     def __post_init__(self) -> None:
-        for element in {"PAYLOAD", "STOCK", "MAGISK"}:
-            self.collection[element] = self.obj.file_paths.get(element.lower())
+        self.collection = {
+            enum_member.name: self.obj.file_paths.get(enum_member.value)
+            for enum_member in FileImageNames
+        }
 
     def get_value(self, key: str) -> object | None:
         """Retrieve the value associated with the given key
