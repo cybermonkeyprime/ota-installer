@@ -1,5 +1,4 @@
 # src/ota_installer/images/file_image/dispatchers/file_type_dispatcher.py
-import enum
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Literal, TypeVar
