@@ -1,7 +1,7 @@
 # src/ota_installer/application.py
 from dataclasses import dataclass, field
 
-from .decorators import FooterWrapper
+from . import decorators
 from .display.configurations.display_configuration import (
     Configuration,
 )
@@ -12,6 +12,8 @@ from .services import (
     ScreenManagerService,
 )
 from .tasks.execution.task_execution import CLIArguments, TaskExecutor
+
+from .styles.palette import RichColors
 
 
 @dataclass
@@ -40,6 +42,7 @@ class Application(object):
             print(self.display_config)
 
 
+@decorators.StylizedIndentPrinter(indent=1, style="task", use_output=False)
 def random_exit_message() -> str:
     from random import choice
 
@@ -59,7 +62,7 @@ def random_exit_message() -> str:
 
 
 @KeyboardInterruptHandler
-@FooterWrapper(message=random_exit_message())
+@decorators.FooterWrapper(message=random_exit_message())
 def task_execution(arguments: CLIArguments):
     (
         TaskExecutor(arguments)
