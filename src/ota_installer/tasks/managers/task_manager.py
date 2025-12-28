@@ -7,7 +7,7 @@ from typing import Self
 from ...display import VariableProcessor
 from ...log_setup import logger
 from ...variables import VariableManager
-from .task_iteration import TaskIteration
+from .task_iteration import TaskIteration, task_iterator
 
 
 @dataclass
@@ -32,6 +32,7 @@ class TaskManager(object):
 
     def set_iteration(self) -> Self:
         self.iteration = TaskIteration(self.variable)
+        # self.iteration = task_iterator(self.variable)
         return self
 
     def set_posix_path(self) -> Self:
@@ -50,4 +51,5 @@ class TaskManager(object):
             logger.exception(f"list_vars: {type(err).__name__} {err}")
 
     def execute_iteration(self, task_group) -> None:
-        self.iteration.execute_iteration(task_group)
+        task_iterator(instance=self.variable, task_group=task_group)
+        # self.iteration.execute_iteration(task_group)

@@ -48,12 +48,7 @@ class TaskExecutor(object):
         return self
 
     def initialize_task_manager(self) -> Self:
-        (
-            self.task_manager.set_file_name(self.path)
-            .set_variable()
-            .set_iteration()
-            .list_vars()
-        )
+        (self.task_manager.set_file_name(self.path).set_variable().list_vars())
         return self
 
     def assign_task_group(self) -> Self:
@@ -98,9 +93,10 @@ class TaskExecutor(object):
             self.execute_task(self.task_group)
 
     def execute_all_tasks(self) -> None:
-        for task_group_key in self.task_group_keys:
-            logger.debug(f"{task_group_key=}")
+        {
             self.execute_task(task_group_key)
+            for task_group_key in self.task_group_keys
+        }
 
 
 def main() -> None:

@@ -26,12 +26,9 @@ DispatcherTypes = (
 )
 
 
-class DispatcherFactory(object):
-    def create_dispatcher(
-        self, dispatcher_type: str, obj: type
-    ) -> DispatcherTypes:
-        dispatcher_class = DispatcherFactoryMapping[dispatcher_type.upper()]
-        return dispatcher_class.value(obj)
+def dispatch_creator(dispatcher_type: str, obj: type) -> DispatcherTypes:
+    dispatcher_class = DispatcherFactoryMapping[dispatcher_type.upper()]
+    return dispatcher_class.value(obj)
 
 
 class DispatcherFactoryMapping(Enum):
