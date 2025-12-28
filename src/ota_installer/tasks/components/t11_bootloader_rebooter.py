@@ -11,7 +11,7 @@ from .base_task import BaseTask
 ENUM_VALUES = TaskOperationDetails.REBOOT_TO_BOOTLOADER.value
 
 
-@task_plugin(ApplicationTasks.REBOOT_TO_BOOTLOADER.task_name)
+@task_plugin(ApplicationTasks.REBOOT_TO_BOOTLOADER.value)
 @dataclass
 class BootloaderRebooter(BaseTask):
     instance: VariableManager = field(default_factory=VariableManager)

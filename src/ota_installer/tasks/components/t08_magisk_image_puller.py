@@ -17,7 +17,7 @@ from .base_task import BaseTask
 ENUM_VALUES = TaskOperationDetails.PULL_MAGISK_IMAGE.value
 
 
-@task_plugin(MigrationTasks.PULL_PATCHED_BOOT_IMAGE.task_name)
+@task_plugin(MigrationTasks.PULL_PATCHED_BOOT_IMAGE.value)
 @dataclass
 class MagiskImagePuller(BaseTask):
     instance: VariableManager = field(default_factory=VariableManager)
@@ -44,4 +44,4 @@ class MagiskImagePuller(BaseTask):
     )
     def perform_task(self) -> None:
         self.task.run_with_output()
-        logger.debug(f"{ApplicationTasks.REBOOT_TO_BOOTLOADER.task_name=}")
+        logger.debug(f"{ApplicationTasks.REBOOT_TO_BOOTLOADER.value=}")

@@ -11,7 +11,7 @@ from .base_task import BaseTask
 ENUM_VALUES = TaskOperationDetails.PUSH_STOCK_BOOT_IMAGE.value
 
 
-@task_plugin(MigrationTasks.PUSH_STOCK_BOOT_IMAGE.task_name)
+@task_plugin(MigrationTasks.PUSH_STOCK_BOOT_IMAGE.value)
 @dataclass
 class StockBootImagePusher(BaseTask):
     instance: VariableManager = field(default_factory=VariableManager)

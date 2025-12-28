@@ -12,7 +12,7 @@ from .base_task import BaseTask
 ENUM_VALUES = TaskOperationDetails.BACKUP_STOCK_BOOT_IMAGE.value
 
 
-@task_plugin(PreparationTasks.BACKUP_STOCK_BOOT_IMAGE.task_name)
+@task_plugin(PreparationTasks.BACKUP_STOCK_BOOT_IMAGE.value)
 @dataclass
 class StockBootImageBackupper(BaseTask):
     instance: VariableManager = field(default_factory=VariableManager)

@@ -11,7 +11,7 @@ from .base_task import BaseTask
 ENUM_VALUES = TaskOperationDetails.REBOOT_TO_RECOVERY.value
 
 
-@task_plugin(ApplicationTasks.REBOOT_TO_RECOVERY.task_name)
+@task_plugin(ApplicationTasks.REBOOT_TO_RECOVERY.value)
 @dataclass
 class RecoveryRebooter(BaseTask):
     instance: VariableManager = field(default_factory=VariableManager)

@@ -13,7 +13,7 @@ from .base_task import BaseTask
 ENUM_VALUES = TaskOperationDetails.EXTRACT_STOCK_BOOT_IMAGE.value
 
 
-@task_plugin(PreparationTasks.EXTRACT_STOCK_BOOT_IMAGE.task_name)
+@task_plugin(PreparationTasks.EXTRACT_STOCK_BOOT_IMAGE.value)
 @dataclass
 class BootImageExtractor(BaseTask):
     instance: VariableManager = field(default_factory=VariableManager)
