@@ -4,8 +4,10 @@ from typing import Self
 
 from ...dispatchers import DispatcherInterface
 from ...dispatchers.constants.dispatcher_constants import DispatcherConstants
-from ...dispatchers.templates import DispatcherTemplate
-from ...dispatchers.templates.dispatcher_template import CollectionValues
+from ...dispatchers.templates.dispatcher_template import (
+    CollectionValues,
+    DispatcherTemplate,
+)
 from ...log_setup import logger
 from ...task_groups.constants.task_group_names import TaskGroupNames
 from ..definitions import TaskDefinitions

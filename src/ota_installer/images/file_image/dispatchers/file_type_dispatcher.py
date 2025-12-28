@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Literal, TypeVar
 
-from ....dispatchers.templates import DispatcherCreator
+from ....dispatchers.templates.dispatcher_creator import DispatcherCreator
 from ....images.file_image.constants.file_image_names import FileImageNames
 
 T = TypeVar("T")

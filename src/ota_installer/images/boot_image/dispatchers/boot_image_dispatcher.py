@@ -2,7 +2,7 @@
 from dataclasses import dataclass, field
 from enum import Enum
 
-from ....dispatchers.templates import DispatcherTemplate
+from ....dispatchers.templates.dispatcher_template import DispatcherTemplate
 
 
 class ImageTypes(Enum):

@@ -2,7 +2,7 @@
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from ..templates import DispatcherTemplate
+from ..templates.dispatcher_template import DispatcherTemplate
 
 
 @dataclass

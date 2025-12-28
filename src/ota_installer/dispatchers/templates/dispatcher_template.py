@@ -34,7 +34,7 @@ class DispatcherTemplate(object):
         """
 
         try:
-            task = self.get_value(key)
+            task = self.collection[key]
             if not isinstance(task, Callable):
                 raise ValueError(f"No task found for key: {key}")
             else:
