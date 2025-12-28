@@ -3,8 +3,8 @@ from enum import StrEnum, auto
 
 
 class FileImageNames(StrEnum):
-    PAYLOAD = auto()
     STOCK = auto()
+    PAYLOAD = auto()
     MAGISK = auto()
 
 

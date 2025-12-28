@@ -1,17 +1,22 @@
-# src/paths/constants/image_file_attributes.py
-from collections import namedtuple
+# src/ota_installer/images/file_image/constants/file_image_attributes.py
 from enum import Enum
 from typing import Self
 
 from ....images.boot_image.constants.boot_image_paths import BootImagePaths
+from ..constants.file_image_names import FileImageNames
+from ..containers.file_image_container import (
+    FileImageStruct,
+)
 
-ImageFileStruct = namedtuple("ImageFileStruct", ["title", "extension"])
 
-
-class ImageFileAttributes(Enum):
-    PAYLOAD = ImageFileStruct(title="payload", extension="bin")
-    STOCK = ImageFileStruct(title="boot", extension="img")
-    MAGISK = ImageFileStruct(title="magisk", extension="img")
+class FileImageAttributes(Enum):
+    PAYLOAD = FileImageStruct(
+        title=FileImageNames.PAYLOAD.value, extension="bin"
+    )
+    STOCK = FileImageStruct(title="boot", extension="img")
+    MAGISK = FileImageStruct(
+        title=FileImageNames.MAGISK.value, extension="img"
+    )
 
     def set_device(self, device: str) -> Self:
         self.device = str(device)

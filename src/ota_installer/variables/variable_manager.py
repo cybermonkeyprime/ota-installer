@@ -51,13 +51,15 @@ class VariableManager(object):
         return self
 
     def define_file_paths(self) -> Self:
-        from ..images.file_image.containers.image_file import ImageFileData
+        from ..images.file_image.containers.file_image_container import (
+            FileImageData,
+        )
         from ..variables.functions import (
             get_file_image_path,
             set_log_file,
         )
 
-        image_data = ImageFileData(
+        image_data = FileImageData(
             self.file_name["device"], self.file_name["version"]
         )
         self.file_paths = {

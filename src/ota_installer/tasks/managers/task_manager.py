@@ -30,11 +30,6 @@ class TaskManager(object):
             logger.exception(f"[{type(err).__name__}] {err}")
         return self
 
-    def set_iteration(self) -> Self:
-        self.iteration = TaskIteration(self.variable)
-        # self.iteration = task_iterator(self.variable)
-        return self
-
     def set_posix_path(self) -> Self:
         self.posix_path = self.file_name
         return self
