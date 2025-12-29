@@ -8,6 +8,7 @@ logger.add(
     level="ERROR",
     format="{time:YYYY-MM-DD HH:mm:ss.SSS} | {level} | {module}:{function}:{line} - {message}",
     colorize=True,
+    backtrace=False,
 )
 logger.remove()  # remove default handler
 logger.add(sys.stderr, level="WARNING")  # suppress INFO and DEBUG

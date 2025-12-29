@@ -2,6 +2,10 @@
 from dataclasses import dataclass, field
 from enum import Enum
 
+from ....dispatchers.constants.dispatcher_constants import (
+    DispatcherConstants,
+)
+from ....dispatchers.dispatcher_plugin_registry import dispatcher_plugin
 from ....dispatchers.templates.dispatcher_template import DispatcherTemplate
 
 
@@ -11,6 +15,7 @@ class ImageTypes(Enum):
     DEFAULT = "init_boot"
 
 
+@dispatcher_plugin(DispatcherConstants.IMAGE.value)
 @dataclass
 class ImageTypeDispatcher(DispatcherTemplate):
     obj: type = field(default_factory=lambda: type)

@@ -3,10 +3,13 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Literal, TypeVar
 
+from ....dispatchers.constants.dispatcher_constants import DispatcherConstants
+from ....dispatchers.dispatcher_plugin_registry import dispatcher_plugin
 from ....dispatchers.templates.dispatcher_creator import DispatcherCreator
 from ....images.file_image.constants.file_image_names import FileImageNames
 
 T = TypeVar("T")
+
 
 CollectionKeys = TypeVar("CollectionKeys")
 CollectionValues = TypeVar("CollectionValues", type, Path, str)
@@ -14,6 +17,7 @@ CollectionDictionary = dict[CollectionKeys, CollectionValues]
 CollectionEnum = Literal
 
 
+@dispatcher_plugin(DispatcherConstants.FILE.value)
 @dataclass
 class FileTypeDispatcher(object):
     obj: type = field(default_factory=lambda: type)

@@ -4,6 +4,8 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import TypeVar
 
+from ...dispatchers.constants.dispatcher_constants import DispatcherConstants
+from ...dispatchers.dispatcher_plugin_registry import dispatcher_plugin
 from ...log_setup import logger
 from ..constants.task_group_names import TaskGroupNames
 
@@ -14,6 +16,7 @@ V = TypeVar("V", type, Path, str)
 CollectionDictionary = dict[K, V]
 
 
+@dispatcher_plugin(DispatcherConstants.TASK_GROUP.value)
 @dataclass
 class TaskGroupTypeDispatcher(object):
     obj: type = field(default_factory=lambda: type)

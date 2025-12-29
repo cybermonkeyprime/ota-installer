@@ -3,6 +3,8 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Self
 
+from loguru import logger
+
 from ... import decorators
 from ...dispatchers import DispatcherInterface
 from .constants import (
@@ -105,10 +107,12 @@ class TaskOperationProcessor(object):
 
 
 def image_handler(key: str) -> Path:
+    logger.debug(f"{key=}")
     try:
         dispatcher = DispatcherInterface("image")
+        logger.debug(f"{dispatcher=}")
         retriever = dispatcher.get_dispatcher()
-        # return retriever.get_key(key)
+        logger.debug(f"{retriever=}")
         return Path.home() / "images" / f"{retriever.get_key(key)}.img"  # type: ignore[return-value]
     except KeyError as e:
         raise ValueError(f"Invalid key for image handler: {key}") from e
