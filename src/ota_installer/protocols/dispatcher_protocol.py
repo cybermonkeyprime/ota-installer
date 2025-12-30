@@ -1,6 +1,4 @@
 # src/ota_installer/types/dispatcher_protocol.py
-from typing import Protocol
+from collections.abc import Callable
 
-
-class DispatcherProtocol(Protocol):
-    def get_value(self, key: str) -> object: ...
+type DispatcherProtocol = Callable[[str], object]

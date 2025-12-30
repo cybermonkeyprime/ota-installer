@@ -1,9 +1,9 @@
 # src/ota_installer/dispatchers/dispatcher_interface.py
 from dataclasses import dataclass, field
 
-from ..log_setup import logger
-from .constants.dispatcher_mapping import DispatcherTypes
-from .factories.dispatch_factory import create_dispatcher
+from ...log_setup import logger
+from ..constants.dispatcher_mapping import DispatcherTypes
+from ..factories.dispatch_factory import create_dispatcher
 
 
 @dataclass

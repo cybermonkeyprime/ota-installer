@@ -2,8 +2,8 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Self
 
-from ...dispatchers import DispatcherInterface
 from ...dispatchers.constants.dispatcher_constants import DispatcherConstants
+from ...dispatchers.factories.dispatcher_interface import DispatcherInterface
 from ...dispatchers.templates.dispatcher_template import (
     CollectionValues,
     DispatcherTemplate,

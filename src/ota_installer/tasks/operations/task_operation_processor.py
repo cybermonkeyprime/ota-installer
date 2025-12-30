@@ -6,7 +6,7 @@ from typing import Self
 from loguru import logger
 
 from ... import decorators
-from ...dispatchers import DispatcherInterface
+from ...dispatchers.factories.dispatcher_interface import DispatcherInterface
 from .constants import (
     CommandStringConstants,
     TaskOpsConstants,

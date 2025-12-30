@@ -2,7 +2,7 @@
 from dataclasses import dataclass
 from typing import Self
 
-from ...dispatchers import DispatcherInterface
+from ...dispatchers.factories.dispatcher_interface import DispatcherInterface
 from ..constants import DispatcherTypes
 
 

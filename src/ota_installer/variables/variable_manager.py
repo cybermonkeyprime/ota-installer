@@ -4,7 +4,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Self
 
-from ..dispatchers import DispatcherInterface
+from ..dispatchers.factories.dispatcher_interface import DispatcherInterface
 from ..images.magisk_image.constants.magisk_image_paths import (
     MagiskImagePaths,
 )
