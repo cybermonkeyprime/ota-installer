@@ -105,8 +105,10 @@ class VariableManager(object):
             return None
 
     def get_dispatcher(self, process_type) -> DispatcherInterface | None:
+        from ..dispatchers.factories.dispatch_retriever import (
+            DispatchRetriever,
+        )
         from ..variables.functions import set_variable_manager
-        from .classes.dispatch_retriever import DispatchRetriever
 
         function_call = set_variable_manager(self.path)
         return (
