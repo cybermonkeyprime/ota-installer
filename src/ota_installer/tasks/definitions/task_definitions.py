@@ -54,7 +54,7 @@ class TaskDefinitionsTemplate(object):
 
 def enum_task_names(enum: Iterable) -> list:
     result = [enum_member.value.value for enum_member in enum]
-    logger.debug(result)
+    logger.debug(f"enum_task_names(): {result=}")
     return result
 
 

@@ -109,12 +109,12 @@ class TaskOperationProcessor(object):
 
 
 def image_handler(key: str) -> Path:
-    logger.debug(f"{key=}")
+    logger.debug(f"image_handler(): {key=}")
     try:
         dispatcher = PluginDispatcherAdapter("image")
-        logger.debug(f"{dispatcher=}")
+        logger.debug(f"image_handler(): {dispatcher=}")
         retriever = dispatcher.load()
-        logger.debug(f"{retriever=}")
+        logger.debug(f"image_handler(): {retriever=}")
         return Path.home() / "images" / f"{retriever.get_key(key)}.img"  # type: ignore[return-value]
     except KeyError as e:
         raise ValueError(f"Invalid key for image handler: {key}") from e

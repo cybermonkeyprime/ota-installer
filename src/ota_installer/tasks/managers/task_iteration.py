@@ -41,7 +41,7 @@ class TaskIteration(object):
 def task_iterator(
     instance: VariableManager, task_group: StringTuple
 ) -> object | None:
-    logger.debug(f"execute_iteration(): {task_group}")
+    logger.debug(f"task_iterator(): {task_group}")
     try:
         [
             task_director(instance=instance, item=task)

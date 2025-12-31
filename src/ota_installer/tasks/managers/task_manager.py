@@ -35,7 +35,7 @@ class TaskManager(object):
         return self
 
     def list_vars(self) -> None:
-        logger.debug(f"{self.variable=}")
+        logger.debug(f"TaskManager.list_vars(): {self.variable=}")
         try:
             (
                 VariableProcessor(self.variable)

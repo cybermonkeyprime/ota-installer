@@ -13,8 +13,6 @@ from .services import (
 )
 from .tasks.execution.task_execution import CLIArguments, TaskExecutor
 
-from .styles.palette import RichColors
-
 
 @dataclass
 class Application(object):

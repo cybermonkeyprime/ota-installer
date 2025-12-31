@@ -27,4 +27,6 @@ class DirectoryDispatcher(DispatcherTemplate):
                 "remote_path"
             ],
         }
-        logger.debug(f"{self.collection=}")
+        logger.debug(
+            f"DirectoryDispatcher.__post_init__(): {self.collection=}"
+        )

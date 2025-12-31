@@ -12,7 +12,7 @@ class TaskFactory(object):
     variable_manager: VariableManager | None = field(default=None)
 
     def create_task(self, task_name: str):
-        logger.debug(f"{task_name=}")
+        logger.debug(f"TaskFactory.create_task(): {task_name=}")
         task_class = TASK_PLUGINS.get(task_name)
         if not task_class:
             logger.error(f"No plugin task registered for: {task_name!r}")

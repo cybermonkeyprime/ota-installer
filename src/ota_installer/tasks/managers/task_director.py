@@ -7,9 +7,9 @@ from ..factories import TaskFactory
 
 def task_director(instance: VariableManager, item: str) -> None:
     """Manages the initiation of task processing."""
-    logger.debug(f"{item=}")
+    logger.debug(f"task_director(): {item=}")
     task = TaskFactory(instance).create_task(task_name=item)
-    logger.debug(f"{task=}")
+    logger.debug(f"task_director(): {task=}")
     if task is None:
         logger.error(f"Failed to resolve task: {item!r} — task returned None")
         return  # or raise an exception if desired

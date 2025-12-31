@@ -28,7 +28,9 @@ class DispatchRetriever(object):
         return self
 
     def get_dispatcher(self) -> DispatcherTypes | None:
-        logger.debug(f"get_dispatcher(): {self.process_type=}")
+        logger.debug(
+            f"DispatchRetriever.get_dispatcher(): {self.process_type=}"
+        )
         allowed = self.allowed_dispatchers()
         if self.process_type.upper() not in self.allowed_dispatchers():
             logger.error(
