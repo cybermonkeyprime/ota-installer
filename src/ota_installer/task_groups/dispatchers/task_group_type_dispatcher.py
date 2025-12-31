@@ -26,7 +26,7 @@ class TaskGroupTypeDispatcher(DispatcherTemplate):
     def __post_init__(self) -> None:
         self.collection = self.populate_collection()
 
-        logger.debug(f"{self.collection=}")
+        logger.debug(f"TaskGroupTypeDispatcher(): {self.collection=}")
 
     def populate_collection(self) -> dict:
         return {

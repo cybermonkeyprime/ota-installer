@@ -18,7 +18,7 @@ class TaskIteration(object):
     task_group: StringTuple = field(default=("", ""))
 
     def execute_iteration(self, task_group: StringTuple) -> object | None:
-        logger.debug(task_group)
+        logger.debug(f"execute_iteration(): {task_group}")
         try:
             stack = list(task_group)
             for task in stack:
@@ -41,7 +41,7 @@ class TaskIteration(object):
 def task_iterator(
     instance: VariableManager, task_group: StringTuple
 ) -> object | None:
-    logger.debug(task_group)
+    logger.debug(f"execute_iteration(): {task_group}")
     try:
         [
             task_director(instance=instance, item=task)

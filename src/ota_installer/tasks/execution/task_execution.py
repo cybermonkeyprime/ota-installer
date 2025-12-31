@@ -75,7 +75,7 @@ class TaskExecutor(object):
         return self
 
     def get_dispatcher_instance(self, key: str) -> CollectionValues | None:
-        logger.debug(f"{key=}")
+        logger.debug(f"TaskExecutor.get_dispatcher_instance(): {key=}")
         return self.dispatcher.get_instance(key)
 
     def execute_task(self, task_group_key: str) -> None:
@@ -87,7 +87,7 @@ class TaskExecutor(object):
             )
 
     def task_iteration(self, task_group_key: str) -> None:
-        logger.debug(f"{task_group_key=}")
+        logger.debug(f"TaskExecutor.task_iteration(): {task_group_key=}")
         dispatcher_instance = self.get_dispatcher_instance(task_group_key)
         self.task_manager.execute_iteration(task_group=dispatcher_instance)
 
