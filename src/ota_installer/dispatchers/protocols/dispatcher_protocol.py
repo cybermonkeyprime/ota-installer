@@ -17,18 +17,6 @@ class DispatcherProtocol(Protocol):
         """
         ...
 
-    def set_value(self, key: str, value: object) -> None:
-        """
-        Set or update a value in the internal collection.
-        """
-        ...
-
-    def get_keys(self) -> list[str]:
-        """
-        Return a list of all keys in the internal collection.
-        """
-        ...
-
     def get_instance(self, key: str) -> object | None: ...
 
     @staticmethod

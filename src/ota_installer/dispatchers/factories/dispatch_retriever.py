@@ -3,8 +3,10 @@ from dataclasses import dataclass
 from typing import Self
 
 from ...log_setup import logger
-from ..constants.dispatcher_mapping import DispatcherFactoryMapping
-from ..factories.plugin_dispatcher_adapter import PluginDispatcherAdapter
+from .mappings.dispatcher_factory_mapping import (
+    DispatcherFactoryMapping,
+    DispatcherTypes,
+)
 
 
 @dataclass
@@ -25,12 +27,13 @@ class DispatchRetriever(object):
         self.function_call = function_call
         return self
 
-    def get_dispatcher(self) -> DispatcherFactoryMapping | None:
-        logger.debug(f"{self.process_type=}")
+    def get_dispatcher(self) -> DispatcherTypes | None:
+        logger.debug(f"get_dispatcher(): {self.process_type=}")
         allowed = self.allowed_dispatchers()
         if self.process_type.upper() not in self.allowed_dispatchers():
             logger.error(
-                f"Invalid dispatcher type: {self.process_type}. Allowed: {allowed}"
+                f"Invalid dispatcher type: {self.process_type}."
+                f"Allowed: {allowed}"
             )
             return None
 
@@ -43,5 +46,3 @@ class DispatchRetriever(object):
         except KeyError as e:
             logger.error(f"Dispatcher mapping failed: {e}")
             return None
-
-        return PluginDispatcherAdapter(self.process_type, self.function_call)

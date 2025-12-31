@@ -14,10 +14,10 @@ Useful in display processors and variable extraction workflows.
 from dataclasses import dataclass, field
 
 from ...log_setup import logger
-from ..constants.dispatcher_mapping import DispatcherTypes
 from ..factories.load_plugin_dispatcher import (
     load_plugin_dispatcher,
 )
+from .mappings.dispatcher_factory_mapping import DispatcherTypes
 
 
 @dataclass
