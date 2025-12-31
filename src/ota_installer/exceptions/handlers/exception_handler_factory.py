@@ -7,7 +7,7 @@ from .base_exception_handler import BaseExceptionHandler
 
 def exception_handler_factory(
     *exception_types: type[BaseException],
-) -> Callable:
+) -> Callable[...]:
     def decorator(
         handler_class: type[BaseExceptionHandler],
     ) -> type[BaseExceptionHandler]:

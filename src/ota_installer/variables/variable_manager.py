@@ -4,7 +4,9 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Self
 
-from ..dispatchers.factories.dispatcher_interface import DispatcherInterface
+from ..dispatchers.factories.plugin_dispatcher_adapter import (
+    PluginDispatcherAdapter,
+)
 from ..images.magisk_image.constants.magisk_image_paths import (
     MagiskImagePaths,
 )
@@ -104,13 +106,14 @@ class VariableManager(object):
             )
             return None
 
-    def get_dispatcher(self, process_type) -> DispatcherInterface | None:
+    def get_dispatcher(self, process_type) -> PluginDispatcherAdapter | None:
         from ..dispatchers.factories.dispatch_retriever import (
             DispatchRetriever,
         )
         from ..variables.functions import set_variable_manager
 
         function_call = set_variable_manager(self.path)
+        logger.debug(f"{function_call=}")
         return (
             DispatchRetriever(process_type)
             .set_function_call(function_call)

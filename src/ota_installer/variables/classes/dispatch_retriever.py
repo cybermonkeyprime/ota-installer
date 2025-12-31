@@ -2,7 +2,9 @@
 from dataclasses import dataclass
 from typing import Self
 
-from ...dispatchers.factories.dispatcher_interface import DispatcherInterface
+from ...dispatchers.factories.plugin_dispatcher_adapter import (
+    PluginDispatcherAdapter,
+)
 from ..constants import DispatcherTypes
 
 
@@ -17,7 +19,7 @@ class DispatchRetriever(object):
         self.function_call = function_call
         return self
 
-    def get_dispatcher(self) -> DispatcherInterface | None:
+    def get_dispatcher(self) -> PluginDispatcherAdapter | None:
         if self.process_type not in self.allowed_dispatchers():
             return None
-        return DispatcherInterface(self.process_type, self.function_call)
+        return PluginDispatcherAdapter(self.process_type, self.function_call)

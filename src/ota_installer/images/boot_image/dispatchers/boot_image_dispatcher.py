@@ -17,14 +17,14 @@ class ImageTypeDispatcher(DispatcherTemplate):
 
     @property
     def allowed_keys(self) -> tuple:
-        return tuple(enum.name for enum in ImageTypes)
+        return tuple(enum.name.lower() for enum in ImageTypes)
 
     def get_key(self, key: str) -> object:
-        key_to_upper = key.upper()
+        normalized_key = self.normalize_key(key)
         evaluated_key = (
             "DEFAULT"
-            if key_to_upper not in self.allowed_keys
-            else key_to_upper
+            if normalized_key not in self.allowed_keys
+            else normalized_key
         )
         key_object = ImageTypes[evaluated_key]
         return key_object.value

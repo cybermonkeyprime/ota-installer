@@ -14,8 +14,9 @@ CollectionDictionary = dict[CollectionKeys, CollectionValues]
 @dataclass
 class DispatcherCreator(object):
     """
-    A centralized dispatcher class for dispatching tasks based on a key-value
-    collection.
+    Legacy dispatcher creation function. Looks up dispatcher classes by string
+    key using DispatcherFactoryMapping, then instantiates with provided context
+    object.
     """
 
     collection: CollectionDictionary = field(

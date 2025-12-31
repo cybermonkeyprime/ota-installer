@@ -1,11 +1,11 @@
 # src/ota_installer/task_groups/dispatchers/task_group_type_dispatcher.py
-from collections.abc import Callable
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import TypeVar
 
 from ...dispatchers.constants.dispatcher_constants import DispatcherConstants
 from ...dispatchers.dispatcher_plugin_registry import dispatcher_plugin
+from ...dispatchers.templates.dispatcher_template import DispatcherTemplate
 from ...log_setup import logger
 from ..constants.task_group_names import TaskGroupNames
 
@@ -18,7 +18,7 @@ CollectionDictionary = dict[K, V]
 
 @dispatcher_plugin(DispatcherConstants.TASK_GROUP.value)
 @dataclass
-class TaskGroupTypeDispatcher(object):
+class TaskGroupTypeDispatcher(DispatcherTemplate):
     obj: type = field(default_factory=lambda: type)
     data_enum: TaskGroupNames = field(init=False)
     collection: dict = field(default_factory=dict, init=False)
@@ -33,19 +33,3 @@ class TaskGroupTypeDispatcher(object):
             enum_member.name.lower(): enum_member._value(self.obj)
             for enum_member in TaskGroupNames
         }
-
-    def get_instance(self, key: str) -> V | None:
-        """
-        Attempt to retrieve and instantiate the value associated with
-            the given key.
-        """
-
-        try:
-            task = self.collection.get(key)
-            if not isinstance(task, Callable):
-                raise ValueError(f"No task found for key: {key}")
-            else:
-                return task()
-        except ValueError as err:
-            logger.exception(f"{type(err).__name__} occurred at: {err}")
-            return None

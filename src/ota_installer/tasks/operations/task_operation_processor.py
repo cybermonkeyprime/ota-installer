@@ -6,7 +6,9 @@ from typing import Self
 from loguru import logger
 
 from ... import decorators
-from ...dispatchers.factories.dispatcher_interface import DispatcherInterface
+from ...dispatchers.factories.plugin_dispatcher_adapter import (
+    PluginDispatcherAdapter,
+)
 from .constants import (
     CommandStringConstants,
     TaskOpsConstants,
@@ -109,9 +111,9 @@ class TaskOperationProcessor(object):
 def image_handler(key: str) -> Path:
     logger.debug(f"{key=}")
     try:
-        dispatcher = DispatcherInterface("image")
+        dispatcher = PluginDispatcherAdapter("image")
         logger.debug(f"{dispatcher=}")
-        retriever = dispatcher.get_dispatcher()
+        retriever = dispatcher.load()
         logger.debug(f"{retriever=}")
         return Path.home() / "images" / f"{retriever.get_key(key)}.img"  # type: ignore[return-value]
     except KeyError as e:

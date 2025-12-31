@@ -18,6 +18,10 @@ class BaseProcessor(object):
         self.dispatcher = self.processing_function.get_dispatcher(
             self.dispatcher_type
         )
+        if not self.dispatcher:
+            raise RuntimeError(
+                f"Dispatcher creation failed for process type: {self.dispatcher_type}"
+            )
 
     def get_value_by_key(self, key: str) -> object:
         return self.dispatcher.get_value(key)

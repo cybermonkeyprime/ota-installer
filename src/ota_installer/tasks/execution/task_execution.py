@@ -3,7 +3,9 @@ from pathlib import Path
 from typing import Self
 
 from ...dispatchers.constants.dispatcher_constants import DispatcherConstants
-from ...dispatchers.factories.dispatcher_interface import DispatcherInterface
+from ...dispatchers.factories.plugin_dispatcher_adapter import (
+    PluginDispatcherAdapter,
+)
 from ...dispatchers.templates.dispatcher_template import (
     CollectionValues,
     DispatcherTemplate,
@@ -66,10 +68,10 @@ class TaskExecutor(object):
         return self
 
     def initialize_task_dispatcher(self) -> Self:
-        dispatcher = DispatcherInterface(
+        dispatcher = PluginDispatcherAdapter(
             DispatcherConstants.TASK_GROUP.value, self.task_definitions
         )
-        self.dispatcher = dispatcher.get_dispatcher()
+        self.dispatcher = dispatcher.load()
         return self
 
     def get_dispatcher_instance(self, key: str) -> CollectionValues | None:

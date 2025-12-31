@@ -4,6 +4,9 @@ from dataclasses import field
 from pathlib import Path
 from typing import TypeVar
 
+from ...log_setup import logger
+from ..protocols.dispatcher_protocol import DispatcherProtocol
+
 T = TypeVar("T")
 
 CollectionKeys = TypeVar("CollectionKeys")
@@ -11,7 +14,7 @@ CollectionValues = TypeVar("CollectionValues", type, Path, str)
 CollectionDictionary = dict[CollectionKeys, CollectionValues]
 
 
-class DispatcherTemplate(object):
+class DispatcherTemplate(DispatcherProtocol):
     """
     A template class for dispatching tasks based on a key-value collection.
     """
@@ -24,7 +27,7 @@ class DispatcherTemplate(object):
         """Retrieve the value associated with the given key
         from the collection.
         """
-        collection_value = self.collection[key]
+        collection_value = self.collection[self.normalize_key(key)]
         return collection_value
 
     def get_instance(self, key: str) -> CollectionValues | None:
@@ -34,11 +37,18 @@ class DispatcherTemplate(object):
         """
 
         try:
-            task = self.collection[key]
+            task = self.collection[self.normalize_key(key)]
             if not isinstance(task, Callable):
-                raise ValueError(f"No task found for key: {key}")
+                raise ValueError(
+                    f"No task found for key: {self.normalize_key(key)}"
+                )
             else:
                 return task()
         except ValueError as err:
-            print(f"Error occurred at: {err}")
+            logger.exception(f"{type(err).__name__} occurred at: {err}")
             return None
+
+    @staticmethod
+    def normalize_key(key: str) -> str:
+        """Normalize dictionary keys for consistent dispatcher behavior."""
+        return key.lower().strip()
