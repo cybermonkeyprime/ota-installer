@@ -133,15 +133,15 @@ class VariableDefiner(object):
     file_path: Path
 
     def __post_init__(self) -> Self:
+        from ..structures.file_name_parser import parse_file_name
         from ..validation import file_path_validator
-        from .functions import parse_file_name
 
         valid_path = file_path_validator(self.file_path)
         self.data_tuple = VariableTypeTuple(
             file_path=valid_path,
             magisk_image_name="place_holder",
             file_path_stem=Path(valid_path.stem),
-            file_parts=parse_file_name(valid_path.stem),
+            file_parts=parse_file_name(valid_path),
         )
         return self
 
@@ -151,4 +151,4 @@ if __name__ == "__main__":
     from .functions import set_variable_manager
 
     variable_manager = set_variable_manager(path)
-    print(variable_manager.log_file)
+    # print(variable_manager.log_file)
