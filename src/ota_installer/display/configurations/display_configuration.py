@@ -2,12 +2,6 @@
 from dataclasses import dataclass, field
 
 from ...log_setup import logger
-from ...program_versioning.constants.software_constants import (
-    SoftwareConstants,
-)
-from ...program_versioning.containers.software_container import (
-    SoftwareContainer,
-)
 from ...program_versioning.software_version import SoftwareVersion
 from ..factories import DisplayFactory
 
@@ -23,10 +17,8 @@ class Configuration(object):  # Display Configuration
         self.version_info = self.software_version.display
 
     def create_version_display(self) -> None:
-        data = [enum_member.value for enum_member in SoftwareConstants]
-
         try:
-            DisplayFactory.create_formatter(SoftwareContainer(*data))
+            DisplayFactory.create_formatter()
         except AttributeError as err:
             logger.error(f"AttributeError: {err}")
         # except Exception as error:

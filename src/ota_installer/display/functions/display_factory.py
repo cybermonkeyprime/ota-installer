@@ -1,15 +1,15 @@
 from dataclasses import field
 
-from .display_formatter import DisplayFormatter
+from ..formatters.display_formatter import DisplayFormatter
 
 
 class DisplayFactory:
     @staticmethod
     def create_formatter(
         title: str = field(default="Title"),
-        major_number: int = field(default=1),
-        minor_number: int = field(default=1),
-        patch_number: int = field(default=1),
+        major_number: int = field(default=0),
+        minor_number: int = field(default=0),
+        patch_number: int = field(default=0),
     ) -> DisplayFormatter:
         return DisplayFormatter(
             title=title,

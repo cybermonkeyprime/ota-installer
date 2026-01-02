@@ -2,22 +2,59 @@ import sys
 
 from loguru import logger
 
-# Standard verbose format for ERROR and above
+# Remove all default loggers
+logger.remove()
+
+# Human-readable stderr for local console use (warnings or higher)
 logger.add(
     sys.stderr,
-    level="ERROR",
+    level="WARNING",
     format="{time:YYYY-MM-DD HH:mm:ss.SSS} | {level} | {module}:{function}:{line} - {message}",
     colorize=True,
     backtrace=False,
 )
-logger.remove()  # remove default handler
-logger.add(sys.stderr, level="WARNING")  # suppress INFO and DEBUG
-# logger.add(sys.stderr, level="DEBUG")
+
+# Structured machine-readable stdout (for logs to file, piping, etc.)
+logger.add(
+    sys.stdout,
+    level="CRITICAL",  # Can lower to DEBUG for verbose JSON output
+    serialize=True,
+    backtrace=False,
+    diagnose=True,
+)
 
 
 def show_debug() -> None:
+    """Enable debug output to stderr."""
     logger.remove()  # remove default handler
-    logger.add(sys.stderr, level="DEBUG")
+    logger.add(
+        sys.stderr,
+        level="DEBUG",
+        format="{time:YYYY-MM-DD HH:mm:ss.SSS} | {level} | {module}:{function}:{line} - {message}",
+        colorize=True,
+        backtrace=True,
+        diagnose=True,
+    )
+    # Keep JSON logs (stdout)
+    logger.add(
+        sys.stdout,
+        level="DEBUG",
+        serialize=True,
+        backtrace=True,
+        diagnose=True,
+    )
+
+
+def add_log_file_sink(path: str) -> None:
+    logger.add(
+        path,
+        level="DEBUG",
+        serialize=True,
+        backtrace=True,
+        diagnose=True,
+        rotation=None,  # No rotation, since filename is already unique
+        retention=None,
+    )
 
 
 def main():

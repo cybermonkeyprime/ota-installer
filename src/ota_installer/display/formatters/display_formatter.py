@@ -14,9 +14,9 @@ from ..objects.constants.display_object_constants import DisplayObjectConstants
 @dataclass
 class DisplayFormatter(object):
     title: str = field(default="Title")
-    major_number: int = field(default=1)
-    minor_number: int = field(default=1)
-    patch_number: int = field(default=1)
+    major_number: int = field(default=0)
+    minor_number: int = field(default=0)
+    patch_number: int = field(default=0)
 
     @FooterWrapper(message="")
     def __post_init__(self) -> None:

@@ -6,6 +6,6 @@ class SoftwareConstants(Enum):
     """Enumeration for software version constants."""
 
     TITLE = "OTA-Installer"
-    MAJOR_NUMBER = 2025
-    MINOR_NUMBER = 12
-    PATCH_NUMBER = 31
+    MAJOR_NUMBER = 2026
+    MINOR_NUMBER = 1
+    PATCH_NUMBER = 1
