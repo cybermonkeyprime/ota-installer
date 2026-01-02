@@ -3,6 +3,8 @@ from collections import namedtuple
 from dataclasses import dataclass
 from enum import Enum
 
+from ota_installer.styles.indentation import indentation
+
 SeparatorContainer = namedtuple(
     "SeparatorContainer", ["character", "spacing", "interval"]
 )
@@ -24,7 +26,18 @@ class Separator(object):
         return [enum_member.value for enum_member in SeparatorConstants]
 
     def __str__(self) -> str:
-        separator = SeparatorContainer(*self.data)
-        return (
-            f"{separator.character * separator.spacing * separator.interval}"
+        sc = SeparatorConstants
+        return indentation(
+            char=sc.CHAR.value,
+            spaces=sc.SPACING.value,
+            interval=sc.INTERVAL.value,
         )
+
+
+def separator(increment: int = 1, char: str = "-") -> str:
+    sc = SeparatorConstants
+    return indentation(
+        char=sc.CHAR.value,
+        spaces=sc.SPACING.value,
+        interval=sc.INTERVAL.value,
+    )

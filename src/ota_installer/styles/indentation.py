@@ -1,12 +1,14 @@
 # src/ota_installer/styles/indentation.py
-from dataclasses import dataclass
+
+from collections import namedtuple
+
+IndentationContainer = namedtuple(
+    "IndentationContainer", ["character", "spacing", "interval"]
+)
 
 
-@dataclass
-class Indentation(object):
-    interval: int
-    char: str = " "
-    spaces: int = 4
-
-    def __str__(self):
-        return f"{self.char[0] * self.spaces * self.interval}"
+def indentation(interval: int = 1, char: str = " ", spaces: int = 4) -> str:
+    ic = IndentationContainer(
+        interval=interval, character=char[0], spacing=spaces
+    )
+    return f"{ic.character * ic.spacing * ic.interval}"

@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from typing import cast
 
 from ..protocols.decorator_protocols import StringReturningDecorator
-from ..styles.indentation import Indentation
+from ..styles.indentation import indentation
 
 type R = str
 
@@ -22,4 +22,4 @@ class IndentWrapper(StringReturningDecorator):
         return cast(Callable[P, R], wrapper)
 
     def indent(self):
-        return f"{Indentation(char=self.char, interval=self.interval)}"
+        return f"{indentation(char=self.char, interval=self.interval)}"
