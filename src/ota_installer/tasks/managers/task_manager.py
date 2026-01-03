@@ -6,7 +6,7 @@ from pathlib import Path
 from typing import Self
 
 from ...display import VariableProcessor
-from ...log_setup import logger
+from ...log_setup import add_structured_log_sink, logger
 from ...variables import VariableManager
 from .task_iteration import TaskIteration, task_iterator
 
@@ -30,8 +30,11 @@ class TaskManager(object):
 
             valid_path = file_path_validator(self.file_name)
             if not valid_path:
-                sys.exit("1")
+                logger.error(f"Invalid file path: {self.file_name}")
+                sys.exit("Invalid input file. Aborting.")
             self.variable = VariableManager(valid_path)
+            add_structured_log_sink(self.variable.file_paths["log_file"])
+
         except Exception as err:
             logger.exception(f"[{type(err).__name__}] {err}")
         return self

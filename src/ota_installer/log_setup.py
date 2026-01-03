@@ -1,16 +1,26 @@
 import sys
+from pathlib import Path
 
 from loguru import logger
+from rich.logging import RichHandler
+
+from .variables.variable_manager import VariableManager
 
 # Remove all default loggers
 logger.remove()
 
 # Human-readable stderr for local console use (warnings or higher)
 logger.add(
-    sys.stderr,
+    RichHandler(
+        markup=True,  # Enables rich text formatting
+        rich_tracebacks=True,  # Beautiful, colorized tracebacks
+        show_time=True,
+        show_level=True,
+        show_path=True,
+    ),
     level="WARNING",
-    format="{time:YYYY-MM-DD HH:mm:ss.SSS} | {level} | {module}:{function}:{line} - {message}",
-    colorize=True,
+    format="{message}",
+    # format="{time:YYYY-MM-DD HH:mm:ss.SSS} | {level} | {module}:{function}:{line} - {message}",
     backtrace=False,
 )
 
@@ -29,12 +39,21 @@ def show_debug() -> None:
     """Enable debug output to stderr."""
     logger.remove()  # remove default handler
     logger.add(
-        sys.stderr,
+        RichHandler(
+            markup=True,  # Enables rich text formatting
+            rich_tracebacks=True,  # Beautiful, colorized tracebacks
+            show_time=True,
+            show_level=True,
+            show_path=True,
+        ),
+        #    sys.stderr,
         level="DEBUG",
-        format="{time:YYYY-MM-DD HH:mm:ss.SSS} | {level} | {module}:{function}:{line} - {message}",
-        colorize=True,
+        # format="{time:YYYY-MM-DD HH:mm:ss.SSS} | {level} | {module}:{function}:{line} - {message}",
+        format="{message}",
+        serialize=False,
+        # colorize=True,
         backtrace=True,
-        diagnose=True,
+        # diagnose=True,
     )
     # Keep JSON logs (stdout)
     logger.add(
@@ -46,9 +65,9 @@ def show_debug() -> None:
     )
 
 
-def add_log_file_sink(path: str) -> None:
+def add_structured_log_sink(path: str | Path) -> None:
     logger.add(
-        path,
+        str(path),
         level="DEBUG",
         serialize=True,
         backtrace=True,

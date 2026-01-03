@@ -10,7 +10,7 @@ from ..dispatchers.factories.mappings.dispatcher_factory_mapping import (
 from ..images.magisk_image.constants.magisk_image_paths import (
     MagiskImagePaths,
 )
-from ..log_setup import add_log_file_sink, logger
+from ..log_setup import logger
 from ..types.directory import DefaultTypeDefinition, DefaultTypeManager
 
 DirectoryTypeDefinition = DefaultTypeDefinition
@@ -70,7 +70,6 @@ class VariableManager(object):
             "payload": get_file_image_path("payload", *image_data),
             "log_file": set_log_file(self.file_name["parts"]),
         }
-        add_log_file_sink(self.file_paths["log_file"])
         return self
 
     def define_directory_paths(self) -> Self:
