@@ -28,9 +28,7 @@ def file_path_validator(file_path: Path | str) -> Path | None:
             raise ValueError(f"Expected a .zip file, got: {file_path.suffix}")
 
         return file_path.resolve()
-    except FileNotFoundError as err:
-        logger.error(f"file_path_validator(): {err}")
-    except ValueError as err:
+    except (FileNotFoundError, ValueError) as err:
         logger.error(f"file_path_validator(): {err}")
 
 
