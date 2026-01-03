@@ -1,4 +1,5 @@
 # src/ota_installer/tasks/managers/task_manager.py
+import sys
 from collections.abc import Callable
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -25,7 +26,12 @@ class TaskManager(object):
 
     def set_variable(self) -> Self:
         try:
-            self.variable = VariableManager(self.file_name)
+            from ...validation.file_path_validation import file_path_validator
+
+            valid_path = file_path_validator(self.file_name)
+            if not valid_path:
+                sys.exit("1")
+            self.variable = VariableManager(valid_path)
         except Exception as err:
             logger.exception(f"[{type(err).__name__}] {err}")
         return self

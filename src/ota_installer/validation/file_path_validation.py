@@ -1,20 +1,37 @@
 # src/ota_installer/validation/file_path_validation.py
+import re
 from pathlib import Path
 
-from rich.console import Console
+from ..log_setup import logger
 
-console = Console()
+FILENAME_PATTERN = re.compile(
+    r"(?P<build>[a-z0-9-]+)\."
+    r"(?P<date>\d{6})\."
+    r"(?P<version>[\d.]+)\."
+    r"(?P<revision>[a-z0-9]+)-"
+    r"(?P<hash>[a-f0-9]+)\.zip"
+)
 
 
-def file_path_validator(file_path: Path | str) -> Path:
+def file_path_validator(file_path: Path | str) -> Path | None:
     file_path = Path(file_path)
-    valid_and_exists = file_path.is_file() and file_path.suffix == ".zip"
-    if not valid_and_exists:
-        console.print(
-            f"[yellow]Warning:[/yellow] '{file_path.name}' "
-            "is not a valid .zip file or does not exist."
-        )
-    return file_path
+    file_path_string = str(file_path.name)
+
+    try:
+        if not FILENAME_PATTERN.match(file_path_string):
+            raise ValueError(f"Invalid filename format: {file_path_string}")
+        if not file_path.exists():
+            raise FileNotFoundError("file_path not found")
+        if not file_path.is_file():
+            raise ValueError(f"Expected a file, got directory: {file_path}")
+        if file_path.suffix.lower() != ".zip":
+            raise ValueError(f"Expected a .zip file, got: {file_path.suffix}")
+
+        return file_path.resolve()
+    except FileNotFoundError as err:
+        logger.error(f"file_path_validator(): {err}")
+    except ValueError as err:
+        logger.error(f"file_path_validator(): {err}")
 
 
 def main():

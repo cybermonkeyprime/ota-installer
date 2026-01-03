@@ -134,14 +134,12 @@ class VariableDefiner(object):
 
     def __post_init__(self) -> Self:
         from ..structures.file_name_parser import parse_file_name
-        from ..validation import file_path_validator
 
-        valid_path = file_path_validator(self.file_path)
         self.data_tuple = VariableTypeTuple(
-            file_path=valid_path,
+            file_path=self.file_path,
             magisk_image_name="place_holder",
-            file_path_stem=Path(valid_path.stem),
-            file_parts=parse_file_name(valid_path),
+            file_path_stem=Path(self.file_path.stem),
+            file_parts=parse_file_name(self.file_path),
         )
         return self
 

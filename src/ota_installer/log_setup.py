@@ -19,6 +19,7 @@ logger.add(
     sys.stdout,
     level="CRITICAL",  # Can lower to DEBUG for verbose JSON output
     serialize=True,
+    colorize=True,
     backtrace=False,
     diagnose=True,
 )
