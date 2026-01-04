@@ -44,8 +44,8 @@ def create_structure[**P](
 ) -> Callable[P, type]:
     try:
         return structure_cls(*args, **kwargs)
-    except Exception as e:
-        raise ValueError("Failed to create structure: ") from e
+    except Exception as err:
+        raise ValueError("Failed to create structure: ") from err
 
 
 def main() -> None:

@@ -35,7 +35,7 @@ class OutputPrinter(GenericDecorator):
                 return result
             except Exception as e:
                 raise RuntimeError(
-                    f"An error occurred while executing the function: {e}"
+                    f"{function.__name__}(): An error occurred while executing the function: {e}"
                 ) from e
 
         return cast(Callable[P, R], wrapper)

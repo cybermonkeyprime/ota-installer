@@ -1,43 +1,27 @@
 # src/ota_installer/application.py
-from dataclasses import dataclass, field
-
 from . import decorators
 from .display.configurations.display_configuration import (
-    Configuration,
+    create_version_display,
 )
 from .exceptions.handlers import KeyboardInterruptHandler
 from .program_versioning.constants.software_constants import SoftwareConstants
 from .services import (
-    DisplayConfigurationService,
     ScreenManagerService,
 )
 from .tasks.execution.task_execution import CLIArguments, TaskExecutor
 
 
-@dataclass
-class Application(object):
-    screen_manager: ScreenManagerService = field(
-        default_factory=ScreenManagerService
-    )
-    display_configurator: DisplayConfigurationService = field(
-        default_factory=DisplayConfigurationService
-    )
+def run() -> None:
+    screen_manager = ScreenManagerService()
+    screen_manager.clear_screen()
+    display_title()
 
-    @property
-    def display_config(self) -> Configuration:
-        return self.display_configurator.get_display_configuration()
 
-    def run(self) -> None:
-        self.screen_manager.clear_screen()
-
-        self.display_title()
-
-    def display_title(self):
-        arguments = CLIArguments
-        if not arguments.version:
-            self.display_config.create_version_display()
-        else:
-            print(self.display_config)
+def display_title():
+    arguments = CLIArguments
+    if not arguments.version:
+        create_version_display()
+        random_exit_message()
 
 
 @decorators.StylizedIndentPrinter(indent=1, style="task", use_output=False)

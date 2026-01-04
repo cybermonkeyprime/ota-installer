@@ -9,7 +9,7 @@ from ..objects.constants.display_object_function_calls import (
 
 
 @decorators.FooterWrapper(message="")
-def display_components() -> None:
+def create_display_objects() -> None:
     try:
         display_header()
     except Exception as err:
@@ -48,7 +48,7 @@ def show_subtitle() -> str:
 
 
 def main():
-    display_components()
+    create_display()
 
 
 if __name__ == "__main__":

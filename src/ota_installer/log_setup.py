@@ -4,8 +4,6 @@ from pathlib import Path
 from loguru import logger
 from rich.logging import RichHandler
 
-from .variables.variable_manager import VariableManager
-
 # Remove all default loggers
 logger.remove()
 

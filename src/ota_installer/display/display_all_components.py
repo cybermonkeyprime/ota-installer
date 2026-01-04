@@ -1,15 +1,15 @@
 # src/ota_installer/display/factories/display_factory.py
 from rich.control import Control
 
-from ... import decorators
-from ...log_setup import logger
-from ..objects.constants.display_object_function_calls import (
+from .. import decorators
+from ..log_setup import logger
+from .objects.constants.display_object_function_calls import (
     DisplayObjectFunctionCalls,
 )
 
 
 @decorators.FooterWrapper(message="")
-def display_components() -> None:
+def show_display_components() -> None:
     try:
         display_header()
     except Exception as err:
@@ -48,7 +48,7 @@ def show_subtitle() -> str:
 
 
 def main():
-    display_components()
+    show_display_components()
 
 
 if __name__ == "__main__":

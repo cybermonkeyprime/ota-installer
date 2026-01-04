@@ -7,10 +7,10 @@ from functools import singledispatchmethod
 class DisplayObjectProcessor(object):
     """
     Processor class for creating display objects based on the provided
-        class type and argument.
+        function type and argument.
     """
 
-    class_name: type
+    function: type
 
     @singledispatchmethod
     def process_object(self, argument):
@@ -22,19 +22,19 @@ class DisplayObjectProcessor(object):
     def _(self, argument: None):
         """Process an object when the argument is None"""
 
-        return self.class_name()
+        return self.function()
 
     @process_object.register
     def _(self, argument: str):
         """Process an object when the argument is an string."""
 
-        return self.class_name(argument)
+        return self.function(argument)
 
     @process_object.register
     def _(self, argument: object):
         """Process an object when the argument is an object."""
 
-        return self.class_name(argument)
+        return self.function(argument)
 
 
 def main():

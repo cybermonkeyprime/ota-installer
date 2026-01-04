@@ -3,9 +3,11 @@ from pathlib import Path
 
 import typer
 
-from .application import Application, task_execution
+from . import application
 from .log_setup import show_debug
-from .program_versioning import SoftwareVersion
+from .program_versioning.software_version import (
+    get_text_display,
+)
 from .tasks.execution.cli_arguments import CLIArguments
 from .tasks.execution.task_execution import TaskGroupNames
 
@@ -14,7 +16,7 @@ cli = typer.Typer(help="Manually Install Android Device OTA Firmware")
 
 def version_callback(value: bool) -> None:
     if value:
-        typer.echo(SoftwareVersion().display)  # Customize as needed
+        typer.echo(get_text_display())  # Customize as needed
         raise typer.Exit()
 
 
@@ -64,10 +66,9 @@ def ota_installerer(
         list=list_paths,
     )
 
-    app_instance = Application()
-    app_instance.run()
+    application.run()
 
-    task_execution(args)
+    application.task_execution(args)
 
 
 if __name__ == "__main__":

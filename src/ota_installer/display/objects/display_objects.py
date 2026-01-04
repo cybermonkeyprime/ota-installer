@@ -1,21 +1,8 @@
 # src/ota_installer/display/objects/display_objects.py
 from dataclasses import dataclass
-from enum import Enum
 from functools import singledispatchmethod
-from typing import NamedTuple
 
-from ..components import DisplaySeparator, DisplaySubtitle, DisplayTitle
-
-
-# Type alias for better readability
-class DisplayObjectTuple(NamedTuple):
-    """
-    NamedTuple to represent a display object with its associated metadata.
-    """
-
-    object_name: str
-    class_name: type
-    class_argument: str | None
+from .constants.display_object_function_calls import DisplayObjectFunctionCalls
 
 
 @dataclass
@@ -52,31 +39,11 @@ class DisplayObjectProcessor(object):
         return self.class_name(argument)
 
 
-# Enums for better readability and maintainability
-class DisplayObjectTypes(Enum):
-    """Enum representing different types of display objects."""
-
-    TITLE = DisplayObjectTuple("title", DisplayTitle, "OTA-Installer")
-    SEPARATOR = DisplayObjectTuple("separator", DisplaySeparator, None)
-    SUBTITLE = DisplayObjectTuple("subtitle", DisplaySubtitle, None)
-
-    def __str__(self) -> str:
-        """String representation of the DisplayObjectTypes enum."""
-
-        return self.value.object_name
-
-    @property
-    def processor(self):
-        """Property to process the associated display object."""
-
-        processor = DisplayObjectProcessor(self.value.class_name)
-        return processor.process_object(self.value.class_argument)
-
-
 def main():
-    print(DisplayObjectTypes.TITLE.processor)
-    print(DisplayObjectTypes.SEPARATOR.processor)
-    print(DisplayObjectTypes.SUBTITLE.processor)
+    function_calls = DisplayObjectFunctionCalls
+    print(function_calls.TITLE.processor)
+    print(function_calls.SEPARATOR.processor)
+    print(function_calls.SUBTITLE.processor)
 
 
 if __name__ == "__main__":

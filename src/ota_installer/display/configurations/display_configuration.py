@@ -1,32 +1,16 @@
 # src/ota_installer/display/configurations/display_configuration.py
-from dataclasses import dataclass, field
 
 from ...log_setup import logger
-from ...program_versioning.software_version import SoftwareVersion
-from ..factories import DisplayFactory
+from ..display_all_components import show_display_components
 
 
-@dataclass
-class Configuration(object):  # Display Configuration
-    software_version: "SoftwareVersion" = field(
-        default_factory=SoftwareVersion
-    )
-    version_info: str = field(default_factory=str)
-
-    def render_version_text(self) -> None:
-        self.version_info = self.software_version.display
-
-    def create_version_display(self) -> None:
-        try:
-            DisplayFactory.create_formatter()
-        except AttributeError as err:
-            logger.error(f"AttributeError: {err}")
-        # except Exception as error:
-        #    print(f"AFailed to create version display: {error}")
-
-    def __str__(self) -> str:
-        self.render_version_text()
-        return ""
+def create_version_display() -> None:
+    try:
+        show_display_components()
+    except AttributeError as err:
+        logger.error(f"AttributeError: {err}")
+    except Exception as error:
+        logger.exception(f"Failed to create version display: {error}")
 
 
 if __name__ == "__main__":

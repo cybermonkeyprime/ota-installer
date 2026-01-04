@@ -5,7 +5,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Self
 
-from ...display import VariableProcessor
+from ...display.display_variable_processor import VariableProcessor
 from ...log_setup import add_structured_log_sink, logger
 from ...variables import VariableManager
 from .task_iteration import TaskIteration, task_iterator
