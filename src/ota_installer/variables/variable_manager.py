@@ -15,6 +15,7 @@ from ..images.magisk_image.constants.magisk_image_paths import (
     MagiskImagePaths,
 )
 from ..log_setup import logger
+from .functions import set_variable_manager
 
 
 @dataclass
@@ -36,7 +37,7 @@ class VariableManager(object):
     )
 
     def __post_init__(self) -> None:
-        self.variables = VariableDefiner(self.path).data_tuple
+        self.variables = define_variable(self.path)  # .data_tuple
         self.define_file_name_attributes()
         self.define_file_paths()
         self.define_directory_paths()
@@ -108,7 +109,6 @@ class VariableManager(object):
         from ..dispatchers.factories.dispatch_retriever import (
             DispatchRetriever,
         )
-        from ..variables.functions import set_variable_manager
 
         function_call = set_variable_manager(self.path)
         logger.debug("VariableManager.get_dispatcher(): function_call)")
@@ -125,25 +125,24 @@ VariableTypeTuple = namedtuple(
 )
 
 
-@dataclass
-class VariableDefiner(object):
-    file_path: Path
+def define_variable(file_path: Path) -> VariableTypeTuple:
+    from ..containers.file_name_parser import parse_file_name
 
-    def __post_init__(self) -> Self:
-        from ..containers.file_name_parser import parse_file_name
+    data_tuple = VariableTypeTuple(
+        file_path=file_path,
+        magisk_image_name="place_holder",
+        file_path_stem=Path(file_path.stem),
+        file_parts=parse_file_name(file_path),
+    )
+    return data_tuple
 
-        self.data_tuple = VariableTypeTuple(
-            file_path=self.file_path,
-            magisk_image_name="place_holder",
-            file_path_stem=Path(self.file_path.stem),
-            file_parts=parse_file_name(self.file_path),
-        )
-        return self
+
+def main():
+    path = Path("/path/to/your/file")
+
+    variable_manager = set_variable_manager(path)
+    print(variable_manager.log_file)
 
 
 if __name__ == "__main__":
-    path = Path("/path/to/your/file")
-    from .functions import set_variable_manager
-
-    variable_manager = set_variable_manager(path)
-    # print(variable_manager.log_file)
+    main()
