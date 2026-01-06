@@ -10,7 +10,7 @@ def set_log_file(file_name_parts: Callable) -> str:
 
 
 def set_variable_manager(path: Path) -> "VariableManager":  # noqa: F821 # pyright: ignore[reportUndefinedVariable]
-    from ..variables import VariableManager
+    from .variable_manager import VariableManager
 
     return VariableManager(path)
 

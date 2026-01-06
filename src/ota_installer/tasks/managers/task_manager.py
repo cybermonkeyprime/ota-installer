@@ -9,6 +9,7 @@ from ...display.display_variable_processor import VariableProcessor
 from ...log_setup import add_structured_log_sink, logger
 from ...variables import VariableManager
 from .task_iteration import TaskIteration, task_iterator
+from ...variables.functions import set_variable_manager
 
 
 @dataclass
@@ -32,7 +33,7 @@ class TaskManager(object):
             if not valid_path:
                 logger.error(f"Invalid file path: {self.file_name}")
                 sys.exit("Invalid input file. Aborting.")
-            self.variable = VariableManager(valid_path)
+            self.variable = set_variable_manager(valid_path)
             add_structured_log_sink(self.variable.file_paths["log_file"])
 
         except Exception as err:
