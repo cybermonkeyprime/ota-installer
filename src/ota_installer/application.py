@@ -1,7 +1,7 @@
 # src/ota_installer/application.py
 from . import decorators
-from .display.configurations.display_configuration import (
-    create_version_display,
+from .display.show_display_components import (
+    show_display_components,
 )
 from .exceptions.handlers import KeyboardInterruptHandler
 from .program_versioning.constants.software_constants import SoftwareConstants
@@ -20,7 +20,7 @@ def run() -> None:
 def display_title():
     arguments = CLIArguments
     if not arguments.version:
-        create_version_display()
+        show_display_components()
         random_exit_message()
 
 
