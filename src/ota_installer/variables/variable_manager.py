@@ -1,5 +1,5 @@
 # src/ota_installer/variables/variable_manager.py
-from collections import defaultdict, namedtuple
+from collections import defaultdict
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Self
@@ -15,6 +15,7 @@ from ..images.magisk_image.constants.magisk_image_paths import (
     MagiskImagePaths,
 )
 from ..log_setup import logger
+from .containers.variable_type_container import VariableTypeContainer
 from .functions import set_variable_manager
 
 
@@ -119,16 +120,10 @@ class VariableManager(object):
         )
 
 
-VariableTypeTuple = namedtuple(
-    "VariableTypeTuple",
-    ["file_path", "magisk_image_name", "file_path_stem", "file_parts"],
-)
-
-
-def define_variable(file_path: Path) -> VariableTypeTuple:
+def define_variable(file_path: Path) -> VariableTypeContainer:
     from ..containers.file_name_parser import parse_file_name
 
-    data_tuple = VariableTypeTuple(
+    data_tuple = VariableTypeContainer(
         file_path=file_path,
         magisk_image_name="place_holder",
         file_path_stem=Path(file_path.stem),
