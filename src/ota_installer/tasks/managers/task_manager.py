@@ -1,5 +1,4 @@
 # src/ota_installer/tasks/managers/task_manager.py
-import sys
 from collections.abc import Callable
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -27,13 +26,7 @@ class TaskManager(object):
 
     def set_variable(self) -> Self:
         try:
-            from ...validation.file_path_validation import file_path_validator
-
-            valid_path = file_path_validator(self.file_name)
-            if not valid_path:
-                logger.error(f"Invalid file path: {self.file_name}")
-                sys.exit("Invalid input file. Aborting.")
-            self.variable = set_variable_manager(valid_path)
+            self.variable = set_variable_manager(self.file_name)
             add_structured_log_sink(self.variable.file_paths["log_file"])
 
         except Exception as err:

@@ -10,7 +10,16 @@ def set_log_file(file_name_parts: Callable) -> str:
 
 
 def set_variable_manager(path: Path) -> "VariableManager":  # noqa: F821 # pyright: ignore[reportUndefinedVariable]
+    import sys
+
+    from ..log_setup import logger
+    from ..validation.file_path_validation import file_path_validator
     from .variable_manager import VariableManager
+
+    valid_path = file_path_validator(path)
+    if not valid_path:
+        logger.error(f"Invalid file path: {path}")
+        sys.exit("Invalid input file. Aborting.")
 
     return VariableManager(path)
 
