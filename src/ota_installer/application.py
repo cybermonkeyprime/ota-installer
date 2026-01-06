@@ -1,9 +1,7 @@
 # src/ota_installer/application.py
 from . import decorators
 from .display.components.clear_screen import clear_screen
-from .display.show_display_header import (
-    show_display_header,
-)
+from .display.show_display_header import show_display_header
 from .exceptions.handlers.keyboard_interrupt_handler import (
     KeyboardInterruptHandler,
 )
@@ -25,7 +23,7 @@ def display_title():
 
 @decorators.StylizedIndentPrinter(indent=1, style="task", use_output=False)
 def random_exit_message() -> str:
-    from random import choice
+    from secrets import choice
 
     CELEBRATIONS = [
         "All tasks completed successfully!",
