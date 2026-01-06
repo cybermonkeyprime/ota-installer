@@ -26,7 +26,7 @@ class VariableManager(object):
     path: Path = field(default_factory=Path)
 
     """ directory type validation"""
-    directory: type | None = field(init=False)
+    directory: DirectoryTypeDefinition | None = field(init=False)
 
     """dicts"""
     file_paths: dict = field(default_factory=dict[str, str], init=False)
