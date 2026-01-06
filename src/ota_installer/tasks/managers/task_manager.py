@@ -7,9 +7,9 @@ from typing import Self
 
 from ...display.display_variable_processor import VariableProcessor
 from ...log_setup import add_structured_log_sink, logger
-from ...variables import VariableManager
-from .task_iteration import TaskIteration, task_iterator
 from ...variables.functions import set_variable_manager
+from ...variables.variable_manager import VariableManager
+from .task_iteration import TaskIteration, task_iterator
 
 
 @dataclass
