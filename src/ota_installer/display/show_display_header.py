@@ -1,29 +1,23 @@
 # src/ota_installer/display/factories/display_factory.py
 from rich.control import Control
 
-from ... import decorators
-from ...log_setup import logger
-from ..objects.constants.display_object_function_calls import (
+from .. import decorators
+from ..log_setup import logger
+from .objects.constants.display_object_function_calls import (
     DisplayObjectFunctionCalls,
 )
 
 
 @decorators.FooterWrapper(message="")
-def display_components() -> None:
-    try:
-        display_header()
-    except Exception as err:
-        logger.error(
-            f"format_display(): An error occurred during initialization: {err}"
-        )
-
-
-def display_header() -> bool:
-    show_title()
-    move_cursor_up()
-    show_separator()
-    show_subtitle()
-    return True
+def show_display_header() -> None:
+    components = (show_title, move_cursor_up, show_separator, show_subtitle)
+    for component in components:
+        try:
+            component()
+        except Exception as err:
+            logger.error(
+                f"format_display(): An error occurred during initialization: {err}"
+            )
 
 
 @decorators.OutputPrinter(suffix="")
@@ -48,7 +42,7 @@ def show_subtitle() -> str:
 
 
 def main():
-    display_components()
+    show_display_header()
 
 
 if __name__ == "__main__":

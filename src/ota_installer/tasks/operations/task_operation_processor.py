@@ -9,7 +9,7 @@ from ... import decorators
 from ...dispatchers.factories.plugin_dispatcher_adapter import (
     PluginDispatcherAdapter,
 )
-from .constants import (
+from .constants.constants import (
     CommandStringConstants,
     TaskOpsConstants,
     TaskOpsItemTypeConstants,
@@ -94,9 +94,6 @@ class TaskOperationProcessor(object):
             TaskOpsConstants.SPACING.value * TaskOpsConstants.INTERVAL.value
         )
     )
-    def get_indentation(self) -> str:
-        return " "
-
     def run_with_output(self) -> None:
         self.show_index_and_title()
 

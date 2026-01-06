@@ -1,25 +1,26 @@
 # src/ota_installer/application.py
 from . import decorators
-from .display.components.clear_screen import clear_screen
 from .display.show_display_header import (
-    show_display_header,
+    show_display_components,
 )
-from .exceptions.handlers.keyboard_interrupt_handler import (
-    KeyboardInterruptHandler,
-)
+from .exceptions.handlers import KeyboardInterruptHandler
 from .program_versioning.constants.software_constants import SoftwareConstants
+from .services import (
+    ScreenManagerService,
+)
 from .tasks.execution.task_execution import CLIArguments, TaskExecutor
 
 
 def run() -> None:
-    clear_screen()
+    screen_manager = ScreenManagerService()
+    screen_manager.clear_screen()
     display_title()
 
 
 def display_title():
     arguments = CLIArguments
     if not arguments.version:
-        show_display_header()
+        show_display_components()
         random_exit_message()
 
 

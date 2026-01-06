@@ -1,13 +1,8 @@
 # src/ota_installer/styles/separator.py
-from collections import namedtuple
 from dataclasses import dataclass
 from enum import Enum
 
-from ota_installer.styles.indentation import indentation
-
-SeparatorContainer = namedtuple(
-    "SeparatorContainer", ["character", "spacing", "interval"]
-)
+from .indentation import indentation
 
 
 class SeparatorConstants(Enum):

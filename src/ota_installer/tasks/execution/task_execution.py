@@ -12,7 +12,7 @@ from ...dispatchers.templates.dispatcher_template import (
 )
 from ...log_setup import logger
 from ...task_groups.constants.task_group_names import TaskGroupNames
-from ..definitions import TaskDefinitions
+from ..definitions.task_definitions import TaskDefinitions
 from ..managers.task_manager import TaskManager
 from .cli_arguments import CLIArguments
 

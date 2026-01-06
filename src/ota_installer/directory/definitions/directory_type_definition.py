@@ -2,7 +2,8 @@
 from collections.abc import Callable
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import TypeVar
+
+from loguru import logger
 
 from ota_installer.images.boot_image.constants.boot_image_paths import (
     BootImagePaths,
@@ -20,30 +21,28 @@ from ...images.magisk_image.containers.magisk_image_container import (
 
 magisk_struct = MagiskImageContainer()
 
-T = TypeVar("T", bound=type)
-# P = ParamSpec("P")
-
 
 @dataclass
-class DirectoryDefinition(object):
+class DirectoryTypeDefinition(object):
     parent_directory: Path
-    boot_image_file_name: str = field(default="")
+    _boot_image: str = field(default="")
     magisk_image: Path | MagiskImageContainer = field(
         default_factory=MagiskImageContainer
     )
 
     def __post_init__(self) -> None:
-        self.boot_image = create_structure(
-            BootImageContainer, self.boot_image_file_name
+        self.boot_image = create_container(
+            BootImageContainer, self._boot_image
         )
-        self.magisk_image = create_structure(MagiskImageContainer)
+        self.magisk_image = create_container(MagiskImageContainer)
 
 
-def create_structure[**P](
-    structure_cls: type, *args: P.args, **kwargs: P.kwargs
-) -> Callable[P, type]:
+def create_container[R, **P](
+    container_cls: R, *args: P.args, **kwargs: P.kwargs
+) -> Callable[P, R]:
     try:
-        return structure_cls(*args, **kwargs)
+        logger.debug(f"{type(container_cls).__name__} {args}")
+        return container_cls(*args, **kwargs)
     except Exception as err:
         raise ValueError("Failed to create structure: ") from err
 

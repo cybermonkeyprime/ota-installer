@@ -1,49 +1,7 @@
 # src/ota_installer/exceptions/handlers/exception_handlers.py
-from collections.abc import Callable
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
-from ...decorators import (
-    Colorizer,
-    IndentWrapper,
-    OutputPrinter,
-)
-
-
-@dataclass
-class BaseExceptionHandler(object):
-    func: Callable
-    exception_type: type[BaseException] = field(default=BaseException)
-    default_message: str = field(default="An error occurred")
-    custom_messages: dict[type[BaseException], str] = field(
-        default_factory=dict
-    )
-
-    def handle[**P](
-        self, *args: P.args, **kwargs: P.kwargs
-    ) -> Callable[P] | None:
-        try:
-            return self.func(*args, **kwargs)
-        except self.exception_type as err:
-            self.print_exception_message(err)
-            return None
-
-    @OutputPrinter(use_color=True, prefix="\n\n", suffix="\n\n")
-    def print_exception_message(self, error: BaseException) -> str:
-        formatted_message = self.format_message(error)
-        return formatted_message
-
-    @IndentWrapper(interval=1)
-    @Colorizer(style="variable")
-    def format_message(self, error: BaseException) -> str:
-        error_message = self.custom_messages.get(
-            type(error), self.default_message
-        )
-        return f"{error_message}"
-
-    def __call__[**P](
-        self, *args: P.args, **kwargs: P.kwargs
-    ) -> Callable[P] | None:
-        return self.handle(*args, **kwargs)
+from .base_exception_handler import BaseExceptionHandler
 
 
 def exception_handler_factory(*exception_types: type[BaseException]):

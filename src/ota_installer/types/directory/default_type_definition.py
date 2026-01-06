@@ -1,10 +1,7 @@
 # src/ota_installer/types/directory/default_type_definition.py
-from collections.abc import Callable
 from dataclasses import dataclass, field
 from enum import Enum
 from pathlib import Path
-import types
-from typing import cast
 
 from ...images.boot_image.containers.boot_image_container import (
     BootImageContainer,
@@ -41,7 +38,7 @@ class BootImage(object):
 
 
 @dataclass
-class DefaultTypeDefinition(object):
+class _DefaultTypeDefinition(object):
     parent_directory: Path
     boot_image_file_name: str = field(default="")
     magisk_image: Path | MagiskImageContainer = field(

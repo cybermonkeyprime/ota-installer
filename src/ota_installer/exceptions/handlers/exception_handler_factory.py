@@ -1,6 +1,5 @@
 # src/ota_installer/exceptions/handlers/exception_handler_factory.py
 from collections.abc import Callable
-from dataclasses import dataclass, field
 
 from .base_exception_handler import BaseExceptionHandler
 
@@ -29,19 +28,9 @@ def exception_handler_factory(
     return decorator
 
 
-@dataclass
-class ExceptionHandler(object):
-    default_message: str = "An error occurred"
-    custom_messages: dict[type[BaseException], str] = field(
-        default_factory=dict
-    )
+def main():
+    pass
 
 
 if __name__ == "__main__":
-
-    @exception_handler_factory(ValueError, KeyError)
-    class CustomExceptionHandler(BaseExceptionHandler):
-        pass
-
-    handler = CustomExceptionHandler()
-    print(handler.custom_messages)
+    main()

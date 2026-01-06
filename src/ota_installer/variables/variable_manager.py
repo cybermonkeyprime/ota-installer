@@ -4,6 +4,10 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Self
 
+from ..directory.definitions.directory_type_definition import (
+    DirectoryTypeDefinition,
+)
+from ..directory.managers.directory_type_manager import set_directory
 from ..dispatchers.factories.mappings.dispatcher_factory_mapping import (
     DispatcherTypes,
 )
@@ -11,10 +15,6 @@ from ..images.magisk_image.constants.magisk_image_paths import (
     MagiskImagePaths,
 )
 from ..log_setup import logger
-from ..types.directory import DefaultTypeDefinition, DefaultTypeManager
-
-DirectoryTypeDefinition = DefaultTypeDefinition
-DirectoryTypeManager = DefaultTypeManager
 
 
 @dataclass
@@ -25,7 +25,7 @@ class VariableManager(object):
     path: Path = field(default_factory=Path)
 
     """ directory type validation"""
-    directory: DirectoryTypeDefinition | None = field(init=False)
+    directory: type | None = field(init=False)
 
     """dicts"""
     file_paths: dict = field(default_factory=dict[str, str], init=False)
@@ -74,9 +74,7 @@ class VariableManager(object):
 
     def define_directory_paths(self) -> Self:
         self.ota_parent_directory = self.path.parent
-        self.directory = DirectoryTypeManager(
-            self.file_name["path"].parent
-        ).create_directory()
+        self.directory = set_directory(self.file_name["path"].parent)
 
         self.directories = {
             "magisk": {
@@ -132,7 +130,7 @@ class VariableDefiner(object):
     file_path: Path
 
     def __post_init__(self) -> Self:
-        from ..structures.file_name_parser import parse_file_name
+        from ..containers.file_name_parser import parse_file_name
 
         self.data_tuple = VariableTypeTuple(
             file_path=self.file_path,
