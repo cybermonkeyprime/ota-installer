@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from functools import wraps
 from typing import cast
 
-from ..protocols.decorator_protocols import GenericDecorator
+from .protocols.decorator_protocols import GenericDecorator
 
 
 @dataclass

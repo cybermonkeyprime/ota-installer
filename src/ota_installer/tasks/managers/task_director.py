@@ -1,7 +1,7 @@
 # src/ota_installer/tasks/managers/task_director.py
 
 from ...log_setup import logger
-from ...variables import VariableManager
+from ...variables.variable_manager import VariableManager
 from ..factories import TaskFactory
 
 

@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 
 from ... import decorators
 from ...task_groups.constants.application_tasks import ApplicationTasks
-from ...variables import VariableManager
+from ...variables.variable_manager import VariableManager
 from ..operations.task_operation_details import TaskOperationDetails
 from ..operations.task_operation_processor import image_handler
 from ..plugin_registry import task_plugin

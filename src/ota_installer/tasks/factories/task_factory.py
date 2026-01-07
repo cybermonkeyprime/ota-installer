@@ -3,7 +3,7 @@ import uuid
 from dataclasses import dataclass, field
 
 from ...log_setup import logger
-from ...variables import VariableManager
+from ...variables.variable_manager import VariableManager
 from ..plugin_registry import TASK_PLUGINS
 
 

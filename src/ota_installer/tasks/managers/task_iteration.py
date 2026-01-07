@@ -4,7 +4,7 @@ from types import NoneType
 
 from ...decorators import StylizedIndentPrinter
 from ...log_setup import logger
-from ...variables import VariableManager
+from ...variables.variable_manager import VariableManager
 from .task_director import task_director
 
 StringTuple = tuple[str, ...]

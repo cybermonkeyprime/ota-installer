@@ -5,7 +5,7 @@ from functools import wraps
 from typing import cast
 
 from ..log_setup import logger
-from ..protocols.decorator_protocols import GenericDecorator
+from .protocols.decorator_protocols import GenericDecorator
 
 
 @dataclass

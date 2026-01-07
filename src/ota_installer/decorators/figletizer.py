@@ -6,7 +6,7 @@ from typing import cast
 
 from pyfiglet import figlet_format
 
-from ..protocols.decorator_protocols import StringReturningDecorator
+from .protocols.decorator_protocols import StringReturningDecorator
 
 type R = str
 

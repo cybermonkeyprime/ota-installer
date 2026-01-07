@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 from typing import Self
 
 from ....dispatchers.constants.dispatcher_constants import DispatcherConstants
-from ....variables import VariableManager
+from ....variables.variable_manager import VariableManager
 from ...variables.processors import BaseProcessor
 
 

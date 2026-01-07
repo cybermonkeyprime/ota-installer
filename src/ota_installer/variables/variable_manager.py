@@ -121,7 +121,7 @@ class VariableManager(object):
 
 
 def define_variable(file_path: Path) -> VariableTypeContainer:
-    from ..containers.file_name_parser import parse_file_name
+    from .functions import parse_file_name
 
     data_tuple = VariableTypeContainer(
         file_path=file_path,

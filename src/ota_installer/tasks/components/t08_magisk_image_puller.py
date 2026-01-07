@@ -9,7 +9,7 @@ from ...images.magisk_image.constants.magisk_image_paths import (
 )
 from ...task_groups.constants.application_tasks import ApplicationTasks
 from ...task_groups.constants.migration_tasks import MigrationTasks
-from ...variables import VariableManager
+from ...variables.variable_manager import VariableManager
 from ..operations.task_operation_details import TaskOperationDetails
 from ..plugin_registry import task_plugin
 from .base_task import BaseTask

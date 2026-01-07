@@ -8,8 +8,8 @@ import pyinputplus as pyip
 from loguru import logger
 from rich.console import Console
 
-from ..protocols.decorator_protocols import GenericDecorator
 from ..styles.palette import RichColors
+from .protocols.decorator_protocols import GenericDecorator
 
 console = Console()
 

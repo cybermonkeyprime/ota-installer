@@ -35,3 +35,16 @@ def get_file_image_path(name: str, device: str, version) -> str:
         .set_version(version)
         .set_file_path()
     )
+
+
+def parse_file_name(raw_name: Path) -> tuple:
+    from .containers.file_name_container import FileNameContainer
+
+    parts = Path(raw_name).stem.split("-")
+    device, file_type, version, *extra_parts = parts
+    return FileNameContainer(
+        device=device,
+        file_type=file_type,
+        version=version,
+        extra=extra_parts,
+    )

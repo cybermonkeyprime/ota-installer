@@ -1,5 +1,5 @@
 # src/ota_installer/display/variables/functions.py
-from ...variables import VariableManager
+from ...variables.variable_manager import VariableManager
 from ..variables.processors import (
     DirectoryIterationProcessor,
     FileIterationProcessor,

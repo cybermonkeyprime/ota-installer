@@ -6,7 +6,7 @@ from typing import cast
 
 from rich.console import Console
 
-from ..protocols.decorator_protocols import GenericDecorator
+from .protocols.decorator_protocols import GenericDecorator
 
 console = Console()
 
@@ -35,7 +35,8 @@ class OutputPrinter(GenericDecorator):
                 return result
             except Exception as e:
                 raise RuntimeError(
-                    f"{function.__name__}(): An error occurred while executing the function: {e}"
+                    f"{function.__name__}(): "
+                    "An error occurred while executing the function: {e}"
                 ) from e
 
         return cast(Callable[P, R], wrapper)

@@ -4,7 +4,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Self
 
-from ...display.display_variable_processor import VariableProcessor
+from ...display.variables.display_variable_processor import VariableProcessor
 from ...log_setup import add_structured_log_sink, logger
 from ...variables.functions import set_variable_manager
 from ...variables.variable_manager import VariableManager
