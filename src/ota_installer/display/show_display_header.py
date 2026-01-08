@@ -1,5 +1,4 @@
 # src/ota_installer/display/show_display_header.py
-from typing import Callable
 from rich.control import Control
 
 from .. import decorators
@@ -17,7 +16,8 @@ def show_display_header() -> None:
             component()
         except Exception as err:
             logger.error(
-                f"format_display(): An error occurred during initialization: {err}"
+                f"format_display(): An error occurred during initialization: "
+                f"{err}"
             )
 
 
@@ -50,10 +50,12 @@ def call_display_component(
     component_type: DisplayComponent, *args, **kwargs
 ) -> str:
     """Call the display function associated with the given component type."""
-    display_function = display_component_calls.get(component_type)
-    if display_function:
-        return display_function(*args, **kwargs)
-    raise ValueError(f"Display component {component_type} is not registered.")
+    display_function = display_component_calls.get(component_type, None)
+    if not display_function:
+        raise ValueError(
+            f"Display component {component_type} is not registered."
+        )
+    return display_function(*args, **kwargs)
 
 
 def main():
