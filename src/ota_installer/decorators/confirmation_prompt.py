@@ -78,7 +78,7 @@ class ConfirmationPrompt(GenericDecorator):
 
     def ending(self) -> str:
         style = RichColors["non_error".upper()]
-        return f"{style.beginnning()}{self.key_options()}{style.ending()}"
+        return f"{style.beginning()}{self.key_options()}{style.ending()}"
 
 
 """ Example usage:"""

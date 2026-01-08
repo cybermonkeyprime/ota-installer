@@ -28,7 +28,7 @@ class OutputPrinter(GenericDecorator):
             try:
                 result = function(*args, **kwargs)
                 console.print(
-                    f"{style.beginnning()}{self.prefix}{result}{style.ending()}",
+                    f"{style.beginning()}{self.prefix}{result}{style.ending()}",
                     highlight=False,
                     end=self.suffix,
                 )

@@ -28,7 +28,7 @@ class Colorizer(StringReturningDecorator):
             try:
                 result = function(*args, **kwargs)
                 styled_result = (
-                    f"{self.color.beginnning()}{result}{self.color.ending()}"
+                    f"{self.color.beginning()}{result}{self.color.ending()}"
                 )
             except AttributeError as error:
                 raise ValueError("Invalid style attribute: ") from error

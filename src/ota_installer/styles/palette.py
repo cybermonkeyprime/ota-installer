@@ -3,6 +3,8 @@ from enum import Enum
 
 
 class RichColors(Enum):
+    """Enumeration for rich color styles."""
+
     TITLE = "green bold"
     AUTHOR = "white"
     VERSION = "yellow"
@@ -13,14 +15,17 @@ class RichColors(Enum):
     WARNING = "yellow"
     NON_ERROR = "white"
 
-    def beginnning(self):
+    def beginning(self):
+        """Constructs the beginning tag for the rich style."""
         return f"[{self.value}]"
 
     def ending(self):
+        """Constructs the ending tag for the rich style."""
         return f"[/{self.value}]"
 
 
 def main() -> None:
+    """The main function of the module, provided for completeness."""
     pass
 
 
