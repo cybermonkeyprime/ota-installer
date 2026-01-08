@@ -9,8 +9,9 @@ from ...program_versioning.constants.software_constants import (
 @StyledFigletPrinter(style="title", font="slant")
 def display_title() -> str:
     """
-    Generate a string representation of the display_title instance, which
-        includes the formatted title.
+    Generate and return a stylized string representation of the application
+        title.
     """
+
     title = SoftwareConstants.TITLE.value
     return f" {title}"

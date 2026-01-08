@@ -21,9 +21,8 @@ from .functions import set_variable_manager
 
 @dataclass
 class VariableManager(object):
-    """Defines all variables"""
+    """Manages variables for OTA installation."""
 
-    """main entry point"""
     path: Path = field(default_factory=Path)
 
     """ directory type validation"""
@@ -45,6 +44,7 @@ class VariableManager(object):
         self.define_image_names()
 
     def define_file_name_attributes(self) -> Self:
+        """Defines file name attributes."""
         self.file_name = {
             "path": self.variables.file_path,
             "stem": self.variables.file_path_stem,
@@ -63,6 +63,7 @@ class VariableManager(object):
             set_log_file,
         )
 
+        """Defines file paths."""
         image_data = FileImageData(
             self.file_name["device"], self.file_name["version"]
         )
@@ -75,6 +76,7 @@ class VariableManager(object):
         return self
 
     def define_directory_paths(self) -> Self:
+        """Defines directory paths."""
         self.ota_parent_directory = self.path.parent
         self.directory = set_directory(self.file_name["path"].parent)
 
@@ -87,6 +89,7 @@ class VariableManager(object):
         return self
 
     def define_image_names(self) -> Self:
+        """Defines image names."""
         self.image_name = {
             "patched": self.variables.magisk_image_name,
         }
@@ -94,6 +97,7 @@ class VariableManager(object):
         return self
 
     def create_directory(self) -> DirectoryTypeDefinition | None:
+        """Creates a directory and returns its definition."""
         try:
             return DirectoryTypeDefinition(
                 self.path.parent,
@@ -111,6 +115,7 @@ class VariableManager(object):
             DispatchRetriever,
         )
 
+        """Retrieves the dispatcher for the given process type."""
         function_call = set_variable_manager(self.path)
         logger.debug("VariableManager.get_dispatcher(): function_call)")
         return (
@@ -123,6 +128,7 @@ class VariableManager(object):
 def define_variable(file_path: Path) -> VariableTypeContainer:
     from .functions import parse_file_name
 
+    """Defines variables based on the file path."""
     data_tuple = VariableTypeContainer(
         file_path=file_path,
         magisk_image_name="place_holder",
@@ -133,10 +139,11 @@ def define_variable(file_path: Path) -> VariableTypeContainer:
 
 
 def main():
+    """Main function to initialize VariableManager and print log_file."""
     path = Path("/path/to/your/file")
 
     variable_manager = set_variable_manager(path)
-    print(variable_manager.log_file)
+    print(variable_manager.file_paths.get("log_file"))
 
 
 if __name__ == "__main__":

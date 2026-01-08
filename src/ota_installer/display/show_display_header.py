@@ -1,15 +1,16 @@
-# src/ota_installer/display/factories/display_factory.py
+# src/ota_installer/display/show_display_header.py
+from typing import Callable
 from rich.control import Control
 
 from .. import decorators
 from ..log_setup import logger
-from .objects.constants.display_object_function_calls import (
-    DisplayObjectFunctionCalls,
-)
+from .constants.display_component import DisplayComponent
+from .constants.display_component_calls import display_component_calls
 
 
 @decorators.FooterWrapper(message="")
 def show_display_header() -> None:
+    """Renders the display header by invoking the components in sequence."""
     components = (show_title, move_cursor_up, show_separator, show_subtitle)
     for component in components:
         try:
@@ -22,23 +23,37 @@ def show_display_header() -> None:
 
 @decorators.OutputPrinter(suffix="")
 def show_title() -> str:
-    return DisplayObjectFunctionCalls.TITLE.processor
+    """Returns the title for the display."""
+    return call_display_component(DisplayComponent.TITLE)
 
 
 @decorators.OutputPrinter(suffix="")
 def move_cursor_up() -> str:
+    """Returns the control sequence to move the cursor up in the console."""
     return str(Control.move(y=-1))
 
 
 @decorators.OutputPrinter(suffix="")
 @decorators.Colorizer(style="title")
 def show_separator() -> str:
-    return DisplayObjectFunctionCalls.SEPARATOR.processor
+    """Returns the separator for the display."""
+    return call_display_component(DisplayComponent.SEPARATOR)
 
 
 @decorators.OutputPrinter()
 def show_subtitle() -> str:
-    return DisplayObjectFunctionCalls.SUBTITLE.processor
+    """Returns the subtitle for the display."""
+    return call_display_component(DisplayComponent.SUBTITLE)
+
+
+def call_display_component(
+    component_type: DisplayComponent, *args, **kwargs
+) -> str:
+    """Call the display function associated with the given component type."""
+    display_function = display_component_calls.get(component_type)
+    if display_function:
+        return display_function(*args, **kwargs)
+    raise ValueError(f"Display component {component_type} is not registered.")
 
 
 def main():
