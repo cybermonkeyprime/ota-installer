@@ -3,16 +3,23 @@ from enum import StrEnum, auto
 
 
 class FileImageNames(StrEnum):
+    """Enumeration for File Image Names."""
+
     STOCK = auto()
     PAYLOAD = auto()
     MAGISK = auto()
 
 
+def print_image_names():
+    """Prints the values of FileImageNames enum."""
+    for image_name in FileImageNames:
+        print(image_name.value)
+
+
 def main():
-    print(FileImageNames.PAYLOAD.value)
-    print(FileImageNames.STOCK.value)
-    print(FileImageNames.MAGISK.value)
+    """Main function that prints file image names."""
+    print_image_names()
 
 
 if __name__ == "__main__":
-    main()
+    main()  # Signed off by Brian Sanford on 20260108
