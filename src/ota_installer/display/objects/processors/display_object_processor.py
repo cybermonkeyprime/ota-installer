@@ -1,4 +1,5 @@
 # src/ota_installer/display/objects/processors/display_object_processor.py
+from collections.abc import Callable
 from dataclasses import dataclass
 from functools import singledispatchmethod
 
@@ -7,33 +8,24 @@ from functools import singledispatchmethod
 class DisplayObjectProcessor(object):
     """
     Processor class for creating display objects based on the provided
-        function type and argument.
+        callable and argument.
     """
 
-    function: type
+    function: Callable
 
     @singledispatchmethod
-    def process_object(self, argument):
-        """Default method for processing an object with an unsupported type."""
-
-        return f"Unsupported type: {type(argument).__name__})"
+    def process_object(self, argument: str | None | object) -> str:
+        """Process the provided argument using a callable."""
+        raise ValueError(f"Unsupported type: {type(argument).__name__}")
 
     @process_object.register
-    def _(self, argument: None):
-        """Process an object when the argument is None"""
-
+    def _(self, argument: None) -> str:
+        """Process the argument when it is None."""
         return self.function()
 
     @process_object.register
-    def _(self, argument: str):
-        """Process an object when the argument is an string."""
-
-        return self.function(argument)
-
-    @process_object.register
-    def _(self, argument: object):
-        """Process an object when the argument is an object."""
-
+    def _(self, argument: str) -> str:
+        """Process the argument when it is a string."""
         return self.function(argument)
 
 
