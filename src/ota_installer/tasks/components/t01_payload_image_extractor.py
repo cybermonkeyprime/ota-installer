@@ -21,7 +21,7 @@ class PayloadImageExtractor(BaseTask):
         super().__init__(
             enum_values=ENUM_VALUES,
             command_string=(
-                f'unzip -o "{self.instance.path}" payload.bin -d "{Path.home()}"'
+                f'7z e "{self.instance.path}" payload.bin -o"{Path.home()}" -y'
             ),
         )
 

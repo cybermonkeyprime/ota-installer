@@ -53,7 +53,6 @@ src/ota_installer/display/components/subtitle.py
 src/ota_installer/display/components/title.py
 src/ota_installer/display/constants/display_component.py
 src/ota_installer/display/constants/display_component_calls.py
-src/ota_installer/display/objects/containers/display_object_container.py
 src/ota_installer/display/objects/processors/display_object_processor.py
 src/ota_installer/display/templates/__init__.py
 src/ota_installer/display/templates/display_template.py

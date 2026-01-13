@@ -33,6 +33,10 @@ class TaskOperationExecutor(object):
     @decorators.ContinueOnKeyPress(indent=1, char=" ")
     @decorators.Encapsulate()
     def execute_and_return_output(self, output_name) -> str:
-        result = check_output(self.command_string, shell=True).decode().strip()
+        result = (
+            check_output(self.command_string.split(), shell=True)
+            .decode()
+            .strip()
+        )
         print(f"{output_name} = {result}")
         return result
