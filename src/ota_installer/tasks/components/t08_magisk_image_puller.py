@@ -28,8 +28,7 @@ class MagiskImagePuller(BaseTask):
             / self.instance.image_name["patched"]
         )
         destination = (
-            MagiskImagePaths.LOCAL_PATH.value
-            / self.instance.file_paths["magisk"]
+            MagiskImagePaths.LOCAL_PATH.value / self.instance.file_paths.magisk
         )
 
         command_string = f'adb pull "{source}" "{destination}"'

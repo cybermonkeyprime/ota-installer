@@ -18,10 +18,8 @@ class StockBootImageBackupper(BaseTask):
     instance: VariableManager = field(default_factory=VariableManager)
 
     def __post_init__(self) -> None:
-        image_path = image_handler(self.instance.file_name["device"])
-        command_string = (
-            f"cp -v {image_path} {self.instance.file_paths['stock']}"
-        )
+        image_path = image_handler(self.instance.file_name.device)
+        command_string = f"cp -v {image_path} {self.instance.file_paths.stock}"
 
         super().__init__(
             enum_values=ENUM_VALUES,

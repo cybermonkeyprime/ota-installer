@@ -19,12 +19,12 @@ class BootImageExtractor(BaseTask):
     instance: VariableManager = field(default_factory=VariableManager)
 
     def __post_init__(self) -> None:
-        device = self.instance.file_name["device"]
+        device = self.instance.file_name.device
         destination_path = Path.home() / "images"
         image_key = image_handler(device)
         options = f'--partitions="{image_key.stem}" --out "{destination_path}"'
         command_string = (
-            f"payload_dumper {self.instance.file_paths['payload']} {options}"
+            f"payload_dumper {self.instance.file_paths.payload} {options}"
         )
 
         super().__init__(

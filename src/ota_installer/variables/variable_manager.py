@@ -15,6 +15,10 @@ from ..images.magisk_image.constants.magisk_image_paths import (
     MagiskImagePaths,
 )
 from ..log_setup import logger
+from .constants.directory_names import DirectoryNames
+from .constants.directory_paths import DirectoryPaths
+from .constants.file_name_info import FileNameInfo
+from .constants.file_paths import FilePaths
 from .containers.variable_type_container import VariableTypeContainer
 from .functions import set_variable_manager
 
@@ -29,8 +33,8 @@ class VariableManager(object):
     directory: DirectoryTypeDefinition | None = field(init=False)
 
     """dicts"""
-    file_paths: dict = field(default_factory=dict[str, str], init=False)
-    file_name: dict = field(default_factory=dict[str, str], init=False)
+    file_paths: FilePaths = field(init=False)
+    file_name: FileNameInfo = field(init=False)
     image_name: dict = field(default_factory=dict[str, str], init=False)
     directories: dict = field(
         default_factory=lambda: defaultdict(dict[str, str]), init=False
@@ -45,13 +49,13 @@ class VariableManager(object):
 
     def define_file_name_attributes(self) -> Self:
         """Defines file name attributes."""
-        self.file_name = {
-            "path": self.variables.file_path,
-            "stem": self.variables.file_path_stem,
-            "parts": self.variables.file_parts,
-            "device": self.variables.file_parts.device,
-            "version": self.variables.file_parts.version,
-        }
+        self.file_name = FileNameInfo(
+            path=self.variables.file_path,
+            stem=self.variables.file_path_stem,
+            parts=self.variables.file_parts,
+            device=self.variables.file_parts.device,
+            version=self.variables.file_parts.version,
+        )
         return self
 
     def define_file_paths(self) -> Self:
@@ -65,27 +69,27 @@ class VariableManager(object):
 
         """Defines file paths."""
         image_data = FileImageData(
-            self.file_name["device"], self.file_name["version"]
+            self.file_name.device, self.file_name.version
         )
-        self.file_paths = {
-            "stock": get_file_image_path("stock", *image_data),
-            "magisk": get_file_image_path("magisk", *image_data),
-            "payload": get_file_image_path("payload", *image_data),
-            "log_file": set_log_file(self.file_name["parts"]),
-        }
+        self.file_paths = FilePaths(
+            stock=get_file_image_path("stock", *image_data),
+            magisk=get_file_image_path("magisk", *image_data),
+            payload=get_file_image_path("payload", *image_data),
+            log_file=set_log_file(self.file_name.parts),
+        )
         return self
 
     def define_directory_paths(self) -> Self:
         """Defines directory paths."""
         self.ota_parent_directory = self.path.parent
-        self.directory = set_directory(self.file_name["path"].parent)
+        self.directory = set_directory(self.file_name.path.parent)
 
-        self.directories = {
-            "magisk": {
-                "local_path": MagiskImagePaths.LOCAL_PATH.value,
-                "remote_path": MagiskImagePaths.REMOTE_PATH.value,
-            }
-        }
+        self.directories = DirectoryNames(
+            magisk=DirectoryPaths(
+                local_path=MagiskImagePaths.LOCAL_PATH.value,
+                remote_path=MagiskImagePaths.REMOTE_PATH.value,
+            )
+        )
         return self
 
     def define_image_names(self) -> Self:
@@ -101,7 +105,7 @@ class VariableManager(object):
         try:
             return DirectoryTypeDefinition(
                 self.path.parent,
-                str(self.file_paths["stock"].parent),
+                str(self.file_paths.stock.parent),
                 self.directories["magisk"]["remote_path"],
             )
         except Exception as err:

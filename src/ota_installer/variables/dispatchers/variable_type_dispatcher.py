@@ -16,5 +16,5 @@ class VariableTypeDispatcher(DispatcherTemplate):
         self.collection = {
             "path.name": Path(self.obj.path).name,
             "path.parent": Path(self.obj.path).parent,
-            "log_file": self.obj.file_paths["log_file"],
+            "log_file": self.obj.file_paths.log_file,
         }

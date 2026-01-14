@@ -17,9 +17,9 @@ class MagiskImageFinder(BaseTask):
     instance: VariableManager = field(default_factory=VariableManager)
 
     def __post_init__(self) -> None:
+        remote_path = "{self.instance.directories.magisk.remote_path}"
         command_string = (
-            f'adb shell ls "{self.instance.directories["magisk"]["remote_path"]}"'
-            "| grep magisk_patched | head -n1"
+            f'adb shell ls "{remote_path}"| grep magisk_patched | head -n1'
         )
 
         super().__init__(

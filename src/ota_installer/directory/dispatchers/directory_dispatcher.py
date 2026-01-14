@@ -20,12 +20,8 @@ class DirectoryDispatcher(DispatcherTemplate):
         self.collection = {
             DIRECTORY.STOCK.value: boot_image.stock,  # stock_path
             DIRECTORY.MAGISK.value: boot_image.magisk,  # magisk_path
-            DIRECTORY.LOCAL.value: self.obj.directories["magisk"][
-                "local_path"
-            ],
-            DIRECTORY.REMOTE.value: self.obj.directories["magisk"][
-                "remote_path"
-            ],
+            DIRECTORY.LOCAL.value: self.obj.directories.magisk.local_path,
+            DIRECTORY.REMOTE.value: self.obj.directories.magisk.remote_path,
         }
         logger.debug(
             f"DirectoryDispatcher.__post_init__(): {self.collection=}"

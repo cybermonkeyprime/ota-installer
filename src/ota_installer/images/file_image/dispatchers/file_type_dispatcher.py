@@ -30,8 +30,8 @@ class FileTypeDispatcher(DispatcherTemplate):
 
     def __post_init__(self) -> None:
         self.collection = {
-            self.normalize_key(enum_member.name): self.obj.file_paths.get(
-                enum_member.value
+            self.normalize_key(enum_member.name): getattr(
+                self.obj.file_paths, enum_member.value
             )
             for enum_member in FileImageNames
         }

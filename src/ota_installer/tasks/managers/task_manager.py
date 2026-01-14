@@ -27,7 +27,7 @@ class TaskManager(object):
     def set_variable(self) -> Self:
         try:
             self.variable = set_variable_manager(self.file_name)
-            add_structured_log_sink(self.variable.file_paths["log_file"])
+            add_structured_log_sink(self.variable.file_paths.log_file)
 
         except Exception as err:
             logger.exception(f"[{type(err).__name__}] {err}")

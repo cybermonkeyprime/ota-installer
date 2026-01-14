@@ -46,7 +46,7 @@ src/ota_installer/dispatchers/factories/plugin_dispatcher_adapter.py
 src/ota_installer/dispatchers/factories/mappings/dispatcher_factory_mapping.py
 src/ota_installer/dispatchers/protocols/dispatcher_protocol.py
 src/ota_installer/dispatchers/templates/dispatcher_template.py
-src/ota_installer/display/show_display_header.py
+src/ota_installer/display/display_header.py
 src/ota_installer/display/components/clear_screen.py
 src/ota_installer/display/components/separator.py
 src/ota_installer/display/components/subtitle.py
@@ -136,9 +136,12 @@ src/ota_installer/types/decorators.py
 src/ota_installer/types/dispatcher_protocol.py
 src/ota_installer/validation/file_path_validation.py
 src/ota_installer/validation/task_group_validator.py
-src/ota_installer/variables/constants.py
 src/ota_installer/variables/functions.py
 src/ota_installer/variables/variable_manager.py
+src/ota_installer/variables/constants/directory_names.py
+src/ota_installer/variables/constants/directory_paths.py
+src/ota_installer/variables/constants/file_name_info.py
+src/ota_installer/variables/constants/file_paths.py
 src/ota_installer/variables/containers/file_name_container.py
 src/ota_installer/variables/containers/variable_type_container.py
 src/ota_installer/variables/dispatchers/variable_type_dispatcher.py
