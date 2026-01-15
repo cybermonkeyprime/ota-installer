@@ -24,7 +24,7 @@ def set_variable_manager(path: Path) -> "VariableManager":  # noqa: F821 # pyrig
     return VariableManager(path)
 
 
-def get_file_image_path(name: str, device: str, version) -> str:
+def get_file_image_path(name: str, device: str, version) -> Path:
     from ..images.file_image.constants.file_image_attributes import (
         FileImageAttributes,
     )

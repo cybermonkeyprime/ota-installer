@@ -24,22 +24,26 @@ magisk_struct = MagiskImageContainer()
 
 @dataclass
 class DirectoryTypeDefinition(object):
+    """
+    Defines the structure for a directory containing boot and magisk images.
+    """
+
     parent_directory: Path
     _boot_image: str = field(default="")
-    magisk_image: Path | MagiskImageContainer = field(
-        default_factory=MagiskImageContainer
-    )
+    magisk_image: Callable = field(default=Callable)
 
     def __post_init__(self) -> None:
+        """
+        Initializes the boot image container after the dataclass is created.
+        """
         self.boot_image = create_container(
             BootImageContainer, self._boot_image
         )
         self.magisk_image = create_container(MagiskImageContainer)
 
 
-def create_container[R, **P](
-    container_cls: R, *args: P.args, **kwargs: P.kwargs
-) -> Callable[P, R]:
+def create_container(container_cls: Callable, *args, **kwargs) -> Callable:
+    """Creates an instance of the specified container class."""
     try:
         logger.debug(f"{type(container_cls).__name__} {args}")
         return container_cls(*args, **kwargs)
@@ -48,6 +52,7 @@ def create_container[R, **P](
 
 
 def main() -> None:
+    """Main function to demonstrate the usage of DirectoryTypeDefinition."""
     # Example usage:
     boot_image = BootImagePaths
     magisk_image = MagiskImagePaths
@@ -60,3 +65,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+# Signed off by Brian Sanford on 20260114

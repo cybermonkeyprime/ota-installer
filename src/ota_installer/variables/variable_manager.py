@@ -1,5 +1,4 @@
 # src/ota_installer/variables/variable_manager.py
-from collections import defaultdict
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Self
@@ -36,9 +35,7 @@ class VariableManager(object):
     file_paths: FilePaths = field(init=False)
     file_name: FileNameInfo = field(init=False)
     image_name: dict = field(default_factory=dict[str, str], init=False)
-    directories: dict = field(
-        default_factory=lambda: defaultdict(dict[str, str]), init=False
-    )
+    directories: DirectoryNames = field(init=False)
 
     def __post_init__(self) -> None:
         self.variables = define_variable(self.path)  # .data_tuple
@@ -106,7 +103,7 @@ class VariableManager(object):
             return DirectoryTypeDefinition(
                 self.path.parent,
                 str(self.file_paths.stock.parent),
-                self.directories["magisk"]["remote_path"],
+                self.directories.magisk.remote_path,
             )
         except Exception as err:
             logger.error(
@@ -147,7 +144,7 @@ def main():
     path = Path("/path/to/your/file")
 
     variable_manager = set_variable_manager(path)
-    print(variable_manager.file_paths.get("log_file"))
+    print(variable_manager.file_paths.log_file)
 
 
 if __name__ == "__main__":
