@@ -131,6 +131,7 @@ src/ota_installer/tasks/operations/task_operation_executor.py
 src/ota_installer/tasks/operations/task_operation_processor.py
 src/ota_installer/tasks/operations/constants/constants.py
 src/ota_installer/tasks/operations/constants/task_operation_details.py
+src/ota_installer/tasks/operations/containers/task_operation_container.py
 src/ota_installer/types/__init__.py
 src/ota_installer/types/decorators.py
 src/ota_installer/types/dispatcher_protocol.py
