@@ -4,10 +4,8 @@ from ..dispatcher_plugin_registry import DISPATCHER_PLUGINS
 
 
 def load_plugin_dispatcher(dispatcher_type: str, obj: type):
-    """
-    Factory function for loading registered plugin dispatchers from a string
-    key.
-    """
+    """Load a registered plugin dispatcher based on the dispatcher type."""
+
     logger.debug(f"load_plugin_dispatcher(): {dispatcher_type=}")
     dispatcher_class = DISPATCHER_PLUGINS.get(dispatcher_type)
     logger.debug(f"load_plugin_dispatcher(): {dispatcher_class=}")
@@ -17,3 +15,4 @@ def load_plugin_dispatcher(dispatcher_type: str, obj: type):
         )
         return None
     return dispatcher_class(obj)
+    # Signed off by Brian Sanford on 20260116

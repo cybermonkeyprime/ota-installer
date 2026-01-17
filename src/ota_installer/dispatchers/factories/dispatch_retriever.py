@@ -19,15 +19,18 @@ class DispatchRetriever(object):
     process_type: str
 
     def allowed_dispatchers(self) -> tuple[str, ...]:
+        """Returns a tuple of allowed dispatcher names."""
         return tuple(
             enum_member.name for enum_member in DispatcherFactoryMapping
         )
 
     def set_function_call(self, function_call) -> Self:
+        """Sets the function call for the dispatcher."""
         self.function_call = function_call
         return self
 
     def get_dispatcher(self) -> DispatcherTypes | None:
+        """Retrieves the dispatcher class based on the process type."""
         logger.debug(
             f"DispatchRetriever.get_dispatcher(): {self.process_type=}"
         )
@@ -48,3 +51,6 @@ class DispatchRetriever(object):
         except KeyError as e:
             logger.error(f"Dispatcher mapping failed: {e}")
             return None
+
+
+# Signed off by Brian Sanford on 20260116

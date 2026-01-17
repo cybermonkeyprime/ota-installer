@@ -16,6 +16,9 @@ class DirectoryDispatcher(DispatcherTemplate):
     obj: type = field(default_factory=lambda: type)
 
     def __post_init__(self) -> None:
+        """
+        Initializes the directory collection based on the provided object.
+        """
         boot_image = self.obj.directory.boot_image
         self.collection = {
             DIRECTORY.STOCK.value: boot_image.stock,  # stock_path
@@ -26,3 +29,6 @@ class DirectoryDispatcher(DispatcherTemplate):
         logger.debug(
             f"DirectoryDispatcher.__post_init__(): {self.collection=}"
         )
+
+
+# Signed off by Brian Sanford on 20260116

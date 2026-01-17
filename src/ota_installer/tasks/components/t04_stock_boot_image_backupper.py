@@ -15,9 +15,12 @@ ENUM_VALUES = TaskOperationDetails.BACKUP_STOCK_BOOT_IMAGE.value
 @task_plugin(PreparationTasks.BACKUP_STOCK_BOOT_IMAGE.value)
 @dataclass
 class StockBootImageBackupper(BaseTask):
+    """Task to backup the stock boot image to a specified path."""
+
     instance: VariableManager = field(default_factory=VariableManager)
 
     def __post_init__(self) -> None:
+        """Initialize the command string for backing up the stock boot image."""
         image_path = image_handler(self.instance.file_name.device)
         command_string = f"cp -v {image_path} {self.instance.file_paths.stock}"
 
@@ -30,4 +33,8 @@ class StockBootImageBackupper(BaseTask):
         message=f"{ENUM_VALUES.TITLE.value} finished sucessfully!"
     )
     def perform_task(self) -> None:
+        """Execute the task to backup the stock boot image."""
         self.task.run_with_output()
+
+
+# Signed off by Brian Sanford on 20260116

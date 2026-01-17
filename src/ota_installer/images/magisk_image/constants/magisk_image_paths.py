@@ -5,6 +5,8 @@ from pathlib import Path
 
 
 class MagiskImagePaths(Enum):
+    """Enumeration for Magisk image paths."""
+
     LOCAL_PATH = Path.home() / "Android" / "boot-images" / "magisk"
     REMOTE_PATH = Path("/sdcard") / "Download" / "magisk"
 
