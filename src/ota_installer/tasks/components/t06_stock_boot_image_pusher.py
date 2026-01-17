@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from ... import decorators
-from ...task_groups.constants.migration_tasks import MigrationTasks
+from ...task_groups.constants.migration_task import MigrationTask
 from ...variables.variable_manager import VariableManager
 from ..operations.task_operation_details import TaskOperationDetails
 from ..plugin_registry import task_plugin
@@ -12,7 +12,7 @@ from .base_task import BaseTask
 ENUM_VALUES = TaskOperationDetails.PUSH_STOCK_BOOT_IMAGE.value
 
 
-@task_plugin(MigrationTasks.PUSH_STOCK_BOOT_IMAGE.value)
+@task_plugin(MigrationTask.PUSH_STOCK_BOOT_IMAGE.value)
 @dataclass
 class StockBootImagePusher(BaseTask):
     """Task to push the stock boot image to the device using adb."""

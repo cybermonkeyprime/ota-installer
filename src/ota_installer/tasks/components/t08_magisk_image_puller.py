@@ -8,7 +8,7 @@ from ...images.magisk_image.constants.magisk_image_paths import (
     MagiskImagePaths,
 )
 from ...task_groups.constants.application_tasks import ApplicationTasks
-from ...task_groups.constants.migration_tasks import MigrationTasks
+from ...task_groups.constants.migration_task import MigrationTask
 from ...variables.variable_manager import VariableManager
 from ..operations.task_operation_details import TaskOperationDetails
 from ..plugin_registry import task_plugin
@@ -17,7 +17,7 @@ from .base_task import BaseTask
 ENUM_VALUES = TaskOperationDetails.PULL_MAGISK_IMAGE.value
 
 
-@task_plugin(MigrationTasks.PULL_PATCHED_BOOT_IMAGE.value)
+@task_plugin(MigrationTask.PULL_PATCHED_BOOT_IMAGE.value)
 @dataclass
 class MagiskImagePuller(BaseTask):
     instance: VariableManager = field(default_factory=VariableManager)

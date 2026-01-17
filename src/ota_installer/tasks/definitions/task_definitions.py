@@ -8,8 +8,8 @@ from ... import decorators
 from ...task_groups.constants.application_tasks import (
     ApplicationTasks,
 )
-from ...task_groups.constants.migration_tasks import (
-    MigrationTasks,
+from ...task_groups.constants.migration_task import (
+    MigrationTask,
 )
 from ...task_groups.constants.preparation_tasks import (
     PreparationTasks,
@@ -67,7 +67,7 @@ class PreparationTaskDefinitions(TaskDefinitionsTemplate):
 @dataclass
 class MigrationTaskDefinitions(TaskDefinitionsTemplate):
     def __post_init__(self) -> None:
-        self.tasks = tuple(enum_task_names(MigrationTasks))
+        self.tasks = tuple(enum_task_names(MigrationTask))
 
 
 @dataclass
