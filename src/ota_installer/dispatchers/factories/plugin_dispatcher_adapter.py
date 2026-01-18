@@ -22,26 +22,32 @@ from .mappings.dispatcher_factory_mapping import DispatcherTypes
 
 @dataclass
 class PluginDispatcherAdapter(object):
-    """
-    Adapter class that wraps dispatcher creation and provides
-    a simplified interface for interacting with dispatcher logic.
+    """Adapter for loading and interacting with plugin dispatchers.
+
+    This class provides a unified interface for loading dispatchers
+    based on a type string and safely accessing their methods.
     """
 
     dispatcher: str = field(default_factory=str)
     object_processor: type = field(default=type)
 
     def load(self) -> DispatcherTypes | None:
-        logger.debug(f"PluginDispatcherAdapter.load(): {self.dispatcher=}")
+        """Load the dispatcher based on the specified type."""
+        logger.debug(f"Loading dispatcher: {self.dispatcher}")
         return load_plugin_dispatcher(
             dispatcher_type=self.dispatcher, obj=self.object_processor
         )
 
     def get_value(self, key: str):
+        """Retrieve a value from the dispatcher using the specified key."""
         dispatcher = self.load()
-        if not dispatcher:
+        if dispatcher is None:
             logger.error(
-                f"Dispatcher '{self.dispatcher}' failed to load."
+                f"Failed to load dispatcher '{self.dispatcher}'. "
                 f"Cannot retrieve value for key: {key}"
             )
             return None
         return dispatcher.get_value(key=key)  # pyright: ignore[reportOptionalMemberAccess,reportAttributeAccessIssue]
+
+
+# Signed off by Brian Sanford on 20260118
