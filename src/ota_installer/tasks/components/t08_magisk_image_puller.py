@@ -27,14 +27,16 @@ class MagiskImagePuller(BaseTask):
 
     def __post_init__(self) -> None:
         """Initializes the command string for pulling the image."""
-        source = self._get_source_path()
-        destination = self._get_destination_path()
-        command_string = f'adb pull "{source}" "{destination}"'
+        command_string = self._build_command_string()
 
         super().__init__(
             enum_values=ENUM_VALUES,
             command_string=command_string,
         )
+
+    def _build_command_string(self) -> str:
+        """Constructs the adb pull command string."""
+        return f'adb pull "{self._get_source_path()}" "{self._get_destination_path()}"'
 
     def _get_source_path(self) -> Path:
         """Constructs the source path for the patched boot image."""
@@ -56,3 +58,6 @@ class MagiskImagePuller(BaseTask):
         """Executes the task to pull the patched boot image."""
         self.task.run_with_output()
         logger.debug(f"{ApplicationTasks.REBOOT_TO_BOOTLOADER.value=}")
+
+
+# Signed off by Brian Sanford on 20260118
