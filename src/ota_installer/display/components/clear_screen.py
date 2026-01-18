@@ -1,19 +1,24 @@
 # src/ota_installer/display/managers/clear_screen.py
-from os import name, system
-
-
-def default_clear_screen_command() -> int:
-    return system("clear" if not name == "nt" else "cls")
+from os import name
+from subprocess import CompletedProcess, run
 
 
 def clear_screen() -> None:
+    """Clears the terminal screen."""
     try:
-        if default_clear_screen_command() != 0:
+        if execute_clear_command() is None:
             raise RuntimeError("Failed to clear the screen.")
     except RuntimeError as error:
-        # Log the error or handle it as needed
         print(f"An error occurred while trying to clear the screen: {error}")
+
+
+def execute_clear_command() -> CompletedProcess:
+    """Executes the command to clear the terminal screen."""
+    command = "clear" if name != "nt" else "cls"
+    return run([command])
 
 
 if __name__ == "__main__":
     clear_screen()
+
+# Signed off by Brian Sanford on 20260118
