@@ -1,22 +1,38 @@
 # src/ota_installer/tasks/components/base_task.py
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from ..operations.task_operation_processor import TaskOperationProcessor
 
 
 @dataclass
 class BaseTask(object):
+    """Represents a base task with associated properties."""
+
+    # enum_values: type
+    # command_string: str = field(default="")
+    # comment: str = field(default="")
+    # reminder: str = field(default="")
+
     def __init__(
         self, enum_values, command_string=None, comment=None, reminder=None
     ):
+        """Initializes the task operation processor with task details."""
+        self.enum_values = enum_values
+        self.command_string = command_string
+        self.comment = comment
+        self.reminder = reminder
         self.task = TaskOperationProcessor()
-        self.task.set_item("index", enum_values.INDEX.value)
-        self.task.set_item("title", enum_values.TITLE.value)
-        self.task.set_item("description", enum_values.DESCRIPTION.value)
+        self._initialize_task()
 
-        if command_string:
-            self.task.set_item("command_string", command_string)
-        if comment:
-            self.task.set_item("comment", comment)
-        if reminder:
-            self.task.set_item("reminder", reminder)
+    def _initialize_task(self) -> None:
+        """Sets the task items based on the provided enum values and optional parameters."""
+        self.task.set_item("index", self.enum_values.INDEX.value)
+        self.task.set_item("title", self.enum_values.TITLE.value)
+        self.task.set_item("description", self.enum_values.DESCRIPTION.value)
+
+        if self.command_string:
+            self.task.set_item("command_string", self.command_string)
+        if self.comment:
+            self.task.set_item("comment", self.comment)
+        if self.reminder:
+            self.task.set_item("reminder", self.reminder)
