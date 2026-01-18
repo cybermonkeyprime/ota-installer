@@ -6,7 +6,8 @@ from typing import Protocol, runtime_checkable
 class DispatcherProtocol(Protocol):
     """
     Protocol defining the interface expected of all dispatchers.
-    Ensures compatibility across dispatcher variants and promotes consistent behavior.
+    Ensures compatibility across dispatcher variants and promotes consistent
+    behavior.
     """
 
     collection: dict[str, object]
@@ -23,6 +24,7 @@ class DispatcherProtocol(Protocol):
     def normalize_key(key: str) -> str:
         """
         Normalize a key string for consistent internal usage.
-        Typical implementations may use lowercasing, stripping, or other formatting.
+        Typical implementations may use lowercasing, stripping, or other
+        formatting.
         """
         ...

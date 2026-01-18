@@ -9,7 +9,7 @@ from ....dispatchers.dispatcher_plugin_registry import dispatcher_plugin
 from ....dispatchers.templates.dispatcher_template import DispatcherTemplate
 
 
-class ImageTypes(Enum):
+class ImageType(Enum):
     TOKAY = "init_boot"
     SHIBA = "init_boot"
     DEFAULT = "init_boot"
@@ -18,18 +18,30 @@ class ImageTypes(Enum):
 @dispatcher_plugin(DispatcherConstants.IMAGE.value)
 @dataclass
 class ImageTypeDispatcher(DispatcherTemplate):
+    """Dispatcher for handling image types."""
+
     obj: type = field(default_factory=lambda: type)
 
     @property
     def allowed_keys(self) -> tuple:
-        return tuple(enum.name for enum in ImageTypes)
+        """Returns a tuple of allowed image type keys."""
+        return tuple(enum.name for enum in ImageType)
 
     def get_key(self, key: str) -> object:
+        """Retrieves the value associated with the given key."""
         key_to_upper = key.upper()
         evaluated_key = (
             "DEFAULT"
             if key_to_upper not in self.allowed_keys
             else key_to_upper
         )
-        key_object = ImageTypes[evaluated_key]
-        return key_object.value
+        normalized_key = key.upper()
+        evaluated_key = (
+            normalized_key
+            if normalized_key in self.allowed_keys
+            else "DEFAULT"
+        )
+        return ImageType[evaluated_key].value
+
+
+# Signed off by Brian Sanford on 20260117
