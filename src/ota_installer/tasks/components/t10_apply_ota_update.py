@@ -14,18 +14,29 @@ ENUM_VALUES = TaskOperationDetails.APPLY_OTA_UPDATE.value
 @task_plugin(ApplicationTasks.APPLY_OTA_UPDATE.value)
 @dataclass
 class ADBSideloader(BaseTask):
+    """Task to apply OTA updates using ADB sideload."""
+
     instance: VariableManager = field(default_factory=VariableManager)
 
     def __post_init__(self) -> None:
-        command_string = f"adb sideload {self.instance.path}"
+        """Initializes the command string for ADB sideload."""
+        command_string = self._create_command_string()
         super().__init__(
             enum_values=ENUM_VALUES,
             command_string=command_string,
             reminder=ENUM_VALUES.REMINDER.value,
         )
 
+    def _create_command_string(self) -> str:
+        """Creates the command string for ADB sideload."""
+        return f"adb sideload {self.instance.path}"
+
     @decorators.DoublePaddedFooterWrapper(
-        message=f"{ENUM_VALUES.TITLE.value} finished sucessfully!"
+        message=f"{ENUM_VALUES.TITLE.value} finished successfully!"
     )
     def perform_task(self) -> None:
+        """Executes the ADB sideload task and runs it with output."""
         self.task.run_with_output()
+
+
+# Signed off by Brian Sanford on 20260118
