@@ -14,16 +14,23 @@ ENUM_VALUES = TaskOperationDetails.CHECK_ADB_CONNECTION.value
 @task_plugin(MigrationTask.CHECK_ADB_CONNECTION.value)
 @dataclass
 class ADBConnectionChecker(BaseTask):
+    """Checks the ADB connection status and performs the task."""
+
     instance: VariableManager = field(default_factory=VariableManager)
 
     def __post_init__(self) -> None:
+        """Initializes the ADBConnectionChecker with command string."""
         super().__init__(
             enum_values=ENUM_VALUES,
             command_string=ENUM_VALUES.COMMAND_STRING.value,
         )
 
     @decorators.DoublePaddedFooterWrapper(
-        message=f"{ENUM_VALUES.TITLE.value} finished sucessfully!"
+        message=f"{ENUM_VALUES.TITLE.value} finished successfully!"
     )
     def perform_task(self) -> None:
+        """Executes the ADB connection check task."""
         self.task.run_with_output()
+
+
+# Signed off by Brian Sanford on 20260118
