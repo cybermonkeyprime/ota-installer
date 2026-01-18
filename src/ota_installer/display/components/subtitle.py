@@ -6,9 +6,13 @@ from ...program_versioning.software_version import SoftwareVersion
 
 @Colorizer(style="version")
 def display_subtitle() -> str:
-    sv = SoftwareVersion()
-    """
-    String representation of the DisplaySubtitle instance.
-    """
+    """Generate a subtitle displaying the current software version.
 
-    return sv.display
+    Returns:
+        str: The string representation of the current software version.
+    """
+    software_version = SoftwareVersion()
+    return software_version.display
+
+
+# Signed off by Brian Sanford on 20260118
