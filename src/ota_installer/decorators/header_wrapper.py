@@ -9,6 +9,8 @@ from .protocols.decorator_protocols import GenericDecorator
 
 @dataclass
 class HeaderWrapper(GenericDecorator):
+    """Decorator that wraps a function with a header message output."""
+
     message: str = field(default="")
 
     from . import Colorizer  # Wrapper as DoubleWrapper
@@ -16,9 +18,11 @@ class HeaderWrapper(GenericDecorator):
     from .output_printer import OutputPrinter
 
     def __call__[R, **P](self, function: Callable[P, R]) -> Callable[P, R]:
+        """Wraps the function to display a header message before execution."""
+
         @wraps(function)
         def wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
-            self.message_output()
+            self._output_message()
             result = function(*args, **kwargs)
             return result
 
@@ -27,5 +31,9 @@ class HeaderWrapper(GenericDecorator):
     @OutputPrinter(use_color=True)
     @Colorizer(style="variable")
     @IndentWrapper(interval=1)  # type: ignore[return-value]
-    def message_output(self) -> object:
+    def _output_message(self) -> str:
+        """Outputs the header message."""
         return f"{self.message}"
+
+
+# Signed off by Brian Sanford on 20260118
