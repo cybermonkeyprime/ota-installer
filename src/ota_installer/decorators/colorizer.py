@@ -20,11 +20,18 @@ class Colorizer(StringReturningDecorator):
     style: str = field(default="")
 
     def __post_init__(self) -> None:
+        """Initializes the color attribute based on the provided style."""
         self.color = RichColors[self.style.upper()]
 
     def __call__[**P](self, function: Callable[P, R]) -> Callable[P, R]:
+        """Wraps the function to apply color styling to its return value."""
+
         @wraps(function)
         def wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
+            """
+            Wrapper function that executes the original function and styles
+            its output.
+            """
             try:
                 result = function(*args, **kwargs)
                 styled_result = (
@@ -46,3 +53,4 @@ if __name__ == "__main__":
         return f"Hello, {name}!"
 
     print(greet("Alice"))
+# Signed off by Brian Sanford on 20260117
