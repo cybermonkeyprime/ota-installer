@@ -9,3 +9,6 @@ class SoftwareContainer(NamedTuple):
     major_number: int
     minor_number: int
     patch_number: int
+
+
+# Signed off by Brian Sanford on 20260118
