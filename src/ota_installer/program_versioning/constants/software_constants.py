@@ -8,4 +8,7 @@ class SoftwareConstants(Enum):
     TITLE = "OTA-Installer"
     MAJOR_NUMBER = 2026
     MINOR_NUMBER = 1
-    PATCH_NUMBER = 14
+    PATCH_NUMBER = 17
+
+
+# Signed off by Brian Sanford on 20260117

@@ -9,6 +9,8 @@ from .protocols.decorator_protocols import GenericDecorator
 
 @dataclass
 class PaddedFooterWrapper(GenericDecorator):
+    """Decorator that adds a padded footer to the output of a function."""
+
     padding: str = field(default="")
 
     from . import Colorizer
@@ -16,10 +18,12 @@ class PaddedFooterWrapper(GenericDecorator):
     from .output_printer import OutputPrinter
 
     def __call__[R, **P](self, function: Callable[P, R]) -> Callable[P, R]:
+        """Wraps the given function to add a padded footer."""
+
         @wraps(function)
         def wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
             result = function(*args, **kwargs)
-            self.padding_output()
+            self._add_padding()
             return result
 
         return cast(Callable[P, R], wrapper)
@@ -27,5 +31,8 @@ class PaddedFooterWrapper(GenericDecorator):
     @OutputPrinter(use_color=True)
     @Colorizer(style="variable")
     @IndentWrapper(interval=1)  # type: ignore[return-value]
-    def padding_output(self) -> object:
+    def _add_padding(self) -> object:
         return f"{self.padding}"
+
+
+# Signed off by Brian Sanford on 20260117

@@ -1,7 +1,11 @@
 # src/ota_installer/program_versioning/containers/software_container.py
-from collections import namedtuple
+from typing import NamedTuple
 
-SoftwareContainer = namedtuple(
-    "SoftwareContainer",
-    ["title", "major_number", "minor_number", "patch_number"],
-)
+
+class SoftwareContainer(NamedTuple):
+    """Represents a software container with versioning information."""
+
+    title: str
+    major_number: int
+    minor_number: int
+    patch_number: int

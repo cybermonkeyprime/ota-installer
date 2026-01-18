@@ -1,6 +1,12 @@
 # src/ota_installer/task_groups/containers/taskgroup_container.py
-from collections import namedtuple
+from typing import NamedTuple
 
-TaskGroupContainer = namedtuple(
-    "TaskGroupContainer", ["group_name", "group_enum"]
-)
+
+class TaskGroupContainer(NamedTuple):
+    """Container for task group information."""
+
+    group_name: str
+    group_enum: str | None
+
+
+# Signed off by Brian Sanford on 20260117

@@ -11,6 +11,7 @@ from ..definitions.directory_type_definition import DirectoryTypeDefinition
 def set_directory(
     parent_directory: Path,
 ) -> DirectoryTypeDefinition | None:
+    """Creates a DirectoryTypeDefinition for the specified parent directory."""
     logger.debug("Creating Directories")
     try:
         return DirectoryTypeDefinition(
@@ -18,6 +19,9 @@ def set_directory(
             str(BootImagePaths.STOCK.value),
             BootImagePaths.MAGISK.value,
         )
-    except Exception as err:
-        logger.exception(f"{type(err).__name__}: {err}")
+    except Exception as error:
+        logger.exception(f"{type(error).__name__}: {error}")
         return None
+
+
+# Signed off by Brian Sanford on 20260117

@@ -5,6 +5,8 @@ from ...tasks.constants.task_ids import TaskIDs
 
 
 class ApplicationTasks(Enum):
+    """Enumeration of application tasks for OTA installation."""
+
     REBOOT_TO_RECOVERY = TaskIDs.REBOOT_TO_RECOVERY
     APPLY_OTA_UPDATE = TaskIDs.APPLY_OTA_UPDATE
     REBOOT_TO_BOOTLOADER = TaskIDs.REBOOT_TO_BOOTLOADER
@@ -12,4 +14,8 @@ class ApplicationTasks(Enum):
 
     @property
     def task_name(self) -> str:
+        """Returns the name of the task associated with the enum value."""
         return self.value.value
+
+
+# Signed off by Brian Sanford on 20260117
