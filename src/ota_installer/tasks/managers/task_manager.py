@@ -13,7 +13,7 @@ from .task_iteration import TaskIteration, task_iterator
 
 @dataclass
 class TaskManager(object):
-    """Manages the execution of tasks based on a file name."""
+    """Manages the execution of tasks based on a specified file name."""
 
     file_name: Path = field(default_factory=Path)
     function: Callable = field(default=Callable)
@@ -21,10 +21,16 @@ class TaskManager(object):
     variable: VariableManager = field(init=False)
 
     def set_file_name(self, arguments) -> Self:
+        """Sets the file name for the task manager."""
         self.file_name = Path(arguments)
         return self
 
     def set_variable(self) -> Self:
+        """Initializes the variable manager and sets up logging.
+
+        Returns:
+            The updated TaskManager instance.
+        """
         try:
             self.variable = set_variable_manager(self.file_name)
             add_structured_log_sink(self.variable.file_paths.log_file)
@@ -34,10 +40,12 @@ class TaskManager(object):
         return self
 
     def set_posix_path(self) -> Self:
+        """Sets the POSIX path for the file name."""
         self.posix_path = self.file_name
         return self
 
     def list_vars(self) -> None:
+        """Logs and processes the variables from the variable manager."""
         logger.debug(f"TaskManager.list_vars(): {self.variable=}")
         try:
             (
@@ -50,5 +58,8 @@ class TaskManager(object):
             logger.exception(f"list_vars: {type(err).__name__} {err}")
 
     def execute_iteration(self, task_group) -> None:
+        """Executes the task iteration for the given task group."""
         task_iterator(instance=self.variable, task_group=task_group)
-        # self.iteration.execute_iteration(task_group)
+
+
+# Signed off by Brian Sanford on 20260118
