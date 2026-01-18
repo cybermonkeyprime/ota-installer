@@ -9,6 +9,11 @@ from .protocols.decorator_protocols import GenericDecorator
 
 @dataclass
 class StylizedIndentPrinter(GenericDecorator):
+    """
+    Decorator that applies stylized indentation and colorization to a
+    function's output.
+    """
+
     style: str = "variable"
     indent: int = 0
     begin: str = ""
@@ -16,6 +21,9 @@ class StylizedIndentPrinter(GenericDecorator):
     use_output: bool = False
 
     def __call__[R, **P](self, function: Callable[P, R]) -> Callable[P, R]:
+        """
+        Wraps the given function with stylized indentation and colorization.
+        """
         from . import Colorizer, IndentWrapper
         from .output_printer import OutputPrinter
 
@@ -27,3 +35,6 @@ class StylizedIndentPrinter(GenericDecorator):
 
         wrapped_fn = wraps(function)(decorated)
         return cast(Callable[P, R], wrapped_fn)
+
+
+# Signed off by Brian Sanford on 20260118
