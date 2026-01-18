@@ -4,16 +4,20 @@ from pathlib import Path
 
 
 class BootImagePaths(Enum):
+    """Enumeration for boot image paths."""
+
     PAYLOAD = Path.home()
     STOCK = Path.home() / "Android" / "boot-images" / "stock"
     MAGISK = Path.home() / "Android" / "boot-images" / "magisk"
 
 
-def main():
+def display_boot_image_paths() -> None:
+    """Prints the paths for boot images."""
     print(BootImagePaths.PAYLOAD.value)
     print(BootImagePaths.STOCK.value)
     print(BootImagePaths.MAGISK.value)
 
 
 if __name__ == "__main__":
-    main()
+    display_boot_image_paths()
+# Signed off by Brian Sanford on 20260117
