@@ -10,6 +10,9 @@ def exception_handler_factory(
     def decorator(
         handler_class: type[BaseExceptionHandler],
     ) -> type[BaseExceptionHandler]:
+        """
+        Factory to create exception handlers for specified exception types.
+        """
         original_init = handler_class.__init__
 
         def __init__[**P](
@@ -34,3 +37,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+# Signed off by Brian Sanford on 20260119
