@@ -19,6 +19,8 @@ from ...variables.dispatchers.variable_type_dispatcher import (
 
 
 class DispatcherFactoryMapping(Enum):
+    """Enumeration of dispatcher types."""
+
     FILE = FileTypeDispatcher
     DIRECTORY = DirectoryDispatcher
     IMAGE = ImageTypeDispatcher
@@ -33,3 +35,4 @@ DispatcherTypes = (
     | TaskGroupTypeDispatcher
     | VariableTypeDispatcher
 )
+# Signed off by Brian Sanford on 20260118
