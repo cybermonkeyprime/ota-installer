@@ -1,6 +1,6 @@
 # src/ota_installer/decorators/output_printer.py
 from collections.abc import Callable
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from functools import wraps
 from typing import cast
 
@@ -13,12 +13,16 @@ console = Console()
 
 @dataclass
 class OutputPrinter(GenericDecorator):
-    prefix: str = field(default="")
-    use_color: bool = field(default=False)
-    suffix: str = field(default="\n")
-    color: str = field(default="non_error")
+    """Decorator for printing function output with optional styling."""
+
+    prefix: str = ""
+    use_color: bool = False
+    suffix: str = "\n"
+    color: str = "non_error"
 
     def __call__[R, **P](self, function: Callable[P, R]) -> Callable[P, R]:
+        """Wraps the function to print its output with specified formatting."""
+
         @wraps(function)
         def wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
             from ..styles import RichColors
@@ -40,3 +44,6 @@ class OutputPrinter(GenericDecorator):
                 ) from e
 
         return cast(Callable[P, R], wrapper)
+
+
+# Signed off by Brian Sanford on 20260118
