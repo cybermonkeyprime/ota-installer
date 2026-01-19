@@ -15,22 +15,34 @@ ENUM_VALUES = TaskOperationDetails.BOOT_TO_MAGISK_IMAGE.value
 @task_plugin(ApplicationTasks.BOOT_TO_MAGISK_IMAGE.value)
 @dataclass
 class MagiskImageBooter(BaseTask):
+    """Task to flash a Magisk image to a device using fastboot."""
+
     instance: VariableManager = field(default_factory=VariableManager)
 
     def __post_init__(self) -> None:
+        """Initializes the command string for flashing the Magisk image."""
         device = self.instance.file_name.device
-        partition = image_handler(device).stem
-        command_string = (
-            f"fastboot flash {partition} {self.instance.file_paths.magisk}"
-        )
+        partition: str = self._get_partition(device)
+        command_string: str = self._build_command(partition)
 
         super().__init__(
-            enum_values=ENUM_VALUES,
-            command_string=command_string,
+            enum_values=ENUM_VALUES, command_string=command_string
         )
+
+    def _get_partition(self, device: str) -> str:
+        """Retrieves the partition name for the given device."""
+        return image_handler(device).stem
+
+    def _build_command(self, partition: str) -> str:
+        """Constructs the fastboot command for flashing the Magisk image."""
+        return f"fastboot flash {partition} {self.instance.file_paths.magisk}"
 
     @decorators.DoublePaddedFooterWrapper(
         message=f"{ENUM_VALUES.TITLE.value} finished sucessfully!"
     )
     def perform_task(self) -> None:
+        """Executes the task to flash the Magisk image."""
         self.task.run_with_output()
+
+
+# Signed off by Brian Sanford on 20260118
