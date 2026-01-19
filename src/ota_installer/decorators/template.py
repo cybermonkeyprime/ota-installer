@@ -11,12 +11,17 @@ type R = object
 
 @dataclass
 class Example(GenericDecorator):
+    """A decorator class that logs the start and end of function execution."""
+
     func: Callable
+    start_message: str = "Beginning"
+    end_message: str = "Ending"
 
     def __call__[**P](self, *args: P.args, **kwargs: P.kwargs) -> R:
-        print(f"Beginning {self.func.__name__}")
+        """Wraps the function to log messages before and after execution."""
+        print(f"{self.start_message} {self.func.__name__}")
         result = self.func(*args, **kwargs)
-        print(f"Ending {self.func.__name__}")
+        print(f"{self.end_message} {self.func.__name__}")
         return cast(Callable[P, R], result)
 
 

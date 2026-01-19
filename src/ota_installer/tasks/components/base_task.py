@@ -1,5 +1,5 @@
 # src/ota_installer/tasks/components/base_task.py
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 from ..operations.task_operation_processor import TaskOperationProcessor
 
@@ -25,7 +25,10 @@ class BaseTask(object):
         self._initialize_task()
 
     def _initialize_task(self) -> None:
-        """Sets the task items based on the provided enum values and optional parameters."""
+        """
+        Sets the task items based on the provided enum values and optional
+        parameters.
+        """
         self.task.set_item("index", self.enum_values.INDEX.value)
         self.task.set_item("title", self.enum_values.TITLE.value)
         self.task.set_item("description", self.enum_values.DESCRIPTION.value)
@@ -36,3 +39,6 @@ class BaseTask(object):
             self.task.set_item("comment", self.comment)
         if self.reminder:
             self.task.set_item("reminder", self.reminder)
+
+
+# Signed off by Brian Sanford on 20260118
