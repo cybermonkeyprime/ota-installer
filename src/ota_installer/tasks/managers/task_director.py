@@ -2,7 +2,7 @@
 
 from ...log_setup import logger
 from ...variables.variable_manager import VariableManager
-from ..factories import TaskFactory
+from ..factories.task_factory import TaskFactory
 
 
 def task_director(instance: VariableManager, item: str) -> None:
