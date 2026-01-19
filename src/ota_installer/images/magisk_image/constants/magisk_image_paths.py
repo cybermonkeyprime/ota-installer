@@ -1,7 +1,7 @@
 # src/directories/constants/magisk_paths.py
-from collections import namedtuple
 from enum import Enum
 from pathlib import Path
+from typing import NamedTuple
 
 
 class MagiskImagePaths(Enum):
@@ -11,6 +11,11 @@ class MagiskImagePaths(Enum):
     REMOTE_PATH = Path("/sdcard") / "Download" / "magisk"
 
 
-MagiskImageTuple = namedtuple(
-    "MagiskImageStruct", ["local_path", "remote_path"]
-)
+class MagiskImageTuple(NamedTuple):
+    """NamedTuple for storing Magisk image paths."""
+
+    local_path: Path
+    remote_path: Path
+
+
+# Signed off by Brian Sanford on 20260119
