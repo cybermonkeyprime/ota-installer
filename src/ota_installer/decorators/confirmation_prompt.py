@@ -16,6 +16,10 @@ console = Console()
 
 @dataclass
 class ConfirmationPrompt(GenericDecorator):
+    """
+    Decorator to prompt for user confirmation before executing a function.
+    """
+
     begin: str = field(default="")
     comment: str = field(default="")
     indent: int = field(default=0)
@@ -28,6 +32,8 @@ class ConfirmationPrompt(GenericDecorator):
     from .indent_wrapper import IndentWrapper
 
     def __call__[R, **P](self, function: Callable[P, R]) -> Callable[P, R]:
+        """Wrap the function with a confirmation prompt."""
+
         @wraps(function)
         def wrapper(*args: P.args, **kwargs: P.kwargs) -> R | None:
             try:
@@ -52,41 +58,56 @@ class ConfirmationPrompt(GenericDecorator):
     # @Printer(prefix="", suffix="")
     @Colorizer(style="task")
     def display_prompt(self) -> str:
-        message = "Do you want to "
-        prompt_message = (
-            f"{self.beginning()}{message}{self.comment}? [{self.ending()}]: "
-        )
-        return prompt_message
+        """Display the confirmation prompt message."""
+
+        return f"{self.begin}{self.prompt_message()}? [{self.ending()}]: "
+
+    def prompt_message(self) -> str:
+        """Construct the prompt message."""
+
+        return f"Do you want to {self.comment}"
+
+    def get_confirmation(self) -> bool:
+        """Get user confirmation input."""
+
+        return pyip.inputYesNo(default="no", limit=3, blank=True) == "yes"
 
     def valid_options(self) -> list[str]:
+        """Return valid options for confirmation."""
+
         return ["Y", "N"]
 
     def key_options(self) -> str:
+        """Return a string of valid key options."""
+
         return "/".join(self.valid_options())
 
     @Colorizer(style="variable")
     @IndentWrapper(interval=1)
     def invalid_option_message(self) -> str:
+        """Return the message for invalid options."""
+
         return "Invalid Option!"
 
     @IndentWrapper(interval=1)
     def beginning(self) -> str:
-        return f"{self.begin}"
+        """Return the beginning part of the prompt."""
 
-    def message_formatter(self):
-        return f"{self.comment}"
+        return self.begin
 
     def ending(self) -> str:
+        """Return the ending part of the prompt with styled options."""
+
         style = RichColors["non_error".upper()]
         return f"{style.beginning()}{self.key_options()}{style.ending()}"
-
-
-""" Example usage:"""
 
 
 @ConfirmationPrompt(
     begin="Start process", comment="Are you sure", indent=2, style="info"
 )
 def my_function():
-    # Function implementation
+    """Function implementation."""
     pass
+
+
+# Signed off by Brian Sanford on 20260118
