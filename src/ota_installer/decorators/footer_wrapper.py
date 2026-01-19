@@ -9,6 +9,8 @@ from .protocols.decorator_protocols import GenericDecorator
 
 @dataclass
 class FooterWrapper(GenericDecorator):
+    """Decorator that wraps a function with a footer message output."""
+
     message: str = field(default="")
 
     from . import Colorizer  # Wrapper as DoubleWrapper
@@ -16,6 +18,8 @@ class FooterWrapper(GenericDecorator):
     from .output_printer import OutputPrinter
 
     def __call__[R, **P](self, function: Callable[P, R]) -> Callable[P, R]:
+        """Wraps the given function to include footer message output."""
+
         @wraps(function)
         def wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
             result = function(*args, **kwargs)
@@ -28,4 +32,8 @@ class FooterWrapper(GenericDecorator):
     @Colorizer(style="variable")
     @IndentWrapper(interval=1)  # type: ignore[return-value]
     def message_output(self) -> object:
+        """Outputs the footer message."""
         return f"{self.message}"
+
+
+# Signed off by Brian Sanford on 20260119
