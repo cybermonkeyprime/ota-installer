@@ -21,3 +21,6 @@ class GenericDecorator(Protocol[R]):
 
 class StringReturningDecorator(Protocol):
     def __call__[**P](self, func: Callable[P, str]) -> Callable[P, str]: ...
+
+
+# Signed off by Brian Sanford on 20260118
