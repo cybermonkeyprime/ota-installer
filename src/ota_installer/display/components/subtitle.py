@@ -1,7 +1,7 @@
 # src/ota_installer/display/components/subtitle.py
 
 from ...decorators.colorizer import Colorizer
-from ...program_versioning.software_version import SoftwareVersion
+from ...program_versioning.software_version import get_display
 
 
 @Colorizer(style="version")
@@ -11,8 +11,7 @@ def display_subtitle() -> str:
     Returns:
         str: The string representation of the current software version.
     """
-    software_version = SoftwareVersion()
-    return software_version.display
+    return get_display()
 
 
 # Signed off by Brian Sanford on 20260118
