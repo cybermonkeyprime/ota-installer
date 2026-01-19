@@ -6,8 +6,8 @@ class StyleContainer(NamedTuple):
     """Container for style attributes."""
 
     character: str
-    spacing: str
-    interval: str
+    spacing: int
+    interval: int
 
 
 # Signed off by Brian Sanford on 20260118
