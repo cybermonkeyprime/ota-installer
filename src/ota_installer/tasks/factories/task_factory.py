@@ -9,22 +9,39 @@ from ..plugin_registry import TASK_PLUGINS
 
 @dataclass
 class TaskFactory(object):
+    """Factory for creating task instances.
+
+    Attributes:
+        variable_manager: An instance of VariableManager or None.
+        run_id: A unique identifier for the task run.
+    """
+
     variable_manager: VariableManager | None = field(default=None)
     run_id: str = field(
         default_factory=lambda: uuid.uuid4().hex[:8]
     )  # Unique ID per run
 
     def create_task(self, task_name: str):
-        logger.debug(f"TaskFactory.create_task(): {task_name=}")
+        """Creates a task instance based on the provided task name."""
+        logger.debug(f"Creating task: {task_name=}")
         task_class = TASK_PLUGINS.get(task_name)
 
-        if not task_class:
+        if task_class is None:
             logger.bind(
                 event="task_lookup", status="not_found", task=task_name
             ).error(f"No plugin task registered for: {task_name!r}")
             return None
 
-        # Log structurally with bound context
+        return self._initialize_task(task_class, task_name)
+
+    def _log_task_not_found(self, task_name: str) -> None:
+        """logs an error when a task is not found."""
+        logger.bind(
+            event="task_lookup", status="not_found", task=task_name
+        ).error(f"no plugin task registered for: {task_name!r}")
+
+    def _initialize_task(self, task_class: type, task_name: str) -> object:
+        """Initializes a task instance with logging."""
         task_logger = logger.bind(
             event="task_init",
             task=task_name,
@@ -36,3 +53,6 @@ class TaskFactory(object):
         task_instance = task_class(self.variable_manager)
         task_instance.logger = task_logger
         return task_instance
+
+
+# Signed off by Brian Sanford on 20260118
