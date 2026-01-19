@@ -7,10 +7,8 @@ from typing import TypeVar
 from ...log_setup import logger
 from ..protocols.dispatcher_protocol import DispatcherProtocol
 
-T = TypeVar("T")
-
-CollectionKeys = TypeVar("CollectionKeys")
-CollectionValues = TypeVar("CollectionValues", type, Path, str)
+CollectionKeys = str
+CollectionValues = Path | str
 CollectionDictionary = dict[CollectionKeys, CollectionValues]
 
 
@@ -36,19 +34,19 @@ class DispatcherTemplate(DispatcherProtocol):
             the given key.
         """
 
-        try:
-            task = self.collection[self.normalize_key(key)]
-            if not isinstance(task, Callable):
-                raise ValueError(
-                    f"No task found for key: {self.normalize_key(key)}"
-                )
-            else:
-                return task()
-        except ValueError as err:
-            logger.exception(f"{type(err).__name__} occurred at: {err}")
-            return None
+        normalized_key = self.normalize_key(key)
+        task = self.collection[self.normalize_key(key)]
+
+        if isinstance(task, Callable):
+            return task()
+
+        logger.error(f"No task found for key: {normalized_key}")
+        return None
 
     @staticmethod
     def normalize_key(key: str) -> str:
         """Normalize dictionary keys for consistent dispatcher behavior."""
         return key.lower().strip()
+
+
+# Signed off by Brian Sanford on 20260118
