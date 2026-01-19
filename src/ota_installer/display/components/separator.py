@@ -1,5 +1,5 @@
 # src/ota_installer/display/components/separator.py
-from ...styles import separator
+from ...styles.separator import separator
 
 
 def display_separator(indent=9, char="-") -> str:
