@@ -1,7 +1,7 @@
 # src/ota_installer/display/variables/processors/base_processor.py
 from dataclasses import dataclass, field
 
-from ....types import DispatcherProtocol
+from ....types.dispatcher_protocol import DispatcherProtocol
 
 
 @dataclass
@@ -20,7 +20,8 @@ class BaseProcessor(object):
         )
         if not self.dispatcher:
             raise RuntimeError(
-                f"Dispatcher creation failed for process type: {self.dispatcher_type}"
+                "Dispatcher creation failed for process type: "
+                "f{self.dispatcher_type}"
             )
 
     def get_value_by_key(self, key: str) -> object:
