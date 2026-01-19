@@ -1,6 +1,13 @@
 # src/ota_installer/styles/containers/style_container.py
-from collections import namedtuple
+from typing import NamedTuple
 
-StyleContainer = namedtuple(
-    "StyleContainer", ["character", "spacing", "interval"]
-)
+
+class StyleContainer(NamedTuple):
+    """Container for style attributes."""
+
+    character: str
+    spacing: str
+    interval: str
+
+
+# Signed off by Brian Sanford on 20260118
