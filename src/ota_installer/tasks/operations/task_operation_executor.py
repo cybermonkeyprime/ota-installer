@@ -9,6 +9,10 @@ from .constants.constants import ExecutorConstants
 
 @dataclass
 class TaskOperationExecutor(object):
+    """
+    Executes shell commands with confirmation prompts and error handling.
+    """
+
     command_string: str
 
     @decorators.ConfirmationPrompt(
@@ -19,6 +23,7 @@ class TaskOperationExecutor(object):
     @decorators.ContinueOnKeyPress(indent=1, char=" ")
     @decorators.Encapsulate()
     def execute(self) -> Self:
+        """Executes the command without returning output."""
         try:
             run([self.command_string], shell=True, check=True)
         except CalledProcessError:
@@ -33,6 +38,7 @@ class TaskOperationExecutor(object):
     @decorators.ContinueOnKeyPress(indent=1, char=" ")
     @decorators.Encapsulate()
     def execute_and_return_output(self, output_name) -> str:
+        """Executes the command and returns its output."""
         result = (
             check_output(self.command_string.split(), shell=True)
             .decode()
@@ -40,3 +46,6 @@ class TaskOperationExecutor(object):
         )
         print(f"{output_name} = {result}")
         return result
+
+
+# Signed off by Brian Sanford on 20260119
