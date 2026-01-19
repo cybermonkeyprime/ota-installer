@@ -8,7 +8,7 @@ from ...display.variables.display_variable_processor import VariableProcessor
 from ...log_setup import add_structured_log_sink, logger
 from ...variables.functions import set_variable_manager
 from ...variables.variable_manager import VariableManager
-from .task_iteration import TaskIteration, task_iterator
+from .task_iteration import task_iterator
 
 
 @dataclass
@@ -17,7 +17,7 @@ class TaskManager(object):
 
     file_name: Path = field(default_factory=Path)
     function: Callable = field(default=Callable)
-    iteration: TaskIteration = field(init=False)
+    iteration: type = field(init=False)
     variable: VariableManager = field(init=False)
 
     def set_file_name(self, arguments) -> Self:
