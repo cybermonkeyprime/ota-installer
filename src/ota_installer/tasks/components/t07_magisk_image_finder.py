@@ -18,19 +18,22 @@ class MagiskImageFinder(BaseTask):
 
     def __post_init__(self) -> None:
         remote_path = "{self.instance.directories.magisk.remote_path}"
-        command_string = (
-            f'adb shell ls "{remote_path}"| grep magisk_patched | head -n1'
-        )
+        command_string = self._build_command_string(remote_path)
 
         super().__init__(
             enum_values=ENUM_VALUES,
             command_string=command_string,
         )
 
+    def _build_command_string(self, remote_path: str) -> str:
+        """Builds the command string to find the patched boot image."""
+        return f'adb shell ls "{remote_path}" | grep magisk_patched | head -n1'
+
     @decorators.DoublePaddedFooterWrapper(
         message=f"{ENUM_VALUES.TITLE.value} finished sucessfully!"
     )
     def perform_task(self) -> None:
+        """Performs the task of finding the patched boot image."""
         self.task.show_index_and_title()
         if getattr(self.task, "description", None):
             self.task.show_description()
@@ -40,3 +43,6 @@ class MagiskImageFinder(BaseTask):
             self.instance.image_name["patched"] = result
         if getattr(self.task, "reminder", None):
             self.task.show_reminder()
+
+
+# Signed off by Brian Sanford on 20260118
