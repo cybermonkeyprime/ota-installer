@@ -4,7 +4,10 @@ from rich.control import Control
 from .. import decorators
 from ..log_setup import logger
 from .constants.display_component import DisplayComponent
-from .constants.display_component_calls import display_component_calls
+from .constants.display_component_calls import (
+    DisplayComponentCalls,
+    display_component_calls,
+)
 
 
 @decorators.FooterWrapper(message="")
@@ -50,7 +53,7 @@ def call_display_component(
     component_type: DisplayComponent, *args, **kwargs
 ) -> str:
     """Call the display function associated with the given component type."""
-    display_function = display_component_calls.get(component_type, None)
+    display_function = display_component_calls[component_type]
     if not display_function:
         raise ValueError(
             f"Display component {component_type} is not registered."
