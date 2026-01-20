@@ -5,7 +5,12 @@ from pathlib import Path
 
 @dataclass(frozen=True, slots=True)
 class FilePaths(object):
+    """Container for file paths used in the OTA installer."""
+
     stock: Path
     magisk: Path
     payload: Path
     log_file: str
+
+
+# Signed off by Brian Sanford on 20260120
