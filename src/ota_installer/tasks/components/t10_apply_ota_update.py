@@ -24,7 +24,7 @@ class ADBSideloader(BaseTask):
         super().__init__(
             enum_values=ENUM_VALUES,
             command_string=command_string,
-            reminder=ENUM_VALUES.REMINDER.value,
+            reminder=ENUM_VALUES.reminder,
         )
 
     def _create_command_string(self) -> str:
@@ -32,11 +32,11 @@ class ADBSideloader(BaseTask):
         return f"adb sideload {self.instance.path}"
 
     @decorators.DoublePaddedFooterWrapper(
-        message=f"{ENUM_VALUES.TITLE.value} finished successfully!"
+        message=f"{ENUM_VALUES.title} finished successfully!"
     )
     def perform_task(self) -> None:
         """Executes the ADB sideload task and runs it with output."""
         self.task.run_with_output()
 
 
-# Signed off by Brian Sanford on 20260118
+# Signed off by Brian Sanford on 20260119

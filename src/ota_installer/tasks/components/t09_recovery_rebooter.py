@@ -20,11 +20,11 @@ class RecoveryRebooter(BaseTask):
     def __post_init__(self) -> None:
         super().__init__(
             enum_values=ENUM_VALUES,
-            command_string=ENUM_VALUES.COMMAND_STRING.value,
+            command_string=ENUM_VALUES.command_string,
         )
 
     @decorators.DoublePaddedFooterWrapper(
-        message=f"{ENUM_VALUES.TITLE.value} finished sucessfully!"
+        message=f"{ENUM_VALUES.title} finished sucessfully!"
     )
     def perform_task(self) -> None:
         """Executes the task to reboot into recovery mode."""
@@ -39,4 +39,4 @@ class RecoveryRebooterPlugin(RecoveryRebooter):
     pass
 
 
-# Signed off by Brian Sanford on 20260116
+# Signed off by Brian Sanford on 20260119

@@ -52,7 +52,7 @@ class MagiskImagePuller(BaseTask):
         )
 
     @decorators.DoublePaddedFooterWrapper(
-        message=f"{ENUM_VALUES.TITLE.value} finished sucessfully!"
+        message=f"{ENUM_VALUES.title} finished sucessfully!"
     )
     def perform_task(self) -> None:
         """Executes the task to pull the patched boot image."""
@@ -60,4 +60,4 @@ class MagiskImagePuller(BaseTask):
         logger.debug(f"{ApplicationTasks.REBOOT_TO_BOOTLOADER.value=}")
 
 
-# Signed off by Brian Sanford on 20260118
+# Signed off by Brian Sanford on 20260119

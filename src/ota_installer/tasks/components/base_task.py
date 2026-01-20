@@ -29,9 +29,9 @@ class BaseTask(object):
         Sets the task items based on the provided enum values and optional
         parameters.
         """
-        self.task.set_item("index", self.enum_values.INDEX.value)
-        self.task.set_item("title", self.enum_values.TITLE.value)
-        self.task.set_item("description", self.enum_values.DESCRIPTION.value)
+        self.task.set_item("index", self.enum_values.index)
+        self.task.set_item("title", self.enum_values.title)
+        self.task.set_item("description", self.enum_values.description)
 
         if self.command_string:
             self.task.set_item("command_string", self.command_string)
@@ -41,4 +41,4 @@ class BaseTask(object):
             self.task.set_item("reminder", self.reminder)
 
 
-# Signed off by Brian Sanford on 20260118
+# Signed off by Brian Sanford on 20260119

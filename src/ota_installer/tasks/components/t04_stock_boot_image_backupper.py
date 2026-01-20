@@ -30,11 +30,11 @@ class StockBootImageBackupper(BaseTask):
         )
 
     @decorators.DoublePaddedFooterWrapper(
-        message=f"{ENUM_VALUES.TITLE.value} finished sucessfully!"
+        message=f"{ENUM_VALUES.title} finished sucessfully!"
     )
     def perform_task(self) -> None:
         """Execute the task to backup the stock boot image."""
         self.task.run_with_output()
 
 
-# Signed off by Brian Sanford on 20260116
+# Signed off by Brian Sanford on 20260119

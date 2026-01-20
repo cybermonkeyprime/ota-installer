@@ -30,7 +30,7 @@ class MagiskImageFinder(BaseTask):
         return f'adb shell ls "{remote_path}" | grep magisk_patched | head -n1'
 
     @decorators.DoublePaddedFooterWrapper(
-        message=f"{ENUM_VALUES.TITLE.value} finished sucessfully!"
+        message=f"{ENUM_VALUES.title} finished sucessfully!"
     )
     def perform_task(self) -> None:
         """Performs the task of finding the patched boot image."""
@@ -45,4 +45,4 @@ class MagiskImageFinder(BaseTask):
             self.task.show_reminder()
 
 
-# Signed off by Brian Sanford on 20260118
+# Signed off by Brian Sanford on 20260119

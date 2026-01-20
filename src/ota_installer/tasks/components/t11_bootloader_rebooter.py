@@ -26,16 +26,15 @@ class BootloaderRebooter(BaseTask):
     def __post_init__(self) -> None:
         """Initializes the BootloaderRebooter with command string."""
         super().__init__(
-            enum_values=ENUM_VALUES,
-            command_string=ENUM_VALUES.COMMAND_STRING.value,
+            enum_values=ENUM_VALUES, command_string=ENUM_VALUES.command_string
         )
 
     @decorators.DoublePaddedFooterWrapper(
-        message=f"{ENUM_VALUES.TITLE.value} finished successfully!"
+        message=f"{ENUM_VALUES.title} finished successfully!"
     )
     def perform_task(self) -> None:
         """Executes the reboot task and outputs the result."""
         self.task.run_with_output()
 
 
-# Signed off by Brian Sanford on 20260118
+# Signed off by Brian Sanford on 20260119

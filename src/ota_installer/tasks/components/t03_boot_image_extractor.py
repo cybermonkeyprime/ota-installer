@@ -38,11 +38,11 @@ class BootImageExtractor(BaseTask):
         return f"payload_dumper {self.instance.file_paths.payload} {options}"
 
     @decorators.DoublePaddedFooterWrapper(
-        message=f"{ENUM_VALUES.TITLE.value} finished sucessfully!"
+        message=f"{ENUM_VALUES.title} finished sucessfully!"
     )
     def perform_task(self) -> None:
         """Executes the task to extract the boot image."""
         self.task.run_with_output()
 
 
-# Signed off by Brian Sanford on 20260116
+# Signed off by Brian Sanford on 20260119

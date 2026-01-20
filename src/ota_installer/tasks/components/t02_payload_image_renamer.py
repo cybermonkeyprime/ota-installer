@@ -34,11 +34,11 @@ class PayloadImageRenamer(BaseTask):
         return f"mv -v {source_path} {self.instance.file_paths.payload}"
 
     @decorators.DoublePaddedFooterWrapper(
-        message=f"{ENUM_VALUES.TITLE.value} finished sucessfully!"
+        message=f"{ENUM_VALUES.title} finished sucessfully!"
     )
     def perform_task(self) -> None:
         """Executes the task to rename the payload image."""
         self.task.run_with_output()
 
 
-# Signed off by Brian Sanford on 20260118
+# Signed off by Brian Sanford on 20260119
