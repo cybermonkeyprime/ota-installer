@@ -4,7 +4,7 @@ from pathlib import Path
 import typer
 
 from . import application
-from .log_setup import show_debug
+from .log_setup import enable_debug_logging
 from .program_versioning.software_version import (
     get_text_display,
 )
@@ -24,7 +24,7 @@ def version_callback(value: bool) -> None:
 def debug_callback(value: bool) -> None:
     """Enable debug logging if the flag is set."""
     if value:
-        show_debug()
+        enable_debug_logging()
 
 
 @cli.command()

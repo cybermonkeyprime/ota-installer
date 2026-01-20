@@ -4,36 +4,39 @@ from pathlib import Path
 from loguru import logger
 from rich.logging import RichHandler
 
-# Remove all default loggers
-logger.remove()
 
-# Human-readable stderr for local console use (warnings or higher)
-logger.add(
-    RichHandler(
-        markup=True,  # Enables rich text formatting
-        rich_tracebacks=True,  # Beautiful, colorized tracebacks
-        show_time=True,
-        show_level=True,
-        show_path=True,
-    ),
-    level="WARNING",
-    format="{message}",
-    # format="{time:YYYY-MM-DD HH:mm:ss.SSS} | {level} | {module}:{function}:{line} - {message}",
-    backtrace=False,
-)
+def configure_logger() -> None:
+    """Configure the logger with different handlers for console and file output."""
 
-# Structured machine-readable stdout (for logs to file, piping, etc.)
-logger.add(
-    sys.stdout,
-    level="CRITICAL",  # Can lower to DEBUG for verbose JSON output
-    serialize=True,
-    colorize=True,
-    backtrace=False,
-    diagnose=True,
-)
+    logger.remove()  # Remove all default loggers
+
+    """ Human-readable stderr for local console use (warnings or higher) """
+    logger.add(
+        RichHandler(
+            markup=True,  # Enables rich text formatting
+            rich_tracebacks=True,  # Beautiful, colorized tracebacks
+            show_time=True,
+            show_level=True,
+            show_path=True,
+        ),
+        level="WARNING",
+        format="{message}",
+        # format="{time:YYYY-MM-DD HH:mm:ss.SSS} | {level} | {module}:{function}:{line} - {message}",
+        backtrace=False,
+    )
+
+    """ structured machine-readable stdout (for logs to file, piping, etc. """
+    logger.add(
+        sys.stdout,
+        level="CRITICAL",  # Can lower to DEBUG for verbose JSON output
+        serialize=True,
+        colorize=True,
+        backtrace=False,
+        diagnose=True,
+    )
 
 
-def show_debug() -> None:
+def enable_debug_logging() -> None:
     """Enable debug output to stderr."""
     logger.remove()  # remove default handler
     logger.add(
@@ -64,6 +67,7 @@ def show_debug() -> None:
 
 
 def add_structured_log_sink(path: str | Path) -> None:
+    """Add a structured log sink to the specified path."""
     logger.add(
         str(path),
         level="DEBUG",
@@ -75,7 +79,8 @@ def add_structured_log_sink(path: str | Path) -> None:
     )
 
 
-def main():
+def log_messages() -> None:
+    """Log various messages at different severity levels."""
     logger.trace("A trace message.")
     logger.debug("A debug message.")
     logger.debug("An info message.")
@@ -85,5 +90,14 @@ def main():
     logger.critical("A critical message.")
 
 
+configure_logger()
+
+
+def main() -> None:
+    """Main entry point of the application."""
+    log_messages()
+
+
 if __name__ == "__main__":
     main()
+# Signed off by Brian Sanford on 20260120

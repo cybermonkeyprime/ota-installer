@@ -52,8 +52,10 @@ class ObjectInspector(object):
 
 
 def main():
+    """Main function to execute the object inspection."""
     inspect_object(ObjectInspector)
 
 
 if __name__ == "__main__":
     main()
+# Signed off by Brian Sanford on 20260120
