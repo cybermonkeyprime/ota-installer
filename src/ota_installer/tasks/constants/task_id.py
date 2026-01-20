@@ -2,7 +2,9 @@
 from enum import StrEnum, auto
 
 
-class TaskIDs(StrEnum):
+class TaskID(StrEnum):
+    """Enumeration of task identifiers for OTA installation processes."""
+
     # preparation
     EXTRACT_PAYLOAD_IMAGE = auto()
     RENAME_PAYLOAD_IMAGE = auto()
