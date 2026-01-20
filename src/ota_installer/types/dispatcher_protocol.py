@@ -3,4 +3,9 @@ from typing import Protocol
 
 
 class DispatcherProtocol(Protocol):
+    """A protocol for dispatching key-value retrieval."""
+
     def get_value(self, key: str) -> object: ...
+
+
+# Signed off by Brian Sanford on 20260120
