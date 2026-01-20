@@ -10,11 +10,21 @@ from ...dispatchers.templates.dispatcher_template import DispatcherTemplate
 @dispatcher_plugin(DispatcherConstants.VARIABLE.value)
 @dataclass
 class VariableTypeDispatcher(DispatcherTemplate):
+    """Dispatcher for handling variable types."""
+
     obj: type = field(default_factory=lambda: type)
 
     def __post_init__(self) -> None:
-        self.collection = {
+        """Initializes the collection of paths based on the provided object."""
+        self.collection = self._initialize_collection()
+
+    def _initialize_collection(self) -> dict[str, Path | str]:
+        """Creates a collection of paths and log file."""
+        return {
             "path.name": Path(self.obj.path).name,
             "path.parent": Path(self.obj.path).parent,
             "log_file": self.obj.file_paths.log_file,
         }
+
+
+# Signed off by Brian Sanford on 20260120
