@@ -6,12 +6,13 @@ from ..variables.processors import (
     VariableFileProcessor,
 )
 
-""" directory names """
+# Directory names
 
 
 def set_ota_file_directory(
     processing_function: VariableManager,
 ) -> None:
+    """Sets the OTA file directory in the processing function."""
     (
         VariableFileProcessor(processing_function)
         .set_title("ota_file_directory")
@@ -23,6 +24,7 @@ def set_ota_file_directory(
 def set_magisk_image_directories(
     processing_function: VariableManager,
 ) -> None:
+    """Sets the Magisk image directories in the processing function."""
     (
         DirectoryIterationProcessor(processing_function)
         .set_directory_names(("local", "remote"))
@@ -35,6 +37,7 @@ def set_magisk_image_directories(
 def set_boot_image_directories(
     processing_function: VariableManager,
 ) -> None:
+    """Sets the boot image directories in the processing function."""
     (
         DirectoryIterationProcessor(processing_function)
         .set_directory_names(("stock", "magisk"))
@@ -44,10 +47,11 @@ def set_boot_image_directories(
     )
 
 
-""" file names """
+# File names
 
 
 def set_ota_file_name(processing_function: VariableManager) -> None:
+    """Sets the OTA file name in the processing function."""
     (
         VariableFileProcessor(processing_function)
         .set_title("ota_file_name")
@@ -59,6 +63,7 @@ def set_ota_file_name(processing_function: VariableManager) -> None:
 def set_image_file_names(
     processing_function: VariableManager,
 ) -> None:
+    """Sets the image file names in the processing function."""
     (
         FileIterationProcessor(processing_function)
         .set_file_names(("payload", "stock", "magisk"))
@@ -66,13 +71,17 @@ def set_image_file_names(
     )
 
 
-""" log files """
+# Log files
 
 
 def set_log_file(processing_function: VariableManager) -> None:
+    """Sets the log file in the processing function."""
     (
         VariableFileProcessor(processing_function)
         .set_title("log_file")
         .set_value("log_file")
         .process_items()
     )
+
+
+# Signed off by Brian Sanford on 20260120
