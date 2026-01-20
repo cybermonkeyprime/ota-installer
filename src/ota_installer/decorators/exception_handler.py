@@ -9,9 +9,17 @@ from .protocols.decorator_protocols import GenericDecorator
 
 @dataclass
 class ExceptionHandler(GenericDecorator):
+    """Decorator to handle exceptions in a function and log them."""
+
     def __call__[R, **P](self, function: Callable[P, R]) -> Callable[P, R]:
+        """Wraps the function to catch and log exceptions."""
+
         @wraps(function)
         def wrapper(*args: P.args, **kwargs: P.kwargs) -> R | None:
+            """
+            Wrapper function that executes the original function and logs
+            exceptions.
+            """
             from ..log_setup import logger
 
             try:
@@ -23,3 +31,6 @@ class ExceptionHandler(GenericDecorator):
             return None
 
         return cast(Callable[P, R], wrapper)
+
+
+# Signed off by Brian Sanford on 20260119
