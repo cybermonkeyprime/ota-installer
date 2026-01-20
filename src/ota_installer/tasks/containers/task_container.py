@@ -2,7 +2,7 @@
 from dataclasses import dataclass
 
 
-@dataclass
+@dataclass(frozen=True, slots=True)
 class TaskContainer(object):
     """Container for task information."""
 
