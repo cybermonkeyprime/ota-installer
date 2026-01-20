@@ -6,8 +6,13 @@ from pathlib import Path
 
 @dataclass(frozen=True, slots=True)
 class FileNameInfo(object):
+    """Represents information about a file name."""
+
     path: Path
     stem: str
     parts: Callable
     device: str
     version: str
+
+
+# Signed off by Brian Sanford on 20260120

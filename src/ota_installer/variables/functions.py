@@ -2,6 +2,10 @@
 from collections.abc import Callable
 from pathlib import Path
 
+from ota_installer.variables.containers.file_name_container import (
+    FileNameContainer,
+)
+
 
 def set_log_file(file_name_parts: Callable) -> str:
     device = file_name_parts.device
@@ -16,6 +20,8 @@ def set_variable_manager(path: Path) -> "VariableManager":  # noqa: F821 # pyrig
     from ..validation.file_path_validation import file_path_validator
     from .variable_manager import VariableManager
 
+    """Create a VariableManager instance after validating the file path. """
+
     valid_path = file_path_validator(path)
     if not valid_path:
         logger.error(f"Invalid file path: {path}")
@@ -29,6 +35,8 @@ def get_file_image_path(name: str, device: str, version) -> Path:
         FileImageAttributes,
     )
 
+    """Retrieve the file image path based on name, device, and version. """
+
     return (
         FileImageAttributes[name.upper()]
         .set_device(device)
@@ -37,8 +45,10 @@ def get_file_image_path(name: str, device: str, version) -> Path:
     )
 
 
-def parse_file_name(raw_name: Path) -> tuple:
+def parse_file_name(raw_name: Path) -> "FileNameContainer":
     from .containers.file_name_container import FileNameContainer
+
+    """Parse the raw file name into its components. """
 
     parts = Path(raw_name).stem.split("-")
     device, file_type, version, *extra_parts = parts
@@ -48,3 +58,6 @@ def parse_file_name(raw_name: Path) -> tuple:
         version=version,
         extra=extra_parts,
     )
+
+
+# Signed off by Brian Sanford on 20260120
