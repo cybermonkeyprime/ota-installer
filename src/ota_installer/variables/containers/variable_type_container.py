@@ -3,8 +3,8 @@ from dataclasses import dataclass
 from pathlib import Path
 
 
-@dataclass
-class VariableTypeContainer:
+@dataclass(frozen=True, slots=True)
+class VariableTypeContainer(object):
     """Container for variable types used in OTA installation."""
 
     file_path: Path
