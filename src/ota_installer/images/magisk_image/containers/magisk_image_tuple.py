@@ -1,6 +1,14 @@
 # src/ota_installer/images/magisk_image/containers/magisk_image_tuple.py
-from collections import namedtuple
+from dataclasses import dataclass
+from pathlib import Path
 
-MagiskImageTuple = namedtuple(
-    "MagiskImageStruct", ["local_path", "remote_path"]
-)
+
+@dataclass
+class MagiskImage:
+    """Represents a Magisk image with local and remote paths."""
+
+    local_path: Path
+    remote_path: Path
+
+
+# Signed off by Brian Sanford on 20260120
