@@ -18,9 +18,11 @@ class BaseProcessor(object):
             raise ValueError(
                 "dispatcher_type must be set in subclass before __post_init__"
             )
+
         self.dispatcher = self.processing_function.get_dispatcher(
             self.dispatcher_type
         )
+
         if not self.dispatcher:
             raise RuntimeError(
                 "Dispatcher creation failed for process type: "
