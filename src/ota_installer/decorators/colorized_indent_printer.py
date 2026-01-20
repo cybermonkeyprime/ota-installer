@@ -11,12 +11,18 @@ type R = str
 
 @dataclass
 class ColorizedIndentPrinter(StringReturningDecorator):
+    """
+    Decorator that applies colorization and indentation to the output of a
+    function.
+    """
+
     indent: int = 0
     begin: str = ""
     end: str = ""
     style: str = "variable"
 
     def __call__[**P](self, function: Callable[P, R]) -> Callable[P, R]:
+        """Wraps the given function to apply colorization and indentation."""
         from . import Colorizer, IndentWrapper, OutputPrinter
 
         @OutputPrinter(use_color=False)
@@ -28,3 +34,6 @@ class ColorizedIndentPrinter(StringReturningDecorator):
             return f"{result}"
 
         return cast(Callable[P, R], wrapper)
+
+
+# Signed off by Brian Sanford on 20260120
