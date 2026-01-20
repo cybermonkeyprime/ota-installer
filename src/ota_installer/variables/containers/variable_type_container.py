@@ -1,7 +1,16 @@
 # src/ota_installer/variables/containers/variable_type_container.py
-from collections import namedtuple
+from dataclasses import dataclass
+from pathlib import Path
 
-VariableTypeContainer = namedtuple(
-    "VariableTypeTuple",
-    ["file_path", "magisk_image_name", "file_path_stem", "file_parts"],
-)
+
+@dataclass
+class VariableTypeContainer:
+    """Container for variable types used in OTA installation."""
+
+    file_path: Path
+    magisk_image_name: str
+    file_path_stem: str
+    file_parts: list[str]
+
+
+# Signed off by Brian Sanford on 20260120
