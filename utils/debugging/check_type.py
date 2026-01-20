@@ -1,6 +1,6 @@
 from collections import namedtuple
 
-from ...log_setup import logger
+from ...src.ota_installer.log_setup import logger
 
 TypeChecker = namedtuple("TypeChecker", ["name", "object_to_check"])
 
@@ -19,3 +19,5 @@ def display_type_information(type_checker: TypeChecker) -> None:
 if __name__ == "__main__":
     type_checker = TypeChecker(name="example", object_to_check=123)
     print(f"{display_type_information(type_checker)}")
+
+# Signed off by Brian Sanford on 20260120
