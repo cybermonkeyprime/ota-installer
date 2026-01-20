@@ -5,7 +5,7 @@ from typing import Self
 
 from ....dispatchers.constants.dispatcher_constants import DispatcherConstants
 from ....variables.variable_manager import VariableManager
-from ...variables.processors import BaseProcessor
+from ...variables.processors.base_processor import BaseProcessor
 
 
 @dataclass

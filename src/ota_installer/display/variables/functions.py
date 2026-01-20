@@ -1,10 +1,12 @@
 # src/ota_installer/display/variables/functions.py
 from ...variables.variable_manager import VariableManager
-from ..variables.processors import (
+from ..variables.processors.directory_iteration_processor import (
     DirectoryIterationProcessor,
-    FileIterationProcessor,
-    VariableFileProcessor,
 )
+from ..variables.processors.file_iteration_processor import (
+    FileIterationProcessor,
+)
+from ..variables.processors.file_processor import VariableFileProcessor
 
 # Directory names
 
