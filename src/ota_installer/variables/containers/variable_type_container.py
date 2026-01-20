@@ -2,6 +2,8 @@
 from dataclasses import dataclass
 from pathlib import Path
 
+from ..containers.file_name_container import FileNameContainer
+
 
 @dataclass(frozen=True, slots=True)
 class VariableTypeContainer(object):
@@ -10,7 +12,7 @@ class VariableTypeContainer(object):
     file_path: Path
     magisk_image_name: str
     file_path_stem: str
-    file_parts: list[str]
+    file_parts: FileNameContainer
 
 
 # Signed off by Brian Sanford on 20260120

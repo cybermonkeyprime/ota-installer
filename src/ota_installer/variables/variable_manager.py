@@ -38,14 +38,14 @@ class VariableManager(object):
     directories: DirectoryNames = field(init=False)
 
     def __post_init__(self) -> None:
-        self.variables = define_variable(self.path)  # .data_tuple
-        self.define_file_name_attributes()
-        self.define_file_paths()
-        self.define_directory_paths()
-        self.define_image_names()
+        self.variables = _initialize_variable_group(self.path)  # .data_tuple
+        self._initialize_file_name_attributes()
+        self._initialize_file_paths()
+        self._initialize_directory_paths()
+        self._initialize_image_names()
 
-    def define_file_name_attributes(self) -> Self:
-        """Defines file name attributes."""
+    def _initialize_file_name_attributes(self) -> Self:
+        """Initializes file name attributes."""
         self.file_name = FileNameInfo(
             path=self.variables.file_path,
             stem=self.variables.file_path_stem,
@@ -55,7 +55,7 @@ class VariableManager(object):
         )
         return self
 
-    def define_file_paths(self) -> Self:
+    def _initialize_file_paths(self) -> Self:
         from ..images.file_image.containers.file_image_container import (
             FileImageData,
         )
@@ -64,7 +64,8 @@ class VariableManager(object):
             set_log_file,
         )
 
-        """Defines file paths."""
+        """Initializes file paths."""
+
         image_data = FileImageData(
             self.file_name.device, self.file_name.version
         )
@@ -76,8 +77,8 @@ class VariableManager(object):
         )
         return self
 
-    def define_directory_paths(self) -> Self:
-        """Defines directory paths."""
+    def _initialize_directory_paths(self) -> Self:
+        """Initializes directory paths."""
         self.ota_parent_directory = self.path.parent
         self.directory = set_directory(self.file_name.path.parent)
 
@@ -89,8 +90,8 @@ class VariableManager(object):
         )
         return self
 
-    def define_image_names(self) -> Self:
-        """Defines image names."""
+    def _initialize_image_names(self) -> Self:
+        """Initializes image names."""
         self.image_name = {
             "patched": self.variables.magisk_image_name,
         }
@@ -126,14 +127,14 @@ class VariableManager(object):
         )
 
 
-def define_variable(file_path: Path) -> VariableTypeContainer:
+def _initialize_variable_group(file_path: Path) -> VariableTypeContainer:
     from .functions import parse_file_name
 
     """Defines variables based on the file path."""
     data_tuple = VariableTypeContainer(
         file_path=file_path,
         magisk_image_name="place_holder",
-        file_path_stem=Path(file_path.stem),
+        file_path_stem=file_path.stem,
         file_parts=parse_file_name(file_path),
     )
     return data_tuple
