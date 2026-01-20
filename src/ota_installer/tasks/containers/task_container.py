@@ -1,4 +1,13 @@
 # src/ota_installer/tasks/containers/task_container.py
-from collections import namedtuple
+from dataclasses import dataclass
 
-TaskContainer = namedtuple("TaskContainer", ["task_name", "task_class"])
+
+@dataclass
+class TaskContainer(object):
+    """Container for task information."""
+
+    task_name: str
+    task_class: type
+
+
+# Signed off by Brian Sanford on 20260119
