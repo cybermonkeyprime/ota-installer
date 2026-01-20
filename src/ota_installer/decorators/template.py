@@ -27,10 +27,14 @@ class Example(GenericDecorator):
 
 @dataclass
 class ExampleWithArgs(GenericDecorator):
+    """A decorator class that logs the start and end of function execution."""
+
     begin: str = "Beginning"
     end: str = "Ending"
 
     def __call__[R, **P](self, function: Callable[P, R]) -> Callable[P, R]:
+        """Wraps the function to log messages before and after execution."""
+
         @wraps(function)
         def wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
             print(f"{self.begin} {function.__name__}")
@@ -39,3 +43,6 @@ class ExampleWithArgs(GenericDecorator):
             return result
 
         return cast(Callable[P, R], wrapper)
+
+
+# Signed off by Brian Sanford on 20260120
