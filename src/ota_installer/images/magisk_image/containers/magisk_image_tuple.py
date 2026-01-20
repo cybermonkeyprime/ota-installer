@@ -4,7 +4,7 @@ from pathlib import Path
 
 
 @dataclass
-class MagiskImage:
+class MagiskImageTuple(object):
     """Represents a Magisk image with local and remote paths."""
 
     local_path: Path
