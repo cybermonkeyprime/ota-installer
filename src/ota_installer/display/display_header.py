@@ -5,7 +5,6 @@ from .. import decorators
 from ..log_setup import logger
 from .constants.display_component import DisplayComponent
 from .constants.display_component_calls import (
-    DisplayComponentCalls,
     display_component_calls,
 )
 
