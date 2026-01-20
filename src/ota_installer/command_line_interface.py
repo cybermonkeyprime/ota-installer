@@ -15,12 +15,14 @@ cli = typer.Typer(help="Manually Install Android Device OTA Firmware")
 
 
 def version_callback(value: bool) -> None:
+    """Display version information and exit."""
     if value:
         typer.echo(get_text_display())  # Customize as needed
         raise typer.Exit()
 
 
 def debug_callback(value: bool) -> None:
+    """Enable debug logging if the flag is set."""
     if value:
         show_debug()
 
@@ -60,6 +62,15 @@ def ota_installerer(
         is_eager=True,
     ),
 ):
+    """Install OTA firmware on an Android device.
+
+    Args:
+        path: The path to the OTA file.
+        task_group: Optional task group to run.
+        list_paths: Flag to list paths and generated files.
+        version: Flag to display version information.
+        debug: Flag to enable debug logging.
+    """
     args = CLIArguments(
         path=Path(path),
         task_group=task_group.value if task_group else None,
@@ -67,10 +78,9 @@ def ota_installerer(
     )
 
     application.run()
-
     application.task_execution(args)
 
 
 if __name__ == "__main__":
-    # main()
     cli()
+# Signed off by Brian Sanford on 20260119
