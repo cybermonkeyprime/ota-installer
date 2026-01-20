@@ -21,8 +21,10 @@ class TaskItemAspectConstants(Enum):
 
 @dataclass
 class TaskItemParser(object):
+    """Parser for task items with aspect and header display capabilities."""
+
     value: str
-    constants = TaskItemAspectConstants
+    constants: type[TaskItemAspectConstants] = TaskItemAspectConstants
 
     @decorators.ColorizedIndentPrinter(
         indent=TaskItemAspectConstants.INDENT.value,
@@ -31,6 +33,7 @@ class TaskItemParser(object):
         style=TaskItemAspectConstants.STYLE.value,
     )
     def show_aspect(self) -> str:
+        """Display the aspect of the task item."""
         return f"{self.value}"
 
     @decorators.ColorizedIndentPrinter(
@@ -39,4 +42,8 @@ class TaskItemParser(object):
         style=TaskItemHeaderConstants.STYLE.value,
     )
     def show_header(self) -> str:
+        """Display the header of the task item."""
         return f"{self.value}"
+
+
+# Signed off by Brian Sanford on 20260119
