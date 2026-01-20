@@ -4,8 +4,13 @@ TASK_PLUGINS = {}
 
 
 def task_plugin(name):
+    """Decorator to register a task plugin."""
+
     def decorator(cls):
         TASK_PLUGINS[name] = cls
         return cls
 
     return decorator
+
+
+# Signed off by Brian Sanford on 20260120
