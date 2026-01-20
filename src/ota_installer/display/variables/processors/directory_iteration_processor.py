@@ -9,6 +9,8 @@ from ...variables.processors.base_processor import BaseProcessor
 
 @dataclass
 class DirectoryIterationProcessor(BaseProcessor):
+    """Processes directory iterations for variable management."""
+
     processing_function: VariableManager = field(
         default_factory=VariableManager
     )
@@ -17,18 +19,22 @@ class DirectoryIterationProcessor(BaseProcessor):
     variable_prefix: str = field(init=False)
 
     def __post_init__(self):
+        """Initializes the dispatcher type."""
         self.dispatcher_type = DispatcherConstants.DIRECTORY.value
-        super().__post_init__()  # initialize dispatcher
+        super().__post_init__()
 
-    def set_directory_names(self, directory_names: tuple) -> Self:
+    def set_directory_names(self, directory_names: tuple[str, ...]) -> Self:
+        """Sets the directory names for processing."""
         self.directory_names = tuple(directory_names)
         return self
 
     def set_directory_type(self, directory_type: str) -> Self:
+        """Sets the type of directories being processed."""
         self.directory_type = str(directory_type)
         return self
 
     def set_variable_prefix(self, variable_prefix: str) -> Self:
+        """Sets the prefix for variable names."""
         self.variable_prefix = str(variable_prefix)
         return self
 
@@ -36,6 +42,7 @@ class DirectoryIterationProcessor(BaseProcessor):
         from ..classes.variable_table_builder import VariableTableBuilder
         from ..containers.variable_item import VariableItem
 
+        """Processes each directory and builds a variable table."""
         builder = VariableTableBuilder(indent=3)
         for directory in self.directory_names:
             title_string = (
@@ -47,3 +54,6 @@ class DirectoryIterationProcessor(BaseProcessor):
             data = VariableItem(title=title_string, value=value_string)
             builder.add(data.title.upper(), data.value)
         builder.render()
+
+
+# Signed off by Brian Sanford on 20260120
