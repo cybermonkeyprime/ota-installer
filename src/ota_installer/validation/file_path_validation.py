@@ -14,12 +14,13 @@ FILENAME_PATTERN = re.compile(
 
 
 def file_path_validator(file_path: Path | str) -> Path | None:
+    """Validates the given file path against the expected filename pattern."""
     file_path = Path(file_path)
-    file_path_string = str(file_path.name)
+    file_string = str(file_path.name)
 
     try:
-        if not FILENAME_PATTERN.match(file_path_string):
-            raise ValueError(f"Invalid filename format: {file_path_string}")
+        if not FILENAME_PATTERN.match(file_string):
+            raise ValueError(f"Invalid filename format: {file_string}")
         if not file_path.exists():
             raise FileNotFoundError("file_path not found")
         if not file_path.is_file():
@@ -38,3 +39,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+# Signed off by Brian Sanford on 20260120
