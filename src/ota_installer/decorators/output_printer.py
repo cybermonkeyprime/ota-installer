@@ -2,7 +2,6 @@
 from collections.abc import Callable
 from dataclasses import dataclass
 from functools import wraps
-from typing import cast
 
 from rich.console import Console
 
@@ -20,11 +19,11 @@ class OutputPrinter(GenericDecorator):
     suffix: str = "\n"
     color: str = "non_error"
 
-    def __call__[R, **P](self, function: Callable[P, R]) -> Callable[P, R]:
+    def __call__(self, function) -> Callable:
         """Wraps the function to print its output with specified formatting."""
 
         @wraps(function)
-        def wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
+        def wrapper(*args, **kwargs) -> object:
             from ..styles.palette import RichColors
 
             style = RichColors[self.color.upper()]
@@ -43,6 +42,7 @@ class OutputPrinter(GenericDecorator):
                     "An error occurred while executing the function: {e}"
                 ) from e
 
-        return cast(Callable[P, R], wrapper)
+        return wrapper
 
 
+# Signed off by Brian Sanford on 20260127
