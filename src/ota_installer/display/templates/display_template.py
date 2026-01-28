@@ -14,4 +14,3 @@ class DisplayComponent(Protocol):
         raise NotImplementedError()
 
 
-# Signed off by Brian Sanford on 20260118

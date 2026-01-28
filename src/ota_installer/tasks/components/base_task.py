@@ -41,4 +41,3 @@ class BaseTask(object):
             self.task.set_item("reminder", self.reminder)
 
 
-# Signed off by Brian Sanford on 20260119

@@ -46,4 +46,3 @@ class TaskItemParser(object):
         return f"{self.value}"
 
 
-# Signed off by Brian Sanford on 20260119

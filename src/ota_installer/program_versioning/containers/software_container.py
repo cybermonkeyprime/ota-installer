@@ -11,4 +11,3 @@ class SoftwareContainer(NamedTuple):
     patch_number: int
 
 
-# Signed off by Brian Sanford on 20260118

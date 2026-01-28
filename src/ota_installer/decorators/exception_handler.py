@@ -33,4 +33,3 @@ class ExceptionHandler(GenericDecorator):
         return cast(Callable[P, R], wrapper)
 
 
-# Signed off by Brian Sanford on 20260119

@@ -60,4 +60,3 @@ def parse_file_name(raw_name: Path) -> "FileNameContainer":
     )
 
 
-# Signed off by Brian Sanford on 20260120

@@ -26,4 +26,3 @@ class MultiplyString(GenericDecorator):
         return cast(Callable[P, R], wrapper)
 
 
-# Signed off by Brian Sanford on 20260117

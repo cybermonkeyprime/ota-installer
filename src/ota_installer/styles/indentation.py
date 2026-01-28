@@ -9,4 +9,3 @@ def indentation(interval: int = 1, char: str = " ", spaces: int = 4) -> str:
     return f"{sc.character * sc.spacing * sc.interval}"
 
 
-# Signed off by Brian Sanford on 20260119

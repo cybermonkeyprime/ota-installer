@@ -41,4 +41,3 @@ class FileImageAttributes(Enum):
         """Constructs the full file path for the image file."""
         boot_image_path = BootImagePaths[self.name].value
         return Path(boot_image_path) / self.file_name
-        # Signed off by Brian Sanford on 20260108

@@ -44,4 +44,3 @@ class ImageTypeDispatcher(DispatcherTemplate):
         return ImageType[evaluated_key].value
 
 
-# Signed off by Brian Sanford on 20260117

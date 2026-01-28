@@ -13,4 +13,3 @@ display_component_calls = {
     DisplayComponent.SUBTITLE: display_subtitle,
 }
 
-# Signed off by Brian Sanford on 20260118

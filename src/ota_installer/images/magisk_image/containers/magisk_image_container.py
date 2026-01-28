@@ -33,4 +33,3 @@ class MagiskImageContainer(object):
         return self.path_container.remote_path
 
 
-# Signed off by Brian Sanford on 20260119

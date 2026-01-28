@@ -24,4 +24,3 @@ def set_directory(
         return None
 
 
-# Signed off by Brian Sanford on 20260117

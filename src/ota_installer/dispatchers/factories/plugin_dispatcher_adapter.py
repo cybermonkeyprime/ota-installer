@@ -17,7 +17,7 @@ from ...log_setup import logger
 from ..factories.load_plugin_dispatcher import (
     load_plugin_dispatcher,
 )
-from .mappings.dispatcher_factory_mapping import DispatcherTypes
+from .mappings.dispatcher_factory_mapping import DispatcherClasses
 
 
 @dataclass
@@ -31,7 +31,7 @@ class PluginDispatcherAdapter(object):
     dispatcher: str = field(default_factory=str)
     object_processor: type = field(default=type)
 
-    def load(self) -> DispatcherTypes | None:
+    def load(self) -> DispatcherClasses | None:
         """Load the dispatcher based on the specified type."""
         logger.debug(f"Loading dispatcher: {self.dispatcher}")
         return load_plugin_dispatcher(
@@ -48,6 +48,3 @@ class PluginDispatcherAdapter(object):
             )
             return None
         return dispatcher.get_value(key=key)  # pyright: ignore[reportOptionalMemberAccess,reportAttributeAccessIssue]
-
-
-# Signed off by Brian Sanford on 20260118

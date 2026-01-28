@@ -53,4 +53,3 @@ if __name__ == "__main__":
         return f"Hello, {name}!"
 
     print(greet("Alice"))
-# Signed off by Brian Sanford on 20260117

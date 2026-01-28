@@ -9,4 +9,3 @@ FileImageData = namedtuple("FileImageData", ["device", "version"])
 
 """Defines the structure of a file image with title and extension."""
 FileImageStruct = namedtuple("FileImageStruct", ["title", "extension"])
-# Signed off by Brian Sanford on 20260116

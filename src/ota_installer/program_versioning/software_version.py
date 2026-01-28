@@ -16,4 +16,3 @@ def get_text_display() -> str:
     return f"{container.title} - {get_display()}"
 
 
-# Signed off by Brian Sanford on 20260119

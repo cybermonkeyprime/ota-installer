@@ -18,7 +18,7 @@ from ....variables.dispatchers.variable_type_dispatcher import (
 )
 
 
-class DispatcherFactoryMapping(Enum):
+class DispatcherType(Enum):
     """Mapping of dispatcher types to their corresponding classes."""
 
     FILE = FileTypeDispatcher
@@ -28,11 +28,11 @@ class DispatcherFactoryMapping(Enum):
     VARIABLE = VariableTypeDispatcher
 
 
-DispatcherTypes = (
+DispatcherClasses = (
     DirectoryDispatcher
     | FileTypeDispatcher
     | ImageTypeDispatcher
     | TaskGroupTypeDispatcher
     | VariableTypeDispatcher
 )
-# Signed off by Brian Sanford on 20260116
+# Signed off by Brian Sanford on 20260127

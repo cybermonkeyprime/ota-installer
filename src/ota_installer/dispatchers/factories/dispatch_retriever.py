@@ -4,8 +4,8 @@ from typing import Self
 
 from ...log_setup import logger
 from .mappings.dispatcher_factory_mapping import (
-    DispatcherFactoryMapping,
-    DispatcherTypes,
+    DispatcherClasses,
+    DispatcherType,
 )
 
 
@@ -13,23 +13,21 @@ from .mappings.dispatcher_factory_mapping import (
 class DispatchRetriever(object):
     """
     Handles safe lookup and validation of dispatcher types from string keys.
-    Backed by DispatcherFactoryMapping enum. Returns plugin dispatcher classes.
+    Backed by DispatcherType enum. Returns plugin dispatcher classes.
     """
 
     process_type: str
 
     def allowed_dispatchers(self) -> tuple[str, ...]:
         """Returns a tuple of allowed dispatcher names."""
-        return tuple(
-            enum_member.name for enum_member in DispatcherFactoryMapping
-        )
+        return tuple(enum_member.name for enum_member in DispatcherType)
 
     def set_function_call(self, function_call) -> Self:
         """Sets the function call for the dispatcher."""
         self.function_call = function_call
         return self
 
-    def get_dispatcher(self) -> DispatcherTypes | None:
+    def get_dispatcher(self) -> DispatcherClasses | None:
         """Retrieves the dispatcher class based on the process type."""
         logger.debug(
             f"DispatchRetriever.get_dispatcher(): {self.process_type=}"
@@ -43,14 +41,9 @@ class DispatchRetriever(object):
             return None
 
         try:
-            dispatcher_enum = DispatcherFactoryMapping[
-                self.process_type.upper()
-            ]
+            dispatcher_enum = DispatcherType[self.process_type.upper()]
             dispatcher_class = dispatcher_enum.value
             return dispatcher_class(self.function_call)
         except KeyError as e:
             logger.error(f"Dispatcher mapping failed: {e}")
             return None
-
-
-# Signed off by Brian Sanford on 20260116

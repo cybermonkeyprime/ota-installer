@@ -42,4 +42,3 @@ def welcome_message():
 if __name__ == "__main__":
     welcome_message()
 
-# Signed off by Brian Sanford on 20260118

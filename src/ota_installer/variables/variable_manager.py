@@ -8,7 +8,7 @@ from ..directory.definitions.directory_type_definition import (
 )
 from ..directory.managers.directory_type_manager import set_directory
 from ..dispatchers.factories.mappings.dispatcher_factory_mapping import (
-    DispatcherTypes,
+    DispatcherClasses,
 )
 from ..images.magisk_image.constants.magisk_image_paths import (
     MagiskImagePaths,
@@ -112,7 +112,7 @@ class VariableManager(object):
             )
             return None
 
-    def get_dispatcher(self, process_type) -> DispatcherTypes | None:
+    def get_dispatcher(self, process_type) -> DispatcherClasses | None:
         from ..dispatchers.factories.dispatch_retriever import (
             DispatchRetriever,
         )
@@ -150,5 +150,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-# Signed off by Brian Sanford on 20260120

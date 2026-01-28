@@ -44,4 +44,3 @@ class Encapsulate(GenericDecorator):
         return SeparatorSpecs.CHAR.value
 
 
-# Signed off by Brian Sanford on 20260120

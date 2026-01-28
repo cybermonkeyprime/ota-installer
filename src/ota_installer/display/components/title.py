@@ -17,4 +17,3 @@ def display_title() -> str:
     return f" {title}"
 
 
-# Signed off by Brian Sanford on 20260108

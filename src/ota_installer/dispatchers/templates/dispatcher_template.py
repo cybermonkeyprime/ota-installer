@@ -49,4 +49,3 @@ class DispatcherTemplate(DispatcherProtocol):
         return key.lower().strip()
 
 
-# Signed off by Brian Sanford on 20260118

@@ -19,4 +19,3 @@ def validate_task_group(value: str) -> TaskGroupNames:
         raise SystemExit(1) from None
 
 
-# Signed off by Brian Sanford on 20260119

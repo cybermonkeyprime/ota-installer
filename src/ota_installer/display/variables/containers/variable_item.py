@@ -10,4 +10,3 @@ class VariableItem(object):
     value: str | None
 
 
-# Signed off by Brian Sanford on 20260119

@@ -8,4 +8,3 @@ class DispatcherProtocol(Protocol):
     def get_value(self, key: str) -> object: ...
 
 
-# Signed off by Brian Sanford on 20260120

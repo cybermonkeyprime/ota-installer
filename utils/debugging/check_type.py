@@ -20,4 +20,3 @@ if __name__ == "__main__":
     type_checker = TypeChecker(name="example", object_to_check=123)
     print(f"{display_type_information(type_checker)}")
 
-# Signed off by Brian Sanford on 20260120

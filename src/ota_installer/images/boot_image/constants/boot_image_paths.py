@@ -20,4 +20,3 @@ def display_boot_image_paths() -> None:
 
 if __name__ == "__main__":
     display_boot_image_paths()
-# Signed off by Brian Sanford on 20260117
