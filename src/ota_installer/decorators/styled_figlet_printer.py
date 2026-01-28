@@ -2,7 +2,6 @@
 from collections.abc import Callable
 from dataclasses import dataclass
 from functools import wraps
-from typing import cast
 
 from .protocols.decorator_protocols import GenericDecorator
 
@@ -16,7 +15,7 @@ class StyledFigletPrinter(GenericDecorator):
     end: str = "\n"
     use_output: bool = False
 
-    def __call__[R, **P](self, function: Callable[P, R]) -> Callable[P, R]:
+    def __call__(self, function: Callable) -> Callable:
         """Wraps the function to apply figlet and color styles."""
         from . import Colorizer, Figletizer
         from .output_printer import OutputPrinter
@@ -30,7 +29,7 @@ class StyledFigletPrinter(GenericDecorator):
             )
 
         wrapped_fn = wraps(function)(decorated_function)
-        return cast(Callable[P, R], wrapped_fn)
+        return wrapped_fn
 
 
 @StyledFigletPrinter(style="variable", font="slant", use_output=True)
@@ -41,4 +40,3 @@ def welcome_message():
 
 if __name__ == "__main__":
     welcome_message()
-
