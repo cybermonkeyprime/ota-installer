@@ -10,3 +10,4 @@ class BootImageTuple(NamedTuple):
     magisk: Path
 
 
+# Signed off by Brian Sanford on 20260129
