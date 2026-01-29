@@ -5,7 +5,7 @@ from .. import decorators
 from ..log_setup import logger
 from .constants.display_component import DisplayComponent
 from .constants.display_component_calls import (
-    display_component_calls,
+    call_display_component,
 )
 
 
@@ -18,7 +18,7 @@ def show_display_header() -> None:
             component()
         except Exception as err:
             logger.error(
-                f"format_display(): An error occurred during initialization: "
+                "format_display(): An error occurred during initialization: "
                 f"{err}"
             )
 
@@ -46,18 +46,6 @@ def show_separator() -> str:
 def show_subtitle() -> str:
     """Returns the subtitle for the display."""
     return call_display_component(DisplayComponent.SUBTITLE)
-
-
-def call_display_component(
-    component_type: DisplayComponent, *args, **kwargs
-) -> str:
-    """Call the display function associated with the given component type."""
-    display_function = display_component_calls[component_type]
-    if not display_function:
-        raise ValueError(
-            f"Display component {component_type} is not registered."
-        )
-    return display_function(*args, **kwargs)
 
 
 def main():

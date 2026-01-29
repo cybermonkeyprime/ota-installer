@@ -39,10 +39,10 @@ class OutputPrinter(GenericDecorator):
             except Exception as e:
                 raise RuntimeError(
                     f"{function.__name__}(): "
-                    "An error occurred while executing the function: {e}"
+                    f"An error occurred while executing the function: {e}"
                 ) from e
 
         return wrapper
 
 
-# Signed off by Brian Sanford on 20260127
+# Signed off by Brian Sanford on 20260129
