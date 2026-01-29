@@ -1,5 +1,6 @@
 # src/ota_installer.tasks/components/04_stock_boot_image_backuppper.py
 from dataclasses import dataclass, field
+from pathlib import Path
 
 from ... import decorators
 from ...task_groups.constants.preparation_tasks import PreparationTasks
@@ -20,8 +21,10 @@ class StockBootImageBackupper(BaseTask):
     instance: VariableManager = field(default_factory=VariableManager)
 
     def __post_init__(self) -> None:
-        """Initialize the command string for backing up the stock boot image."""
-        image_path = image_handler(self.instance.file_name.device)
+        """
+        Initialize the command string for backing up the stock boot image.
+        """
+        image_path = Path(image_handler(self.instance.file_name.device))
         command_string = f"cp -v {image_path} {self.instance.file_paths.stock}"
 
         super().__init__(
@@ -30,10 +33,11 @@ class StockBootImageBackupper(BaseTask):
         )
 
     @decorators.DoublePaddedFooterWrapper(
-        message=f"{ENUM_VALUES.title} finished sucessfully!"
+        message=f"{ENUM_VALUES.title} finished successfully!"
     )
     def perform_task(self) -> None:
         """Execute the task to backup the stock boot image."""
         self.task.run_with_output()
 
 
+# Signed off by Brian Sanford on 20260129
