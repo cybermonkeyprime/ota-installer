@@ -21,7 +21,7 @@ class StockBootImagePusher(BaseTask):
 
     def __post_init__(self) -> None:
         """Initializes the command string for pushing the stock boot image."""
-        command_string = self._create_command_string()
+        command_string = self._generate_adb_push_command()
 
         super().__init__(
             enum_values=ENUM_VALUES,
@@ -29,7 +29,7 @@ class StockBootImagePusher(BaseTask):
             reminder=ENUM_VALUES.reminder,
         )
 
-    def _create_command_string(self) -> str:
+    def _generate_adb_push_command(self) -> str:
         """Creates the adb push command string."""
         stock_image_path = Path(self.instance.file_paths.stock)
         return f'adb push "{stock_image_path}" /sdcard/'
@@ -42,3 +42,4 @@ class StockBootImagePusher(BaseTask):
         self.task.run_with_output()
 
 
+# Signed off by Brian Sanford on 20260129
