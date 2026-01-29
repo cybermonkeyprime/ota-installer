@@ -45,7 +45,7 @@ class DirectoryTypeDefinition(object):
 def create_container(container_cls: Callable, *args, **kwargs) -> Callable:
     """Creates an instance of the specified container class."""
     try:
-        logger.debug(f"{type(container_cls).__name__} {args}")
+        logger.debug(f"Creating {container_cls.__name__} with args: {args}")
         return container_cls(*args, **kwargs)
     except Exception as err:
         raise ValueError("Failed to create structure: ") from err
