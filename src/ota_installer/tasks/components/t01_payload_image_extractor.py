@@ -23,10 +23,10 @@ class PayloadImageExtractor(BaseTask):
         """Initializes the command string for extracting the payload image."""
         super().__init__(
             enum_values=ENUM_VALUES,
-            command_string=self._build_command_string(),
+            command_string=self._create_extraction_command(),
         )
 
-    def _build_command_string(self) -> str:
+    def _create_extraction_command(self) -> str:
         """Constructs the command string for extraction."""
         return f'7z e "{self.instance.path}" payload.bin -o"{Path.home()}" -y'
 
@@ -38,3 +38,4 @@ class PayloadImageExtractor(BaseTask):
         self.task.run_with_output()
 
 
+# Signed off by Brian Sanford on 20260129
