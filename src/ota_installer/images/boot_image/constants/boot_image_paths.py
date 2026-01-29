@@ -13,10 +13,10 @@ class BootImagePaths(Enum):
 
 def display_boot_image_paths() -> None:
     """Prints the paths for boot images."""
-    print(BootImagePaths.PAYLOAD.value)
-    print(BootImagePaths.STOCK.value)
-    print(BootImagePaths.MAGISK.value)
+    for path in BootImagePaths:
+        print(path.value)
 
 
 if __name__ == "__main__":
     display_boot_image_paths()
+# Signed off by Brian Sanford on 20260129
