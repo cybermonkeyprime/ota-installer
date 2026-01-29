@@ -30,13 +30,12 @@ class DispatchRetriever(object):
     def get_dispatcher(self) -> DispatcherClasses | None:
         """Retrieves the dispatcher class based on the process type."""
         logger.debug(
-            f"DispatchRetriever.get_dispatcher(): {self.process_type=}"
+            f"Retrieving dispatcher for process type: {self.process_type}"
         )
-        allowed = self.allowed_dispatchers()
         if self.process_type.upper() not in self.allowed_dispatchers():
             logger.error(
                 f"Invalid dispatcher type: {self.process_type}."
-                f"Allowed: {allowed}"
+                f"Allowed: {self.allowed_dispatchers()}"
             )
             return None
 
@@ -47,3 +46,6 @@ class DispatchRetriever(object):
         except KeyError as e:
             logger.error(f"Dispatcher mapping failed: {e}")
             return None
+
+
+# Signed off by Brian Sanford on 20260127

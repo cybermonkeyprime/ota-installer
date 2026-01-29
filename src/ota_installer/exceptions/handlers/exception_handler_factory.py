@@ -15,10 +15,12 @@ def exception_handler_factory(
         """
         original_init = handler_class.__init__
 
-        def __init__[**P](
-            self: BaseExceptionHandler, *args: P.args, **kwargs: P.kwargs
-        ) -> None:
+        def __init__(self: BaseExceptionHandler, *args, **kwargs) -> None:
+            """
+            Initialize the exception handler with specified exception types.
+            """
             original_init(self, *args, **kwargs)
+
             self.exception_types = exception_types
             self.custom_messages = {
                 ex: self.default_message for ex in exception_types
@@ -32,8 +34,11 @@ def exception_handler_factory(
 
 
 def main():
+    """Main entry point of the application."""
     pass
 
 
 if __name__ == "__main__":
     main()
+
+# Signed off by Brian Sanford on 20260129

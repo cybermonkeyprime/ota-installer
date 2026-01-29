@@ -20,9 +20,7 @@ class BaseExceptionHandler(object):
         default_factory=dict
     )
 
-    def handle[**P](
-        self, *args: P.args, **kwargs: P.kwargs
-    ) -> Callable[P] | None:
+    def handle(self, *args, **kwargs) -> Callable | None:
         """Executes the function and handles exceptions."""
         try:
             return self.function(*args, **kwargs)
@@ -45,9 +43,7 @@ class BaseExceptionHandler(object):
         )
         return f"{error_message}"
 
-    def __call__[**P](
-        self, *args: P.args, **kwargs: P.kwargs
-    ) -> Callable[P] | None:
+    def __call__(self, *args, **kwargs) -> Callable | None:
         """Allows the instance to be called as a function."""
         return self.handle(*args, **kwargs)
 
