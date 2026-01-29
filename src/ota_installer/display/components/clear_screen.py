@@ -14,10 +14,8 @@ def clear_screen() -> None:
 
 def execute_clear_command() -> CompletedProcess:
     """Executes the command to clear the terminal screen."""
-    command = "clear" if name != "nt" else "cls"
-    return run([command])
+    return run(["clear" if name != "nt" else "cls"])
 
 
 if __name__ == "__main__":
     clear_screen()
-
