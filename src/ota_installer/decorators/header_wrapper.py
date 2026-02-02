@@ -33,3 +33,6 @@ class HeaderWrapper(GenericDecorator):
     def _output_message(self) -> str:
         """Outputs the header message."""
         return f"{self.message}"
+
+
+# Signed off by Brian Sanford on 20260202
