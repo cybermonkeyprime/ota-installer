@@ -34,3 +34,4 @@ class ImageTypeDispatcher(DispatcherTemplate):
         return key_object.value
 
 
+# Signed off by Brian Sanford on 20260202
