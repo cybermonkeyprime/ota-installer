@@ -94,3 +94,4 @@ class ApplicationTaskDefinitions(TaskDefinitionsTemplate):
         self.tasks = tuple(enum_task_names(ApplicationTasks))
 
 
+# Signed off by Brian Sanford on 20260202
