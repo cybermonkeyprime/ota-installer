@@ -9,7 +9,7 @@ class BaseProcessor(object):
     """Base class for processing with a dispatcher."""
 
     processing_function: object = field(init=False)
-    dispatcher: DispatcherProtocol | None = field(init=False)
+    dispatcher: DispatcherProtocol = field(init=False)
     dispatcher_type: str | None = None  # To be set in subclasses
 
     def __post_init__(self) -> None:
@@ -34,3 +34,4 @@ class BaseProcessor(object):
         return self.dispatcher.get_value(key)
 
 
+# Signed off by Brian Sanford on 20260202
