@@ -1,14 +1,14 @@
 # src/ota_installer/decorators/continue_on_keypress.py
 from collections.abc import Callable
 from dataclasses import dataclass, field
-from enum import Enum
+from enum import Enum, IntEnum
 from functools import wraps
 from typing import cast
 
 from .protocols.decorator_protocols import GenericDecorator
 
 
-class Specs(Enum):
+class Specs(IntEnum):
     SPACING = 4
     INTERVAL = 20
 
@@ -27,7 +27,12 @@ class ContinueOnKeyPress(GenericDecorator):
 
     def __post_init__(self) -> None:
         self.specs = Enum(
-            "Specs", {"CHAR": self.char[0], "SPACING": 4, "INTERVAL": 20}
+            "Specs",
+            {
+                "CHAR": self.char[0],
+                "SPACING": Specs.SPACING,
+                "INTERVAL": Specs.INTERVAL,
+            },
         )
 
     @ExceptionHandler()
@@ -66,3 +71,4 @@ class ContinueOnKeyPress(GenericDecorator):
 if __name__ == "__main__":
     pass
 
+# Signed off by Brian Sanford on 20260202
