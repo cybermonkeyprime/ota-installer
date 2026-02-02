@@ -8,13 +8,12 @@ from ..operations.task_operation_processor import TaskOperationProcessor
 class BaseTask(object):
     """Represents a base task with associated properties."""
 
-    # enum_values: type
-    # command_string: str = field(default="")
-    # comment: str = field(default="")
-    # reminder: str = field(default="")
-
     def __init__(
-        self, enum_values, command_string=None, comment=None, reminder=None
+        self,
+        enum_values: type,
+        command_string: str | None = None,
+        comment: str | None = None,
+        reminder: str | None = None,
     ):
         """Initializes the task operation processor with task details."""
         self.enum_values = enum_values
@@ -41,3 +40,4 @@ class BaseTask(object):
             self.task.set_item("reminder", self.reminder)
 
 
+# Signed off by Brian Sanford on 20260202
