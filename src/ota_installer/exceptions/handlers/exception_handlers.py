@@ -38,3 +38,4 @@ class KeyboardInterruptHandler(BaseExceptionHandler):
     default_message: str = "Keyboard interrupt detected, quitting!"
 
 
+# Signed off by Brian Sanford on 20260202
