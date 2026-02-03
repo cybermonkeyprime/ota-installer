@@ -21,15 +21,13 @@ class TaskFactory(object):
         default_factory=lambda: uuid.uuid4().hex[:8]
     )  # Unique ID per run
 
-    def create_task(self, task_name: str):
+    def create_task(self, task_name: str) -> object | None:
         """Creates a task instance based on the provided task name."""
         logger.debug(f"Creating task: {task_name=}")
         task_class = TASK_PLUGINS.get(task_name)
 
-        if task_class is None:
-            logger.bind(
-                event="task_lookup", status="not_found", task=task_name
-            ).error(f"No plugin task registered for: {task_name!r}")
+        if not task_class:
+            self._log_task_not_found(task_name)
             return None
 
         return self._initialize_task(task_class, task_name)
@@ -55,3 +53,4 @@ class TaskFactory(object):
         return task_instance
 
 
+# Signed off by Brian Sanford on 20260203
