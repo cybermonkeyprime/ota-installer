@@ -10,6 +10,8 @@ from ....dispatchers.templates.dispatcher_template import DispatcherTemplate
 
 
 class ImageType(Enum):
+    """Enumeration of supported image types."""
+
     TOKAY = "init_boot"
     SHIBA = "init_boot"
     DEFAULT = "init_boot"
@@ -33,6 +35,9 @@ class ImageTypeDispatcher(DispatcherTemplate):
         evaluated_key = (
             normalized_key
             if normalized_key in self.allowed_keys
-            else "DEFAULT"
+            else ImageType.DEFAULT.name
         )
         return ImageType[evaluated_key].value
+
+
+# Signed off by Brian Sanford on 20260203
