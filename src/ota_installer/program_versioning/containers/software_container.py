@@ -1,8 +1,9 @@
 # src/ota_installer/program_versioning/containers/software_container.py
-from typing import NamedTuple
+from dataclasses import dataclass
 
 
-class SoftwareContainer(NamedTuple):
+@dataclass
+class SoftwareContainer(object):
     """Represents a software container with versioning information."""
 
     title: str
@@ -11,3 +12,4 @@ class SoftwareContainer(NamedTuple):
     patch_number: int
 
 
+# Signed off by Brian Sanford on 20260203
