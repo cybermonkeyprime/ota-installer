@@ -25,9 +25,13 @@ class RichColors(Enum):
 
 
 def main() -> None:
-    """The main function of the module, provided for completeness."""
+    """Main entry point of the module.
+
+    This function is provided for completeness and currently does nothing.
+    """
     pass
 
 
 if __name__ == "__main__":
     main()
+# Signed off by Brian Sanford on 20260203
