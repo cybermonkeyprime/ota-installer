@@ -17,7 +17,6 @@ from ...log_setup import logger
 from ..factories.load_plugin_dispatcher import (
     load_plugin_dispatcher,
 )
-from .mappings.dispatcher_factory_mapping import DispatcherClasses
 
 
 @dataclass
@@ -31,20 +30,23 @@ class PluginDispatcherAdapter(object):
     dispatcher: str = field(default_factory=str)
     object_processor: type = field(default=type)
 
-    def load(self) -> DispatcherClasses | None:
+    def load(self) -> type | None:
         """Load the dispatcher based on the specified type."""
         logger.debug(f"Loading dispatcher: {self.dispatcher}")
         return load_plugin_dispatcher(
             dispatcher_type=self.dispatcher, obj=self.object_processor
         )
 
-    def get_value(self, key: str):
+    def get_value(self, key: str) -> object:
         """Retrieve a value from the dispatcher using the specified key."""
         dispatcher = self.load()
-        if dispatcher is None:
+        if not dispatcher:
             logger.error(
                 f"Failed to load dispatcher '{self.dispatcher}'. "
                 f"Cannot retrieve value for key: {key}"
             )
             return None
-        return dispatcher.get_value(key=key)  # pyright: ignore[reportOptionalMemberAccess,reportAttributeAccessIssue]
+        return dispatcher.get_value(key=key)
+
+
+# Signed off by Brian Sanford on 20260203
