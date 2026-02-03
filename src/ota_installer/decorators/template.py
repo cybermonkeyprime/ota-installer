@@ -2,7 +2,6 @@
 from collections.abc import Callable
 from dataclasses import dataclass
 from functools import wraps
-from typing import cast
 
 from .protocols.decorator_protocols import GenericDecorator
 
@@ -17,12 +16,12 @@ class Example(GenericDecorator):
     start_message: str = "Beginning"
     end_message: str = "Ending"
 
-    def __call__[**P](self, *args: P.args, **kwargs: P.kwargs) -> R:
+    def __call__(self, *args, **kwargs) -> object:
         """Wraps the function to log messages before and after execution."""
         print(f"{self.start_message} {self.func.__name__}")
         result = self.func(*args, **kwargs)
         print(f"{self.end_message} {self.func.__name__}")
-        return cast(Callable[P, R], result)
+        return result
 
 
 @dataclass
@@ -32,16 +31,17 @@ class ExampleWithArgs(GenericDecorator):
     begin: str = "Beginning"
     end: str = "Ending"
 
-    def __call__[R, **P](self, function: Callable[P, R]) -> Callable[P, R]:
+    def __call__(self, function: Callable) -> Callable:
         """Wraps the function to log messages before and after execution."""
 
         @wraps(function)
-        def wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
+        def wrapper(*args, **kwargs) -> object:
             print(f"{self.begin} {function.__name__}")
             result = function(*args, **kwargs)
             print(f"{self.end} {function.__name__}")
             return result
 
-        return cast(Callable[P, R], wrapper)
+        return wrapper
 
 
+# Signed off by Brian Sanford on 20260203
