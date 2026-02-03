@@ -35,7 +35,11 @@ class TaskExecutor(object):
 
     def initialize_task_manager(self) -> Self:
         """Initializes the task manager with the specified path."""
-        self.task_manager.set_file_name(self.path).set_variable().list_vars()
+        (
+            self.task_manager.set_file_name(self.path)
+            .set_variable()
+            .log_and_process_variables()
+        )
         return self
 
     def assign_task_group(self) -> Self:
@@ -115,4 +119,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

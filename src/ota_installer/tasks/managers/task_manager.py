@@ -17,7 +17,7 @@ class TaskManager(object):
 
     file_name: Path = field(default_factory=Path)
     function: Callable = field(default=Callable)
-    iteration: type = field(init=False)
+    # iteration: type = field(init=False)
     variable: VariableManager = field(init=False)
 
     def set_file_name(self, arguments) -> Self:
@@ -26,11 +26,7 @@ class TaskManager(object):
         return self
 
     def set_variable(self) -> Self:
-        """Initializes the variable manager and sets up logging.
-
-        Returns:
-            The updated TaskManager instance.
-        """
+        """Initializes the variable manager and sets up logging."""
         try:
             self.variable = set_variable_manager(self.file_name)
             add_structured_log_sink(self.variable.file_paths.log_file)
@@ -44,9 +40,11 @@ class TaskManager(object):
         self.posix_path = self.file_name
         return self
 
-    def list_vars(self) -> None:
+    def log_and_process_variables(self) -> None:
         """Logs and processes the variables from the variable manager."""
-        logger.debug(f"TaskManager.list_vars(): {self.variable=}")
+        logger.debug(
+            f"TaskManager.log_and_process_variables(): {self.variable=}"
+        )
         try:
             (
                 VariableProcessor(self.variable)
@@ -55,10 +53,13 @@ class TaskManager(object):
                 .process_log_file()
             )
         except Exception as err:
-            logger.exception(f"list_vars: {type(err).__name__} {err}")
+            logger.exception(
+                f"log_and_process_variables: {type(err).__name__} {err}"
+            )
 
     def execute_iteration(self, task_group) -> None:
         """Executes the task iteration for the given task group."""
         task_iterator(instance=self.variable, task_group=task_group)
 
 
+# Signed off by Brian Sanford on 20260203
