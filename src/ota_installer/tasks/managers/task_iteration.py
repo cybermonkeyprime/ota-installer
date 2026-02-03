@@ -20,7 +20,7 @@ def task_iterator(
 
     for task in task_group:
         try:
-            task_director(instance=instance, item=task)
+            task_director(instance=instance, task_name=task)
         except TypeError as err:
             _handle_type_error(task_group, err)
         except Exception as err:
