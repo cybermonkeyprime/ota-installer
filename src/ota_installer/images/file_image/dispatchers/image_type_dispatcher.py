@@ -29,12 +29,6 @@ class ImageTypeDispatcher(DispatcherTemplate):
 
     def get_key(self, key: str) -> object:
         """Retrieves the value associated with the given key."""
-        key_to_upper = key.upper()
-        evaluated_key = (
-            "DEFAULT"
-            if key_to_upper not in self.allowed_keys
-            else key_to_upper
-        )
         normalized_key = key.upper()
         evaluated_key = (
             normalized_key
@@ -42,5 +36,3 @@ class ImageTypeDispatcher(DispatcherTemplate):
             else "DEFAULT"
         )
         return ImageType[evaluated_key].value
-
-
