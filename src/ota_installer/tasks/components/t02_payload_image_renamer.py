@@ -21,14 +21,13 @@ class PayloadImageRenamer(BaseTask):
 
     def __post_init__(self) -> None:
         """Initializes the command string for renaming the payload image."""
-        command_string = self._generate_rename_command()
 
         super().__init__(
             enum_values=ENUM_VALUES,
-            command_string=command_string,
+            command_string=self._create_rename_command(),
         )
 
-    def _generate_rename_command(self) -> str:
+    def _create_rename_command(self) -> str:
         """Generates the command string for renaming the payload image."""
         source_path = Path.home() / "payload.bin"
         destination_path = self.instance.file_paths.payload
@@ -40,3 +39,6 @@ class PayloadImageRenamer(BaseTask):
     def perform_task(self) -> None:
         """Executes the task to rename the payload image."""
         self.task.run_with_output()
+
+
+# Signed off by Brian Sanford on 20260203
