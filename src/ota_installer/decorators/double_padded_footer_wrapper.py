@@ -3,8 +3,7 @@ from collections.abc import Callable
 from dataclasses import dataclass, field
 from functools import wraps
 
-from dependency_injector import containers, providers
-
+from ..containers.decorators import Decorators
 from ..log_setup import logger
 from .protocols.decorator_protocols import GenericDecorator
 
@@ -18,15 +17,6 @@ class DoublePaddedFooterWrapper(GenericDecorator):
     beginning: str = field(default="")
     message: str = field(default="Finished!")
     ending: str = field(default="")
-
-    class Container(containers.DeclarativeContainer):
-        from . import Colorizer
-        from .indent_wrapper import IndentWrapper
-        from .output_printer import OutputPrinter
-
-        colorizer = providers.Factory(Colorizer, style="variable")
-        indent_wrapper = providers.Factory(IndentWrapper, interval=1)
-        output_printer = providers.Factory(OutputPrinter, use_color=False)
 
     def __call__(self, function: Callable) -> Callable:
         """Wraps the function to add a double padded footer."""
@@ -42,9 +32,9 @@ class DoublePaddedFooterWrapper(GenericDecorator):
 
         return wrapper
 
-    @Container.output_printer()
-    @Container.colorizer()
-    @Container.indent_wrapper()
+    @Decorators.output_printer(use_color=False)
+    @Decorators.colorizer(style="variable")
+    @Decorators.indent_wrapper(interval=1)
     def _output_footer(self, message: str) -> str:
         """Outputs the footer messages."""
         return f"{message}"

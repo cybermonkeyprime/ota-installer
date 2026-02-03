@@ -2,8 +2,8 @@
 from collections.abc import Callable
 from dataclasses import dataclass
 from functools import wraps
-from typing import cast
 
+from ..containers.decorators import Decorators
 from .protocols.decorator_protocols import StringReturningDecorator
 
 type R = str
@@ -21,18 +21,18 @@ class ColorizedIndentPrinter(StringReturningDecorator):
     end: str = ""
     style: str = "variable"
 
-    def __call__[**P](self, function: Callable[P, R]) -> Callable[P, R]:
+    def __call__(self, function: Callable) -> Callable:
         """Wraps the given function to apply colorization and indentation."""
-        from . import Colorizer, IndentWrapper, OutputPrinter
 
-        @OutputPrinter(use_color=False)
-        @Colorizer(style=self.style)
-        @IndentWrapper(interval=self.indent)
+        @Decorators.output_printer(use_color=False)
+        @Decorators.colorizer(style=self.style)
+        @Decorators.indent_wrapper(interval=self.indent)
         @wraps(function)
-        def wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
+        def wrapper(*args, **kwargs) -> R:
             result = function(*args, **kwargs)
             return f"{result}"
 
-        return cast(Callable[P, R], wrapper)
+        return wrapper
 
 
+# Signed off by Brian Sanford on 20260203
