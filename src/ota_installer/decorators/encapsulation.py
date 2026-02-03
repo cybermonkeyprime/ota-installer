@@ -3,7 +3,6 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from enum import Enum
 from functools import wraps
-from typing import cast
 
 from .protocols.decorator_protocols import GenericDecorator
 
@@ -21,26 +20,27 @@ class Encapsulate(GenericDecorator):
     from .multiply_string import MultiplyString
     from .output_printer import OutputPrinter
 
-    def __call__[R, **P](self, function: Callable[P, R]) -> Callable[P, R]:
+    def __call__(self, function: Callable) -> Callable:
         """
         Wraps the function with separator calls before and after execution.
         """
 
         @wraps(function)
-        def wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
-            self.print_separator()
+        def wrapper(*args, **kwargs) -> object:
+            self._print_separator()
             result = function(*args, **kwargs)
-            self.print_separator()
+            self._print_separator()
             return result
 
-        return cast(Callable[P, R], wrapper)
+        return wrapper
 
     @OutputPrinter(prefix="\n", suffix="\n\n")
     @MultiplyString(
         interval=(SeparatorSpecs.SPACING.value * SeparatorSpecs.INTERVAL.value)
     )
-    def print_separator(self) -> str:
+    def _print_separator(self) -> str:
         """Prints a separator line."""
         return SeparatorSpecs.CHAR.value
 
 
+# Signed off by Brian Sanford on 20260203
