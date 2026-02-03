@@ -14,13 +14,17 @@ def task_iterator(
 ) -> object | None:
     """Iterates over a task group and executes each task."""
     logger.debug(f"Iterating over task group: {task_group}")
-    try:
-        for task in list(task_group):
+    if not task_group:
+        skipped_task_group_msg()
+        return None
+
+    for task in task_group:
+        try:
             task_director(instance=instance, item=task)
-    except TypeError as err:
-        _handle_type_error(task_group, err)
-    except Exception as err:
-        logger.exception(f"TaskIteration Error: {err}")
+        except TypeError as err:
+            _handle_type_error(task_group, err)
+        except Exception as err:
+            logger.exception(f"TaskIteration Error: {err}")
 
 
 def _handle_type_error(task_group: StringTuple, err: TypeError) -> None:
@@ -33,6 +37,8 @@ def _handle_type_error(task_group: StringTuple, err: TypeError) -> None:
 
 @StylizedIndentPrinter(indent=2, style="variable", end="\n\n", use_output=True)
 def skipped_task_group_msg() -> str:
+    """Displays a message indicating that the task group was skipped."""
     return "Task Group skipped"
 
 
+# Signed off by Brian Sanford on 20260203
