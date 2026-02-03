@@ -2,20 +2,27 @@
 from os import name
 from subprocess import CompletedProcess, run
 
+from ...log_setup import logger
+
 
 def clear_screen() -> None:
     """Clears the terminal screen."""
     try:
-        if execute_clear_command() is None:
-            raise RuntimeError("Failed to clear the screen.")
+        execute_clear_command()
     except RuntimeError as error:
-        print(f"An error occurred while trying to clear the screen: {error}")
+        logger.exception(f"Error clearing the screen: {error}")
 
 
 def execute_clear_command() -> CompletedProcess:
     """Executes the command to clear the terminal screen."""
-    return run(["clear" if name != "nt" else "cls"])
+    command = "clear" if name != "nt" else "cls"
+    result = run(command, check=True)
+    if result.returncode != 0:
+        raise RuntimeError("Command failed to execute.")
+    return result
 
 
 if __name__ == "__main__":
     clear_screen()
+
+# Signed off by Brian Sanford on 20260203
