@@ -33,10 +33,11 @@ class StyledFigletPrinter(GenericDecorator):
 
 
 @StyledFigletPrinter(style="variable", font="slant", use_output=True)
-def welcome_message():
+def welcome_message() -> str:
     """Returns a welcome message for the OTA Installer."""
     return "OTA Installer ready!"
 
 
 if __name__ == "__main__":
     welcome_message()
+# Signed off by Brian Sanford on 20260203
