@@ -3,7 +3,6 @@ import time
 from collections.abc import Callable
 from dataclasses import dataclass
 from functools import wraps
-from typing import cast
 
 from .protocols.decorator_protocols import GenericDecorator
 
@@ -15,24 +14,24 @@ class TimeIt(GenericDecorator):
     start_time: float = 0
     end_time: float = 0
 
-    def __call__[R, **P](self, function: Callable[P, R]) -> Callable[P, R]:
+    def __call__(self, function: Callable) -> Callable:
         """Wrap the function to measure its execution time."""
 
         @wraps(function)
-        def wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
+        def wrapper(*args, **kwargs) -> object:
             self.start_time = self._get_current_time()
             result = function(*args, **kwargs)
             self.end_time = self._get_current_time()
             self._log_execution_time(function, args, kwargs)
             return result
 
-        return cast(Callable[P, R], wrapper)
+        return wrapper
 
     def _log_execution_time(
         self, function: Callable, args: tuple, kwargs: dict
     ) -> None:
         """Log the execution time of the function."""
-        total_time = self._calculate_total_time()
+        total_time = self.end_time - self.start_time
         function_signature = f"{function.__name__}{args} {kwargs}"
         print(f"Function {function_signature} took {total_time:.4f} seconds")
 
@@ -40,8 +39,5 @@ class TimeIt(GenericDecorator):
         """Get the current time in seconds."""
         return time.perf_counter()
 
-    def _calculate_total_time(self) -> float:
-        """Calculate the total execution time."""
-        return self.end_time - self.start_time
 
-
+# Signed off by Brian Sanford on 20260203

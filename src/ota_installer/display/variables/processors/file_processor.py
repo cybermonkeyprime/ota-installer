@@ -23,19 +23,19 @@ class VariableFileProcessor(BaseProcessor):
     title: str = field(init=False)
     value: str = field(init=False)
 
-    def __post_init__(self) -> object | None:
+    def __post_init__(self) -> None:
         """Initializes the dispatcher type after the dataclass is created."""
         self.dispatcher_type = DispatcherConstants.VARIABLE.value
         super().__post_init__()
 
     def set_title(self, name: str) -> Self:
         """Sets the title of the variable."""
-        self.title = str(name)
+        self.title = name
         return self
 
     def set_value(self, value: str) -> Self:
         """Sets the value of the variable."""
-        self.value = str(value)
+        self.value = value
         return self
 
     def process_items(self) -> Self | None:
@@ -53,3 +53,4 @@ class VariableFileProcessor(BaseProcessor):
         builder.render()
 
 
+# Signed off by Brian Sanford on 20260203
