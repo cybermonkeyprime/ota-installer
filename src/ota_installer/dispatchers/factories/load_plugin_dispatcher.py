@@ -3,7 +3,7 @@ from ...log_setup import logger
 from ..dispatcher_plugin_registry import DISPATCHER_PLUGINS
 
 
-def load_plugin_dispatcher(dispatcher_type: str, obj: type):
+def load_plugin_dispatcher(dispatcher_type: str, obj: type) -> type | None:
     """Load a registered plugin dispatcher based on the dispatcher type."""
 
     logger.debug(f"load_plugin_dispatcher(): {dispatcher_type=}")
@@ -15,3 +15,6 @@ def load_plugin_dispatcher(dispatcher_type: str, obj: type):
         )
         return None
     return dispatcher_class(obj)
+
+
+# Signed off by Brian Sanford on 20260203
