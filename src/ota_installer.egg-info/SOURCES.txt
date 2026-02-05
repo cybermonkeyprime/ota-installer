@@ -13,6 +13,7 @@ src/ota_installer.egg-info/dependency_links.txt
 src/ota_installer.egg-info/entry_points.txt
 src/ota_installer.egg-info/requires.txt
 src/ota_installer.egg-info/top_level.txt
+src/ota_installer/containers/decorators.py
 src/ota_installer/decorators/__init__.py
 src/ota_installer/decorators/colorized_indent_printer.py
 src/ota_installer/decorators/colorizer.py

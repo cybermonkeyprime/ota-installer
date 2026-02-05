@@ -3,6 +3,7 @@ Name: ota-installer
 Version: 2026.2.3
 Requires-Python: >=3.14
 License-File: LICENSE.txt
+Requires-Dist: dependency-injector==4.48.3
 Requires-Dist: loguru==0.7.3
 Requires-Dist: pyfiglet==1.0.2
 Requires-Dist: pyinputplus==0.2.12

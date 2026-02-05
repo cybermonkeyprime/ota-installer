@@ -1,3 +1,4 @@
+dependency-injector==4.48.3
 loguru==0.7.3
 pyfiglet==1.0.2
 pyinputplus==0.2.12
