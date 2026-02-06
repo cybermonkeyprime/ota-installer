@@ -20,7 +20,6 @@ class MagiskImageFinder(BaseTask):
     def __post_init__(self) -> None:
         remote_path = Path(self.instance.directories.magisk.remote_path)
         command_string = self._create_command_string(remote_path)
-
         super().__init__(
             enum_values=ENUM_VALUES,
             command_string=command_string,
@@ -28,7 +27,7 @@ class MagiskImageFinder(BaseTask):
 
     def _create_command_string(self, remote_path: Path) -> str:
         """Constructs the command string to locate the patched boot image."""
-        return f'adb shell ls "{remote_path}" | grep magisk_patched | head -n1'
+        return f"adb shell ls {remote_path} | grep magisk_patched | head -n1"
 
     @decorators.DoublePaddedFooterWrapper(
         message=f"{ENUM_VALUES.title} finished sucessfully!"

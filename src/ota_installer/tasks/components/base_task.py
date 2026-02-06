@@ -1,6 +1,7 @@
 # src/ota_installer/tasks/components/base_task.py
 from dataclasses import dataclass
 
+from ..operations.task_operation_details import TaskOperation
 from ..operations.task_operation_processor import TaskOperationProcessor
 
 
@@ -10,7 +11,7 @@ class BaseTask(object):
 
     def __init__(
         self,
-        enum_values: type,
+        enum_values: TaskOperation,
         command_string: str | None = None,
         comment: str | None = None,
         reminder: str | None = None,
