@@ -1,7 +1,7 @@
 # src/ota_installer/tasks/managers/task_iteration.py
 from types import NoneType
 
-from ...decorators import StylizedIndentPrinter
+from ...decorators.styled_indent_printer import StylizedIndentPrinter
 from ...log_setup import logger
 from ...variables.variable_manager import VariableManager
 from .task_director import task_director

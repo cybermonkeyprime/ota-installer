@@ -6,7 +6,15 @@ class Decorators(containers.DeclarativeContainer):
     from ..decorators.colorizer import Colorizer
     from ..decorators.indent_wrapper import IndentWrapper
     from ..decorators.output_printer import OutputPrinter
+    from ..decorators.styled_indent_printer import StylizedIndentPrinter
 
     colorizer = providers.Factory(Colorizer)
     indent_wrapper = providers.Factory(IndentWrapper)
     output_printer = providers.Factory(OutputPrinter)
+
+    stylized_indent_printer = providers.Factory(
+        StylizedIndentPrinter,
+        colorizer=colorizer,
+        indent_wrapper=indent_wrapper,
+        output_printer=output_printer,
+    )
