@@ -4,7 +4,7 @@ from ..containers.software_container import SoftwareContainer
 
 
 def build_software_container() -> SoftwareContainer:
-    """Builds a SoftwareContainer instance with versioning information."""
+    """Creates a SoftwareContainer instance with versioning information."""
     return SoftwareContainer(
         title=SoftwareConstants.TITLE.value,
         major_number=SoftwareConstants.MAJOR_NUMBER.value,
@@ -13,3 +13,4 @@ def build_software_container() -> SoftwareContainer:
     )
 
 
+# Signed off by Brian Sanford on 20260209  # Signed off by Brian Sanford on 20260209
