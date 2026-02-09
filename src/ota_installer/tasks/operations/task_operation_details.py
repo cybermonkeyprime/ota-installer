@@ -5,6 +5,8 @@ from enum import Enum
 
 @dataclass(frozen=True, slots=True)
 class TaskOperation(object):
+    """Represents a task operation with its details."""
+
     index: int
     title: str
     description: str
@@ -13,6 +15,8 @@ class TaskOperation(object):
 
 
 class TaskOperationDetails(Enum):
+    """Enumeration of task operation details."""
+
     EXTRACT_PAYLOAD_IMAGE = TaskOperation(
         index=1,
         title="Payload Image Extractor",
@@ -86,3 +90,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# Signed off by Brian Sanford on 20260209
