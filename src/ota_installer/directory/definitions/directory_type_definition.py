@@ -39,7 +39,7 @@ class DirectoryTypeDefinition(object):
         self.boot_image = create_container(
             BootImageContainer, self._boot_image
         )
-        self.magisk_image = create_container(MagiskImageContainer)
+        self.magisk_image_container = create_container(MagiskImageContainer)
 
 
 def create_container(container_cls: Callable, *args, **kwargs) -> Callable:
@@ -65,3 +65,5 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+# Signed off by Brian Sanford on 20260209

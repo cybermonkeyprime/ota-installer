@@ -2,7 +2,6 @@
 from collections.abc import Callable
 from dataclasses import dataclass, field
 from functools import wraps
-from typing import cast
 
 from .protocols.decorator_protocols import GenericDecorator
 
@@ -17,16 +16,16 @@ class PaddedFooterWrapper(GenericDecorator):
     from .indent_wrapper import IndentWrapper
     from .output_printer import OutputPrinter
 
-    def __call__[R, **P](self, function: Callable[P, R]) -> Callable[P, R]:
+    def __call__(self, function: Callable) -> Callable:
         """Wraps the given function to add a padded footer."""
 
         @wraps(function)
-        def wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
+        def wrapper(*args, **kwargs) -> Callable:
             result = function(*args, **kwargs)
             self._add_padding()
             return result
 
-        return cast(Callable[P, R], wrapper)
+        return wrapper
 
     @OutputPrinter(use_color=True)
     @Colorizer(style="variable")
@@ -35,3 +34,4 @@ class PaddedFooterWrapper(GenericDecorator):
         return f"{self.padding}"
 
 
+# Signed off by Brian Sanford on 20260209
