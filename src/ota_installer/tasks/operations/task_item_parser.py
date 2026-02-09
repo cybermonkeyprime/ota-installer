@@ -44,5 +44,3 @@ class TaskItemParser(object):
     def show_header(self) -> str:
         """Display the header of the task item."""
         return f"{self.value}"
-
-
