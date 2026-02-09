@@ -38,7 +38,8 @@ class FileIterationProcessor(BaseProcessor):
             data = VariableItem(
                 title=f"{file}_name", value=Path(file_path).name
             )
-            builder.add(data.title.upper(), data.value)
+            builder.add(data.title.upper(), str(data.value))
         builder.render()
 
 
+# Signed off by Brian Sanford on 20260209

@@ -2,7 +2,6 @@
 from collections.abc import Callable
 from dataclasses import field
 from pathlib import Path
-from typing import TypeVar
 
 from ...log_setup import logger
 from ..protocols.dispatcher_protocol import DispatcherProtocol
@@ -17,9 +16,7 @@ class DispatcherTemplate(DispatcherProtocol):
     A template class for dispatching tasks based on a key-value collection.
     """
 
-    collection: CollectionDictionary = field(
-        default_factory=CollectionDictionary
-    )
+    collection: CollectionDictionary = field(default_factory=dict)
 
     def get_value(self, key: str) -> object | None:
         """Retrieve the value associated with the given key
@@ -49,3 +46,4 @@ class DispatcherTemplate(DispatcherProtocol):
         return key.lower().strip()
 
 
+# Signed off by Brian Sanford on 20260209
