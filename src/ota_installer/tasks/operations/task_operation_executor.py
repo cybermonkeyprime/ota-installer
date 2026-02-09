@@ -10,9 +10,7 @@ from .constants.constants import ExecutorConstants
 
 @dataclass
 class TaskOperationExecutor(object):
-    """
-    Executes shell commands with confirmation prompts and error handling.
-    """
+    """Executes shell commands with confirmation prompts and error handling."""
 
     command_string: str
 
@@ -27,9 +25,9 @@ class TaskOperationExecutor(object):
         """Executes the command without returning output."""
         try:
             run(self.command_string, shell=True, check=True)
-        except CalledProcessError as e:
+        except CalledProcessError as error:
             logger.exception(
-                f"Command failed with code {e.returncode}: {e.output}"
+                f"Command failed with code {error.returncode}: {error.output}"
             )
         return self
 
@@ -46,9 +44,13 @@ class TaskOperationExecutor(object):
             result = (
                 check_output(self.command_string, shell=True).decode().strip()
             )
-        except CalledProcessError as e:
+        except CalledProcessError as error:
             logger.exception(
-                f"{output_name} failed with code {e.returncode}: {e.output}"
+                f"{output_name} failed with code {error.returncode}: "
+                f"{error.output}"
             )
             return ""
         return result
+
+
+# Signed off by Brian Sanford on 20260209
