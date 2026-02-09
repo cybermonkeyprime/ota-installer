@@ -9,16 +9,31 @@ def file_path_validator(file_path: Path | str) -> Path | None:
     file_path = Path(file_path)
 
     try:
-        if not file_path.exists():
-            raise FileNotFoundError("file_path not found")
-        if not file_path.is_file():
-            raise ValueError(f"Expected a file, got directory: {file_path}")
-        if file_path.suffix.lower() != ".zip":
-            raise ValueError(f"Expected a .zip file, got: {file_path.suffix}")
+        _check_file_exists(file_path)
+        _check_is_file(file_path)
+        _check_file_extension(file_path)
 
         return file_path.resolve()
     except (FileNotFoundError, ValueError) as err:
         logger.error(f"file_path_validator(): {err}")
+
+
+def _check_file_exists(file_path: Path) -> None:
+    """Checks if the file exists."""
+    if not file_path.exists():
+        raise FileNotFoundError("File path not found.")
+
+
+def _check_is_file(file_path: Path) -> None:
+    """Checks if the path is a file."""
+    if not file_path.is_file():
+        raise ValueError(f"Expected a file, got directory: {file_path}")
+
+
+def _check_file_extension(file_path: Path) -> None:
+    """Checks if the file has the correct extension."""
+    if file_path.suffix.lower() != ".zip":
+        raise ValueError(f"Expected a .zip file, got: {file_path.suffix}")
 
 
 def main():
@@ -27,3 +42,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# Signed off by Brian Sanford on 20260209
