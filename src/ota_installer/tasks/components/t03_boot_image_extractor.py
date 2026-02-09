@@ -25,13 +25,17 @@ class BootImageExtractor(BaseTask):
         device = self.instance.file_name.device
         destination_path = Path.home() / "images"
         image_key = image_handler(device)
-        options = f'--partitions="{image_key.stem}" --out "{destination_path}"'
+        options = self._format_options(image_key.stem, destination_path)
         command_string = self._build_command_string(options)
 
         super().__init__(
             enum_values=ENUM_VALUES,
             command_string=command_string,
         )
+
+    def _format_options(self, image_stem: str, destination: Path) -> str:
+        """Formats the options for the payload dumper command."""
+        return f'--partitions="{image_stem}" --out "{destination}"'
 
     def _build_command_string(self, options: str) -> str:
         """Constructs the command string for the payload dumper."""
@@ -45,3 +49,4 @@ class BootImageExtractor(BaseTask):
         self.task.run_with_output()
 
 
+# Signed off by Brian Sanford on 20260209
