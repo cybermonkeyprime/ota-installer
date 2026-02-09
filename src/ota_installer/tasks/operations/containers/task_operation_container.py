@@ -4,6 +4,8 @@ from dataclasses import dataclass
 
 @dataclass
 class TaskOperationContainer:
+    """Container for task operation details."""
+
     index: int
     title: str
     description: str
@@ -11,3 +13,4 @@ class TaskOperationContainer:
     reminder: str | None = None
 
 
+# Signed off by Brian Sanford on 20260209
