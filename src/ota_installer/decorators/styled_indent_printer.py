@@ -2,7 +2,6 @@
 from collections.abc import Callable
 from dataclasses import dataclass
 from functools import wraps
-from typing import cast
 
 from .protocols.decorator_protocols import GenericDecorator
 
@@ -27,11 +26,15 @@ class StylizedIndentPrinter(GenericDecorator):
         from . import Colorizer, IndentWrapper
         from .output_printer import OutputPrinter
 
-        decorated = IndentWrapper(interval=self.indent)(function)  # pyright: ignore[reportArgumentType]
-        decorated = Colorizer(style=self.style)(decorated)
+        decorated_function = IndentWrapper(interval=self.indent)(function)  # pyright: ignore[reportArgumentType]
+        decorated_function = Colorizer(style=self.style)(decorated_function)
 
         if self.use_output:
-            decorated = OutputPrinter(suffix=self.end)(decorated)
+            decorated_function = OutputPrinter(suffix=self.end)(
+                decorated_function
+            )
 
-        wrapped_fn = wraps(function)(decorated)
-        return wrapped_fn
+        return wraps(function)(decorated_function)
+
+
+# Signed off by Brian Sanford on 20260209
