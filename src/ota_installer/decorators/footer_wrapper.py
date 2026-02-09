@@ -2,7 +2,6 @@
 from collections.abc import Callable
 from dataclasses import dataclass, field
 from functools import wraps
-from typing import cast
 
 from .protocols.decorator_protocols import GenericDecorator
 
@@ -17,16 +16,16 @@ class FooterWrapper(GenericDecorator):
     from .indent_wrapper import IndentWrapper
     from .output_printer import OutputPrinter
 
-    def __call__[R, **P](self, function: Callable[P, R]) -> Callable[P, R]:
+    def __call__(self, function: Callable) -> Callable:
         """Wraps the given function to include footer message output."""
 
         @wraps(function)
-        def wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
+        def wrapper(*args, **kwargs) -> object:
             result = function(*args, **kwargs)
             self.message_output()
             return result
 
-        return cast(Callable[P, R], wrapper)
+        return wrapper
 
     @OutputPrinter(use_color=True)
     @Colorizer(style="variable")
@@ -36,3 +35,4 @@ class FooterWrapper(GenericDecorator):
         return f"{self.message}"
 
 
+# Signed off by Brian Sanford on 20260209
