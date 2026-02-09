@@ -18,7 +18,9 @@ class DispatcherProtocol(Protocol):
         """
         ...
 
-    def get_instance(self, key: str) -> object | None: ...
+    def get_instance(self, key: str) -> object | None:
+        """Retrieve an instance from the collection using the provided key."""
+        ...
 
     @staticmethod
     def normalize_key(key: str) -> str:
@@ -30,3 +32,4 @@ class DispatcherProtocol(Protocol):
         ...
 
 
+# Signed off by Brian Sanford on 20260209
