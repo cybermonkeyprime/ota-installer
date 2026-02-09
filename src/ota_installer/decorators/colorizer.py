@@ -43,7 +43,7 @@ class Colorizer(StringReturningDecorator):
         return wrapper
 
 
-if __name__ == "__main__":
+def main() -> None:
     # Example usage
     colorizer = Colorizer(style="task")
 
@@ -52,3 +52,8 @@ if __name__ == "__main__":
         return f"Hello, {name}!"
 
     print(greet("Alice"))
+
+
+if __name__ == "__main__":
+    main()
+# Signed off by Brian Sanford on 20260209
