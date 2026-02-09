@@ -31,11 +31,11 @@ class ConfirmationPrompt(GenericDecorator):
     from . import Colorizer
     from .indent_wrapper import IndentWrapper
 
-    def __call__[R, **P](self, function: Callable[P, R]) -> Callable[P, R]:
+    def __call__(self, function: Callable) -> Callable:
         """Wrap the function with a confirmation prompt."""
 
         @wraps(function)
-        def wrapper(*args: P.args, **kwargs: P.kwargs) -> R | None:
+        def wrapper(*args, **kwargs) -> Callable | None:
             try:
                 console.print(self.display_prompt(), end="")
                 if not self.auto_confirm:
@@ -53,7 +53,7 @@ class ConfirmationPrompt(GenericDecorator):
                 )
                 return None
 
-        return cast(Callable[P, R], wrapper)
+        return wrapper
 
     # @Printer(prefix="", suffix="")
     @Colorizer(style="task")
@@ -110,3 +110,4 @@ def my_function():
     pass
 
 
+# Signed off by Brian Sanford on 20260209
