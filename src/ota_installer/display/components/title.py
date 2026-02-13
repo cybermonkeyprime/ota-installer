@@ -13,7 +13,7 @@ def display_title() -> str:
         title.
     """
 
-    title = SoftwareConstants.TITLE.value
-    return f" {title}"
+    return f" {SoftwareConstants.TITLE.value}"
 
 
+# Signed off by Brian Sanford on 20260213
