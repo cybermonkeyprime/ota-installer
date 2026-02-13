@@ -15,16 +15,10 @@ def task_iterator(
     """Iterates over a task group and executes each task."""
     logger.debug(f"Iterating over task group: {task_group}")
     if not task_group:
-        skipped_task_group_msg()
-        return None
+        return skipped_task_group_msg()
 
     for task in task_group:
-        try:
-            task_director(instance=instance, task_name=task)
-        except TypeError as err:
-            _handle_type_error(task_group, err)
-        except Exception as err:
-            logger.exception(f"TaskIteration Error: {err}")
+        task_director(instance=instance, task_name=task)
 
 
 def _handle_type_error(task_group: StringTuple, err: TypeError) -> None:
