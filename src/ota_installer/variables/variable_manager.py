@@ -100,17 +100,14 @@ class VariableManager(object):
 
     def create_directory(self) -> DirectoryTypeDefinition | None:
         """Creates a directory and returns its definition."""
-        try:
-            return DirectoryTypeDefinition(
+        return (
+            DirectoryTypeDefinition(
                 self.path.parent,
                 str(self.file_paths.stock.parent),
                 self.directories.magisk.remote_path,
             )
-        except Exception as err:
-            logger.error(
-                f"[{type(err).__name__}] Directory Creation Failed: {err}"
-            )
-            return None
+            or None
+        )
 
     def get_dispatcher(self, process_type) -> DispatcherClasses | None:
         from ..dispatchers.factories.dispatch_retriever import (
