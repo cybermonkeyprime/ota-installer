@@ -5,7 +5,10 @@ from .builders.software_container_builder import build_software_container
 def get_display() -> str:
     """Returns the display string for the global software version."""
     container = build_software_container()
-    return f"Build: {container.major_number}.{container.minor_number}.{container.patch_number}"
+    return (
+        f"Build: {container.major_number}."
+        f"{container.minor_number}.{container.patch_number}"
+    )
 
 
 def get_text_display() -> str:
@@ -16,3 +19,4 @@ def get_text_display() -> str:
     return f"{container.title} - {get_display()}"
 
 
+# Signed off by Brian Sanford on 20260213
