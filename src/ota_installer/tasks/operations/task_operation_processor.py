@@ -28,6 +28,7 @@ class TaskOperationProcessor(object):
     command_string: str = field(init=False)
 
     def set_item(self, field_name: str, value: object) -> Self:
+        """Sets the value of a task field."""
         try:
             enum_member = TaskOpsItemTypeConstants[field_name.upper()]
         except KeyError:
@@ -47,21 +48,20 @@ class TaskOperationProcessor(object):
         return self
 
     def get_item(self, field_name: str) -> object:
-        try:
-            TaskOpsItemTypeConstants[field_name.upper()]
-        except KeyError:
-            raise AttributeError(
-                f"'{field_name}' is not a valid task field."
-            ) from None
+        """Retrieves the value of a task field."""
+        if field_name.upper() not in TaskOpsItemTypeConstants.__members__:
+            raise AttributeError(f"'{field_name}' is not a valid task field.")
 
         return getattr(self, field_name.lower(), None)
 
     def show_index_and_title(self) -> str:
+        """Displays the index and title of the task."""
         return TaskItemParser(f"{self.index}. {self.title}:").show_header()
 
     @decorators.FooterWrapper()
     @decorators.ColorizedIndentPrinter(indent=3, end="", style="warning")
     def show_description(self) -> str:
+        """Displays the description of the task."""
         return self.description
 
     @decorators.FooterWrapper()
@@ -71,23 +71,31 @@ class TaskOperationProcessor(object):
         style=CommandStringConstants.STYLE.value,
     )
     def show_command_string(self) -> str:
+        """Displays the command string of the task."""
         return self.command_string
 
     def show_comment(self) -> str:
+        """Displays the comment of the task."""
         return TaskItemParser(self.comment).show_aspect()
 
     def show_reminder(self) -> str:
+        """Displays the reminder of the task."""
         return TaskItemParser(self.reminder).show_aspect()
 
     def execute_command_string(self) -> None:
+        """Executes the command string associated with the task."""
         TaskOperationExecutor(self.command_string).execute()
-        if getattr(self, "reminder", None):
+        if self.reminder:
             self.show_reminder()
 
     def execute_and_return_output(self, output_name) -> str:
-        return TaskOperationExecutor(
-            self.command_string
-        ).execute_and_return_output(output_name)
+        """Executes the command string and returns the output."""
+        return (
+            TaskOperationExecutor(
+                self.command_string
+            ).execute_and_return_output(output_name)
+            or "No output"
+        )
 
     @decorators.MultiplyString(
         interval=(
@@ -95,17 +103,16 @@ class TaskOperationProcessor(object):
         )
     )
     def run_with_output(self) -> None:
+        """Runs the task and displays its output."""
         self.show_index_and_title()
-
-        if getattr(self, "description", None):
+        if self.description:
             self.show_description()
-
         self.show_command_string()
-
         self.execute_command_string()
 
 
 def image_handler(key: str) -> Path:
+    """Handles image retrieval based on a key."""
     logger.debug(f"image_handler(): {key=}")
     try:
         dispatcher = PluginDispatcherAdapter("image")
@@ -118,8 +125,11 @@ def image_handler(key: str) -> Path:
 
 
 def main():
+    """Main entry point of the application."""
     pass
 
 
 if __name__ == "__main__":
     main()
+
+# Signed off by Brian Sanford on 20260213
