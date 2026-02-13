@@ -85,7 +85,7 @@ class TaskOperationProcessor(object):
     def execute_command_string(self) -> None:
         """Executes the command string associated with the task."""
         TaskOperationExecutor(self.command_string).execute()
-        if self.reminder:
+        if getattr(self, "reminder", None):
             self.show_reminder()
 
     def execute_and_return_output(self, output_name) -> str:
@@ -105,7 +105,7 @@ class TaskOperationProcessor(object):
     def run_with_output(self) -> None:
         """Runs the task and displays its output."""
         self.show_index_and_title()
-        if self.description:
+        if getattr(self, "description", None):
             self.show_description()
         self.show_command_string()
         self.execute_command_string()

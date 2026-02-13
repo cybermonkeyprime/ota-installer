@@ -13,6 +13,7 @@ class VariableTypeDispatcher(DispatcherTemplate):
     """Dispatcher for handling variable types."""
 
     obj: type = field(default_factory=lambda: type)
+    collection: dict[str, Path | str] = field(init=False)
 
     def __post_init__(self) -> None:
         """Initializes the collection of paths based on the provided object."""
@@ -25,5 +26,3 @@ class VariableTypeDispatcher(DispatcherTemplate):
             "path.parent": Path(self.obj.path).parent,
             "log_file": self.obj.file_paths.log_file,
         }
-
-
