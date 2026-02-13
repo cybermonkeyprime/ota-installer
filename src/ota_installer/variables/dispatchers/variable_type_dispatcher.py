@@ -26,3 +26,6 @@ class VariableTypeDispatcher(DispatcherTemplate):
             "path.parent": Path(self.obj.path).parent,
             "log_file": self.obj.file_paths.log_file,
         }
+
+
+# Signed off by Brian Sanford on 20260213
