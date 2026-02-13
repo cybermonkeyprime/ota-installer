@@ -24,10 +24,10 @@ class DoublePaddedFooterWrapper(GenericDecorator):
         @wraps(function)
         def wrapper(*args, **kwargs) -> object:
             result = function(*args, **kwargs)
-            self._output_footer(self.beginning)
+            self._print_footer(self.beginning)
             logger.debug(self.message)
-            self._output_footer(self.message)
-            self._output_footer(self.ending)
+            self._print_footer(self.message)
+            self._print_footer(self.ending)
             return result
 
         return wrapper
@@ -35,10 +35,12 @@ class DoublePaddedFooterWrapper(GenericDecorator):
     @Decorators.output_printer(use_color=False)
     @Decorators.colorizer(style="variable")
     @Decorators.indent_wrapper(interval=1)
-    def _output_footer(self, message: str) -> str:
+    def _print_footer(self, message: str) -> str:
         """Outputs the footer messages."""
         return f"{message}"
 
 
 if __name__ == "__main__":
     pass
+
+# Signed off by Brian Sanford on 20260213
