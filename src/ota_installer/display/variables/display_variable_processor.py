@@ -38,8 +38,9 @@ class VariableProcessor(object):
 
     def process_items(self, iterator: set) -> None:
         """Executes a set of processing functions."""
-        function = self.processing_function
-        {process_item(function) for process_item in iterator}
+        frozenset(
+            process_item(self.processing_function) for process_item in iterator
+        )
 
     def process_log_file(self) -> Self:
         """Processes the log file."""
