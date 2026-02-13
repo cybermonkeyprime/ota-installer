@@ -1,5 +1,6 @@
 # src/ota_installer/display/constants/display_component_calls.py
 from collections.abc import Callable
+from dataclasses import dataclass
 
 from ..components.separator import display_separator
 from ..components.subtitle import display_subtitle
@@ -14,6 +15,13 @@ display_component_calls: dict[DisplayComponent, Callable] = {
     DisplayComponent.SEPARATOR: display_separator,
     DisplayComponent.SUBTITLE: display_subtitle,
 }
+
+
+@dataclass
+class _DisplayComponentCalls(object):
+    title: Callable = display_title
+    separator: Callable = display_separator
+    subtitle: Callable = display_subtitle
 
 
 def call_display_component(component_type: DisplayComponent) -> str:
