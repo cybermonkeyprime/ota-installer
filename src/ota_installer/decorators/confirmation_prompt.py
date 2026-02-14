@@ -2,10 +2,8 @@
 from collections.abc import Callable
 from dataclasses import dataclass, field
 from functools import wraps
-from typing import cast
 
 import pyinputplus as pyip
-from loguru import logger
 from rich.console import Console
 
 from ..styles.palette import RichColors
@@ -36,22 +34,10 @@ class ConfirmationPrompt(GenericDecorator):
 
         @wraps(function)
         def wrapper(*args, **kwargs) -> Callable | None:
-            try:
-                console.print(self.display_prompt(), end="")
-                if not self.auto_confirm:
-                    confirm = pyip.inputYesNo(
-                        default="no",
-                        limit=3,
-                        blank=True,
-                    )
-                    if confirm != "yes":
-                        return None
-                return function(*args, **kwargs)
-            except Exception as err:
-                logger.exception(
-                    f"{function.__name__} raised an exception: {err}"
-                )
+            console.print(self.display_prompt(), end="")
+            if not self.auto_confirm and not self.get_confirmation():
                 return None
+            return function(*args, **kwargs)
 
         return wrapper
 
