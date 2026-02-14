@@ -42,13 +42,12 @@ class DirectoryTypeDefinition(object):
         self.magisk_image_container = create_container(MagiskImageContainer)
 
 
-def create_container(container_cls: Callable, *args, **kwargs) -> Callable:
+def create_container(
+    container_cls: Callable, *args, **kwargs
+) -> Callable | None:
     """Creates an instance of the specified container class."""
-    try:
-        logger.debug(f"Creating {container_cls.__name__} with args: {args}")
-        return container_cls(*args, **kwargs)
-    except Exception as err:
-        raise ValueError("Failed to create structure: ") from err
+    logger.debug(f"Creating {container_cls.__name__} with args: {args}")
+    return container_cls(*args) if args else None
 
 
 def main() -> None:
