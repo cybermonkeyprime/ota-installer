@@ -56,7 +56,8 @@ def parse_file_name(raw_name: Path) -> "FileNameContainer":
         device=device,
         file_type=file_type,
         version=version,
-        extra=extra_parts,
+        extra="".join(extra_parts),
     )
 
 
+# Signed off by Brian Sanford on 20260213
