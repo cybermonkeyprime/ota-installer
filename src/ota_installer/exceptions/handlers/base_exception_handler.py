@@ -22,11 +22,11 @@ class BaseExceptionHandler(object):
 
     def handle(self, *args, **kwargs) -> Callable | None:
         """Executes the function and handles exceptions."""
-        try:
-            return self.function(*args, **kwargs)
-        except self.exception_type as err:
-            self.print_exception_message(err)
+        if not callable(self.function):
             return None
+
+        result = self.function(*args, **kwargs)
+        return result
 
     @OutputPrinter(use_color=True, prefix="\n\n", suffix="\n\n")
     def print_exception_message(self, error: BaseException) -> str:
@@ -50,5 +50,4 @@ class BaseExceptionHandler(object):
 
 if __name__ == "__main__":
     pass
-
-# Signed off by Brian Sanford on 20260202
+# Signed off by Brian Sanford on 20260213
