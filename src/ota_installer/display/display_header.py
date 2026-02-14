@@ -14,13 +14,17 @@ def show_display_header() -> None:
     """Renders the display header by invoking the components in sequence."""
     components = (show_title, move_cursor_up, show_separator, show_subtitle)
     for component in components:
-        try:
-            component()
-        except Exception as err:
-            logger.error(
-                "format_display(): An error occurred during initialization: "
-                f"{err}"
-            )
+        if not _execute_component(component):
+            logger.error("An error occurred during initialization.")
+
+
+def _execute_component(component) -> bool:
+    """Executes a display component and returns success status."""
+    try:
+        component()
+        return True
+    except Exception:
+        return False
 
 
 @decorators.OutputPrinter(suffix="")
