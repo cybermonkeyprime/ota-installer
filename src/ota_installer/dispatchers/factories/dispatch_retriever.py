@@ -39,13 +39,12 @@ class DispatchRetriever(object):
             )
             return None
 
-        try:
-            dispatcher_enum = DispatcherType[self.process_type.upper()]
-            dispatcher_class = dispatcher_enum.value
-            return dispatcher_class(self.function_call)
-        except KeyError as e:
-            logger.error(f"Dispatcher mapping failed: {e}")
+        dispatcher_enum = DispatcherType[self.process_type.upper()]
+        if dispatcher_enum is None:
+            logger.error(f"Dispatcher mapping failed for: {self.process_type}")
             return None
+        dispatcher_class = dispatcher_enum.value
+        return dispatcher_class(self.function_call)
 
 
-# Signed off by Brian Sanford on 20260127
+# Signed off by Brian Sanford on 20260213
