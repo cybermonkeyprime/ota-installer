@@ -28,19 +28,14 @@ class OutputPrinter(GenericDecorator):
 
             style = RichColors[self.color.upper()]
 
-            try:
-                result = function(*args, **kwargs)
+            result = function(*args, **kwargs)
+            if result is not None:
                 console.print(
                     f"{style.beginning()}{self.prefix}{result}{style.ending()}",
                     highlight=False,
                     end=self.suffix,
                 )
-                return result
-            except Exception as e:
-                raise RuntimeError(
-                    f"{function.__name__}(): "
-                    f"An error occurred while executing the function: {e}"
-                ) from e
+            return result
 
         return wrapper
 
