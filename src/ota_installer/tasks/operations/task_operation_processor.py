@@ -29,23 +29,16 @@ class TaskOperationProcessor(object):
 
     def set_item(self, field_name: str, value: object) -> Self:
         """Sets the value of a task field."""
-        try:
-            enum_member = TaskOpsItemTypeConstants[field_name.upper()]
-        except KeyError:
-            raise AttributeError(
-                f"'{field_name}' is not a valid task field."
-            ) from None
-
-        expected_type = enum_member.value
-        if not isinstance(value, expected_type):
+        if field_name.upper() in TaskOpsItemTypeConstants.__members__:
+            expected_type = TaskOpsItemTypeConstants[field_name.upper()].value
+            if isinstance(value, expected_type):
+                setattr(self, field_name.lower(), value)
+                return self
             raise TypeError(
-                f"Expected value of type "
-                f"{expected_type.__name__} for '{field_name}', "
-                f"but got {type(value).__name__} instead."
+                f"Expected value of type {expected_type.__name__} for "
+                f"'{field_name}', but got {type(value).__name__} instead."
             )
-
-        setattr(self, field_name.lower(), value)
-        return self
+        raise AttributeError(f"'{field_name}' is not a valid task field.")
 
     def get_item(self, field_name: str) -> object:
         """Retrieves the value of a task field."""
