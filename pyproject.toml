@@ -7,7 +7,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ota-installer"
-version = "2026.2.3"
+version = "2026.2.13"
 requires-python = ">=3.14"
 dependencies = [
   "dependency-injector==4.48.3",
