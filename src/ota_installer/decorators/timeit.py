@@ -19,9 +19,9 @@ class TimeIt(GenericDecorator):
 
         @wraps(function)
         def wrapper(*args, **kwargs) -> object:
-            self.start_time = self._get_current_time()
+            self.start_time = time.perf_counter()
             result = function(*args, **kwargs)
-            self.end_time = self._get_current_time()
+            self.end_time = time.perf_counter()
             self._log_execution_time(function, args, kwargs)
             return result
 
@@ -34,10 +34,6 @@ class TimeIt(GenericDecorator):
         total_time = self.end_time - self.start_time
         function_signature = f"{function.__name__}{args} {kwargs}"
         print(f"Function {function_signature} took {total_time:.4f} seconds")
-
-    def _get_current_time(self) -> float:
-        """Get the current time in seconds."""
-        return time.perf_counter()
 
 
 # Signed off by Brian Sanford on 20260203
