@@ -87,10 +87,13 @@ class TaskExecutor(object):
 
     def execute_task(self, task_group_key: str) -> None:
         """Executes a specific task based on the task group key."""
-        try:
+        if hasattr(self, "task_iteration"):
             self.task_iteration(task_group_key)
-        except AttributeError as e:
-            logger.error(f"Processing {task_group_key} failed: {e}")
+        else:
+            logger.error(
+                f"Processing {task_group_key} "
+                "failed: task_iteration method not found."
+            )
 
     def task_iteration(self, task_group_key: str) -> None:
         """Iterates over tasks in the specified task group."""
