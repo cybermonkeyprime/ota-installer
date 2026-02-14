@@ -1,5 +1,4 @@
 # src/ota_installer/variables/functions.py
-from collections.abc import Callable
 from pathlib import Path
 
 from ota_installer.variables.containers.file_name_container import (
@@ -7,7 +6,7 @@ from ota_installer.variables.containers.file_name_container import (
 )
 
 
-def set_log_file(file_name_parts: Callable) -> str:
+def set_log_file(file_name_parts: FileNameContainer) -> str:
     device = file_name_parts.device
     version = file_name_parts.version
     return f"/tmp/ota-installer_{device}_{version}.txt"
