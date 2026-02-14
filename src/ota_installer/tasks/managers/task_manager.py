@@ -27,12 +27,11 @@ class TaskManager(object):
 
     def set_variable(self) -> Self:
         """Initializes the variable manager and sets up logging."""
-        try:
-            self.variable = set_variable_manager(self.file_name)
+        self.variable = set_variable_manager(self.file_name)
+        if self.variable:
             add_structured_log_sink(self.variable.file_paths.log_file)
-
-        except Exception as err:
-            logger.exception(f"[{type(err).__name__}] {err}")
+        else:
+            logger.error("Failed to initialize variable manager.")
         return self
 
     def set_posix_path(self) -> Self:
