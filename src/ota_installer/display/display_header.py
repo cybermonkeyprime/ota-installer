@@ -20,11 +20,7 @@ def show_display_header() -> None:
 
 def _execute_component(component) -> bool:
     """Executes a display component and returns success status."""
-    try:
-        component()
-        return True
-    except Exception:
-        return False
+    return component() if component else False
 
 
 @decorators.OutputPrinter(suffix="")
