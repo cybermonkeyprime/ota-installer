@@ -57,7 +57,6 @@ src/ota_installer/display/constants/display_component.py
 src/ota_installer/display/constants/display_component_calls.py
 src/ota_installer/display/objects/processors/display_object_processor.py
 src/ota_installer/display/templates/display_template.py
-src/ota_installer/display/variables/display_factory.py
 src/ota_installer/display/variables/display_variable_processor.py
 src/ota_installer/display/variables/functions.py
 src/ota_installer/display/variables/classes/variable_table_builder.py
