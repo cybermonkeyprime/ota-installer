@@ -21,6 +21,8 @@ class Colorizer(StringReturningDecorator):
     def __post_init__(self) -> None:
         """Initializes the color attribute based on the provided style."""
         self.color = RichColors[self.style.upper()]
+        if self.color is None:
+            raise ValueError(f"Invalid style: {self.style}")
 
     def __call__(self, function: Callable) -> Callable:
         """Wraps the function to apply color styling to its return value."""
@@ -31,14 +33,8 @@ class Colorizer(StringReturningDecorator):
             Wrapper function that executes the original function and styles
             its output.
             """
-            try:
-                result = function(*args, **kwargs)
-                styled_result = (
-                    f"{self.color.beginning()}{result}{self.color.ending()}"
-                )
-            except AttributeError as error:
-                raise ValueError("Invalid style attribute: ") from error
-            return styled_result
+            result = function(*args, **kwargs)
+            return f"{self.color.beginning()}{result}{self.color.ending()}"
 
         return wrapper
 
