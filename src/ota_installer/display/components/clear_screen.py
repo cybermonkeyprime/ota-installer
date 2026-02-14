@@ -7,10 +7,8 @@ from ...log_setup import logger
 
 def clear_screen() -> None:
     """Clears the terminal screen."""
-    try:
-        execute_clear_command()
-    except RuntimeError as error:
-        logger.exception(f"Error clearing the screen: {error}")
+    if not execute_clear_command():
+        logger.error("Failed to clear the screen.")
 
 
 def execute_clear_command() -> CompletedProcess:
