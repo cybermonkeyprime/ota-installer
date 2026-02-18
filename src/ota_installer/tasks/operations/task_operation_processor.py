@@ -29,22 +29,20 @@ class TaskOperationProcessor(object):
 
     def set_item(self, field_name: str, value: object) -> Self:
         """Sets the value of a task field."""
-        if field_name.upper() in TaskOpsItemTypeConstants.__members__:
-            expected_type = TaskOpsItemTypeConstants[field_name.upper()].value
-            if isinstance(value, expected_type):
-                setattr(self, field_name.lower(), value)
-                return self
+        expected_type = TaskOpsItemTypeConstants.validate_and_get_type(
+            field_name
+        )
+        if not isinstance(value, expected_type):
             raise TypeError(
                 f"Expected value of type {expected_type.__name__} for "
                 f"'{field_name}', but got {type(value).__name__} instead."
             )
-        raise AttributeError(f"'{field_name}' is not a valid task field.")
+        setattr(self, field_name.lower(), value)
+        return self
 
     def get_item(self, field_name: str) -> object:
         """Retrieves the value of a task field."""
-        if field_name.upper() not in TaskOpsItemTypeConstants.__members__:
-            raise AttributeError(f"'{field_name}' is not a valid task field.")
-
+        TaskOpsItemTypeConstants.validate_and_get_type(field_name)
         return getattr(self, field_name.lower(), None)
 
     def show_index_and_title(self) -> str:
