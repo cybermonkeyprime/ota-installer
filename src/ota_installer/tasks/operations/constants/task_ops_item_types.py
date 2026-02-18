@@ -13,11 +13,18 @@ class TaskOpsItemTypes(Enum):
     COMMAND_STRING = str
 
     @classmethod
-    def validate_and_get_type(cls, field_name: str) -> type:
-        """Checks if field exists and returns its expected type."""
-        try:
-            return cls[field_name.upper()].value
-        except KeyError:
+    def get_validated_type(cls, field_name: str) -> type:
+        """
+        Validates field existence using a whitelist check.
+        Raises AttributeError immediately on failure (Fail-Fast).
+        """
+        key = field_name.upper()
+
+        # Explicit membership check: 'Look Before You Leap'
+        if not key:
             raise AttributeError(
-                f"'{field_name}' is not a valid task field."
+                f"Invalid field: '{field_name}'. "
+                f"Allowed fields are: {', '.join(cls._member_names_)}"
             ) from None
+
+        return cls[field_name.upper()].value
