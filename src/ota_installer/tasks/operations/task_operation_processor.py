@@ -12,8 +12,8 @@ from ...dispatchers.factories.plugin_dispatcher_adapter import (
 from .constants.constants import (
     CommandStringConstants,
     TaskOpsConstants,
-    TaskOpsItemTypeConstants,
 )
+from .constants.task_ops_item_types import TaskOpsItemTypes
 from .task_item_parser import TaskItemParser
 from .task_operation_executor import TaskOperationExecutor
 
@@ -29,9 +29,7 @@ class TaskOperationProcessor(object):
 
     def set_item(self, field_name: str, value: object) -> Self:
         """Sets the value of a task field."""
-        expected_type = TaskOpsItemTypeConstants.validate_and_get_type(
-            field_name
-        )
+        expected_type = TaskOpsItemTypes.validate_and_get_type(field_name)
         if not isinstance(value, expected_type):
             raise TypeError(
                 f"Expected value of type {expected_type.__name__} for "
@@ -42,7 +40,7 @@ class TaskOperationProcessor(object):
 
     def get_item(self, field_name: str) -> object:
         """Retrieves the value of a task field."""
-        TaskOpsItemTypeConstants.validate_and_get_type(field_name)
+        TaskOpsItemTypes.validate_and_get_type(field_name)
         return getattr(self, field_name.lower(), None)
 
     def show_index_and_title(self) -> str:
