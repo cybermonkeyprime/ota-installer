@@ -1,8 +1,8 @@
 # src/ota_installer/styles/palette.py
-from enum import Enum
+from enum import StrEnum
 
 
-class RichColors(Enum):
+class RichColors(StrEnum):
     """Enumeration for rich color styles."""
 
     TITLE = "green bold"

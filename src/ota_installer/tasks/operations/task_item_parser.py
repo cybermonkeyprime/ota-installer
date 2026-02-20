@@ -1,6 +1,6 @@
 # src/ota_installer/tasks/operations/task_item_parser.py
 from dataclasses import dataclass
-from enum import Enum
+from enum import Enum, IntEnum, StrEnum
 
 from ... import decorators
 
@@ -19,6 +19,17 @@ class TaskItemAspectConstants(Enum):
     STYLE = TaskItemConstants.STYLE.value
 
 
+class TaskItemStyles(StrEnum):
+    HEADER = TaskItemConstants.STYLE.value
+    ASPECT = TaskItemConstants.STYLE.value
+    DEFAULT = "tasks"
+
+
+class TaskItemIndents(IntEnum):
+    HEADER = 1
+    ASPECT = 2
+
+
 @dataclass
 class TaskItemParser(object):
     """Parser for task items with aspect and header display capabilities."""
@@ -27,19 +38,19 @@ class TaskItemParser(object):
     constants: type[TaskItemAspectConstants] = TaskItemAspectConstants
 
     @decorators.ColorizedIndentPrinter(
-        indent=TaskItemAspectConstants.INDENT.value,
+        indent=TaskItemIndents.ASPECT.value,
         begin="",
         end="",
-        style=TaskItemAspectConstants.STYLE.value,
+        style=TaskItemStyles.ASPECT.value,
     )
     def show_aspect(self) -> str:
         """Display the aspect of the task item."""
         return f"{self.value}"
 
     @decorators.ColorizedIndentPrinter(
-        indent=TaskItemHeaderConstants.INDENT.value,
+        indent=TaskItemIndents.HEADER.value,
         end=":",
-        style=TaskItemHeaderConstants.STYLE.value,
+        style=TaskItemStyles.HEADER.value,
     )
     def show_header(self) -> str:
         """Display the header of the task item."""

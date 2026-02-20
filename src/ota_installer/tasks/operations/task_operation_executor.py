@@ -5,7 +5,7 @@ from typing import Self
 
 from ... import decorators
 from ...log_setup import logger
-from .constants.constants import ExecutorConstants
+from .constants.constants import Indents, Messages
 
 
 @dataclass
@@ -15,8 +15,8 @@ class TaskOperationExecutor(object):
     command_string: str
 
     @decorators.ConfirmationPrompt(
-        comment=ExecutorConstants.MESSAGE.value,
-        indent=ExecutorConstants.INDENT.value,
+        comment=Messages.EXECUTE.value,
+        indent=Indents.EXECUTE,
         char=" ",
     )
     @decorators.ContinueOnKeyPress(indent=1, char=" ")
@@ -32,8 +32,8 @@ class TaskOperationExecutor(object):
         return self
 
     @decorators.ConfirmationPrompt(
-        comment=ExecutorConstants.MESSAGE.value,
-        indent=ExecutorConstants.INDENT.value,
+        comment=Messages.EXECUTE.value,
+        indent=Indents.EXECUTE,
         char=" ",
     )
     @decorators.ContinueOnKeyPress(indent=1, char=" ")

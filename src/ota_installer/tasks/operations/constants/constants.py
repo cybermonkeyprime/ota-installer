@@ -1,5 +1,5 @@
 # src/tasks/task_operation_constants.py
-from enum import Enum
+from enum import Enum, IntEnum, StrEnum, auto
 
 
 class TaskOpsConstants(Enum):
@@ -10,33 +10,36 @@ class TaskOpsConstants(Enum):
     TASK_STYLE = "task"
 
 
-class DescriptionConstants(Enum):
-    """Constants for description formatting."""
+class Styles(StrEnum):
+    """Constants for styles."""
 
-    INDENT = 3
-    STYLE = "warning"
-
-
-class CommandStringConstants(Enum):
-    """Constants for command string formatting."""
-
-    INDENT = 3
-    STYLE = "non_error"
+    COMMAND = "non_error"
+    NON_ERROR = auto()
+    WARNING = auto()
+    TASK = auto()
+    DESCRIPTION = "warning"
 
 
-class ExecutorConstants(Enum):
-    """Constants for task execution."""
+class Indents(IntEnum):
+    """Constants for indents."""
 
-    INDENT = 3
-    MESSAGE = "execute the task"
-    KEYPRESS_INDENT = 1
+    COMMAND = 3
+    REMINDER = 2
+    EXECUTE = 3
+    KEYPRESS = 1
+    DESCRIPTION = 3
 
 
-class ReminderConstants(Enum):
-    """Constants for reminder formatting."""
+class Messages(Enum):
+    """Constants for messages."""
 
-    INDENT = 2
-    STYLE = "warning"
+    EXECUTE = "execute the task"
+
+
+class Spacings(IntEnum):
+    """Constants for spacings."""
+
+    DEFAULT = 4
 
 
 # Signed off by Brian Sanford on 20260217

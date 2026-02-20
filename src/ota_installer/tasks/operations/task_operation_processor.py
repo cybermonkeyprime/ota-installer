@@ -10,7 +10,8 @@ from ...dispatchers.factories.plugin_dispatcher_adapter import (
     PluginDispatcherAdapter,
 )
 from .constants.constants import (
-    CommandStringConstants,
+    Indents,
+    Styles,
     TaskOpsConstants,
 )
 from .constants.task_ops_item_types import TaskOpsItemTypes
@@ -48,16 +49,18 @@ class TaskOperationProcessor(object):
         return TaskItemParser(f"{self.index}. {self.title}:").show_header()
 
     @decorators.FooterWrapper()
-    @decorators.ColorizedIndentPrinter(indent=3, end="", style="warning")
+    @decorators.ColorizedIndentPrinter(
+        indent=Indents.DESCRIPTION, end="", style=Styles.DESCRIPTION
+    )
     def show_description(self) -> str:
         """Displays the description of the task."""
         return self.description
 
     @decorators.FooterWrapper()
     @decorators.ColorizedIndentPrinter(
-        indent=CommandStringConstants.INDENT.value,
+        indent=Indents.COMMAND,
         end="",
-        style=CommandStringConstants.STYLE.value,
+        style=Styles.COMMAND,
     )
     def show_command_string(self) -> str:
         """Displays the command string of the task."""
