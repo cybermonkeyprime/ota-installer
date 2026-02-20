@@ -2,14 +2,6 @@
 from enum import Enum, IntEnum, StrEnum, auto
 
 
-class TaskOpsConstants(Enum):
-    """Constants for task operations."""
-
-    SPACING = 4
-    INTERVAL = 1
-    TASK_STYLE = "task"
-
-
 class Styles(StrEnum):
     """Constants for styles."""
 
@@ -24,10 +16,10 @@ class Indents(IntEnum):
     """Constants for indents."""
 
     COMMAND = 3
-    REMINDER = 2
-    EXECUTE = 3
-    KEYPRESS = 1
     DESCRIPTION = 3
+    EXECUTE = 3
+    REMINDER = 2
+    KEYPRESS = 1
 
 
 class Messages(Enum):
@@ -36,10 +28,11 @@ class Messages(Enum):
     EXECUTE = "execute the task"
 
 
-class Spacings(IntEnum):
-    """Constants for spacings."""
+class DefaultIndent(IntEnum):
+    """Constants for default indent properties."""
 
-    DEFAULT = 4
+    SPACING = 4
+    INTERVAL = 1
 
 
-# Signed off by Brian Sanford on 20260217
+# Signed off by Brian Sanford on 20260219

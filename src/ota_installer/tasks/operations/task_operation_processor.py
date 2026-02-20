@@ -10,7 +10,9 @@ from ...dispatchers.factories.plugin_dispatcher_adapter import (
     PluginDispatcherAdapter,
 )
 from .constants.constants import (
+    DefaultIndent,
     Indents,
+    Spacings,
     Styles,
     TaskOpsConstants,
 )
@@ -90,9 +92,7 @@ class TaskOperationProcessor(object):
         )
 
     @decorators.MultiplyString(
-        interval=(
-            TaskOpsConstants.SPACING.value * TaskOpsConstants.INTERVAL.value
-        )
+        interval=(DefaultIndent.SPACING * DefaultIndent.INTERVAL)
     )
     def run_with_output(self) -> None:
         """Runs the task and displays its output."""
