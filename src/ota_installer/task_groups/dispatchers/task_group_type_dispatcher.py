@@ -28,10 +28,7 @@ class TaskGroupTypeDispatcher(DispatcherTemplate):
         """Populate the collection with enum member names and their
         corresponding values.
         """
-        return {
-            enum_member.name.lower(): enum_member._value(self.obj)
-            for enum_member in TaskGroupNames
-        }
+        return TaskGroupNames.create_dictionary(self.obj)
 
 
-# Signed off by Brian Sanford on 20260203
+# Signed off by Brian Sanford on 20260224

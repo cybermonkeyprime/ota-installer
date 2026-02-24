@@ -9,16 +9,18 @@ class TaskGroupNames(StrEnum):
     MIGRATION = auto()
     APPLICATION = auto()
 
-    @property
-    def lower_case(self) -> str:
-        """Return the lowercase representation of the task group name."""
-        return self.value.lower()
-
     def _value(self, obj: type) -> object:
         """Retrieve the value from the given object based on the
         task group name.
         """
         return getattr(obj, self.value)
 
+    @classmethod
+    def create_dictionary(cls, obj) -> dict:
+        """create the dictionary with enum member names and their
+        corresponding values.
+        """
+        return {enum_member: enum_member._value(obj) for enum_member in cls}
 
-# Signed off by Brian Sanford on 20260202
+
+# Signed off by Brian Sanford on 20260224
