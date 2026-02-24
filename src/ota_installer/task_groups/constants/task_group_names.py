@@ -22,5 +22,10 @@ class TaskGroupNames(StrEnum):
         """
         return {enum_member: enum_member._value(obj) for enum_member in cls}
 
+    @staticmethod
+    def normalize_key(key: str) -> str:
+        """Normalize dictionary keys for consistent dispatcher behavior."""
+        return key.lower().strip()
+
 
 # Signed off by Brian Sanford on 20260224

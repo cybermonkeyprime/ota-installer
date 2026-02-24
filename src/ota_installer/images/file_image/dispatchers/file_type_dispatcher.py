@@ -23,12 +23,9 @@ class FileTypeDispatcher(DispatcherTemplate):
         Initializes the collection with normalized keys and corresponding
         file paths.
         """
-        self.collection = {
-            self.normalize_key(enum_member.name): getattr(
-                self.obj.file_paths, enum_member.value
-            )
-            for enum_member in FileImageNames
-        }
+        self.collection = FileImageNames.create_path_dictionary(
+            self.obj.file_paths
+        )
 
 
-# Signed off by Brian Sanford on 20260202
+# Signed off by Brian Sanford on 20260224

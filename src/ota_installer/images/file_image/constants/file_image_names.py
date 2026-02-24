@@ -9,6 +9,23 @@ class FileImageNames(StrEnum):
     PAYLOAD = auto()
     MAGISK = auto()
 
+    @classmethod
+    def create_path_dictionary(cls, file_paths) -> dict:
+        """create the dictionary with enum member names and their
+        corresponding values.
+        """
+        return {
+            cls.normalize_key(enum_member): getattr(
+                file_paths, enum_member.value
+            )
+            for enum_member in cls
+        }
+
+    @staticmethod
+    def normalize_key(key: str) -> str:
+        """Normalize dictionary keys for consistent dispatcher behavior."""
+        return key.strip()
+
 
 def print_image_names():
     """Prints the values of FileImageNames enum."""
