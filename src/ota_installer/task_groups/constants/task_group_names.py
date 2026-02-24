@@ -1,13 +1,13 @@
 # task_groups/constants/task_group_names.py
-from enum import Enum
+from enum import StrEnum, auto
 
 
-class TaskGroupNames(Enum):
+class TaskGroupNames(StrEnum):
     """Enumeration for task group names."""
 
-    PREPARATION = "preparation"
-    MIGRATION = "migration"
-    APPLICATION = "application"
+    PREPARATION = auto()
+    MIGRATION = auto()
+    APPLICATION = auto()
 
     @property
     def lower_case(self) -> str:

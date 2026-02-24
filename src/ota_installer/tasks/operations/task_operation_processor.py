@@ -12,9 +12,7 @@ from ...dispatchers.factories.plugin_dispatcher_adapter import (
 from .constants.constants import (
     DefaultIndent,
     Indents,
-    Spacings,
     Styles,
-    TaskOpsConstants,
 )
 from .constants.task_ops_item_types import TaskOpsItemTypes
 from .task_item_parser import TaskItemParser
