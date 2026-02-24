@@ -15,9 +15,7 @@ class FileImageNames(StrEnum):
         corresponding values.
         """
         return {
-            cls.normalize_key(enum_member): getattr(
-                file_paths, enum_member.value
-            )
+            cls.normalize_key(enum_member): getattr(file_paths, enum_member)
             for enum_member in cls
         }
 
@@ -41,4 +39,4 @@ def main():
 if __name__ == "__main__":
     pass
 
-# Signed off by Brian Sanford on 20260203
+# Signed off by Brian Sanford on 20260224
