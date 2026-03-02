@@ -2,7 +2,7 @@
 from dataclasses import dataclass, field
 
 from ... import decorators
-from ...task_groups.constants.application_tasks import ApplicationTasks
+from ...task_groups.constants.application_task import ApplicationTask
 from ...variables.variable_manager import VariableManager
 from ..operations.task_operation_details import TaskOperationDetails
 from ..plugin_registry import task_plugin
@@ -31,7 +31,7 @@ class RecoveryRebooter(BaseTask):
         self.task.run_with_output()
 
 
-@task_plugin(ApplicationTasks.REBOOT_TO_RECOVERY.value)
+@task_plugin(ApplicationTask.REBOOT_TO_RECOVERY.value)
 @dataclass
 class RecoveryRebooterPlugin(RecoveryRebooter):
     """Plugin for the RecoveryRebooter task."""

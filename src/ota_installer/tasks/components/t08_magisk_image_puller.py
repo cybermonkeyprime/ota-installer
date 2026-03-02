@@ -8,7 +8,7 @@ from ... import decorators
 from ...images.magisk_image.constants.magisk_image_paths import (
     MagiskImagePaths,
 )
-from ...task_groups.constants.application_tasks import ApplicationTasks
+from ...task_groups.constants.application_task import ApplicationTask
 from ...task_groups.constants.migration_task import MigrationTask
 from ...variables.variable_manager import VariableManager
 from ..operations.task_operation_details import TaskOperationDetails
@@ -55,7 +55,7 @@ class MagiskImagePuller(BaseTask):
     def perform_task(self) -> None:
         """Executes the task to pull the patched boot image."""
         self.task.run_with_output()
-        logger.debug(f"{ApplicationTasks.REBOOT_TO_BOOTLOADER.value=}")
+        logger.debug(f"{ApplicationTask.REBOOT_TO_BOOTLOADER.value=}")
 
 
 # Signed off by Brian Sanford on 20260203

@@ -2,7 +2,7 @@
 from dataclasses import dataclass, field
 
 from ... import decorators
-from ...task_groups.constants.application_tasks import ApplicationTasks
+from ...task_groups.constants.application_task import ApplicationTask
 from ...variables.variable_manager import VariableManager
 from ..operations.task_operation_details import TaskOperationDetails
 from ..operations.task_operation_processor import image_handler
@@ -12,7 +12,7 @@ from .base_task import BaseTask
 ENUM_VALUES = TaskOperationDetails.BOOT_TO_MAGISK_IMAGE.value
 
 
-@task_plugin(ApplicationTasks.BOOT_TO_MAGISK_IMAGE.value)
+@task_plugin(ApplicationTask.BOOT_TO_MAGISK_IMAGE.value)
 @dataclass
 class MagiskImageBooter(BaseTask):
     """Task to flash a Magisk image to a device using fastboot."""

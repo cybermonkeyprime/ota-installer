@@ -2,7 +2,7 @@
 from dataclasses import dataclass, field
 
 from ... import decorators
-from ...task_groups.constants.application_tasks import ApplicationTasks
+from ...task_groups.constants.application_task import ApplicationTask
 from ...variables.variable_manager import VariableManager
 from ..operations.task_operation_details import TaskOperationDetails
 from ..plugin_registry import task_plugin
@@ -11,7 +11,7 @@ from .base_task import BaseTask
 ENUM_VALUES = TaskOperationDetails.REBOOT_TO_BOOTLOADER.value
 
 
-@task_plugin(ApplicationTasks.REBOOT_TO_BOOTLOADER.value)
+@task_plugin(ApplicationTask.REBOOT_TO_BOOTLOADER.value)
 @dataclass
 class BootloaderRebooter(BaseTask):
     """Handles the rebooting process to the bootloader.

@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from ... import decorators
-from ...task_groups.constants.preparation_tasks import PreparationTasks
+from ...task_groups.constants.preparation_task import PreparationTask
 from ...variables.variable_manager import VariableManager
 from ..operations.task_operation_details import TaskOperationDetails
 from ..plugin_registry import task_plugin
@@ -12,7 +12,7 @@ from .base_task import BaseTask
 ENUM_VALUES = TaskOperationDetails.EXTRACT_PAYLOAD_IMAGE.value
 
 
-@task_plugin(PreparationTasks.EXTRACT_PAYLOAD_IMAGE.value)
+@task_plugin(PreparationTask.EXTRACT_PAYLOAD_IMAGE.value)
 @dataclass
 class PayloadImageExtractor(BaseTask):
     """Extracts payload images from a specified archive file."""

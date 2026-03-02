@@ -1,10 +1,11 @@
 # src/ota_installer/task_groups/constants/application_tasks.py
 from enum import Enum
 
+from ...log_setup import logger
 from ...tasks.constants.task_id import TaskID
 
 
-class ApplicationTasks(Enum):
+class ApplicationTask(Enum):
     """Enumeration of application tasks for OTA installation."""
 
     REBOOT_TO_RECOVERY = TaskID.REBOOT_TO_RECOVERY
@@ -16,6 +17,13 @@ class ApplicationTasks(Enum):
     def task_name(self) -> str:
         """Returns the name of the task associated with the enum value."""
         return self.value.value
+
+    @classmethod
+    def get_member_names(cls) -> tuple:
+        """Extracts task names from an enumeration."""
+        result = tuple(enum_member.value.value for enum_member in cls)
+        logger.debug(f"enum_task_names(): {result=}")
+        return result
 
 
 # Signed off by Brian Sanford on 20260202

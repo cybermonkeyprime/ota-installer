@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from ... import decorators
-from ...task_groups.constants.preparation_tasks import PreparationTasks
+from ...task_groups.constants.preparation_task import PreparationTask
 from ...variables.variable_manager import VariableManager
 from ..operations.task_operation_details import TaskOperationDetails
 from ..operations.task_operation_processor import image_handler
@@ -13,7 +13,7 @@ from .base_task import BaseTask
 ENUM_VALUES = TaskOperationDetails.EXTRACT_STOCK_BOOT_IMAGE.value
 
 
-@task_plugin(PreparationTasks.EXTRACT_STOCK_BOOT_IMAGE.value)
+@task_plugin(PreparationTask.EXTRACT_STOCK_BOOT_IMAGE.value)
 @dataclass
 class BootImageExtractor(BaseTask):
     """Extracts the stock boot image from a given payload file."""

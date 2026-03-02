@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from ... import decorators
-from ...task_groups.constants.preparation_tasks import PreparationTasks
+from ...task_groups.constants.preparation_task import PreparationTask
 from ...variables.variable_manager import VariableManager
 from ..operations.task_operation_details import TaskOperationDetails
 from ..operations.task_operation_processor import image_handler
@@ -13,7 +13,7 @@ from .base_task import BaseTask
 ENUM_VALUES = TaskOperationDetails.BACKUP_STOCK_BOOT_IMAGE.value
 
 
-@task_plugin(PreparationTasks.BACKUP_STOCK_BOOT_IMAGE.value)
+@task_plugin(PreparationTask.BACKUP_STOCK_BOOT_IMAGE.value)
 @dataclass
 class StockBootImageBackupper(BaseTask):
     """Task to backup the stock boot image to a specified path."""

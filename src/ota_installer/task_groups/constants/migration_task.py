@@ -1,6 +1,7 @@
 # src/ota_installer/task_groups/constants/migration_task.py
 from enum import Enum
 
+from ...log_setup import logger
 from ...tasks.constants.task_id import TaskID
 
 
@@ -16,6 +17,13 @@ class MigrationTask(Enum):
     def task_name(self) -> str:
         """Returns the name of the task."""
         return self.value.value
+
+    @classmethod
+    def get_member_names(cls) -> tuple:
+        """Extracts task names from an enumeration."""
+        result = tuple(enum_member.value.value for enum_member in cls)
+        logger.debug(f"enum_task_names(): {result=}")
+        return result
 
 
 # Signed off by Brian Sanford on 20260217

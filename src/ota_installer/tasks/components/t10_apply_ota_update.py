@@ -2,7 +2,7 @@
 from dataclasses import dataclass, field
 
 from ... import decorators
-from ...task_groups.constants.application_tasks import ApplicationTasks
+from ...task_groups.constants.application_task import ApplicationTask
 from ...variables.variable_manager import VariableManager
 from ..operations.task_operation_details import TaskOperationDetails
 from ..plugin_registry import task_plugin
@@ -11,7 +11,7 @@ from .base_task import BaseTask
 ENUM_VALUES = TaskOperationDetails.APPLY_OTA_UPDATE.value
 
 
-@task_plugin(ApplicationTasks.APPLY_OTA_UPDATE.value)
+@task_plugin(ApplicationTask.APPLY_OTA_UPDATE.value)
 @dataclass
 class ADBSideloader(BaseTask):
     """Task to apply OTA updates using ADB sideload."""
