@@ -89,9 +89,9 @@ src/ota_installer/styles/indentation.py
 src/ota_installer/styles/palette.py
 src/ota_installer/styles/separator.py
 src/ota_installer/styles/containers/style_container.py
-src/ota_installer/task_groups/constants/application_tasks.py
+src/ota_installer/task_groups/constants/application_task.py
 src/ota_installer/task_groups/constants/migration_task.py
-src/ota_installer/task_groups/constants/preparation_tasks.py
+src/ota_installer/task_groups/constants/preparation_task.py
 src/ota_installer/task_groups/constants/task_group_names.py
 src/ota_installer/task_groups/containers/taskgroup_container.py
 src/ota_installer/task_groups/dispatchers/task_group_type_dispatcher.py
@@ -125,6 +125,7 @@ src/ota_installer/tasks/operations/task_operation_executor.py
 src/ota_installer/tasks/operations/task_operation_processor.py
 src/ota_installer/tasks/operations/constants/constants.py
 src/ota_installer/tasks/operations/constants/task_operation_details.py
+src/ota_installer/tasks/operations/constants/task_ops_item_types.py
 src/ota_installer/tasks/operations/containers/task_operation_container.py
 src/ota_installer/types/decorators.py
 src/ota_installer/types/dispatcher_protocol.py
