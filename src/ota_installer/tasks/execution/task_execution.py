@@ -52,6 +52,7 @@ class TaskExecutor(object):
 
     def initialize_task_dispatcher(self) -> Self:
         """Initializes the task dispatcher."""
+        print(f"{self.task_definitions=}")
         self.dispatcher = PluginDispatcherAdapter(
             DispatcherConstants.TASK_GROUP.value, self.task_definitions
         ).load()

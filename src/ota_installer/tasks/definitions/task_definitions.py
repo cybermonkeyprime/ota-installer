@@ -1,8 +1,5 @@
 # src/ota_installer/tasks/definitions/task_definitions.py
-from collections.abc import Iterable, Iterator
-from dataclasses import dataclass, field
-
-from loguru import logger
+from dataclasses import dataclass
 
 from ... import decorators
 from ...task_groups.constants.application_task import (
