@@ -29,6 +29,7 @@ class DispatchRetriever(object):
             f"Retrieving dispatcher for process type: {self.process_type}"
         )
         allowed_dispatchers = DispatcherType.allowed_dispatchers()
+
         if self.process_type.upper() not in allowed_dispatchers:
             logger.error(
                 f"Invalid dispatcher type: {self.process_type}."
@@ -40,5 +41,9 @@ class DispatchRetriever(object):
         if dispatcher_enum is None:
             logger.error(f"Dispatcher mapping failed for: {self.process_type}")
             return None
+
         dispatcher_class = dispatcher_enum.value
         return dispatcher_class(self.function_call)
+
+
+# Signed off by Brian Sanford on 20260303
