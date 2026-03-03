@@ -1,5 +1,6 @@
 # src/ota_installer/tasks/operations/task_operation_processor.py
 from dataclasses import dataclass, field
+from functools import partial
 from pathlib import Path
 from typing import Self
 
@@ -17,6 +18,13 @@ from .constants.constants import (
 from .constants.task_ops_item_types import TaskOpsItemTypes
 from .task_item_parser import TaskItemParser
 from .task_operation_executor import TaskOperationExecutor
+
+task_command_printer = partial(
+    decorators.ColorizedIndentPrinter,
+    indent=Indents.COMMAND,
+    style=Styles.COMMAND,
+    end="",
+)
 
 
 @dataclass
@@ -57,11 +65,7 @@ class TaskOperationProcessor(object):
         return self.description
 
     @decorators.FooterWrapper()
-    @decorators.ColorizedIndentPrinter(
-        indent=Indents.COMMAND,
-        end="",
-        style=Styles.COMMAND,
-    )
+    @task_command_printer()
     def show_command_string(self) -> str:
         """Displays the command string of the task."""
         return self.command_string

@@ -8,13 +8,18 @@ from ... import decorators
 from ...log_setup import logger
 from .constants.constants import Indents, Messages
 
-task_prompt = partial(
-    decorators.ConfirmationPrompt,
-    char=" ",
-    comment=Messages.EXECUTE.value,
-    indent=Indents.EXECUTE,
-)
-task_on_keypress = partial(decorators.ContinueOnKeyPress, indent=1, char=" ")
+
+@dataclass(frozen=True, slots=True)
+class Task(object):
+    prompt = partial(
+        decorators.ConfirmationPrompt,
+        comment=Messages.EXECUTE.value,
+        indent=Indents.EXECUTE,
+    )
+    on_keypress = partial(
+        decorators.ContinueOnKeyPress,
+        indent=1,
+    )
 
 
 @dataclass
@@ -23,8 +28,8 @@ class TaskOperationExecutor(object):
 
     command_string: str
 
-    @task_prompt()
-    @task_on_keypress()
+    @Task.prompt()
+    @Task.on_keypress()
     @decorators.Encapsulate()
     def execute(self) -> Self:
         """Executes the command without returning output."""
@@ -36,8 +41,8 @@ class TaskOperationExecutor(object):
             )
         return self
 
-    @task_prompt()
-    @task_on_keypress()
+    @Task.prompt()
+    @Task.on_keypress()
     @decorators.Encapsulate()
     def execute_and_return_output(self, output_name) -> str:
         """Executes the command and returns its output."""
