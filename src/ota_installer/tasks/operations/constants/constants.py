@@ -35,4 +35,3 @@ class DefaultIndent(IntEnum):
     INTERVAL = 1
 
 
-# Signed off by Brian Sanford on 20260219

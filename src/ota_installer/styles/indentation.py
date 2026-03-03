@@ -15,4 +15,3 @@ def indentation(interval: int = 1, char: str = " ", spaces: int = 4) -> str:
     )
 
 
-# Signed off by Brian Sanford on 20260203

@@ -36,4 +36,3 @@ def call_display_component(component_type: DisplayComponent) -> str:
     return display_function()
 
 
-# Signed off by Brian Sanford on 20260203

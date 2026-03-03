@@ -26,4 +26,3 @@ class PreparationTask(Enum):
         return result
 
 
-# Signed off by Brian Sanford on 20260129

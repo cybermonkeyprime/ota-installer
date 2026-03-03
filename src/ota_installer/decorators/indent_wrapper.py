@@ -29,4 +29,3 @@ class IndentWrapper(StringReturningDecorator):
         return f"{indentation(char=self.char, interval=self.interval)}"
 
 
-# Signed off by Brian Sanford on 20260129

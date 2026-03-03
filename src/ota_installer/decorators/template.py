@@ -44,4 +44,3 @@ class ExampleWithArgs(GenericDecorator):
         return wrapper
 
 
-# Signed off by Brian Sanford on 20260203

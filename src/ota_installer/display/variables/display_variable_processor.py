@@ -51,4 +51,3 @@ class VariableProcessor(object):
 
 if __name__ == "__main__":
     pass
-# Signed off by Brian Sanford on 20260213

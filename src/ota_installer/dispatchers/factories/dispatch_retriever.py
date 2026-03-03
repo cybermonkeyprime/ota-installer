@@ -47,4 +47,3 @@ class DispatchRetriever(object):
         return dispatcher_class(self.function_call)
 
 
-# Signed off by Brian Sanford on 20260213

@@ -26,4 +26,3 @@ class FileImageStruct(NamedTuple):
 
 # may change to dataclass in future
 
-# Signed off by Brian Sanford on 20260129

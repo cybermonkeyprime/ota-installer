@@ -7,4 +7,3 @@ def validate_task_group(value: str) -> TaskGroupNames:
     return TaskGroupNames[value.upper()] or None
 
 
-# Signed off by Brian Sanford on 20260213

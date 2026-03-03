@@ -28,4 +28,3 @@ class TaskGroupNames(StrEnum):
         return key.lower().strip()
 
 
-# Signed off by Brian Sanford on 20260224

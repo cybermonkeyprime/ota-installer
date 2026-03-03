@@ -35,4 +35,3 @@ class FooterWrapper(GenericDecorator):
         return f"{self.message}"
 
 
-# Signed off by Brian Sanford on 20260209

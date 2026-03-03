@@ -16,4 +16,3 @@ def load_plugin_dispatcher(dispatcher_type: str, obj: type) -> type | None:
     return dispatcher_class(obj)
 
 
-# Signed off by Brian Sanford on 20260203
