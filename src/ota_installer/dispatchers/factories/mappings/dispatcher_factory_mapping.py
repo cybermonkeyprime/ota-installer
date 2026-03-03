@@ -27,6 +27,11 @@ class DispatcherType(Enum):
     TASK_GROUP = TaskGroupTypeDispatcher
     VARIABLE = VariableTypeDispatcher
 
+    @classmethod
+    def allowed_dispatchers(cls) -> tuple[str, ...]:
+        """Returns a tuple of allowed dispatcher names."""
+        return tuple(enum_member.name for enum_member in cls)
+
 
 DispatcherClasses = (
     DirectoryDispatcher

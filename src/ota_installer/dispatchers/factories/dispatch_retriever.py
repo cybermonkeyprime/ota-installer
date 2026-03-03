@@ -18,10 +18,6 @@ class DispatchRetriever(object):
 
     process_type: str
 
-    def allowed_dispatchers(self) -> tuple[str, ...]:
-        """Returns a tuple of allowed dispatcher names."""
-        return tuple(enum_member.name for enum_member in DispatcherType)
-
     def set_function_call(self, function_call) -> Self:
         """Sets the function call for the dispatcher."""
         self.function_call = function_call
@@ -32,10 +28,11 @@ class DispatchRetriever(object):
         logger.debug(
             f"Retrieving dispatcher for process type: {self.process_type}"
         )
-        if self.process_type.upper() not in self.allowed_dispatchers():
+        allowed_dispatchers = DispatcherType.allowed_dispatchers()
+        if self.process_type.upper() not in allowed_dispatchers:
             logger.error(
                 f"Invalid dispatcher type: {self.process_type}."
-                f"Allowed: {self.allowed_dispatchers()}"
+                f"Allowed: {allowed_dispatchers}"
             )
             return None
 
@@ -45,5 +42,3 @@ class DispatchRetriever(object):
             return None
         dispatcher_class = dispatcher_enum.value
         return dispatcher_class(self.function_call)
-
-
