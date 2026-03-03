@@ -36,17 +36,17 @@ class ContinueOnKeyPress(GenericDecorator):
         )
 
     @ExceptionHandler()
-    def __call__[R, **P](self, function: Callable[P, R]) -> Callable[P, R]:
+    def __call__(self, function: Callable) -> Callable:
         """Wraps the function to display a message and wait for user input."""
 
         @wraps(function)
-        def wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
+        def wrapper(*args, **kwargs) -> object:
             result = function(*args, **kwargs)
             self.display_message()
             input()
             return result
 
-        return cast(Callable[P, R], wrapper)
+        return wrapper
 
     def create_indentation(self) -> str:
         """
@@ -70,4 +70,4 @@ class ContinueOnKeyPress(GenericDecorator):
 
 if __name__ == "__main__":
     pass
-
+# Signed off by Brian Sanford on 20260303
