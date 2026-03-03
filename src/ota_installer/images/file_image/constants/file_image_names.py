@@ -10,7 +10,7 @@ class FileImageNames(StrEnum):
     MAGISK = auto()
 
     @classmethod
-    def create_path_dictionary(cls, file_paths) -> dict:
+    def create_path_dictionary(cls, file_paths) -> dict[str, str]:
         """create the dictionary with enum member names and their
         corresponding values.
         """
@@ -38,4 +38,4 @@ def main():
 
 if __name__ == "__main__":
     pass
-
+# Signed off by Brian Sanford on 20260303
