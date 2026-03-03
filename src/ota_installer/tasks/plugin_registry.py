@@ -7,7 +7,7 @@ TASK_PLUGINS: dict[str, Callable] = {}
 def task_plugin(name: str) -> Callable:
     """Decorator to register a task plugin."""
 
-    def decorator(cls) -> object:
+    def decorator(cls: Callable) -> object:
         if name in TASK_PLUGINS:
             raise ValueError(f"Task Plugin '{name}' already registered")
 
@@ -18,3 +18,4 @@ def task_plugin(name: str) -> Callable:
     return decorator
 
 
+# Signed off by Brian Sanford on 20260303
