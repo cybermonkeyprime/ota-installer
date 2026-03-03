@@ -1,11 +1,20 @@
 # src/ota_installer/tasks/operations/task_operation_executor.py
 from dataclasses import dataclass
+from functools import partial
 from subprocess import CalledProcessError, check_output, run
 from typing import Self
 
 from ... import decorators
 from ...log_setup import logger
 from .constants.constants import Indents, Messages
+
+task_prompt = partial(
+    decorators.ConfirmationPrompt,
+    char=" ",
+    comment=Messages.EXECUTE.value,
+    indent=Indents.EXECUTE,
+)
+task_on_keypress = partial(decorators.ContinueOnKeyPress, indent=1, char=" ")
 
 
 @dataclass
@@ -14,12 +23,8 @@ class TaskOperationExecutor(object):
 
     command_string: str
 
-    @decorators.ConfirmationPrompt(
-        comment=Messages.EXECUTE.value,
-        indent=Indents.EXECUTE,
-        char=" ",
-    )
-    @decorators.ContinueOnKeyPress(indent=1, char=" ")
+    @task_prompt()
+    @task_on_keypress()
     @decorators.Encapsulate()
     def execute(self) -> Self:
         """Executes the command without returning output."""
@@ -31,12 +36,8 @@ class TaskOperationExecutor(object):
             )
         return self
 
-    @decorators.ConfirmationPrompt(
-        comment=Messages.EXECUTE.value,
-        indent=Indents.EXECUTE,
-        char=" ",
-    )
-    @decorators.ContinueOnKeyPress(indent=1, char=" ")
+    @task_prompt()
+    @task_on_keypress()
     @decorators.Encapsulate()
     def execute_and_return_output(self, output_name) -> str:
         """Executes the command and returns its output."""
