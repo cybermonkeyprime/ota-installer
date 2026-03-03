@@ -19,10 +19,11 @@ class ApplicationTask(Enum):
         return self.value.value
 
     @classmethod
-    def get_member_names(cls) -> tuple:
+    def get_member_names(cls) -> tuple[str, ...]:
         """Extracts task names from an enumeration."""
         result = tuple(enum_member.value.value for enum_member in cls)
         logger.debug(f"enum_task_names(): {result=}")
         return result
 
 
+# Signed off by Brian Sanford on 20260303
