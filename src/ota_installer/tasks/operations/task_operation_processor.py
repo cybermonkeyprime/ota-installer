@@ -35,6 +35,12 @@ class TaskAspect(StrEnum):
         )
 
 
+task_indent = partial(
+    decorators.MultiplyString,
+    interval=(DefaultIndent.SPACING * DefaultIndent.INTERVAL),
+)
+
+
 @dataclass
 class TaskOperationProcessor(object):
     index: int = field(init=False)
@@ -99,9 +105,7 @@ class TaskOperationProcessor(object):
             or "No output"
         )
 
-    @decorators.MultiplyString(
-        interval=(DefaultIndent.SPACING * DefaultIndent.INTERVAL)
-    )
+    # @task_indent()
     def run_with_output(self) -> None:
         """Runs the task and displays its output."""
         self.show_index_and_title()
