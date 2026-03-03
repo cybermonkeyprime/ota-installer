@@ -26,6 +26,3 @@ def task_director(instance: VariableManager, task_name: str) -> None:
         logger.exception(
             f"Unexpected error while executing {task_name!r}: {err}"
         )
-
-
-# Signed off by Brian Sanford on 20260213
