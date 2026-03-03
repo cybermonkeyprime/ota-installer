@@ -47,9 +47,12 @@ class VariableFileProcessor(BaseProcessor):
         data = VariableItem(
             title=self.title, value=str(self.get_value_by_key(self.value))
         )
+
         if self.title == "log_file":
             builder.newline()
+
         builder.add(f"{data.title.upper()}", data.value)
         builder.render()
 
 
+# Signed off by Brian Sanford on 20260303
