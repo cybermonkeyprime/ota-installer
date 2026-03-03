@@ -9,7 +9,7 @@ class TaskGroupNames(StrEnum):
     MIGRATION = auto()
     APPLICATION = auto()
 
-    def _value(self, obj: type) -> object:
+    def _get_value(self, obj: type) -> object:
         """Retrieve the value from the given object based on the
         task group name.
         """
@@ -20,7 +20,9 @@ class TaskGroupNames(StrEnum):
         """create the dictionary with enum member names and their
         corresponding values.
         """
-        return {enum_member: enum_member._value(obj) for enum_member in cls}
+        return {
+            enum_member: enum_member._get_value(obj) for enum_member in cls
+        }
 
     @staticmethod
     def normalize_key(key: str) -> str:
@@ -28,3 +30,4 @@ class TaskGroupNames(StrEnum):
         return key.lower().strip()
 
 
+# Signed off by Brian Sanford on 20260303
