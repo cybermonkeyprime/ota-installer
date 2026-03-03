@@ -44,21 +44,16 @@ class TaskManager(object):
         logger.debug(
             f"TaskManager.log_and_process_variables(): {self.variable=}"
         )
-        try:
-            (
-                VariableProcessor(self.variable)
-                .process_directory_names()
-                .process_file_names()
-                .process_log_file()
-            )
-        except Exception as err:
-            logger.exception(
-                f"log_and_process_variables: {type(err).__name__} {err}"
-            )
+        if not self.variable:
+            logger.error("Variable manager is not initialized.")
+        else:
+            VariableProcessor(
+                self.variable
+            ).process_directory_names().process_file_names().process_log_file()
 
     def execute_iteration(self, task_group) -> None:
         """Executes the task iteration for the given task group."""
         task_iterator(instance=self.variable, task_group=task_group)
 
 
-# Signed off by Brian Sanford on 20260203
+# Signed off by Brian Sanford on 20260303
