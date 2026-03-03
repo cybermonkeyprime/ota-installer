@@ -26,6 +26,8 @@ class IndentWrapper(StringReturningDecorator):
 
     def indent(self):
         """Generates the indentation string."""
+
         return f"{indentation(char=self.char, interval=self.interval)}"
 
 
+# Signed off by Brian Sanford on 20260303
