@@ -9,4 +9,9 @@ class BootImageTuple(NamedTuple):
     stock: Path
     magisk: Path
 
+    def is_valid(self) -> bool:
+        """Checks if both stock and magisk paths are valid."""
+        return self.stock.exists() and self.magisk.exists()
 
+
+# Signed off by Brian Sanford on 20260303
