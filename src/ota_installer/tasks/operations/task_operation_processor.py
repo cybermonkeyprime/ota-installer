@@ -1,5 +1,6 @@
 # src/ota_installer/tasks/operations/task_operation_processor.py
 from dataclasses import dataclass, field
+from enum import StrEnum, auto
 from functools import partial
 from pathlib import Path
 from typing import Self
@@ -19,12 +20,19 @@ from .constants.task_ops_item_types import TaskOpsItemTypes
 from .task_item_parser import TaskItemParser
 from .task_operation_executor import TaskOperationExecutor
 
-task_command_printer = partial(
-    decorators.ColorizedIndentPrinter,
-    indent=Indents.COMMAND,
-    style=Styles.COMMAND,
-    end="",
-)
+
+class TaskAspect(StrEnum):
+    COMMAND = auto()
+    DESCRIPTION = auto()
+
+    @property
+    def indent_printer(self):
+        return partial(
+            decorators.ColorizedIndentPrinter,
+            indent=Indents[self.name],
+            style=Styles[self.name],
+            end="",
+        )
 
 
 @dataclass
@@ -57,15 +65,13 @@ class TaskOperationProcessor(object):
         return TaskItemParser(f"{self.index}. {self.title}:").show_header()
 
     @decorators.FooterWrapper()
-    @decorators.ColorizedIndentPrinter(
-        indent=Indents.DESCRIPTION, end="", style=Styles.DESCRIPTION
-    )
+    @TaskAspect.DESCRIPTION.indent_printer()
     def show_description(self) -> str:
         """Displays the description of the task."""
         return self.description
 
     @decorators.FooterWrapper()
-    @task_command_printer()
+    @TaskAspect.COMMAND.indent_printer()
     def show_command_string(self) -> str:
         """Displays the command string of the task."""
         return self.command_string
