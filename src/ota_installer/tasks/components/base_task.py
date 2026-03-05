@@ -1,8 +1,15 @@
 # src/ota_installer/tasks/components/base_task.py
 from dataclasses import dataclass
+from enum import StrEnum, auto
 
 from ..operations.task_operation_details import TaskOperation
 from ..operations.task_operation_processor import TaskOperationProcessor
+
+
+class OptionalTaskField(StrEnum):
+    COMMAND_STRING = auto()
+    COMMENT = auto()
+    REMINDER = auto()
 
 
 @dataclass
@@ -33,11 +40,9 @@ class BaseTask(object):
         self.task.set_item("title", self.enum_values.title)
         self.task.set_item("description", self.enum_values.description)
 
-        if self.command_string:
-            self.task.set_item("command_string", self.command_string)
-        if self.comment:
-            self.task.set_item("comment", self.comment)
-        if self.reminder:
-            self.task.set_item("reminder", self.reminder)
+        for attr in OptionalTaskField:
+            if value := getattr(self, attr, None):
+                self.task.set_item(attr, value)
 
 
+# Signed off by Brian Sanford on 20260305
