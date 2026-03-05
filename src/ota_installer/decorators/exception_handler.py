@@ -21,14 +21,16 @@ class ExceptionHandler(GenericDecorator):
             """
             from ..log_setup import logger
 
+            result = None
             try:
-                return function(*args, **kwargs)
+                result = function(*args, **kwargs)
             except Exception as err:
                 logger.exception(
                     f"{type(err).__name__} occured in {function.__name__}"
                 )
-            return None
+            return result
 
         return wrapper
 
 
+# Signed off by Brian Sanford on 20260305
