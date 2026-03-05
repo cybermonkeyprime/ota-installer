@@ -1,5 +1,5 @@
 # src/ota_installer/variables/variable_manager.py
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, asdict
 from pathlib import Path
 from typing import Self
 
