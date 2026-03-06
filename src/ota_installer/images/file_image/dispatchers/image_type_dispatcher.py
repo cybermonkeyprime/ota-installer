@@ -32,3 +32,6 @@ class ImageTypeDispatcher(DispatcherTemplate):
     def get_key(self, key: str) -> str:
         """Retrieves the value associated with the given key."""
         return getattr(ImageType, key.upper(), ImageType.DEFAULT).value
+
+
+# Signed off by Brian Sanford on 20260305
