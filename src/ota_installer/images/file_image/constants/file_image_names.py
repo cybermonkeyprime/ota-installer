@@ -15,14 +15,9 @@ class FileImageNames(StrEnum):
         corresponding values.
         """
         return {
-            cls.normalize_key(enum_member): getattr(file_paths, enum_member)
+            enum_member.strip(): getattr(file_paths, enum_member)
             for enum_member in cls
         }
-
-    @staticmethod
-    def normalize_key(key: str) -> str:
-        """Normalize dictionary keys for consistent dispatcher behavior."""
-        return key.strip()
 
 
 def print_image_names():
@@ -38,3 +33,5 @@ def main():
 
 if __name__ == "__main__":
     pass
+
+# Signed off by Brian Sanford on 20260305
