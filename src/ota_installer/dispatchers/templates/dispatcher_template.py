@@ -46,3 +46,4 @@ class DispatcherTemplate(DispatcherProtocol):
         return key.lower().strip()
 
 
+# src/ota_installer/dispatchers/templates/dispatcher_template.py
