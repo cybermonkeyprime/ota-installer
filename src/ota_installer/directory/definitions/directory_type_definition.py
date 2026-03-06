@@ -30,7 +30,7 @@ class DirectoryTypeDefinition(object):
 
     parent_directory: Path
     _boot_image: str = field(default="")
-    magisk_image: Callable = field(default=Callable)
+    magisk_image: Path = field(default_factory=Path)
 
     def __post_init__(self) -> None:
         """
