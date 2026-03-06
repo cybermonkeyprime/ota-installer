@@ -98,12 +98,10 @@ class TaskOperationProcessor(object):
 
     def execute_and_return_output(self, output_name) -> str:
         """Executes the command string and returns the output."""
-        return (
-            TaskOperationExecutor(
-                self.command_string
-            ).execute_and_return_output(output_name)
-            or "No output"
-        )
+        output = TaskOperationExecutor(
+            self.command_string
+        ).execute_and_return_output(output_name)
+        return output or "No output"
 
     # @task_indent()
     def run_with_output(self) -> None:
@@ -135,3 +133,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+# Signed off by Brian Sanford on 20260305
