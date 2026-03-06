@@ -16,6 +16,11 @@ class ImageType(Enum):
     SHIBA = "init_boot"
     DEFAULT = "init_boot"
 
+    @classmethod
+    def allowed_keys(cls) -> tuple:
+        """Returns a tuple of allowed image type keys."""
+        return tuple(cls.__members__.keys())
+
 
 @dispatcher_plugin(DispatcherConstants.IMAGE.value)
 @dataclass
@@ -24,19 +29,6 @@ class ImageTypeDispatcher(DispatcherTemplate):
 
     obj: type = field(default_factory=lambda: type)
 
-    @property
-    def allowed_keys(self) -> tuple:
-        """Returns a tuple of allowed image type keys."""
-        return tuple(enum.name for enum in ImageType)
-
-    def get_key(self, key: str) -> object:
+    def get_key(self, key: str) -> str:
         """Retrieves the value associated with the given key."""
-        normalized_key = key.upper()
-        evaluated_key = (
-            normalized_key
-            if normalized_key in self.allowed_keys
-            else ImageType.DEFAULT.name
-        )
-        return ImageType[evaluated_key].value
-
-
+        return getattr(ImageType, key.upper(), ImageType.DEFAULT).value
