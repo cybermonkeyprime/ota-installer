@@ -34,11 +34,10 @@ class DispatcherTemplate(DispatcherProtocol):
         normalized_key = self.normalize_key(key)
         task = self.collection[self.normalize_key(key)]
 
-        if isinstance(task, Callable):
-            return task()
-
-        logger.error(f"No task found for key: {normalized_key}")
-        return None
+        if not isinstance(task, Callable):
+            logger.error(f"No task found for key: {normalized_key}")
+            return None
+        return task()
 
     @staticmethod
     def normalize_key(key: str) -> str:
@@ -46,4 +45,4 @@ class DispatcherTemplate(DispatcherProtocol):
         return key.lower().strip()
 
 
-# src/ota_installer/dispatchers/templates/dispatcher_template.py
+# Signed off by Brian Sanford on 20260307
