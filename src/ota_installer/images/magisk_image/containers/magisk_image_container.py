@@ -2,7 +2,7 @@
 from dataclasses import dataclass
 from pathlib import Path
 
-from ..constants.magisk_image_paths import MagiskImagePaths
+from ..constants.magisk_image_paths import MagiskImagePath
 from .magisk_image_tuple import MagiskImageTuple
 
 
@@ -15,7 +15,9 @@ class MagiskImageContainer(object):
         """
         Returns a list of path values from the Magisk image paths enumeration.
         """
-        return [enum_member.value for enum_member in MagiskImagePaths]
+        print(f"{MagiskImagePath.list()=}")
+        return MagiskImagePath.list()
+        return [enum_member.value for enum_member in MagiskImagePath]
 
     @property
     def path_container(self) -> MagiskImageTuple:
@@ -33,3 +35,4 @@ class MagiskImageContainer(object):
         return self.path_container.remote_path
 
 
+# Signed off by Brian Sanford on 20260307
