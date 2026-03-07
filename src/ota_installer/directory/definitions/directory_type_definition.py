@@ -13,7 +13,7 @@ from ...images.boot_image.containers.boot_image_container import (
     BootImageContainer,
 )
 from ...images.magisk_image.constants.magisk_image_paths import (
-    MagiskImagePaths,
+    MagiskImagePath,
 )
 from ...images.magisk_image.containers.magisk_image_container import (
     MagiskImageContainer,
@@ -54,7 +54,7 @@ def main() -> None:
     """Main function to demonstrate the usage of DirectoryTypeDefinition."""
     # Example usage:
     boot_image = BootImagePaths
-    magisk_image = MagiskImagePaths
+    magisk_image = MagiskImagePath
 
     print(f"Stock image path: {boot_image.STOCK.value}")
     print(f"Patched image path: {boot_image.MAGISK.value}")
