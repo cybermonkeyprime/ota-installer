@@ -11,8 +11,8 @@ class MagiskImagePath(Enum):
     REMOTE_PATH = Path("/sdcard") / "Download" / "magisk"
 
     @classmethod
-    def list(cls) -> list:
-        return [cls.__members__.values()]
+    def list(cls) -> tuple:
+        return tuple(enum_member.value for enum_member in cls)
 
 
 class MagiskImageTuple(NamedTuple):

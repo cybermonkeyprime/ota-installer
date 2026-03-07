@@ -10,19 +10,12 @@ from .magisk_image_tuple import MagiskImageTuple
 class MagiskImageContainer(object):
     """Container for managing Magisk image paths."""
 
-    @property
-    def path_data(self) -> list:
-        """
-        Returns a list of path values from the Magisk image paths enumeration.
-        """
-        print(f"{MagiskImagePath.list()=}")
-        return MagiskImagePath.list()
-        return [enum_member.value for enum_member in MagiskImagePath]
+    magisk_path: tuple = MagiskImagePath.list()
 
     @property
     def path_container(self) -> MagiskImageTuple:
         """Returns a MagiskImageTuple containing local and remote paths."""
-        return MagiskImageTuple(*self.path_data)
+        return MagiskImageTuple(*self.magisk_path)
 
     @property
     def local_path(self) -> Path:
