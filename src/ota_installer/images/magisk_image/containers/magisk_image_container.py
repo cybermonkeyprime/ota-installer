@@ -13,19 +13,19 @@ class MagiskImageContainer(object):
     magisk_path: tuple = MagiskImagePath.list()
 
     @property
-    def path_container(self) -> MagiskImageTuple:
+    def _path_container(self) -> MagiskImageTuple:
         """Returns a MagiskImageTuple containing local and remote paths."""
         return MagiskImageTuple(*self.magisk_path)
 
     @property
     def local_path(self) -> Path:
         """Returns the local path from the path container."""
-        return self.path_container.local_path
+        return self._path_container.local_path
 
     @property
     def remote_path(self) -> Path:
         """Returns the remote path from the path container."""
-        return self.path_container.remote_path
+        return self._path_container.remote_path
 
 
 # Signed off by Brian Sanford on 20260307
