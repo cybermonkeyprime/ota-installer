@@ -19,7 +19,7 @@ class DisplayObjectProcessor(object):
         raise ValueError(f"Unsupported type: {type(argument).__name__}")
 
     @process_object.register
-    def _(self, argument: None) -> str:
+    def _(self) -> str:
         """Process the argument when it is None."""
         return self.function()
 
@@ -35,4 +35,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
