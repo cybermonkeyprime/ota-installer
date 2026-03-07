@@ -1,10 +1,39 @@
 # src/ota_installer/display/variables/processors/directory_iteration_processor.py
 from dataclasses import dataclass, field
+from enum import Enum
 from typing import Self
 
 from ....dispatchers.constants.dispatcher_constants import DispatcherConstants
 from ....variables.variable_manager import VariableManager
 from ...variables.processors.base_processor import BaseProcessor
+
+
+class DirectoryItemType(Enum):
+    """Constants for task item types."""
+
+    INDEX = int
+    TITLE = str
+    DESCRIPTION = str
+    COMMENT = str
+    REMINDER = str
+    COMMAND_STRING = str
+
+    @classmethod
+    def get_validated_type(cls, field_name: str) -> type:
+        """
+        Validates field existence using a whitelist check.
+        Raises AttributeError immediately on failure (Fail-Fast).
+        """
+        key = field_name.upper()
+
+        # Explicit membership check: 'Look Before You Leap'
+        if not key:
+            raise AttributeError(
+                f"Invalid field: '{field_name}'. "
+                f"Allowed fields are: {', '.join(cls._member_names_)}"
+            ) from None
+
+        return cls[field_name.upper()].value
 
 
 @dataclass
@@ -56,3 +85,4 @@ class DirectoryIterationProcessor(BaseProcessor):
         builder.render()
 
 
+# Signed off by Brian Sanford on 20260307
