@@ -1,5 +1,5 @@
 # src/ota_installer/variables/variable_manager.py
-from dataclasses import dataclass, field, asdict
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Self
 
@@ -11,7 +11,7 @@ from ..dispatchers.factories.mappings.dispatcher_factory_mapping import (
     DispatcherClasses,
 )
 from ..images.magisk_image.constants.magisk_image_paths import (
-    MagiskImagePaths,
+    MagiskImagePath,
 )
 from ..log_setup import logger
 from .constants.directory_names import DirectoryNames
@@ -84,8 +84,8 @@ class VariableManager(object):
 
         self.directories = DirectoryNames(
             magisk=DirectoryPaths(
-                local_path=MagiskImagePaths.LOCAL_PATH.value,
-                remote_path=MagiskImagePaths.REMOTE_PATH.value,
+                local_path=MagiskImagePath.LOCAL_PATH.value,
+                remote_path=MagiskImagePath.REMOTE_PATH.value,
             )
         )
         return self
