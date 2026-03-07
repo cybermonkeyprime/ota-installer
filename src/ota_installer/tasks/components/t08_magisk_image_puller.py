@@ -6,7 +6,7 @@ from loguru import logger
 
 from ... import decorators
 from ...images.magisk_image.constants.magisk_image_paths import (
-    MagiskImagePaths,
+    MagiskImagePath,
 )
 from ...task_groups.constants.application_task import ApplicationTask
 from ...task_groups.constants.migration_task import MigrationTask
@@ -39,14 +39,14 @@ class MagiskImagePuller(BaseTask):
     def _source_path(self) -> Path:
         """Constructs the source path for the patched boot image."""
         return (
-            MagiskImagePaths.REMOTE_PATH.value
+            MagiskImagePath.REMOTE_PATH.value
             / self.instance.image_name["patched"]
         )
 
     def _destination_path(self) -> Path:
         """Constructs the destination path for the pulled image."""
         return (
-            MagiskImagePaths.LOCAL_PATH.value / self.instance.file_paths.magisk
+            MagiskImagePath.LOCAL_PATH.value / self.instance.file_paths.magisk
         )
 
     @decorators.DoublePaddedFooterWrapper(
@@ -56,5 +56,3 @@ class MagiskImagePuller(BaseTask):
         """Executes the task to pull the patched boot image."""
         self.task.run_with_output()
         logger.debug(f"{ApplicationTask.REBOOT_TO_BOOTLOADER.value=}")
-
-
