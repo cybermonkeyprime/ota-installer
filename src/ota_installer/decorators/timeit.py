@@ -36,3 +36,4 @@ class TimeIt(GenericDecorator):
         print(f"Function {function_signature} took {total_time:.4f} seconds")
 
 
+# Signed off by Brian Sanford on 20260307
