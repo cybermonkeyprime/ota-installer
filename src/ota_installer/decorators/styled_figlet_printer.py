@@ -28,8 +28,7 @@ class StyledFigletPrinter(GenericDecorator):
                 decorated_function
             )
 
-        wrapped_fn = wraps(function)(decorated_function)
-        return wrapped_fn
+        return wraps(function)(decorated_function)
 
 
 @StyledFigletPrinter(style="variable", font="slant", use_output=True)
@@ -40,3 +39,4 @@ def welcome_message() -> str:
 
 if __name__ == "__main__":
     welcome_message()
+# Signed off by Brian Sanford on 20260307
