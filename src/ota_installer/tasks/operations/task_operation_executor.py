@@ -1,7 +1,7 @@
 # src/ota_installer/tasks/operations/task_operation_executor.py
 from dataclasses import dataclass
 from functools import partial
-from subprocess import CalledProcessError, check_output, run
+from subprocess import check_output, run
 from typing import Self
 
 from ... import decorators
@@ -53,5 +53,3 @@ class TaskOperationExecutor(object):
             )
             return ""
         return result
-
-

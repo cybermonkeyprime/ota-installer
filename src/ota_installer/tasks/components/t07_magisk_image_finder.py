@@ -45,3 +45,4 @@ class MagiskImageFinder(BaseTask):
             self.task.show_reminder()
 
 
+# Signed off by Brian Sanford on 20260307
