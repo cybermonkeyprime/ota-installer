@@ -1,13 +1,16 @@
 # src/ota_installer/program_versioning/software_version.py
+from enum import Enum
+
 from .builders.software_container_builder import build_software_container
+
+CONTAINER = build_software_container()
 
 
 def get_display() -> str:
     """Returns the display string for the global software version."""
-    container = build_software_container()
     return (
-        f"Build: {container.major_number}."
-        f"{container.minor_number}.{container.patch_number}"
+        f"Build: {CONTAINER.major_number}."
+        f"{CONTAINER.minor_number}.{CONTAINER.patch_number}"
     )
 
 
@@ -15,7 +18,12 @@ def get_text_display() -> str:
     """
     Returns a formatted string with the title and display of the software
     version."""
-    container = build_software_container()
-    return f"{container.title} - {get_display()}"
+    return f"{CONTAINER.title} - {get_display()}"
 
 
+class DisplayType(Enum):
+    VERBOSE = get_display
+    CONCISE = get_text_display
+
+
+# Signed off by Brian Sanford on 20260310
