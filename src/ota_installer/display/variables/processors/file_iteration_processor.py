@@ -8,7 +8,7 @@ from ....variables.variable_manager import VariableManager
 from ...variables.processors.base_processor import BaseProcessor
 
 
-@dataclass
+@dataclass(slots=True)
 class FileIterationProcessor(BaseProcessor):
     """Processes a list of file names and builds a variable table."""
 
@@ -42,3 +42,4 @@ class FileIterationProcessor(BaseProcessor):
         builder.render()
 
 
+# Signed off by Brian Sanford on 20260310
