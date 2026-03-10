@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from functools import singledispatchmethod
 
 
-@dataclass
+@dataclass(frozen=True, slots=True)
 class DisplayObjectProcessor(object):
     """
     Processor class for creating display objects based on the provided
@@ -35,3 +35,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+# Signed off by Brian Sanford on 20260310
