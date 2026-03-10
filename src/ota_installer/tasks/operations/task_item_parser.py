@@ -5,27 +5,22 @@ from enum import Enum, IntEnum, StrEnum
 from ... import decorators
 
 
-class TaskItemConstants(Enum):
+class TaskItemType(Enum):
     STYLE = "task"
 
 
-class TaskItemHeaderConstants(Enum):
-    INDENT = 1
-    STYLE = TaskItemConstants.STYLE.value
-
-
-class TaskItemAspectConstants(Enum):
+class TaskItemAspect(Enum):
     INDENT = 2
-    STYLE = TaskItemConstants.STYLE.value
+    STYLE = TaskItemType.STYLE.value
 
 
-class TaskItemStyles(StrEnum):
-    HEADER = TaskItemConstants.STYLE.value
-    ASPECT = TaskItemConstants.STYLE.value
+class TaskItemStyle(StrEnum):
+    HEADER = TaskItemType.STYLE.value
+    ASPECT = TaskItemType.STYLE.value
     DEFAULT = "tasks"
 
 
-class TaskItemIndents(IntEnum):
+class TaskItemIndent(IntEnum):
     HEADER = 1
     ASPECT = 2
 
@@ -35,25 +30,26 @@ class TaskItemParser(object):
     """Parser for task items with aspect and header display capabilities."""
 
     value: str
-    constants: type[TaskItemAspectConstants] = TaskItemAspectConstants
+    constants: type[TaskItemAspect] = TaskItemAspect
 
     @decorators.ColorizedIndentPrinter(
-        indent=TaskItemIndents.ASPECT.value,
+        indent=TaskItemIndent.ASPECT.value,
         begin="",
         end="",
-        style=TaskItemStyles.ASPECT.value,
+        style=TaskItemStyle.ASPECT.value,
     )
     def show_aspect(self) -> str:
         """Display the aspect of the task item."""
         return f"{self.value}"
 
     @decorators.ColorizedIndentPrinter(
-        indent=TaskItemIndents.HEADER.value,
+        indent=TaskItemIndent.HEADER.value,
         end=":",
-        style=TaskItemStyles.HEADER.value,
+        style=TaskItemStyle.HEADER.value,
     )
     def show_header(self) -> str:
         """Display the header of the task item."""
         return f"{self.value}"
 
 
+# Signed off by Brian Sanford on 20260310
