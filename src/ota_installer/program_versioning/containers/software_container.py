@@ -2,7 +2,7 @@
 from dataclasses import dataclass
 
 
-@dataclass
+@dataclass(frozen=True, slots=True)
 class SoftwareContainer(object):
     """Represents a software container with versioning information."""
 
@@ -12,3 +12,4 @@ class SoftwareContainer(object):
     patch_number: int
 
 
+# Signed off by Brian Sanford on 20260310
