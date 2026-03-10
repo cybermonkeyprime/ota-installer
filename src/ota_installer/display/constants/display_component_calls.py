@@ -24,6 +24,3 @@ def call_display_component(component_type: DisplayComponent) -> str:
             f"Display component {component_type} is not registered."
         )
     return display_function()
-
-
-# Signed off by Brian Sanford on 20260303
