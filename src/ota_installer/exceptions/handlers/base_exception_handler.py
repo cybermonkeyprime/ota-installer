@@ -9,7 +9,7 @@ from ...decorators import (
 )
 
 
-@dataclass
+@dataclass(slots=True)
 class BaseExceptionHandler(object):
     """Handles exceptions for a given function with customizable messages."""
 
@@ -50,3 +50,4 @@ class BaseExceptionHandler(object):
 
 if __name__ == "__main__":
     pass
+# Signed off by Brian Sanford on 20260310
