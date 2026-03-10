@@ -17,12 +17,12 @@ from ..variables.functions import (
 class VariableProcessor(object):
     """Processes variable file and directory names for OTA installation."""
 
-    processing_function: VariableManager
+    variable_manager: VariableManager
 
     def process_file_names(self) -> Self:
         """Processes OTA and image file names."""
         file_types = {set_ota_file_name, set_image_file_names}
-        self.process_items(file_types)
+        self._process_items(file_types)
         return self
 
     def process_directory_names(self) -> Self:
@@ -32,22 +32,22 @@ class VariableProcessor(object):
             set_boot_image_directories,
             set_magisk_image_directories,
         }
-        self.process_items(directory_types)
+        self._process_items(directory_types)
         print()
         return self
 
-    def process_items(self, iterator: set) -> None:
+    def _process_items(self, functions: set) -> None:
         """Executes a set of processing functions."""
-        frozenset(
-            process_item(self.processing_function) for process_item in iterator
-        )
+        for function in functions:
+            function(self.variable_manager)
 
     def process_log_file(self) -> Self:
         """Processes the log file."""
-        set_log_file(self.processing_function)
+        set_log_file(self.variable_manager)
         print()
         return self
 
 
 if __name__ == "__main__":
     pass
+# Signed off by Brian Sanford on 20260310
