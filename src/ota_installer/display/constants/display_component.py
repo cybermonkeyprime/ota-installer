@@ -27,11 +27,13 @@ class DisplayComponent(StrEnum):
     def render(self) -> str:
         """Triggers the associated display function."""
 
-        display_function = self._mapping.get(self)
-        if not display_function:
-            raise ValueError(f"No display function defined for: {self.value}")
+        if self not in self._mapping:
+            raise NotImplementedError(
+                f"LOUD FAIL: '{self.name}' is defined in DisplayComponent "
+                f"but missing from the _mapping dictionary."
+            )
 
-        return display_function()
+        return self._mapping[self]()
 
 
 # Signed off by Brian Sanford on 20260310

@@ -1,4 +1,4 @@
-# src/ota_installer/tasks/plugin_registry.py
+# nkyoThank  src/ota_installer/tasks/plugin_registry.py
 from collections.abc import Callable
 
 TASK_PLUGINS: dict[str, Callable] = {}
