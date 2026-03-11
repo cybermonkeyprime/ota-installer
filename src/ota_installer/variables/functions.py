@@ -7,24 +7,22 @@ from ota_installer.variables.containers.file_name_container import (
 
 
 def set_log_file(file_name_parts: FileNameContainer) -> str:
+    """Generate a log file path based on device and version."""
     device = file_name_parts.device
     version = file_name_parts.version
     return f"/tmp/ota-installer_{device}_{version}.txt"
 
 
 def set_variable_manager(path: Path) -> "VariableManager":  # noqa: F821 # pyright: ignore[reportUndefinedVariable]
-    import sys
-
     from ..log_setup import logger
     from ..validation.file_path_validation import file_path_validator
     from .variable_manager import VariableManager
 
     """Create a VariableManager instance after validating the file path. """
 
-    valid_path = file_path_validator(path)
-    if not valid_path:
+    if not file_path_validator(path):
         logger.error(f"Invalid file path: {path}")
-        sys.exit("Invalid input file. Aborting.")
+        raise SystemExit("Invalid input file. Aborting.")
 
     return VariableManager(path)
 
@@ -57,5 +55,3 @@ def parse_file_name(raw_name: Path) -> "FileNameContainer":
         version=version,
         extra="".join(extra_parts),
     )
-
-
