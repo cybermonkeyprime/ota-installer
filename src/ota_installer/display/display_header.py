@@ -3,9 +3,8 @@ from rich.control import Control
 
 from .. import decorators
 from ..log_setup import logger
-from .constants.display_component import DisplayComponent
 from .constants.display_component_calls import (
-    call_display_component,
+    DisplayCall,
 )
 
 
@@ -26,7 +25,7 @@ def _execute_component(component) -> bool:
 @decorators.OutputPrinter(suffix="")
 def show_title() -> str:
     """Returns the title for the display."""
-    return call_display_component(DisplayComponent.TITLE)
+    return DisplayCall.TITLE.render
 
 
 @decorators.OutputPrinter(suffix="")
@@ -39,13 +38,13 @@ def move_cursor_up() -> str:
 @decorators.Colorizer(style="title")
 def show_separator() -> str:
     """Returns the separator for the display."""
-    return call_display_component(DisplayComponent.SEPARATOR)
+    return DisplayCall.SEPARATOR.render
 
 
 @decorators.OutputPrinter()
 def show_subtitle() -> str:
     """Returns the subtitle for the display."""
-    return call_display_component(DisplayComponent.SUBTITLE)
+    return DisplayCall.SUBTITLE.render
 
 
 def main():
