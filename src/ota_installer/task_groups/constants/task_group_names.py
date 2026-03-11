@@ -29,5 +29,10 @@ class TaskGroupNames(StrEnum):
         """Normalize dictionary keys for consistent dispatcher behavior."""
         return key.lower().strip()
 
+    @classmethod
+    def validation(cls, value: str) -> bool:
+        """Validate the provided task group name."""
+        return value.upper() in cls.__members__
+
 
 # Signed off by Brian Sanford on 20260303
