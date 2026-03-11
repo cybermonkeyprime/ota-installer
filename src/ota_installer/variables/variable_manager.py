@@ -34,15 +34,30 @@ class VariableManager(object):
     """dicts"""
     file_paths: FilePaths = field(init=False)
     file_name: FileNameInfo = field(init=False)
-    image_name: dict = field(default_factory=dict[str, str], init=False)
+    image_name: dict[str, str] = field(default_factory=dict, init=False)
     directories: DirectoryNames = field(init=False)
 
     def __post_init__(self) -> None:
-        self.variables = _initialize_variable_group(self.path)  # .data_tuple
+        self.variables = self._initialize_variable_group(
+            self.path
+        )  # .data_tuple
         self._initialize_file_name_attributes()
         self._initialize_file_paths()
         self._initialize_directory_paths()
         self._initialize_image_names()
+
+    def _initialize_variable_group(
+        self, file_path: Path
+    ) -> VariableTypeContainer:
+        from .functions import parse_file_name
+
+        """Defines variables based on the file path."""
+        return VariableTypeContainer(
+            file_path=file_path,
+            magisk_image_name="place_holder",
+            file_path_stem=file_path.stem,
+            file_parts=parse_file_name(file_path),
+        )
 
     def _initialize_file_name_attributes(self) -> Self:
         """Initializes file name attributes."""
@@ -56,6 +71,7 @@ class VariableManager(object):
         return self
 
     def _initialize_file_paths(self) -> Self:
+        """Initializes file paths."""
         from ..images.file_image.containers.file_image_container import (
             FileImageData,
         )
@@ -63,8 +79,6 @@ class VariableManager(object):
             get_file_image_path,
             set_log_file,
         )
-
-        """Initializes file paths."""
 
         image_data = FileImageData(
             self.file_name.device, self.file_name.version
@@ -122,19 +136,6 @@ class VariableManager(object):
             .set_function_call(function_call)
             .get_dispatcher()
         )
-
-
-def _initialize_variable_group(file_path: Path) -> VariableTypeContainer:
-    from .functions import parse_file_name
-
-    """Defines variables based on the file path."""
-    data_tuple = VariableTypeContainer(
-        file_path=file_path,
-        magisk_image_name="place_holder",
-        file_path_stem=file_path.stem,
-        file_parts=parse_file_name(file_path),
-    )
-    return data_tuple
 
 
 def main():
