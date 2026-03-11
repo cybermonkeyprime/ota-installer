@@ -26,3 +26,4 @@ def display_type_information(type_checker: TypeChecker) -> None:
 if __name__ == "__main__":
     type_checker = TypeChecker(name="example", object_to_check=123)
     display_type_information(type_checker)
+# Signed off by Brian Sanford on 20260310
