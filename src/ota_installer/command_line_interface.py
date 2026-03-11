@@ -28,7 +28,7 @@ def debug_callback(value: bool) -> None:
 
 
 @cli.command()
-def ota_installerer(
+def ota_installer(
     path: str = typer.Argument(..., help="The path to the OTA file."),
     task_group: TaskGroupNames | None = typer.Option(
         None,
