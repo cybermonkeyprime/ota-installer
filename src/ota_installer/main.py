@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 from .command_line_interface import cli
 
 # DO NOT REMOVE, PLUGIN LOADERS!!!
@@ -10,10 +8,11 @@ from .tasks import plugin_loader
 def main() -> None:
     """Entry point for the application.
 
-    This function initializes the command line interface.
+    Initializes the command line interface.
     """
     cli()
 
 
 if __name__ == "__main__":
     main()
+# Signed off by Brian Sanford on 20260310
