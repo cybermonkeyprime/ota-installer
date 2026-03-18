@@ -15,7 +15,6 @@ from ...task_groups.constants.task_group_names import TaskGroupNames
 from ..definitions.task_definitions import TaskDefinitions
 from ..managers.task_manager import TaskManager
 from .cli_arguments import CLIArguments
-from ota_installer.task_groups.constants import task_group_names
 
 
 @dataclass(slots=True)
@@ -88,6 +87,7 @@ class TaskExecutor(object):
 
     def execute_task(self, task_group_key: str) -> None:
         """Executes a specific task based on the task group key."""
+
         if not hasattr(self, "task_iteration"):
             logger.error(
                 f"Processing {task_group_key} failed: task_iteration method not found."
@@ -104,8 +104,10 @@ class TaskExecutor(object):
 
     def execute_single_task(self) -> None:
         """Executes a single task if a task group is defined."""
+
         if not self.task_group:
             raise AttributeError(f"{self.task_group!r} does not exist!")
+
         logger.debug(
             f"Executing single task for task group: {self.task_group}"
         )
