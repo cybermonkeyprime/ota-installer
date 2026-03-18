@@ -15,7 +15,7 @@ class FileImageNames(StrEnum):
         corresponding values.
         """
         return {
-            enum_member.strip(): getattr(file_paths, enum_member)
+            enum_member: getattr(file_paths, enum_member)
             for enum_member in cls
         }
 
@@ -33,4 +33,4 @@ def main():
 
 if __name__ == "__main__":
     pass
-
+# Signed off by Brian Sanford on 20260317
