@@ -1,6 +1,4 @@
 # src/ota_installer/tasks/managers/task_iteration.py
-from types import NoneType
-
 from ...decorators.styled_indent_printer import StylizedIndentPrinter
 from ...log_setup import logger
 from ...variables.variable_manager import VariableManager
@@ -14,7 +12,9 @@ def task_iterator(
     instance: VariableManager, task_group: StringTuple
 ) -> object | None:
     """Iterates over a task group and executes each task."""
+
     logger.debug(f"Iterating over task group: {task_group}")
+
     if not task_group:
         return _skipped_task_group_msg()
 
@@ -31,3 +31,4 @@ def _skipped_task_group_msg() -> str:
     return "Task Group skipped"
 
 
+# Signed off by Brian Sanford on 20260318
