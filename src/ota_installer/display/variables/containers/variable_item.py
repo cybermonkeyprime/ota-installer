@@ -7,7 +7,7 @@ class VariableItem(object):
     """Represents a variable item with a title and a value."""
 
     title: str
-    value: str | None
+    value: str
 
 
-# Signed off by Brian Sanford on 20260317
+# Signed off by Brian Sanford on 20260318

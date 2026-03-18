@@ -13,7 +13,7 @@ class VariableFileConstants(Enum):
     VALUE = str
 
 
-@dataclass
+@dataclass(slots=True)
 class VariableFileProcessor(BaseProcessor):
     """Processes variable files for the dispatcher."""
 
@@ -53,5 +53,3 @@ class VariableFileProcessor(BaseProcessor):
 
         builder.add(f"{data.title.upper()}", data.value)
         builder.render()
-
-
