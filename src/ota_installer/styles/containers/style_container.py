@@ -1,8 +1,9 @@
 # src/ota_installer/styles/containers/style_container.py
-from typing import NamedTuple
+from dataclasses import dataclass
 
 
-class StyleContainer(NamedTuple):
+@dataclass(frozen=True, slots=True)
+class StyleContainer(object):
     """Container for style attributes."""
 
     character: str
@@ -10,4 +11,4 @@ class StyleContainer(NamedTuple):
     interval: int
 
 
-# Final
+# Signed off by Brian Sanford on 20260318
