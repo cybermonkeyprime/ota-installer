@@ -3,8 +3,6 @@ from collections.abc import Callable
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from loguru import logger
-
 from ota_installer.images.boot_image.constants.boot_image_paths import (
     BootImagePaths,
 )
@@ -18,8 +16,7 @@ from ...images.magisk_image.constants.magisk_image_paths import (
 from ...images.magisk_image.containers.magisk_image_container import (
     MagiskImageContainer,
 )
-
-magisk_struct = MagiskImageContainer()
+from ...log_setup import logger
 
 
 @dataclass
@@ -64,3 +61,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+# Signed off by Brian Sanford on 20260318
