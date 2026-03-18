@@ -47,3 +47,4 @@ class FileImageAttributes(Enum):
         return Path(boot_image_path) / self.file_name
 
 
+# Signed off by Brian Sanford on 20260317
