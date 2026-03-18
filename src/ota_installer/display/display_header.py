@@ -1,17 +1,40 @@
 # src/ota_installer/display/show_display_header.py
+from enum import StrEnum
+
 from rich.control import Control
 
 from .. import decorators
 from ..log_setup import logger
-from .constants.display_component import (
-    DisplayComponent,
-)
+from .constants.display_component import DisplayComponent
+
+
+class DisplayHeader(StrEnum):
+    TITLE = DisplayComponent.TITLE.render
+    MOVE_CURSOR_UP = str(Control.move(y=-1))
+    SEPARATOR = DisplayComponent.SEPARATOR.render
+    SUBTITLE = DisplayComponent.SUBTITLE.render
+
+    @decorators.OutputPrinter(suffix="")
+    def render(self) -> str:
+        """Returns the component for the display."""
+        return self.value
+
+    @decorators.OutputPrinter(suffix="")
+    @decorators.Colorizer(style="title")
+    def render_green(self) -> str:
+        """Returns the component for the display in green."""
+        return self.value
 
 
 @decorators.FooterWrapper(message="")
 def show_display_header() -> None:
     """Renders the display header by invoking the components in sequence."""
-    components = (show_title, move_cursor_up, show_separator, show_subtitle)
+    components = (
+        DisplayHeader.TITLE.render,
+        DisplayHeader.MOVE_CURSOR_UP.render,
+        DisplayHeader.SEPARATOR.render_green,
+        DisplayHeader.SUBTITLE.render,
+    )
     for component in components:
         if not _execute_component(component):
             logger.error("An error occurred during initialization.")
@@ -20,31 +43,6 @@ def show_display_header() -> None:
 def _execute_component(component) -> bool:
     """Executes a display component and returns success status."""
     return component() if component else False
-
-
-@decorators.OutputPrinter(suffix="")
-def show_title() -> str:
-    """Returns the title for the display."""
-    return DisplayComponent.TITLE.render
-
-
-@decorators.OutputPrinter(suffix="")
-def move_cursor_up() -> str:
-    """Returns the control sequence to move the cursor up in the console."""
-    return str(Control.move(y=-1))
-
-
-@decorators.OutputPrinter(suffix="")
-@decorators.Colorizer(style="title")
-def show_separator() -> str:
-    """Returns the separator for the display."""
-    return DisplayComponent.SEPARATOR.render
-
-
-@decorators.OutputPrinter()
-def show_subtitle() -> str:
-    """Returns the subtitle for the display."""
-    return DisplayComponent.SUBTITLE.render
 
 
 def main():
