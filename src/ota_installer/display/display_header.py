@@ -36,11 +36,11 @@ def show_display_header() -> None:
         DisplayHeader.SUBTITLE.render_default,
     )
     for component in components:
-        if not _execute_component(component):
+        if not execute_component(component):
             logger.error("An error occurred during initialization.")
 
 
-def _execute_component(component) -> bool:
+def execute_component(component) -> bool:
     """Executes a display component and returns success status."""
     return component() if component else False
 
