@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 
-@dataclass
+@dataclass(frozen=True, slots=True)
 class MagiskImageTuple(object):
     """Represents a Magisk image with local and remote paths."""
 
