@@ -61,4 +61,3 @@ class MagiskImagePuller(BaseTask):
         logger.debug(f"{ApplicationTask.REBOOT_TO_BOOTLOADER.value=}")
 
 
-# Signed off by Brian Sanford on 20260310

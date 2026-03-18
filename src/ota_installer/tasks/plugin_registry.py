@@ -18,4 +18,3 @@ def task_plugin(name: str) -> Callable:
     return decorator
 
 
-# Signed off by Brian Sanford on 20260303

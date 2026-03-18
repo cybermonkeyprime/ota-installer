@@ -9,5 +9,4 @@ class TaskGroupContainer(NamedTuple):
     group_enum: str | None
 
 
-# Signed off by Brian Sanford on 20260303
 # Final

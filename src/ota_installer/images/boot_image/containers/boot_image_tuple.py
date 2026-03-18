@@ -14,4 +14,3 @@ class BootImageTuple(NamedTuple):
         return self.stock.exists() and self.magisk.exists()
 
 
-# Signed off by Brian Sanford on 20260303

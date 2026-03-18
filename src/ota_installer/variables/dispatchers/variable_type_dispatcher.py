@@ -28,4 +28,3 @@ class VariableTypeDispatcher(DispatcherTemplate):
         }
 
 
-# Signed off by Brian Sanford on 20260310

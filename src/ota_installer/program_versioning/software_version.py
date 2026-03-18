@@ -26,4 +26,3 @@ class DisplayType(Enum):
     CONCISE = get_text_display
 
 
-# Signed off by Brian Sanford on 20260310

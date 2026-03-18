@@ -13,5 +13,4 @@ class TaskOperationContainer:
     reminder: str | None = None
 
 
-# Signed off by Brian Sanford on 20260310
 # Final 20260310

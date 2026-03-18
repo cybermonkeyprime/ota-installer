@@ -56,4 +56,3 @@ class TaskManager(object):
         task_iterator(instance=self.variable, task_group=task_group)
 
 
-# Signed off by Brian Sanford on 20260310

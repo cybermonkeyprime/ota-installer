@@ -34,4 +34,3 @@ class ImageTypeDispatcher(DispatcherTemplate):
         return getattr(ImageType, key.upper(), ImageType.DEFAULT).value
 
 
-# Signed off by Brian Sanford on 20260305

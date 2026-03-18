@@ -16,5 +16,4 @@ def dispatcher_plugin(name) -> Callable:
     return decorator
 
 
-# Signed off by Brian Sanford on 20260307
 # Final

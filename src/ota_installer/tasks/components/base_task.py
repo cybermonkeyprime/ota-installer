@@ -45,4 +45,3 @@ class BaseTask(object):
                 self.task.set_item(attr, value)
 
 
-# Signed off by Brian Sanford on 20260305

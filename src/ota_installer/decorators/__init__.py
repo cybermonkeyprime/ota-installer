@@ -17,5 +17,4 @@ from .styled_figlet_printer import *
 from .template import *
 from .timeit import *
 
-# Signed off by Brian Sanford on 20260303
 # Final

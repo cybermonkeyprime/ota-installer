@@ -1,6 +1,6 @@
 # src/ota_installer/images/file_image/dispatchers/file_type_dispatcher.py
+from collections.abc import Mapping
 from dataclasses import dataclass, field
-from pathlib import Path
 
 from ....dispatchers.constants.dispatcher_constants import DispatcherConstants
 from ....dispatchers.dispatcher_plugin_registry import dispatcher_plugin
@@ -16,7 +16,7 @@ class FileTypeDispatcher(DispatcherTemplate):
     """
 
     obj: type = field(default_factory=lambda: type)
-    collection: dict[str, Path] = field(init=False, default_factory=dict)
+    collection: Mapping = field(init=False, default_factory=dict)
 
     def __post_init__(self) -> None:
         """
@@ -28,4 +28,4 @@ class FileTypeDispatcher(DispatcherTemplate):
         )
 
 
-# Signed off by Brian Sanford on 20260305
+# Signed off by Brian Sanford on 20260317

@@ -8,4 +8,3 @@ def display_separator(indent: int = 9, char: str = "-") -> str:
     return f"{formatted_separator}> "
 
 
-# Signed off by Brian Sanford on 20260303

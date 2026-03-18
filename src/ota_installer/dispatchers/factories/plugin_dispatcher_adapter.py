@@ -49,4 +49,3 @@ class PluginDispatcherAdapter(object):
         return dispatcher.get_value(key=key)
 
 
-# Signed off by Brian Sanford on 20260303

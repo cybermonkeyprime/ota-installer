@@ -18,4 +18,3 @@ def task_director(instance: VariableManager, task_name: Callable) -> None:
     task.perform_task()
 
 
-# Signed off by Brian Sanford on 20260305

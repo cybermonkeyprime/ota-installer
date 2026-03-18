@@ -30,12 +30,11 @@ class ImageTypeDispatcher(DispatcherTemplate):
         type value.
         """
         normalized_key = self.normalize_key(key)
-        evaluated_key = (
-            "DEFAULT"
-            if normalized_key not in self.allowed_keys
-            else normalized_key
+        return (
+            ImageType[normalized_key]
+            if normalized_key in self.allowed_keys
+            else ImageType.DEFAULT.value
         )
-        return ImageType[evaluated_key].value
 
 
-# Signed off by Brian Sanford on 20260303
+# Signed off by Brian Sanford on 20260317
