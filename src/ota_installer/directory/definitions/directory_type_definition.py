@@ -11,10 +11,8 @@ from ...images.boot_image.containers.boot_image_container import (
     BootImageContainer,
 )
 from ...images.magisk_image.constants.magisk_image_paths import (
-    MagiskImagePath,
-)
-from ...images.magisk_image.containers.magisk_image_container import (
     MagiskImageContainer,
+    MagiskImagePath,
 )
 from ...log_setup import logger
 

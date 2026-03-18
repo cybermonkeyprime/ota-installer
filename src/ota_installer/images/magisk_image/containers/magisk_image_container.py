@@ -7,7 +7,7 @@ from .magisk_image_tuple import MagiskImageTuple
 
 
 @dataclass
-class MagiskImageContainer(object):
+class _MagiskImageContainer(object):
     """Container for managing Magisk image paths."""
 
     magisk_path: tuple = MagiskImagePath.list()
