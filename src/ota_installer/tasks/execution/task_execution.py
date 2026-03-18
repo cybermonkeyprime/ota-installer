@@ -71,7 +71,7 @@ class TaskExecutor(object):
     @property
     def task_group_keys(self) -> tuple:
         """Returns the keys of the task groups."""
-        return tuple(enum.value for enum in TaskGroupNames)
+        return TaskGroupNames.get_task_group_members()
 
     def execute_task_based_on_group(self) -> None:
         """Executes tasks based on the task group rules."""

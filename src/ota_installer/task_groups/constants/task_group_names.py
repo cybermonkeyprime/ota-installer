@@ -34,5 +34,10 @@ class TaskGroupNames(StrEnum):
         """Validate the provided task group name."""
         return value.upper() in cls.__members__
 
+    @classmethod
+    def get_task_group_members(cls) -> tuple:
+        """Returns the keys of the task groups."""
+        return tuple(enum.value for enum in cls)
 
-# Signed off by Brian Sanford on 20260317
+
+# Signed off by Brian Sanford on 20260318
