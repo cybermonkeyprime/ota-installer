@@ -5,7 +5,7 @@ from pathlib import Path
 from ..constants.boot_image_paths import BootImagePaths
 
 
-@dataclass
+@dataclass(frozen=True, slots=True)
 class BootImageContainer(object):
     """Container for boot image paths."""
 
@@ -13,10 +13,5 @@ class BootImageContainer(object):
 
     magisk: Path = BootImagePaths.MAGISK.value
 
-    @property
-    def path_list(self) -> list[Path]:
-        """List of all boot image paths."""
-        return [Path(enum_member.value) for enum_member in BootImagePaths]
 
-
-# Signed off by Brian Sanford on 20260317
+# Signed off by Brian Sanford on 20260318

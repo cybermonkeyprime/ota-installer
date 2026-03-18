@@ -16,7 +16,7 @@ class PreparationTask(Enum):
     @property
     def task_name(self) -> str:
         """Return the lowercase name of the task."""
-        return self.value.value.lower()
+        return self.value.value
 
     @classmethod
     def get_member_names(cls) -> tuple:
