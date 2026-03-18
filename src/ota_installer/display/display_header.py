@@ -15,7 +15,7 @@ class DisplayHeader(StrEnum):
     SUBTITLE = DisplayComponent.SUBTITLE.render
 
     @decorators.OutputPrinter(suffix="")
-    def render(self) -> str:
+    def render_default(self) -> str:
         """Returns the component for the display."""
         return self.value
 
@@ -30,10 +30,10 @@ class DisplayHeader(StrEnum):
 def show_display_header() -> None:
     """Renders the display header by invoking the components in sequence."""
     components = (
-        DisplayHeader.TITLE.render,
-        DisplayHeader.MOVE_CURSOR_UP.render,
+        DisplayHeader.TITLE.render_default,
+        DisplayHeader.MOVE_CURSOR_UP.render_default,
         DisplayHeader.SEPARATOR.render_green,
-        DisplayHeader.SUBTITLE.render,
+        DisplayHeader.SUBTITLE.render_default,
     )
     for component in components:
         if not _execute_component(component):
