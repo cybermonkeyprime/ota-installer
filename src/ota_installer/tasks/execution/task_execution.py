@@ -15,6 +15,7 @@ from ...task_groups.constants.task_group_names import TaskGroupNames
 from ..definitions.task_definitions import TaskDefinitions
 from ..managers.task_manager import TaskManager
 from .cli_arguments import CLIArguments
+from ota_installer.task_groups.constants import task_group_names
 
 
 @dataclass(slots=True)
@@ -87,13 +88,13 @@ class TaskExecutor(object):
 
     def execute_task(self, task_group_key: str) -> None:
         """Executes a specific task based on the task group key."""
-        if hasattr(self, "task_iteration"):
-            self.task_iteration(task_group_key)
-        else:
+        if not hasattr(self, "task_iteration"):
             logger.error(
-                f"Processing {task_group_key} "
-                "failed: task_iteration method not found."
+                f"Processing {task_group_key} failed: task_iteration method not found."
             )
+            raise AttributeError("task_iteration method not found.")
+
+        self.task_iteration(task_group_key)
 
     def task_iteration(self, task_group_key: str) -> None:
         """Iterates over tasks in the specified task group."""
@@ -103,11 +104,12 @@ class TaskExecutor(object):
 
     def execute_single_task(self) -> None:
         """Executes a single task if a task group is defined."""
-        if self.task_group:
-            logger.debug(
-                f"Executing single task for task group: {self.task_group}"
-            )
-            self.execute_task(self.task_group)
+        if not self.task_group:
+            raise AttributeError(f"{self.task_group!r} does not exist!")
+        logger.debug(
+            f"Executing single task for task group: {self.task_group}"
+        )
+        self.execute_task(self.task_group)
 
     def execute_all_tasks(self) -> None:
         """Executes all tasks defined in the task group keys."""
@@ -122,3 +124,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+# Signed off by Brian Sanford on 20260318
