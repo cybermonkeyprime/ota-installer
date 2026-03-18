@@ -8,11 +8,6 @@ from ....variables.variable_manager import VariableManager
 from ...variables.processors.base_processor import BaseProcessor
 
 
-class VariableFileConstants(Enum):
-    TITLE = str
-    VALUE = str
-
-
 @dataclass(slots=True)
 class VariableFileProcessor(BaseProcessor):
     """Processes variable files for the dispatcher."""
@@ -53,3 +48,6 @@ class VariableFileProcessor(BaseProcessor):
 
         builder.add(f"{data.title.upper()}", data.value)
         builder.render()
+
+
+# Signed off by Brian Sanford on 20260318
