@@ -22,7 +22,7 @@ class FooterWrapper(GenericDecorator):
         @wraps(function)
         def wrapper(*args, **kwargs) -> object:
             result = function(*args, **kwargs)
-            self.message_output()
+            self._output_message()
             return result
 
         return wrapper
@@ -30,8 +30,9 @@ class FooterWrapper(GenericDecorator):
     @OutputPrinter(use_color=True)
     @Colorizer(style="variable")
     @IndentWrapper(interval=1)  # type: ignore[return-value]
-    def message_output(self) -> object:
+    def _output_message(self) -> str:
         """Outputs the footer message."""
         return f"{self.message}"
 
 
+# Signed off by Brian Sanford on 20260317
