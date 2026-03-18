@@ -8,8 +8,6 @@ from ...dispatchers.templates.dispatcher_template import DispatcherTemplate
 from ...log_setup import logger
 from ..constants.directory_type import DirectoryType
 
-DIRECTORY = DirectoryType
-
 
 @dispatcher_plugin(DispatcherConstants.DIRECTORY.value)
 @dataclass
@@ -39,3 +37,4 @@ class DirectoryDispatcher(DispatcherTemplate):
         }
 
 
+# Signed off by Brian Sanford on 20260317
