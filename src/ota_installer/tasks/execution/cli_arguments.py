@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 
-@dataclass
+@dataclass(frozen=True, slots=True)
 class CLIArguments(object):
     """Represents command-line arguments for the application."""
 
@@ -12,3 +12,4 @@ class CLIArguments(object):
     version = False
 
 
+# Signed off by Brian Sanford on 20260318

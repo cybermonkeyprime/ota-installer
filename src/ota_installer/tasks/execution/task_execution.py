@@ -17,7 +17,7 @@ from ..managers.task_manager import TaskManager
 from .cli_arguments import CLIArguments
 
 
-@dataclass
+@dataclass(slots=True)
 class TaskExecutor(object):
     arguments: CLIArguments
     task_manager: TaskManager = field(default_factory=lambda: TaskManager())
