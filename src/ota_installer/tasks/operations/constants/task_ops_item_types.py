@@ -27,6 +27,7 @@ class TaskOpsItemTypes(Enum):
                 f"Allowed fields are: {', '.join(cls._member_names_)}"
             ) from None
 
-        return cls[field_name.upper()].value
+        return cls[key].value
 
 
+# Signed off by Brian Sanford on 20260317
