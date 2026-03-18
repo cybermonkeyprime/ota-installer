@@ -13,7 +13,7 @@ def set_directory(
 ) -> DirectoryTypeDefinition | None:
     """Creates a DirectoryTypeDefinition for the specified parent directory."""
     logger.debug("Creating Directories")
-    if not parent_directory.exists() or not parent_directory.is_dir():
+    if not any([parent_directory.exists(), parent_directory.is_dir()]):
         logger.error("Invalid parent directory: %s", parent_directory)
         return None
 
@@ -24,3 +24,4 @@ def set_directory(
     )
 
 
+# Signed off by Brian Sanford on 20260318
