@@ -24,7 +24,7 @@ class DisplayComponent(StrEnum):
         }
 
     @property
-    def render(self) -> str:
+    def build(self) -> str:
         """Triggers the associated display function."""
 
         if self not in self._mapping:
