@@ -25,17 +25,20 @@ class DisplayHeader(StrEnum):
         """Returns the component for the display in green."""
         return self.value
 
+    @classmethod
+    def get_rendering_sequence(cls) -> tuple:
+        return (
+            cls.TITLE.render_default,
+            cls.MOVE_CURSOR_UP.render_default,
+            cls.SEPARATOR.render_green,
+            cls.SUBTITLE.render_default,
+        )
+
 
 @decorators.FooterWrapper(message="")
 def show_display_header() -> None:
     """Renders the display header by invoking the components in sequence."""
-    components = (
-        DisplayHeader.TITLE.render_default,
-        DisplayHeader.MOVE_CURSOR_UP.render_default,
-        DisplayHeader.SEPARATOR.render_green,
-        DisplayHeader.SUBTITLE.render_default,
-    )
-    for component in components:
+    for component in DisplayHeader.get_rendering_sequence():
         if not execute_component(component):
             logger.error("An error occurred during initialization.")
 
