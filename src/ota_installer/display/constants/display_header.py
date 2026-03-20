@@ -5,11 +5,11 @@ from enum import StrEnum, auto
 
 from rich.control import Control
 
-from .. import decorators
-from ..log_setup import logger
-from .components.separator import display_separator
-from .components.subtitle import display_subtitle
-from .components.title import display_title
+from ... import decorators
+from ...log_setup import logger
+from ..components.separator import display_separator
+from ..components.subtitle import display_subtitle
+from ..components.title import display_title
 
 
 class DisplayHeader(StrEnum):
