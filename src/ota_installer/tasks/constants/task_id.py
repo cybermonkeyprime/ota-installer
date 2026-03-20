@@ -4,8 +4,6 @@ from enum import StrEnum, auto
 
 from ..plugin_registry import TASK_PLUGINS
 
-MISSING = object()
-
 
 class TaskID(StrEnum):
     """Enumeration of task identifiers for OTA installation processes."""
@@ -32,7 +30,7 @@ class TaskID(StrEnum):
         The Dispatcher: Fetches the registered plugin function.
         Fails loudly if the task exists in TaskID but wasn't loaded.
         """
-        if self.value is MISSING:
+        if self.value is TASK_PLUGINS:
             raise NotImplementedError(
                 f"LOUD FAIL: TaskID.{self.name} ('{self.value}') has no "
                 f"registered plugin. Check plugin_loader.py imports!"
