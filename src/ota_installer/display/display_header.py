@@ -34,22 +34,22 @@ class DisplayHeader(StrEnum):
             cls.SUBTITLE.render_default,
         )
 
+    @classmethod
+    @decorators.FooterWrapper(message="")
+    def render_all(cls) -> None:
+        """Render the display header by invoking the components in sequence."""
+        for component in DisplayHeader.get_rendering_sequence():
+            if not cls.execute_component(component):
+                logger.error("An error occurred during initialization.")
 
-@decorators.FooterWrapper(message="")
-def show_display_header() -> None:
-    """Renders the display header by invoking the components in sequence."""
-    for component in DisplayHeader.get_rendering_sequence():
-        if not execute_component(component):
-            logger.error("An error occurred during initialization.")
-
-
-def execute_component(component) -> bool:
-    """Executes a display component and returns success status."""
-    return component() if component else False
+    @staticmethod
+    def execute_component(component) -> bool:
+        """Executes a display component and returns success status."""
+        return component() if component else False
 
 
 def main():
-    show_display_header()
+    DisplayHeader.render_all()
 
 
 if __name__ == "__main__":
