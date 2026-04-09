@@ -17,6 +17,14 @@ from ....variables.dispatchers.variable_type_dispatcher import (
     VariableTypeDispatcher,
 )
 
+DispatcherClasses = (
+    DirectoryDispatcher
+    | FileTypeDispatcher
+    | ImageTypeDispatcher
+    | TaskGroupTypeDispatcher
+    | VariableTypeDispatcher
+)
+
 
 class DispatcherType(Enum):
     """Mapping of dispatcher types to their corresponding classes."""
@@ -30,15 +38,8 @@ class DispatcherType(Enum):
     @classmethod
     def allowed_dispatchers(cls) -> tuple[str, ...]:
         """Returns a tuple of allowed dispatcher names."""
-        return tuple(enum_member.name for enum_member in cls)
+        search = tuple(enum_member.name for enum_member in cls)
+        return search
 
-
-DispatcherClasses = (
-    DirectoryDispatcher
-    | FileTypeDispatcher
-    | ImageTypeDispatcher
-    | TaskGroupTypeDispatcher
-    | VariableTypeDispatcher
-)
 
 # Signed off by Brian Sanford on 20260317

@@ -1,4 +1,4 @@
-# src/ota_installer/dispatchers/constants/dispatcher_constants.py
+# src/ota_installer/dispatchers/constants/dispatcher_type.py
 from collections.abc import Callable
 from enum import StrEnum, auto
 from pathlib import Path
@@ -8,7 +8,7 @@ CollectionValues = Path | str
 CollectionDictionary = dict[CollectionKeys, CollectionValues]
 
 
-class DispatcherConstants(StrEnum):
+class DispatcherType(StrEnum):
     """Enumeration for dispatcher constants used in the OTA installer."""
 
     DIRECTORY = auto()
@@ -36,18 +36,22 @@ class DispatcherConstants(StrEnum):
         )
 
         return {
-            cls.FILE: FileTypeDispatcher,
-            cls.DIRECTORY: DirectoryDispatcher,
-            cls.IMAGE: ImageTypeDispatcher,
-            cls.TASK_GROUP: TaskGroupTypeDispatcher,
-            cls.VARIABLE: VariableTypeDispatcher,
+            cls.FILE.name: FileTypeDispatcher,
+            cls.DIRECTORY.name: DirectoryDispatcher,
+            cls.IMAGE.name: ImageTypeDispatcher,
+            cls.TASK_GROUP.name: TaskGroupTypeDispatcher,
+            cls.VARIABLE.name: VariableTypeDispatcher,
         }
 
     @classmethod
     def allowed_dispatchers(cls) -> tuple[str, ...]:
         """returns a tuple of allowed dispatcher names."""
-        search = {key.name for key in cls._dispatcher_mapping().keys()}
-        return tuple(search)
+        search = tuple(key for key in cls._dispatcher_mapping().keys())
+        return search
+
+    @classmethod
+    def get_function(cls, key: str):
+        return cls._dispatcher_mapping()[key.upper()]
 
 
 # Final sign off by Brian Sanford on 20260317

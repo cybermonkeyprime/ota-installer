@@ -3,9 +3,9 @@ from dataclasses import dataclass
 from typing import Self
 
 from ...log_setup import logger
+from ..constants.dispatcher_type import DispatcherType
 from .mappings.dispatcher_factory_mapping import (
     DispatcherClasses,
-    DispatcherType,
 )
 
 
@@ -37,12 +37,11 @@ class DispatchRetriever(object):
             )
             return None
 
-        dispatcher_enum = DispatcherType[self.process_type.upper()]
-        if dispatcher_enum is None:
+        dispatcher_name = DispatcherType.get_function(
+            self.process_type.upper()
+        )
+        if dispatcher_name is None:
             logger.error(f"Dispatcher mapping failed for: {self.process_type}")
             return None
 
-        dispatcher_class = dispatcher_enum.value
-        return dispatcher_class(self.function_call)
-
-
+        return dispatcher_name(self.function_call)
