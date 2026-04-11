@@ -11,8 +11,8 @@ from ..components.separator import display_separator
 from ..components.subtitle import display_subtitle
 from ..components.title import display_title
 
-type Bool_Condition = Callable[[], bool]
-type Str_Condition = Callable[[], str]
+type Bool_Predicate = Callable[[], bool]
+type Str_Predicate = Callable[[], str]
 
 
 class DisplayHeader(StrEnum):
@@ -22,7 +22,7 @@ class DisplayHeader(StrEnum):
     SUBTITLE = auto()
 
     @property
-    def mapping(self) -> dict["DisplayHeader", Str_Condition | str]:
+    def mapping(self) -> dict["DisplayHeader", Str_Predicate | str]:
         return {
             DisplayHeader.TITLE: display_title,
             DisplayHeader.MOVE_CURSOR_UP: str(Control.move(y=-1)),
@@ -49,7 +49,7 @@ class DisplayHeader(StrEnum):
         return self.build
 
     @classmethod
-    def get_rendering_sequence(cls) -> tuple[Bool_Condition, ...]:
+    def get_rendering_sequence(cls) -> tuple[Bool_Predicate, ...]:
         return (
             cls.TITLE.render_default,
             cls.MOVE_CURSOR_UP.render_default,
@@ -66,7 +66,7 @@ class DisplayHeader(StrEnum):
                 logger.error("An error occurred during initialization.")
 
     @staticmethod
-    def execute_component(component: Bool_Condition | None) -> bool:
+    def execute_component(component: Bool_Predicate | None) -> bool:
         """Execute a display component and return success status."""
         return component() if component else False
 
