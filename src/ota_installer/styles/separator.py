@@ -4,7 +4,7 @@ from enum import Enum
 from .indentation import indentation
 
 
-class SeparatorConstants(Enum):
+class SeparatorType(Enum):
     """Enumeration for separator constants."""
 
     CHAR = "-"
@@ -12,15 +12,13 @@ class SeparatorConstants(Enum):
     INTERVAL = 10
 
 
-def separator(
-    increment: int = 1, char: str = SeparatorConstants.CHAR.value
-) -> str:
+def separator(cls=SeparatorType) -> str:
     """Generates a formatted separator string."""
-    sc = SeparatorConstants
     return indentation(
-        char=sc.CHAR.value,
-        spaces=sc.SPACING.value,
-        interval=sc.INTERVAL.value,
+        char=cls.CHAR.value,
+        spaces=cls.SPACING.value,
+        interval=cls.INTERVAL.value,
     )
 
 
+# Signed off by Brian Sanford on 20260410

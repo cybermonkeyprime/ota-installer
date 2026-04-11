@@ -11,6 +11,9 @@ from ..components.separator import display_separator
 from ..components.subtitle import display_subtitle
 from ..components.title import display_title
 
+type Bool_Condition = Callable[[], bool]
+type Str_Condition = Callable[[], str]
+
 
 class DisplayHeader(StrEnum):
     TITLE = auto()
@@ -19,18 +22,17 @@ class DisplayHeader(StrEnum):
     SUBTITLE = auto()
 
     @property
-    def build(self) -> str:
-        """Build the display content for this header component."""
-        mapping: dict[DisplayHeader, Callable[[], str] | str] = {
+    def mapping(self) -> dict["DisplayHeader", Str_Condition | str]:
+        return {
             DisplayHeader.TITLE: display_title,
             DisplayHeader.MOVE_CURSOR_UP: str(Control.move(y=-1)),
             DisplayHeader.SEPARATOR: display_separator,
             DisplayHeader.SUBTITLE: display_subtitle,
         }
 
-        value = mapping[self]
-
-        if callable(value):
+    @property
+    def build(self) -> str:
+        if callable(value := self.mapping[self]):
             return value()
 
         return value
@@ -47,7 +49,7 @@ class DisplayHeader(StrEnum):
         return self.build
 
     @classmethod
-    def get_rendering_sequence(cls) -> tuple[Callable[[], bool], ...]:
+    def get_rendering_sequence(cls) -> tuple[Bool_Condition, ...]:
         return (
             cls.TITLE.render_default,
             cls.MOVE_CURSOR_UP.render_default,
@@ -64,7 +66,7 @@ class DisplayHeader(StrEnum):
                 logger.error("An error occurred during initialization.")
 
     @staticmethod
-    def execute_component(component: Callable[[], bool] | None) -> bool:
+    def execute_component(component: Bool_Condition | None) -> bool:
         """Execute a display component and return success status."""
         return component() if component else False
 
