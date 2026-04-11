@@ -1,5 +1,4 @@
-# src/ota_installer/display/show_display_header.py
-# from collections.abc import Callable
+# src/ota_installer/display/constants/display_header.py
 from collections.abc import Callable
 from enum import StrEnum, auto
 
