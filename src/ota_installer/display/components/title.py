@@ -2,7 +2,7 @@
 
 from ...decorators import StyledFigletPrinter
 from ...program_versioning.constants.software_constants import (
-    SoftwareConstants,
+    SoftwareType,
 )
 
 
@@ -13,6 +13,4 @@ def display_title() -> str:
         title.
     """
 
-    return f" {SoftwareConstants.TITLE.value}"
-
-
+    return f" {SoftwareType.TITLE.value}"

@@ -5,7 +5,7 @@ from .display.constants.display_header import DisplayHeader
 from .exceptions.handlers.keyboard_interrupt_handler import (
     KeyboardInterruptHandler,
 )
-from .program_versioning.constants.software_constants import SoftwareConstants
+from .program_versioning.constants.software_constants import SoftwareType
 from .tasks.execution.task_execution import CLIArguments, TaskExecutor
 
 
@@ -34,8 +34,8 @@ def display_random_exit_message() -> str:
         "You did it, tech wizard!",
         "Mission complete—well done!",
         "Everything's in place.",
-        f"{SoftwareConstants.TITLE.value} says: Great job!",
-        f"{SoftwareConstants.TITLE.value} is complete!",
+        f"{SoftwareType.TITLE.value} says: Great job!",
+        f"{SoftwareType.TITLE.value} is complete!",
     ]
 
     emoji = choice(["🎉", "✅", "🚀", "✨", "🎯", "💻"])
