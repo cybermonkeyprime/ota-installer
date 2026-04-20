@@ -5,7 +5,7 @@ from enum import Enum
 from ....dispatchers.constants.dispatcher_type import DispatcherType
 from ....dispatchers.dispatcher_plugin_registry import dispatcher_plugin
 from ....dispatchers.templates.dispatcher_template import DispatcherTemplate
-from .
+from ...boot_image.constants.boot_image_type import BootImageType
 
 
 class ImageType(Enum):
@@ -30,4 +30,4 @@ class ImageTypeDispatcher(DispatcherTemplate):
 
     def get_key(self, key: str) -> str:
         """Retrieves the value associated with the given key."""
-        return getattr(ImageType, key.upper(), ImageType.DEFAULT).value
+        return BootImageType.validate_key(key)

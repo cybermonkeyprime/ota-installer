@@ -13,11 +13,7 @@ class ImageTypeDispatcher(DispatcherTemplate):
         """Normalizes the provided key and returns the corresponding image
         type value.
         """
-        return BootImageType.get_key(key)
-
-
-def retrieve_image_type_from_key(enum: type, key: str) -> str:
-    return enum.get_key(key)
+        return BootImageType.validate_key(key)
 
 
 # Signed off by Brian Sanford on 20260420
