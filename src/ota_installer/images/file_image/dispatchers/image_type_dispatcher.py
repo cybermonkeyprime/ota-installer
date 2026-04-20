@@ -2,9 +2,7 @@
 from dataclasses import dataclass, field
 from enum import Enum
 
-from ....dispatchers.constants.dispatcher_constants import (
-    DispatcherConstants,
-)
+from ....dispatchers.constants.dispatcher_type import DispatcherType
 from ....dispatchers.dispatcher_plugin_registry import dispatcher_plugin
 from ....dispatchers.templates.dispatcher_template import DispatcherTemplate
 
@@ -22,7 +20,7 @@ class ImageType(Enum):
         return tuple(cls.__members__.keys())
 
 
-@dispatcher_plugin(DispatcherConstants.IMAGE.value)
+@dispatcher_plugin(DispatcherType.IMAGE.value)
 @dataclass
 class ImageTypeDispatcher(DispatcherTemplate):
     """Dispatcher for handling image types."""
@@ -32,5 +30,3 @@ class ImageTypeDispatcher(DispatcherTemplate):
     def get_key(self, key: str) -> str:
         """Retrieves the value associated with the given key."""
         return getattr(ImageType, key.upper(), ImageType.DEFAULT).value
-
-

@@ -2,13 +2,13 @@
 from collections.abc import Mapping
 from dataclasses import dataclass, field
 
-from ....dispatchers.constants.dispatcher_constants import DispatcherConstants
+from ....dispatchers.constants.dispatcher_type import DispatcherType
 from ....dispatchers.dispatcher_plugin_registry import dispatcher_plugin
 from ....dispatchers.templates.dispatcher_template import DispatcherTemplate
 from ....images.file_image.constants.file_image_names import FileImageNames
 
 
-@dispatcher_plugin(DispatcherConstants.FILE.value)
+@dispatcher_plugin(DispatcherType.FILE.value)
 @dataclass
 class FileTypeDispatcher(DispatcherTemplate):
     """

@@ -2,14 +2,14 @@
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from ...dispatchers.constants.dispatcher_constants import DispatcherConstants
+from ...dispatchers.constants.dispatcher_type import DispatcherType
 from ...dispatchers.dispatcher_plugin_registry import dispatcher_plugin
 from ...dispatchers.templates.dispatcher_template import DispatcherTemplate
 from ...log_setup import logger
 from ..constants.task_group_names import TaskGroupNames
 
 
-@dispatcher_plugin(DispatcherConstants.TASK_GROUP.value)
+@dispatcher_plugin(DispatcherType.TASK_GROUP.value)
 @dataclass
 class TaskGroupTypeDispatcher(DispatcherTemplate):
     obj: type = field(default_factory=lambda: type)
@@ -29,5 +29,3 @@ class TaskGroupTypeDispatcher(DispatcherTemplate):
         corresponding values.
         """
         return TaskGroupNames.create_dictionary(self.obj)
-
-

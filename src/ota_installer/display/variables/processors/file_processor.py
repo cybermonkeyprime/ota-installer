@@ -1,9 +1,8 @@
 # src/ota_installer/display/variables/processors/file_processor.py
 from dataclasses import dataclass, field
-from enum import Enum
 from typing import Self
 
-from ....dispatchers.constants.dispatcher_constants import DispatcherConstants
+from ....dispatchers.constants.dispatcher_type import DispatcherType
 from ....variables.variable_manager import VariableManager
 from ...variables.processors.base_processor import BaseProcessor
 
@@ -20,7 +19,7 @@ class VariableFileProcessor(BaseProcessor):
 
     def __post_init__(self) -> None:
         """Initializes the dispatcher type after the dataclass is created."""
-        self.dispatcher_type = DispatcherConstants.VARIABLE.value
+        self.dispatcher_type = DispatcherType.VARIABLE.value
         super().__post_init__()
 
     def set_title(self, name: str) -> Self:

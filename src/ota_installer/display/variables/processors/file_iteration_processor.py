@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Self
 
-from ....dispatchers.constants.dispatcher_constants import DispatcherConstants
+from ....dispatchers.constants.dispatcher_type import DispatcherType
 from ....variables.variable_manager import VariableManager
 from ...variables.processors.base_processor import BaseProcessor
 
@@ -24,7 +24,7 @@ class FileIterationProcessor(BaseProcessor):
 
     def __post_init__(self) -> None:
         """Initializes the dispatcher type after the dataclass is created."""
-        self.dispatcher_type = DispatcherConstants.FILE.value
+        self.dispatcher_type = DispatcherType.FILE.value
         super().__post_init__()
 
     def process_items(self) -> None:
@@ -40,5 +40,3 @@ class FileIterationProcessor(BaseProcessor):
             )
             builder.add(data.title.upper(), str(data.value))
         builder.render()
-
-

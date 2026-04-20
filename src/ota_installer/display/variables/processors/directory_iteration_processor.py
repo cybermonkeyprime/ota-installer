@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 from enum import Enum
 from typing import Self
 
-from ....dispatchers.constants.dispatcher_constants import DispatcherConstants
+from ....dispatchers.constants.dispatcher_type import DispatcherType
 from ....variables.variable_manager import VariableManager
 from ...variables.processors.base_processor import BaseProcessor
 
@@ -49,7 +49,7 @@ class DirectoryIterationProcessor(BaseProcessor):
 
     def __post_init__(self):
         """Initializes the dispatcher type."""
-        self.dispatcher_type = DispatcherConstants.DIRECTORY.value
+        self.dispatcher_type = DispatcherType.DIRECTORY.value
         super().__post_init__()
 
     def set_directory_names(self, directory_names: tuple[str, ...]) -> Self:
@@ -83,5 +83,3 @@ class DirectoryIterationProcessor(BaseProcessor):
             data = VariableItem(title=title_string, value=value_string)
             builder.add(data.title.upper(), data.value)
         builder.render()
-
-

@@ -1,14 +1,14 @@
 # src/ota_installer/directory/dispatchers/directory_dispatcher.py
 from dataclasses import dataclass, field
 
-from ...dispatchers.constants.dispatcher_constants import DispatcherConstants
+from ...dispatchers.constants.dispatcher_type import DispatcherType
 from ...dispatchers.dispatcher_plugin_registry import dispatcher_plugin
 from ...dispatchers.templates.dispatcher_template import DispatcherTemplate
 from ...log_setup import logger
 from ..constants.directory_type import DirectoryType
 
 
-@dispatcher_plugin(DispatcherConstants.DIRECTORY.value)
+@dispatcher_plugin(DispatcherType.DIRECTORY.value)
 @dataclass
 class DirectoryDispatcher(DispatcherTemplate):
     obj: type = field(default_factory=lambda: type)

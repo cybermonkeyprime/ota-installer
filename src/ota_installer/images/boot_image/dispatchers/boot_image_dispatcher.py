@@ -1,40 +1,23 @@
 # src/ota_installer/images/boot_image/dispatchers/boot_image_dispatcher.py
 from dataclasses import dataclass, field
-from enum import StrEnum
 
 from ....dispatchers.templates.dispatcher_template import DispatcherTemplate
-
-
-class ImageType(StrEnum):
-    TOKAY = "init_boot"
-    SHIBA = "init_boot"
-    DEFAULT = "init_boot"
-
-    @classmethod
-    def allowed_types(cls) -> tuple:
-        """Returns a tuple of allowed image type keys in lowercase."""
-        return tuple(enum.name.lower() for enum in cls)
+from ..constants.boot_image_type import BootImageType
 
 
 @dataclass
 class ImageTypeDispatcher(DispatcherTemplate):
     obj: type = field(default_factory=lambda: type)
 
-    @property
-    def allowed_keys(self) -> tuple[str, ...]:
-        """Returns a tuple of allowed image type keys in lowercase."""
-        return ImageType.allowed_types()
-
     def get_key(self, key: str) -> str:
         """Normalizes the provided key and returns the corresponding image
         type value.
         """
-        normalized_key = self.normalize_key(key)
-        return (
-            ImageType[normalized_key]
-            if normalized_key in self.allowed_keys
-            else ImageType.DEFAULT.value
-        )
+        return BootImageType.get_key(key)
+
+
+def retrieve_image_type_from_key(enum: type, key: str) -> str:
+    return enum.get_key(key)
 
 
 # Signed off by Brian Sanford on 20260317

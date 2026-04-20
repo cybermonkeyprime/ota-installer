@@ -1,5 +1,4 @@
 # src/ota_installer/dispatchers/constants/dispatcher_type.py
-from collections.abc import Callable
 from enum import StrEnum, auto
 from pathlib import Path
 

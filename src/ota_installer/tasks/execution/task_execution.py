@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Self
 
-from ...dispatchers.constants.dispatcher_constants import DispatcherConstants
+from ...dispatchers.constants.dispatcher_type import DispatcherType
 from ...dispatchers.factories.plugin_dispatcher_adapter import (
     PluginDispatcherAdapter,
 )
@@ -53,7 +53,7 @@ class TaskExecutor(object):
     def initialize_task_dispatcher(self) -> Self:
         """Initializes the task dispatcher."""
         self.dispatcher = PluginDispatcherAdapter(
-            DispatcherConstants.TASK_GROUP.value, self.task_definitions
+            DispatcherType.TASK_GROUP.value, self.task_definitions
         ).load()
         return self
 

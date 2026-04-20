@@ -5,7 +5,7 @@ import typer
 
 from . import application
 from .log_setup import enable_debug_logging
-from .program_versioning.software_version import DisplayType
+from .program_versioning.constants.software_constants import SoftwareType
 from .tasks.execution.cli_arguments import CLIArguments
 from .tasks.execution.task_execution import TaskGroupNames
 
@@ -15,7 +15,7 @@ cli = typer.Typer(help="Manually Install Android Device OTA Firmware")
 def version_callback(value: bool) -> None:
     """Display version information and exit."""
     if value:
-        typer.echo(DisplayType.CONCISE.value)  # Customize as needed
+        typer.echo(SoftwareType.render_text())  # Customize as needed
         raise typer.Exit()
 
 

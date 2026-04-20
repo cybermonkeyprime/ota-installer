@@ -2,12 +2,12 @@
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from ...dispatchers.constants.dispatcher_constants import DispatcherConstants
+from ...dispatchers.constants.dispatcher_type import DispatcherType
 from ...dispatchers.dispatcher_plugin_registry import dispatcher_plugin
 from ...dispatchers.templates.dispatcher_template import DispatcherTemplate
 
 
-@dispatcher_plugin(DispatcherConstants.VARIABLE.value)
+@dispatcher_plugin(DispatcherType.VARIABLE.value)
 @dataclass
 class VariableTypeDispatcher(DispatcherTemplate):
     """Dispatcher for handling variable types."""
@@ -26,5 +26,3 @@ class VariableTypeDispatcher(DispatcherTemplate):
             "path.parent": Path(self.obj.path).parent,
             "log_file": self.obj.file_paths.log_file,
         }
-
-
