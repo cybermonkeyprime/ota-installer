@@ -23,4 +23,4 @@ class BootImageType(StrEnum):
         type value.
         """
         normalized_key = cls.normalize_key(key)
-        return getattr(cls, normalized_key, cls.DEFAULT).value
+        return cls[normalized_key.upper()] or cls.DEFAULT.value
