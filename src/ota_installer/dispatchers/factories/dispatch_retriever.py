@@ -2,7 +2,6 @@
 from dataclasses import dataclass
 from typing import Self
 
-from ...log_setup import logger
 from ..constants.dispatcher_type import DispatcherType
 
 
@@ -22,9 +21,6 @@ class DispatchRetriever(object):
 
     def get_dispatcher(self) -> type | None:
         """Retrieves the dispatcher class based on the process type."""
-        logger.debug(
-            f"Retrieving dispatcher for process type: {self.process_type}"
-        )
         return DispatcherType.retrieve_dispatcher(
             self.process_type, self.function_call
         )
