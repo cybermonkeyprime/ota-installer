@@ -51,11 +51,13 @@ class DispatcherType(StrEnum):
         return search
 
     @classmethod
-    def get_function(cls, key: str) -> type:
+    def call_dispatcher(cls, key: str) -> type:
+        """Retrieves the dispatcher class based on the key."""
         return cls._dispatcher_mapping()[key.upper()]
 
     @classmethod
-    def dispatcher_check(cls, process_type) -> None:
+    def check_dispatcher(cls, process_type) -> None:
+        """Validates the dispatcher type."""
         allowed_dispatchers = cls.allowed_dispatchers()
         if process_type.upper() not in allowed_dispatchers:
             logger.error(
@@ -66,22 +68,22 @@ class DispatcherType(StrEnum):
 
     @classmethod
     def dispatcher_error(cls, process_type):
-        if cls.get_function(process_type) is None:
+        if cls.call_dispatcher(process_type) is None:
             logger.error(f"Dispatcher mapping failed for: {process_type}")
             return None
 
     @classmethod
-    def retrieve_dispatcher(cls, process_type, function_call) -> type | None:
+    def retrieve_dispatcher(cls, process_type, function_data) -> type | None:
         """Retrieves the dispatcher class based on the process type."""
         logger.debug(f"Retrieving dispatcher for process type: {process_type}")
 
-        cls.dispatcher_check(process_type)
+        cls.check_dispatcher(process_type)
 
-        dispatcher_name = cls.get_function(process_type.upper())
+        dispatcher_name = cls.call_dispatcher(process_type.upper())
 
         cls.dispatcher_error(process_type)
 
-        return dispatcher_name(function_call)
+        return dispatcher_name(function_data)
 
 
-# Final sign off by Brian Sanford on 20260317
+# Final sign off by Brian Sanford on 20260421
