@@ -36,12 +36,15 @@ class TaskOperationDetails(Enum):
         index=4,
         title="Backup Stock Boot Image",
         description="📁 Backing up your stock boot image.",
+        command_string="",
+        reminder="",
     )
     CHECK_ADB_CONNECTION = TaskOperation(
         index=1,
         title="Check ADB Connection",
         description="🔌 Checking for an ADB-connected device.",
         command_string="adb devices",
+        reminder="",
     )
     PUSH_STOCK_BOOT_IMAGE = TaskOperation(
         index=2,
@@ -53,22 +56,28 @@ class TaskOperationDetails(Enum):
         index=3,
         title="Find Magisk Image",
         description="🔍 Searching for the patched Magisk image.",
+        command_string="",
+        reminder="",
     )
     PULL_MAGISK_IMAGE = TaskOperation(
         index=4,
         title="Pull Magisk Image",
         description="📥 Pulling the patched Magisk image to your computer.",
+        command_string="",
+        reminder="",
     )
     REBOOT_TO_RECOVERY = TaskOperation(
         index=1,
         title="Reboot To Recovery",
         description="♻️ Rebooting the device into recovery mode.",
         command_string="adb reboot recovery",
+        reminder="",
     )
     APPLY_OTA_UPDATE = TaskOperation(
         index=2,
         title="Apply OTA Image",
         description="🚀 Applying the OTA update via adb sideload.",
+        command_string="",
         reminder="Restart to verify build, then reboot to Bootloader",
     )
     REBOOT_TO_BOOTLOADER = TaskOperation(
@@ -76,11 +85,14 @@ class TaskOperationDetails(Enum):
         title="Reboot to Bootloader",
         description="🧰 Rebooting into bootloader (fastboot) mode.",
         command_string="adb reboot bootloader",
+        reminder="",
     )
     BOOT_TO_MAGISK_IMAGE = TaskOperation(
         index=4,
         title="Boot to Magisk Image",
         description="💾 Flashing the patched Magisk image with fastboot.",
+        command_string="",
+        reminder="",
     )
 
 
