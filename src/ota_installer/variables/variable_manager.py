@@ -7,6 +7,7 @@ from ..directory.definitions.directory_type_definition import (
     DirectoryTypeDefinition,
 )
 from ..directory.managers.directory_type_manager import set_directory
+from ..dispatchers.constants.dispatcher_type import DispatcherType
 from ..dispatchers.factories.mappings.dispatcher_factory_mapping import (
     DispatcherClasses,
 )
@@ -123,7 +124,7 @@ class VariableManager(object):
             or None
         )
 
-    def get_dispatcher(self, process_type) -> DispatcherClasses | None:
+    def get_dispatcher(self, process_type) -> type | None:
         from ..dispatchers.factories.dispatch_retriever import (
             DispatchRetriever,
         )
@@ -131,6 +132,7 @@ class VariableManager(object):
         """Retrieves the dispatcher for the given process type."""
         function_call = set_variable_manager(self.path)
         logger.debug("VariableManager.get_dispatcher(): function_call)")
+        return DispatcherType.retrieve_dispatcher(process_type, function_call)
         return (
             DispatchRetriever(process_type)
             .set_function_call(function_call)
