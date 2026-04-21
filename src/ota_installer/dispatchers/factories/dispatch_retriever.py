@@ -4,9 +4,6 @@ from typing import Self
 
 from ...log_setup import logger
 from ..constants.dispatcher_type import DispatcherType
-from .mappings.dispatcher_factory_mapping import (
-    DispatcherClasses,
-)
 
 
 @dataclass
@@ -23,25 +20,11 @@ class DispatchRetriever(object):
         self.function_call = function_call
         return self
 
-    def get_dispatcher(self) -> DispatcherClasses | None:
+    def get_dispatcher(self) -> type | None:
         """Retrieves the dispatcher class based on the process type."""
         logger.debug(
             f"Retrieving dispatcher for process type: {self.process_type}"
         )
-        allowed_dispatchers = DispatcherType.allowed_dispatchers()
-
-        if self.process_type.upper() not in allowed_dispatchers:
-            logger.error(
-                f"Invalid dispatcher type: {self.process_type}."
-                f"Allowed: {allowed_dispatchers}"
-            )
-            return None
-
-        dispatcher_name = DispatcherType.get_function(
-            self.process_type.upper()
+        return DispatcherType.retrieve_dispatcher(
+            self.process_type, self.function_call
         )
-        if dispatcher_name is None:
-            logger.error(f"Dispatcher mapping failed for: {self.process_type}")
-            return None
-
-        return dispatcher_name(self.function_call)

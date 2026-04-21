@@ -4,9 +4,11 @@ from enum import Enum
 from ....directory.dispatchers.directory_dispatcher import (
     DirectoryDispatcher,
 )
-from ....images.boot_image.dispatchers.boot_image_dispatcher import (
-    ImageTypeDispatcher,
-)
+
+# from ....images.boot_image.dispatchers.boot_image_dispatcher import (
+#    ImageTypeDispatcher,
+# )
+from ....images.boot_image.constants.boot_image_type import BootImageType
 from ....images.file_image.dispatchers.file_type_dispatcher import (
     FileTypeDispatcher,
 )
@@ -20,7 +22,7 @@ from ....variables.dispatchers.variable_type_dispatcher import (
 DispatcherClasses = (
     DirectoryDispatcher
     | FileTypeDispatcher
-    | ImageTypeDispatcher
+    | BootImageType
     | TaskGroupTypeDispatcher
     | VariableTypeDispatcher
 )
@@ -31,7 +33,7 @@ class DispatcherType(Enum):
 
     FILE = FileTypeDispatcher
     DIRECTORY = DirectoryDispatcher
-    IMAGE = ImageTypeDispatcher
+    IMAGE = BootImageType
     TASK_GROUP = TaskGroupTypeDispatcher
     VARIABLE = VariableTypeDispatcher
 

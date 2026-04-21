@@ -2,6 +2,8 @@
 from enum import StrEnum, auto
 from pathlib import Path
 
+from ...log_setup import logger
+
 CollectionKeys = str
 CollectionValues = Path | str
 CollectionDictionary = dict[CollectionKeys, CollectionValues]
@@ -21,8 +23,8 @@ class DispatcherType(StrEnum):
         from ...directory.dispatchers.directory_dispatcher import (
             DirectoryDispatcher,
         )
-        from ...images.boot_image.dispatchers.boot_image_dispatcher import (
-            ImageTypeDispatcher,
+        from ...images.boot_image.constants.boot_image_type import (
+            BootImageType,
         )
         from ...images.file_image.dispatchers.file_type_dispatcher import (
             FileTypeDispatcher,
@@ -37,7 +39,7 @@ class DispatcherType(StrEnum):
         return {
             cls.FILE.name: FileTypeDispatcher,
             cls.DIRECTORY.name: DirectoryDispatcher,
-            cls.IMAGE.name: ImageTypeDispatcher,
+            cls.IMAGE.name: BootImageType,
             cls.TASK_GROUP.name: TaskGroupTypeDispatcher,
             cls.VARIABLE.name: VariableTypeDispatcher,
         }
@@ -49,8 +51,37 @@ class DispatcherType(StrEnum):
         return search
 
     @classmethod
-    def get_function(cls, key: str):
+    def get_function(cls, key: str) -> type:
         return cls._dispatcher_mapping()[key.upper()]
+
+    @classmethod
+    def dispatcher_check(cls, process_type) -> None:
+        allowed_dispatchers = cls.allowed_dispatchers()
+        if process_type.upper() not in allowed_dispatchers:
+            logger.error(
+                f"Invalid dispatcher type: {process_type}."
+                f"Allowed: {allowed_dispatchers}"
+            )
+            return None
+
+    @classmethod
+    def dispatcher_error(cls, process_type):
+        if cls.get_function(process_type) is None:
+            logger.error(f"Dispatcher mapping failed for: {process_type}")
+            return None
+
+    @classmethod
+    def retrieve_dispatcher(cls, process_type, function_call) -> type | None:
+        """Retrieves the dispatcher class based on the process type."""
+        logger.debug(f"Retrieving dispatcher for process type: {process_type}")
+
+        cls.dispatcher_check(process_type)
+
+        dispatcher_name = cls.get_function(process_type.upper())
+
+        cls.dispatcher_error(process_type)
+
+        return dispatcher_name(function_call)
 
 
 # Final sign off by Brian Sanford on 20260317
