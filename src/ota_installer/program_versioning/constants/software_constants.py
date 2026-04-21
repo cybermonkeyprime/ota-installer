@@ -8,7 +8,7 @@ class SoftwareType(Enum):
     TITLE = "OTA-Installer"
     MAJOR_NUMBER = 2026
     MINOR_NUMBER = 4
-    PATCH_NUMBER = 10
+    PATCH_NUMBER = 21
 
     @classmethod
     def render_display(cls) -> str:
