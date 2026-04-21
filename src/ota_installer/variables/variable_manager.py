@@ -125,19 +125,10 @@ class VariableManager(object):
         )
 
     def get_dispatcher(self, process_type) -> type | None:
-        from ..dispatchers.factories.dispatch_retriever import (
-            DispatchRetriever,
-        )
-
         """Retrieves the dispatcher for the given process type."""
         function_call = set_variable_manager(self.path)
         logger.debug("VariableManager.get_dispatcher(): function_call)")
         return DispatcherType.retrieve_dispatcher(process_type, function_call)
-        return (
-            DispatchRetriever(process_type)
-            .set_function_call(function_call)
-            .get_dispatcher()
-        )
 
 
 def main():
