@@ -8,12 +8,7 @@ from ..directory.definitions.directory_type_definition import (
 )
 from ..directory.managers.directory_type_manager import set_directory
 from ..dispatchers.constants.dispatcher_type import DispatcherType
-from ..dispatchers.factories.mappings.dispatcher_factory_mapping import (
-    DispatcherClasses,
-)
-from ..images.magisk_image.constants.magisk_image_paths import (
-    MagiskImagePath,
-)
+from ..images.magisk_image.constants.magisk_image_paths import MagiskImagePath
 from ..log_setup import logger
 from .constants.directory_names import DirectoryNames
 from .constants.directory_paths import DirectoryPaths

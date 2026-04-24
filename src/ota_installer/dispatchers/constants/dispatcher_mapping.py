@@ -1,6 +1,4 @@
 # src/ota_installer/dispatchers/constants/dispatcher_mapping.py
-from enum import Enum
-
 from ...directory.dispatchers.directory_dispatcher import (
     DirectoryDispatcher,
 )
@@ -17,7 +15,7 @@ from ...variables.dispatchers.variable_type_dispatcher import (
     VariableTypeDispatcher,
 )
 
-_DispatcherTypes = (
+DispatcherTypes = (
     DirectoryDispatcher
     | FileTypeDispatcher
     | ImageTypeDispatcher

@@ -23,8 +23,8 @@ class DispatcherType(StrEnum):
         from ...directory.dispatchers.directory_dispatcher import (
             DirectoryDispatcher,
         )
-        from ...images.boot_image.constants.boot_image_type import (
-            BootImageType,
+        from ...images.boot_image.dispatchers.boot_image_dispatcher import (
+            ImageTypeDispatcher,
         )
         from ...images.file_image.dispatchers.file_type_dispatcher import (
             FileTypeDispatcher,
@@ -39,16 +39,15 @@ class DispatcherType(StrEnum):
         return {
             cls.FILE.name: FileTypeDispatcher,
             cls.DIRECTORY.name: DirectoryDispatcher,
-            cls.IMAGE.name: BootImageType,
+            cls.IMAGE.name: ImageTypeDispatcher,
             cls.TASK_GROUP.name: TaskGroupTypeDispatcher,
             cls.VARIABLE.name: VariableTypeDispatcher,
         }
 
     @classmethod
     def allowed_dispatchers(cls) -> tuple[str, ...]:
-        """returns a tuple of allowed dispatcher names."""
-        search = tuple(key for key in cls._dispatcher_mapping().keys())
-        return search
+        """Returns a tuple of allowed dispatcher names."""
+        return tuple(key for key in cls._dispatcher_mapping().keys())
 
     @classmethod
     def call_dispatcher(cls, key: str) -> type:
@@ -78,9 +77,7 @@ class DispatcherType(StrEnum):
         logger.debug(f"Retrieving dispatcher for process type: {process_type}")
 
         cls.check_dispatcher(process_type)
-
         dispatcher_name = cls.call_dispatcher(process_type.upper())
-
         cls.dispatcher_error(process_type)
 
         return dispatcher_name(function_data)
