@@ -77,8 +77,8 @@ class DispatcherType(StrEnum):
         logger.debug(f"Retrieving dispatcher for process type: {process_type}")
 
         cls.check_dispatcher(process_type)
-        dispatcher_name = cls.call_dispatcher(process_type.upper())
         cls.dispatcher_error(process_type)
+        dispatcher_name = cls.call_dispatcher(process_type.upper())
 
         return dispatcher_name(function_data)
 

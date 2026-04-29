@@ -5,10 +5,12 @@ from enum import StrEnum, auto
 from rich.control import Control
 
 from ... import decorators
+from ...decorators import StyledFigletPrinter
+from ...decorators.colorizer import Colorizer
 from ...log_setup import logger
-from ..components.separator import display_separator
-from ..components.subtitle import display_subtitle
-from ..components.title import display_title
+from ...program_versioning.constants.software_constants import SoftwareType
+from ...styles.separator import separator
+from ..constants.display_type import DisplayType
 
 type Bool_Predicate = Callable[[], bool]
 type Str_Predicate = Callable[[], str]
@@ -23,10 +25,10 @@ class DisplayHeader(StrEnum):
     @property
     def mapping(self) -> dict["DisplayHeader", Str_Predicate | str]:
         return {
-            DisplayHeader.TITLE: display_title,
+            DisplayHeader.TITLE: _title,
             DisplayHeader.MOVE_CURSOR_UP: str(Control.move(y=-1)),
-            DisplayHeader.SEPARATOR: display_separator,
-            DisplayHeader.SUBTITLE: display_subtitle,
+            DisplayHeader.SEPARATOR: _separator,
+            DisplayHeader.SUBTITLE: _subtitle,
         }
 
     @property
@@ -68,6 +70,27 @@ class DisplayHeader(StrEnum):
     def execute_component(component: Bool_Predicate | None) -> bool:
         """Execute a display component and return success status."""
         return component() if component else False
+
+
+@StyledFigletPrinter(style="title", font="slant")
+def _title() -> str:
+    """
+    Generate and return a stylized string representation of the application
+        title.
+    """
+    return f" {SoftwareType.TITLE.value}"
+
+
+def _separator(indent: int = 9, char: str = "-") -> str:
+    """Generates a formatted display separator."""
+    formatted_separator = separator()
+    return f"{formatted_separator}> "
+
+
+@Colorizer(style="version")
+def _subtitle() -> str:
+    """Generate a subtitle displaying the current software version."""
+    return DisplayType.VERBOSE.value
 
 
 def main() -> None:
