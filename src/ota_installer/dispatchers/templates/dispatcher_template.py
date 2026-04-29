@@ -1,5 +1,4 @@
 # src/ota_installer/dispatchers/templates/dispatcher_template.py
-from collections.abc import Callable
 from dataclasses import field
 from pathlib import Path
 
@@ -32,10 +31,16 @@ class DispatcherTemplate(DispatcherProtocol):
         """
 
         normalized_key = self.normalize_key(key)
-        task = self.collection[self.normalize_key(key)]
+        task = self.collection.get(normalized_key)
 
-        if not isinstance(task, Callable):
-            logger.error(f"No task found for key: {normalized_key}")
+        if task is None:
+            logger.critical(f"Key not found in collection: {normalized_key}")
+            return None
+
+        if not callable(task):
+            logger.error(
+                f"Value for '{normalized_key}' is not a callable task."
+            )
             return None
         return task()
 
@@ -45,3 +50,4 @@ class DispatcherTemplate(DispatcherProtocol):
         return key.lower().strip()
 
 
+# Signed off by Brian Sanford on 20260429

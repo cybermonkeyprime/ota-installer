@@ -73,7 +73,6 @@ class DirectoryIterationProcessor(BaseProcessor):
 
         """Processes each directory and builds a variable table."""
         builder = VariableTableBuilder(indent=3)
-        builder.newline()
         for directory in self.directory_names:
             title_string = (
                 f"{self.directory_type}"
