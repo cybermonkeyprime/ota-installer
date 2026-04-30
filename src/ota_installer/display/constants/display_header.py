@@ -22,21 +22,19 @@ class DisplayHeader(StrEnum):
     SEPARATOR = auto()
     SUBTITLE = auto()
 
-    @property
-    def mapping(self) -> dict["DisplayHeader", Str_Predicate | str]:
+    @classmethod
+    def mapping(cls) -> dict["DisplayHeader", Str_Predicate | str]:
         return {
-            DisplayHeader.TITLE: _title,
-            DisplayHeader.MOVE_CURSOR_UP: str(Control.move(y=-1)),
-            DisplayHeader.SEPARATOR: _separator,
-            DisplayHeader.SUBTITLE: _subtitle,
+            cls.TITLE: _title,
+            cls.MOVE_CURSOR_UP: str(Control.move(y=-1)),
+            cls.SEPARATOR: _separator,
+            cls.SUBTITLE: _subtitle,
         }
 
     @property
     def build(self) -> str:
-        if callable(value := self.mapping[self]):
-            return value()
-
-        return value
+        value = self.mapping()[self]
+        return value() if callable(value) else value
 
     @decorators.OutputPrinter(suffix="")
     def render_default(self) -> str:
@@ -90,7 +88,7 @@ def _separator(indent: int = 9, char: str = "-") -> str:
 @Colorizer(style="version")
 def _subtitle() -> str:
     """Generate a subtitle displaying the current software version."""
-    return DisplayType.VERBOSE.value
+    return f"{DisplayType.VERBOSE.value}\n"
 
 
 def main() -> None:
@@ -99,3 +97,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+# Signed off by Brian Sanford on 20260430
