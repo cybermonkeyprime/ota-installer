@@ -1,5 +1,5 @@
 # src/ota_installer/dispatchers/constants/dispatcher_mapping.py
-from ...directory.dispatchers.directory_dispatcher import (
+from ...directory.directory_handler import (
     DirectoryDispatcher,
 )
 from ...images.boot_image.dispatchers.boot_image_dispatcher import (

@@ -5,8 +5,8 @@ from .display.constants.display_header import DisplayHeader
 from .exceptions.handlers.keyboard_interrupt_handler import (
     KeyboardInterruptHandler,
 )
-from .program_versioning.constants.software_constants import SoftwareType
 from .tasks.execution.task_execution import CLIArguments, TaskExecutor
+from .version_handler import SoftwareType
 
 
 def run() -> None:

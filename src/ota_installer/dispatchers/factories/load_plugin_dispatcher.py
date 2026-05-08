@@ -5,8 +5,8 @@ from ..dispatcher_plugin_registry import DISPATCHER_PLUGINS
 
 def load_plugin_dispatcher(dispatcher_type: str, obj: type) -> type | None:
     """Load a registered plugin dispatcher based on the dispatcher type."""
-    logger.debug("Loading plugin dispatcher for type: %s", dispatcher_type)
-    dispatcher_class = DISPATCHER_PLUGINS[dispatcher_type]
+    logger.debug(f"Loading plugin dispatcher for type: {dispatcher_type}")
+    dispatcher_class = DISPATCHER_PLUGINS.get(dispatcher_type)
 
     if not dispatcher_class:
         logger.error(

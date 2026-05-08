@@ -3,10 +3,10 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Self
 
-from ..directory.definitions.directory_type_definition import (
+from ..directory_handler import (
     DirectoryTypeDefinition,
+    set_directory,
 )
-from ..directory.managers.directory_type_manager import set_directory
 from ..dispatchers.constants.dispatcher_type import DispatcherType
 from ..images.magisk_image.constants.magisk_image_paths import MagiskImagePath
 from ..log_setup import logger
@@ -45,7 +45,7 @@ class VariableManager(object):
     def _initialize_variable_group(
         self, file_path: Path
     ) -> VariableTypeContainer:
-        from .functions import parse_file_name
+        from .containers.file_name_container import parse_file_name
 
         """Defines variables based on the file path."""
         return VariableTypeContainer(
@@ -62,13 +62,13 @@ class VariableManager(object):
             stem=self.variables.file_path_stem,
             parts=self.variables.file_parts,
             device=self.variables.file_parts.device,
-            version=self.variables.file_parts.version,
+            version=self.variables.file_parts.build_id,
         )
         return self
 
     def _initialize_file_paths(self) -> Self:
         """Initializes file paths."""
-        from ..images.file_image.containers.file_image_container import (
+        from ..images.generic_image_handler import (
             FileImageData,
         )
         from ..variables.functions import (

@@ -9,26 +9,28 @@ from ota_installer.variables.containers.file_name_container import (
 def set_log_file(file_name_parts: FileNameContainer) -> str:
     """Generate a log file path based on device and version."""
     device = file_name_parts.device
-    version = file_name_parts.version
+    version = file_name_parts.build_id
     return f"/tmp/ota-installer_{device}_{version}.txt"
 
 
 def set_variable_manager(path: Path) -> "VariableManager":  # noqa: F821 # pyright: ignore[reportUndefinedVariable]
     from ..log_setup import logger
-    from ..validation.file_path_validation import file_path_validator
+    from ..validation.validate_zip_file import validate_zip_file
     from .variable_manager import VariableManager
 
     """Create a VariableManager instance after validating the file path. """
 
-    if not file_path_validator(path):
-        logger.error(f"Invalid file path: {path}")
-        raise SystemExit("Invalid input file. Aborting.")
+    valid_path = validate_zip_file(path)
 
-    return VariableManager(path)
+    if not valid_path:
+        logger.error(f"Invalid file path: {path}. Aborting.")
+        raise SystemExit()
+
+    return VariableManager(valid_path)
 
 
 def get_file_image_path(name: str, device: str, version) -> Path:
-    from ..images.file_image.constants.file_image_attributes import (
+    from ..images.generic_image_handler import (
         FileImageAttributes,
     )
 
@@ -40,20 +42,3 @@ def get_file_image_path(name: str, device: str, version) -> Path:
         .set_version(version)
         .set_file_path()
     )
-
-
-def parse_file_name(raw_name: Path) -> "FileNameContainer":
-    from .containers.file_name_container import FileNameContainer
-
-    """Parse the raw file name into its components. """
-
-    parts = Path(raw_name).stem.split("-")
-    device, file_type, version, *extra_parts = parts
-    return FileNameContainer(
-        device=device,
-        file_type=file_type,
-        version=version,
-        extra="".join(extra_parts),
-    )
-
-

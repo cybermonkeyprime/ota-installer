@@ -5,9 +5,9 @@ import typer
 
 from . import application
 from .log_setup import enable_debug_logging
-from .program_versioning.constants.software_constants import SoftwareType
 from .tasks.execution.cli_arguments import CLIArguments
 from .tasks.execution.task_execution import TaskGroupNames
+from .version_handler import SoftwareType
 
 cli = typer.Typer(help="Manually Install Android Device OTA Firmware")
 

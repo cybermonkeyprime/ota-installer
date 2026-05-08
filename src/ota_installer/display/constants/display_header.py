@@ -8,8 +8,8 @@ from ... import decorators
 from ...decorators import StyledFigletPrinter
 from ...decorators.colorizer import Colorizer
 from ...log_setup import logger
-from ...program_versioning.constants.software_constants import SoftwareType
 from ...styles.separator import separator
+from ...version_handler import SoftwareType
 from ..constants.display_type import DisplayType
 
 type Bool_Predicate = Callable[[], bool]

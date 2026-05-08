@@ -1,12 +1,7 @@
 # src/ota_installer/dispatchers/constants/dispatcher_type.py
 from enum import StrEnum, auto
-from pathlib import Path
 
 from ...log_setup import logger
-
-CollectionKeys = str
-CollectionValues = Path | str
-CollectionDictionary = dict[CollectionKeys, CollectionValues]
 
 
 class DispatcherType(StrEnum):
@@ -19,14 +14,14 @@ class DispatcherType(StrEnum):
     VARIABLE = auto()
 
     @classmethod
-    def _dispatcher_mapping(cls):
-        from ...directory.dispatchers.directory_dispatcher import (
+    def _dispatcher_mapping(cls) -> dict[str, type]:
+        from ...directory_handler import (
             DirectoryDispatcher,
         )
-        from ...images.boot_image.dispatchers.boot_image_dispatcher import (
+        from ...images.boot_image_handler import (
             ImageTypeDispatcher,
         )
-        from ...images.file_image.dispatchers.file_type_dispatcher import (
+        from ...images.generic_image_handler import (
             FileTypeDispatcher,
         )
         from ...task_groups.dispatchers.task_group_type_dispatcher import (

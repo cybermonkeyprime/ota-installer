@@ -120,7 +120,7 @@ def image_handler(key: str) -> Path:
     logger.debug(f"image_handler(): {dispatcher=}")
     retriever = dispatcher.load()
     logger.debug(f"image_handler(): {retriever=}")
-    image_path = Path.home() / "images" / f"{retriever.get_key(key)}.img"  # type: ignore[return-value]
+    image_path = Path.home() / "images" / f"{retriever.get_key(key)}.img"
     if not image_path.exists():
         raise ValueError(f"Invalid key for image handler: {key}")
     return image_path
