@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from ... import decorators
-from ...task_groups.constants.preparation_task import PreparationTask
+from ...task_group_handler import PreparationTask
 from ...variables.variable_manager import VariableManager
 from ..operations.task_operation_details import TaskOperationDetails
 from ..operations.task_operation_processor import image_handler
@@ -38,5 +38,3 @@ class StockBootImageBackupper(BaseTask):
     def perform_task(self) -> None:
         """Execute the task to backup the stock boot image."""
         self.task.run_with_output()
-
-

@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from ... import decorators
-from ...task_groups.constants.migration_task import MigrationTask
+from ...task_group_handler import MigrationTask
 from ...variables.variable_manager import VariableManager
 from ..operations.task_operation_details import TaskOperationDetails
 from ..plugin_registry import task_plugin
@@ -40,5 +40,3 @@ class StockBootImagePusher(BaseTask):
     def perform_task(self) -> None:
         """Executes the task to push the stock boot image."""
         self.task.run_with_output()
-
-

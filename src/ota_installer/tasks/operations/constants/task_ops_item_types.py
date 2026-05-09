@@ -18,7 +18,7 @@ class TaskOpsItemTypes(Enum):
         Validates field existence using a whitelist check.
         Raises AttributeError immediately on failure (Fail-Fast).
         """
-        key = field_name.upper()
+        key: str = field_name.upper()
 
         # Explicit membership check: 'Look Before You Leap'
         if not key:

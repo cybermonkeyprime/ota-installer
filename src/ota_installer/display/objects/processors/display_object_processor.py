@@ -14,7 +14,7 @@ class DisplayObjectProcessor(object):
     function: Callable
 
     @singledispatchmethod
-    def process_object(self, argument: str | None | object) -> str:
+    def process_object(self, argument: str | object | None) -> str:
         """Process the provided argument using a callable."""
         raise ValueError(f"Unsupported type: {type(argument).__name__}")
 

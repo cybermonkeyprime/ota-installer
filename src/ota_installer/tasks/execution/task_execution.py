@@ -11,7 +11,7 @@ from ...dispatchers.templates.dispatcher_template import (
     DispatcherTemplate,
 )
 from ...log_setup import logger
-from ...task_groups.constants.task_group_names import TaskGroupNames
+from ...task_group_handler import TaskGroupName
 from ..definitions.task_definitions import TaskDefinitions
 from ..managers.task_manager import TaskManager
 from .cli_arguments import CLIArguments
@@ -71,7 +71,7 @@ class TaskExecutor(object):
     @property
     def task_group_keys(self) -> tuple:
         """Returns the keys of the task groups."""
-        return TaskGroupNames.get_task_group_members()
+        return TaskGroupName.get_task_group_members()
 
     def execute_task_based_on_group(self) -> None:
         """Executes tasks based on the task group rules."""

@@ -5,8 +5,8 @@ import typer
 
 from . import application
 from .log_setup import enable_debug_logging
+from .task_group_handler import TaskGroupName
 from .tasks.execution.cli_arguments import CLIArguments
-from .tasks.execution.task_execution import TaskGroupNames
 from .version_handler import SoftwareVersion
 
 cli = typer.Typer(help="Manually Install Android Device OTA Firmware")
@@ -28,7 +28,7 @@ def debug_callback(value: bool) -> None:
 @cli.command()
 def ota_installer(
     path: str = typer.Argument(..., help="The path to the OTA file."),
-    task_group: TaskGroupNames | None = typer.Option(
+    task_group: TaskGroupName | None = typer.Option(
         None,
         "--task_group",
         "-t",

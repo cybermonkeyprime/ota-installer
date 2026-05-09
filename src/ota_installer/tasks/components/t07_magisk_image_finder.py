@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from ... import decorators
-from ...task_groups.constants.migration_task import MigrationTask
+from ...task_group_handler import MigrationTask
 from ...variables.variable_manager import VariableManager
 from ..operations.task_operation_details import TaskOperationDetails
 from ..plugin_registry import task_plugin
@@ -43,5 +43,3 @@ class MagiskImageFinder(BaseTask):
             self.instance.image_name["patched"] = result
         if getattr(self.task, "reminder", None):
             self.task.show_reminder()
-
-

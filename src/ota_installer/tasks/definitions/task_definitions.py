@@ -3,17 +3,13 @@ from dataclasses import dataclass
 from functools import partial
 
 from ... import decorators
-from ...task_groups.constants.application_task import (
+from ...task_group_handler import (
     ApplicationTask,
-)
-from ...task_groups.constants.migration_task import (
     MigrationTask,
-)
-from ...task_groups.constants.preparation_task import (
     PreparationTask,
 )
 
-task_prompt = partial(decorators.ConfirmationPrompt, char=" ")
+task_prompt: partial = partial(decorators.ConfirmationPrompt, char=" ")
 
 
 @dataclass
