@@ -10,12 +10,19 @@ from ..directory_handler import (
 from ..dispatchers.constants.dispatcher_type import DispatcherType
 from ..images.magisk_image.constants.magisk_image_paths import MagiskImagePath
 from ..log_setup import logger
-from .constants.directory_names import DirectoryNames
-from .constants.directory_paths import DirectoryPaths
-from .constants.file_name_info import FileNameInfo
-from .constants.file_paths import FilePaths
-from .containers.variable_type_container import VariableTypeContainer
-from .functions import set_variable_manager
+from .variable_handler import (
+    get_file_image_path,
+    parse_file_name,
+    set_log_file,
+    set_variable_manager,
+)
+from .variable_info import (
+    DirectoryNames,
+    DirectoryPaths,
+    FileNameInfo,
+    FilePaths,
+    VariableTypeContainer,
+)
 
 
 @dataclass
@@ -45,8 +52,6 @@ class VariableManager(object):
     def _initialize_variable_group(
         self, file_path: Path
     ) -> VariableTypeContainer:
-        from .containers.file_name_container import parse_file_name
-
         """Defines variables based on the file path."""
         return VariableTypeContainer(
             file_path=file_path,
@@ -70,10 +75,6 @@ class VariableManager(object):
         """Initializes file paths."""
         from ..images.generic_image_handler import (
             FileImageData,
-        )
-        from ..variables.functions import (
-            get_file_image_path,
-            set_log_file,
         )
 
         image_data = FileImageData(

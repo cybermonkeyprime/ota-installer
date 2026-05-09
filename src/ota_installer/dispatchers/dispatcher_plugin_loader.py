@@ -11,7 +11,7 @@ from ..images.generic_image_handler import (
 from ..task_group_handler import (
     TaskGroupTypeDispatcher,
 )
-from ..variables.dispatchers.variable_type_dispatcher import (
+from ..variables.variable_handler import (
     VariableTypeDispatcher,
 )
 # Final

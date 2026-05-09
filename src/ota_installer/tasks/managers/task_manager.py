@@ -7,7 +7,7 @@ from typing import Self
 from ...decorators.styled_indent_printer import StylizedIndentPrinter
 from ...display.variables.display_variable_processor import VariableProcessor
 from ...log_setup import add_structured_log_sink, logger
-from ...variables.functions import set_variable_manager
+from ...variables.variable_handler import set_variable_manager
 from ...variables.variable_manager import VariableManager
 from ..task_info import TaskID
 
@@ -17,7 +17,7 @@ class TaskManager(object):
     """Manages the execution of tasks based on a specified file name."""
 
     file_name: Path = field(default_factory=Path)
-    function: Callable = field(default=Callable)
+    function: Callable = field(default=type)
     # iteration: type = field(init=False)
     variable: VariableManager = field(init=False)
 
