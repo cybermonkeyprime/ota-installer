@@ -56,7 +56,7 @@ class TaskGroupContainer(object):
     """Container for task group information."""
 
     group_name: str
-    group_enum: str | None
+    group_enum: TaskGroupName | None
 
 
 class BehaviorBase(Enum):
@@ -102,7 +102,7 @@ class PreparationTask(BehaviorBase):
     BACKUP_STOCK_BOOT_IMAGE = TaskID.BACKUP_STOCK_BOOT_IMAGE
 
 
-@dispatcher_plugin(DispatcherType.TASK_GROUP.value)
+@dispatcher_plugin(name=DispatcherType.TASK_GROUP.value)
 @dataclass
 class TaskGroupTypeDispatcher(DispatcherTemplate):
     obj: type = field(default_factory=lambda: type)
