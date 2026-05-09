@@ -1,3 +1,4 @@
+# task_group_handler.py
 from collections.abc import Mapping
 from dataclasses import dataclass, field
 from enum import Enum, StrEnum, auto
@@ -6,7 +7,7 @@ from .dispatchers.constants.dispatcher_type import DispatcherType
 from .dispatchers.dispatcher_plugin_registry import dispatcher_plugin
 from .dispatchers.templates.dispatcher_template import DispatcherTemplate
 from .log_setup import logger
-from .tasks.constants.task_id import TaskID
+from .tasks.task_info import TaskID
 
 StrTuple = tuple[str, ...]
 TaskGroupMap = Mapping["TaskGroupName", object]
@@ -121,3 +122,6 @@ class TaskGroupTypeDispatcher(DispatcherTemplate):
         corresponding values.
         """
         return TaskGroupName.create_dictionary(self.obj)
+
+
+# Signed off by Brian Sanford on 20260509

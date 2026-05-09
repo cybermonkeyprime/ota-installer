@@ -1,9 +1,9 @@
-# src/ota_installer/tasks/definitions/task_definitions.py
+# tasks/task_handler.py
 from dataclasses import dataclass
 from functools import partial
 
-from ... import decorators
-from ...task_group_handler import (
+from .. import decorators
+from ..task_group_handler import (
     ApplicationTask,
     MigrationTask,
     PreparationTask,
@@ -35,4 +35,4 @@ class TaskDefinitions(object):
         return ApplicationTask.get_member_names()
 
 
-# Signed off by Brian Sanford on 20260318
+# Signed off by Brian Sanford on 20260509

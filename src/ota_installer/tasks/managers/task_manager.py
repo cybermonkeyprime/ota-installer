@@ -4,11 +4,12 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Self
 
+from ...decorators.styled_indent_printer import StylizedIndentPrinter
 from ...display.variables.display_variable_processor import VariableProcessor
 from ...log_setup import add_structured_log_sink, logger
 from ...variables.functions import set_variable_manager
 from ...variables.variable_manager import VariableManager
-from .task_iteration import task_iterator
+from ..task_info import TaskID
 
 
 @dataclass
@@ -48,7 +49,7 @@ class TaskManager(object):
             logger.error("Variable manager is not initialized.")
         else:
             VariableProcessor(
-                self.variable
+                variable_manager=self.variable
             ).process_directory_names().process_file_names().process_log_file()
 
     def execute_iteration(self, task_group) -> None:
@@ -56,3 +57,44 @@ class TaskManager(object):
         task_iterator(instance=self.variable, task_group=task_group)
 
 
+def task_director(instance: VariableManager, task_name: Callable) -> None:
+    """Manages the initiation of task processing."""
+    logger.debug(f"Initiating task: {task_name}")
+    task = task_name(instance=instance)
+
+    if not _is_executable(task):
+        logger.error(f"Task {task_name!r} is missing perform_task() method.")
+        raise ValueError(f"Task {task_name!r} is not executable.")
+
+    task.perform_task()
+
+
+def _is_executable(task: object) -> bool:
+    """Checks if the task has a perform_task method."""
+    return hasattr(task, "perform_task")
+
+
+StringTuple = tuple[str, ...]
+
+
+def task_iterator(
+    instance: VariableManager, task_group: StringTuple
+) -> object | None:
+    """Iterates over a task group and executes each task."""
+
+    logger.debug(f"Iterating over task group: {task_group}")
+
+    if not task_group:
+        return _skipped_task_group_msg()
+
+    for task_name in task_group:
+        task_id = TaskID(task_name)
+        task_class = task_id.execute
+
+        task_director(instance=instance, task_name=task_class)
+
+
+@StylizedIndentPrinter(indent=2, style="variable", end="\n\n", use_output=True)
+def _skipped_task_group_msg() -> str:
+    """Displays a message indicating that the task group was skipped."""
+    return "Task Group skipped"

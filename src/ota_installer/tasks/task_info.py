@@ -1,8 +1,9 @@
-# src/ota_installer/tasks/constants/task_names.py
+# tasks/task_info.py
 from collections.abc import Callable
+from dataclasses import dataclass
 from enum import StrEnum, auto
 
-from ..plugin_registry import TASK_PLUGINS
+from .plugin_registry import TASK_PLUGINS
 
 
 class TaskID(StrEnum):
@@ -39,4 +40,12 @@ class TaskID(StrEnum):
         return TASK_PLUGINS[self.value]
 
 
-# Signed off by Brian Sanford on 20260317
+@dataclass(frozen=True, slots=True)
+class TaskContainer(object):
+    """Container for task information."""
+
+    task_name: str
+    task_class: type
+
+
+# Signed off by Brian Sanford on 20260509

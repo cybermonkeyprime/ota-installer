@@ -12,8 +12,8 @@ from ...dispatchers.templates.dispatcher_template import (
 )
 from ...log_setup import logger
 from ...task_group_handler import TaskGroupName
-from ..definitions.task_definitions import TaskDefinitions
 from ..managers.task_manager import TaskManager
+from ..task_handler import TaskDefinitions
 from .cli_arguments import CLIArguments
 
 
