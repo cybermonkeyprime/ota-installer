@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from enum import Enum
 
 
-class SoftwareType(Enum):
+class SoftwareVersion(Enum):
     """Enumeration for software version constants."""
 
     TITLE = "OTA-Installer"
@@ -12,7 +12,7 @@ class SoftwareType(Enum):
     PATCH_NUMBER = 8
 
     @classmethod
-    def render_display(cls) -> str:
+    def display(cls) -> str:
         """Returns the display string for the global software version."""
         return (
             f"Build: {cls.MAJOR_NUMBER.value}."
@@ -20,15 +20,15 @@ class SoftwareType(Enum):
         )
 
     @classmethod
-    def render_text(cls) -> str:
+    def formatted(cls) -> str:
         """
         Returns a formatted string with the title or display of the software
         version."""
-        return f"{cls.TITLE.value} - {cls.render_display()}"
+        return f"{cls.TITLE.value} - {cls.display()}"
 
 
 @dataclass(frozen=True, slots=True)
-class SoftwareContainer(object):
+class SoftwareInfo(object):
     """Represents a software container with versioning information."""
 
     title: str
@@ -37,13 +37,13 @@ class SoftwareContainer(object):
     patch_number: int
 
 
-def build_software_container() -> SoftwareContainer:
+def create_software_info() -> SoftwareInfo:
     """Creates a SoftwareContainer instance with versioning information."""
-    return SoftwareContainer(
-        title=SoftwareType.TITLE.value,
-        major_number=SoftwareType.MAJOR_NUMBER.value,
-        minor_number=SoftwareType.MINOR_NUMBER.value,
-        patch_number=SoftwareType.PATCH_NUMBER.value,
+    return SoftwareInfo(
+        title=SoftwareVersion.TITLE.value,
+        major_number=SoftwareVersion.MAJOR_NUMBER.value,
+        minor_number=SoftwareVersion.MINOR_NUMBER.value,
+        patch_number=SoftwareVersion.PATCH_NUMBER.value,
     )
 
 

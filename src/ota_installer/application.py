@@ -1,12 +1,12 @@
 # src/ota_installer/application.py
 from . import decorators
 from .display.components.clear_screen import clear_screen
-from .display.constants.display_header import DisplayHeader
+from .display.display_info import DisplayHeader
 from .exceptions.handlers.keyboard_interrupt_handler import (
     KeyboardInterruptHandler,
 )
 from .tasks.execution.task_execution import CLIArguments, TaskExecutor
-from .version_handler import SoftwareType
+from .version_handler import SoftwareVersion
 
 
 def run() -> None:
@@ -34,8 +34,8 @@ def display_random_exit_message() -> str:
         "You did it, tech wizard!",
         "Mission complete—well done!",
         "Everything's in place.",
-        f"{SoftwareType.TITLE.value} says: Great job!",
-        f"{SoftwareType.TITLE.value} is complete!",
+        f"{SoftwareVersion.TITLE.value} says: Great job!",
+        f"{SoftwareVersion.TITLE.value} is complete!",
     ]
 
     emoji = choice(["🎉", "✅", "🚀", "✨", "🎯", "💻"])

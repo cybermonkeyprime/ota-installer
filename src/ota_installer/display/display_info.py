@@ -1,16 +1,15 @@
-# src/ota_installer/display/constants/display_header.py
-from collections.abc import Callable
-from enum import StrEnum, auto
+# display/display_info.py
+from collections.abc import Callable, Mapping
+from enum import Enum, StrEnum, auto
 
 from rich.control import Control
 
-from ... import decorators
-from ...decorators import StyledFigletPrinter
-from ...decorators.colorizer import Colorizer
-from ...log_setup import logger
-from ...styles.separator import separator
-from ...version_handler import SoftwareType
-from ..constants.display_type import DisplayType
+from .. import decorators
+from ..decorators import StyledFigletPrinter
+from ..decorators.colorizer import Colorizer
+from ..log_setup import logger
+from ..styles.separator import separator
+from ..version_handler import SoftwareVersion
 
 type Bool_Predicate = Callable[[], bool]
 type Str_Predicate = Callable[[], str]
@@ -23,17 +22,17 @@ class DisplayHeader(StrEnum):
     SUBTITLE = auto()
 
     @classmethod
-    def mapping(cls) -> dict["DisplayHeader", Str_Predicate | str]:
+    def mapping(cls) -> Mapping["DisplayHeader", Str_Predicate | str]:
         return {
             cls.TITLE: _title,
-            cls.MOVE_CURSOR_UP: str(Control.move(y=-1)),
+            cls.MOVE_CURSOR_UP: str(object=Control.move(y=-1)),
             cls.SEPARATOR: _separator,
             cls.SUBTITLE: _subtitle,
         }
 
     @property
     def build(self) -> str:
-        value = self.mapping()[self]
+        value: Str_Predicate | str = self.mapping()[self]
         return value() if callable(value) else value
 
     @decorators.OutputPrinter(suffix="")
@@ -76,7 +75,7 @@ def _title() -> str:
     Generate and return a stylized string representation of the application
         title.
     """
-    return f" {SoftwareType.TITLE.value}"
+    return f" {SoftwareVersion.TITLE.value}"
 
 
 def _separator(indent: int = 9, char: str = "-") -> str:
@@ -91,10 +90,15 @@ def _subtitle() -> str:
     return f"{DisplayType.VERBOSE.value}\n"
 
 
+class DisplayType(Enum):
+    VERBOSE = SoftwareVersion.display()
+    CONCISE = SoftwareVersion.formatted()
+
+
 def main() -> None:
     DisplayHeader.render_all()
 
 
 if __name__ == "__main__":
     main()
-# Signed off by Brian Sanford on 20260430
+# Signed off by Brian Sanford on 20260508
