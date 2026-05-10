@@ -3,7 +3,7 @@ from collections.abc import Mapping
 from dataclasses import dataclass, field
 from enum import Enum, StrEnum, auto
 
-from .dispatchers.dispatcher_template import DispatcherTemplate
+from .dispatchers.dispatcher_handler import DispatcherTemplate
 from .dispatchers.dispatcher_type import DispatcherType
 from .dispatchers.plugins.dispatcher_plugin_registry import dispatcher_plugin
 from .log_setup import logger
