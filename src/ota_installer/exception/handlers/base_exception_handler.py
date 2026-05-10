@@ -2,11 +2,7 @@
 from collections.abc import Callable
 from dataclasses import dataclass, field
 
-from ...decorators import (
-    Colorizer,
-    IndentWrapper,
-    OutputPrinter,
-)
+from ... import decorator
 
 
 @dataclass(slots=True)
@@ -28,14 +24,14 @@ class BaseExceptionHandler(object):
         result = self.function(*args, **kwargs)
         return result
 
-    @OutputPrinter(use_color=True, prefix="\n\n", suffix="\n\n")
+    @decorator.OutputPrinter(use_color=True, prefix="\n\n", suffix="\n\n")
     def print_exception_message(self, error: BaseException) -> str:
         """Prints the formatted exception message."""
         formatted_message = self.format_message(error)
         return formatted_message
 
-    @IndentWrapper(interval=1)
-    @Colorizer(style="variable")
+    @decorator.IndentWrapper(interval=1)
+    @decorator.Colorizer(style="variable")
     def format_message(self, error: BaseException) -> str:
         """Formats the error message based on the exception type."""
         error_message = self.custom_messages.get(

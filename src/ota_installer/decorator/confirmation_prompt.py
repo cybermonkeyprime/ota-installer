@@ -6,7 +6,7 @@ from functools import wraps
 import pyinputplus as pyip
 from rich.console import Console
 
-from ..styles.palette import RichColors
+from ..style.palette import RichColors
 from .protocol.decorator_protocols import GenericDecorator
 
 console = Console()

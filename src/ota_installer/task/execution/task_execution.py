@@ -2,16 +2,16 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Self
 
-from ...dispatchers.dispatcher_handler import (
+from ...dispatcher.dispatcher_handler import (
     CollectionValues,
     DispatcherTemplate,
 )
-from ...dispatchers.dispatcher_type import DispatcherType
-from ...dispatchers.plugins.dispatcher_plugin_handler import (
+from ...dispatcher.dispatcher_type import DispatcherType
+from ...dispatcher.plugins.dispatcher_plugin_handler import (
     PluginDispatcherAdapter,
 )
 from ...log_setup import logger
-from ...task_group_handler import TaskGroupName
+from ...task_group.task_group_handler import TaskGroupName
 from ..managers.task_manager import TaskManager
 from ..task_handler import TaskDefinitions
 from .cli_arguments import CLIArguments

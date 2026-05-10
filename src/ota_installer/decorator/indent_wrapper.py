@@ -2,7 +2,7 @@
 from collections.abc import Callable
 from dataclasses import dataclass
 
-from ..styles.indentation import indentation
+from ..style.indentation import indentation
 from .protocol.decorator_protocols import StringReturningDecorator
 
 type R = str

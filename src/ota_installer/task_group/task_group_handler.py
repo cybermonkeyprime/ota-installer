@@ -3,11 +3,11 @@ from collections.abc import Mapping
 from dataclasses import dataclass, field
 from enum import Enum, StrEnum, auto
 
-from .dispatchers.dispatcher_handler import DispatcherTemplate
-from .dispatchers.dispatcher_type import DispatcherType
-from .dispatchers.plugins.dispatcher_plugin_registry import dispatcher_plugin
-from .log_setup import logger
-from .tasks.task_info import TaskID
+from ..dispatcher.dispatcher_handler import DispatcherTemplate
+from ..dispatcher.dispatcher_type import DispatcherType
+from ..dispatcher.plugins.dispatcher_plugin_registry import dispatcher_plugin
+from ..log_setup import logger
+from ..task.task_info import TaskID
 
 StrTuple = tuple[str, ...]
 TaskGroupMap = Mapping["TaskGroupName", object]

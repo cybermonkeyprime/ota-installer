@@ -4,11 +4,9 @@ from enum import Enum, StrEnum, auto
 
 from rich.control import Control
 
-from .. import decorators
-from ..decorators import StyledFigletPrinter
-from ..decorators.colorizer import Colorizer
+from .. import decorator
 from ..log_setup import logger
-from ..styles.separator import separator
+from ..style.separator import separator
 from ..versioning.version_handler import SoftwareVersion
 
 type Bool_Predicate = Callable[[], bool]
@@ -35,13 +33,13 @@ class DisplayHeader(StrEnum):
         value: Str_Predicate | str = self.mapping()[self]
         return value() if callable(value) else value
 
-    @decorators.OutputPrinter(suffix="")
+    @decorator.OutputPrinter(suffix="")
     def render_default(self) -> str:
         """Render the component with default styling."""
         return self.build
 
-    @decorators.OutputPrinter(suffix="")
-    @decorators.Colorizer(style="title")
+    @decorator.OutputPrinter(suffix="")
+    @decorator.Colorizer(style="title")
     def render_green(self) -> str:
         """Render the component with green title styling."""
         return self.build
@@ -56,7 +54,7 @@ class DisplayHeader(StrEnum):
         )
 
     @classmethod
-    @decorators.FooterWrapper(message="")
+    @decorator.FooterWrapper(message="")
     def render_all(cls) -> None:
         """Render the display header by invoking the components in sequence."""
         for component in cls.get_rendering_sequence():
@@ -69,7 +67,7 @@ class DisplayHeader(StrEnum):
         return component() if component else False
 
 
-@StyledFigletPrinter(style="title", font="slant")
+@decorator.StyledFigletPrinter(style="title", font="slant")
 def _title() -> str:
     """
     Generate and return a stylized string representation of the application
@@ -84,7 +82,7 @@ def _separator(indent: int = 9, char: str = "-") -> str:
     return f"{formatted_separator}> "
 
 
-@Colorizer(style="version")
+@decorator.Colorizer(style="version")
 def _subtitle() -> str:
     """Generate a subtitle displaying the current software version."""
     return f"{DisplayType.VERBOSE.value}\n"

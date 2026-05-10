@@ -1,6 +1,6 @@
 # src/ota_installer/styles/indentation.py
 
-from .containers.style_container import StyleContainer
+from .container.style_container import StyleContainer
 
 
 def indentation(interval: int = 1, char: str = " ", spaces: int = 4) -> str:
@@ -13,5 +13,3 @@ def indentation(interval: int = 1, char: str = " ", spaces: int = 4) -> str:
         * style_container.spacing
         * style_container.interval
     )
-
-
