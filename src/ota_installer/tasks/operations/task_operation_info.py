@@ -1,3 +1,4 @@
+# tasks/operations/task_operation_info.py
 from dataclasses import dataclass
 from enum import Enum, IntEnum, StrEnum, auto
 
@@ -137,3 +138,6 @@ class TaskOperationDetails(Enum):
         title="Boot to Magisk Image",
         description="💾 Flashing the patched Magisk image with fastboot.",
     )
+
+
+# Signed off by Brian Sanford on 20260510
