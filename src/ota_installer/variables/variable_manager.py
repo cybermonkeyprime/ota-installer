@@ -7,7 +7,7 @@ from ..directory_handler import (
     DirectoryTypeDefinition,
     set_directory,
 )
-from ..dispatchers.constants.dispatcher_type import DispatcherType
+from ..dispatchers.dispatcher_type import DispatcherType
 from ..images.magisk_image.constants.magisk_image_paths import MagiskImagePath
 from ..log_setup import logger
 from .variable_handler import (

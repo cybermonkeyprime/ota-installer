@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: ota-installer
-Version: 2026.4.21
+Version: 2026.5.8
 Requires-Python: >=3.14
 License-File: LICENSE.txt
 Requires-Dist: dependency-injector==4.48.3

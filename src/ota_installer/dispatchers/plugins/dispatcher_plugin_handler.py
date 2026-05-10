@@ -14,9 +14,7 @@ Useful in display processors and variable extraction workflows.
 from dataclasses import dataclass, field
 
 from ...log_setup import logger
-from ..factories.load_plugin_dispatcher import (
-    load_plugin_dispatcher,
-)
+from .dispatcher_plugin_registry import DISPATCHER_PLUGINS
 
 
 @dataclass
@@ -49,3 +47,15 @@ class PluginDispatcherAdapter(object):
         return dispatcher.get_value(key=key)
 
 
+def load_plugin_dispatcher(dispatcher_type: str, obj: type) -> type | None:
+    """Load a registered plugin dispatcher based on the dispatcher type."""
+    logger.debug(f"Loading plugin dispatcher for type: {dispatcher_type}")
+    dispatcher_class = DISPATCHER_PLUGINS.get(dispatcher_type)
+
+    if not dispatcher_class:
+        logger.error(
+            f"No plugin dispatcher registered for: {dispatcher_type!r}",
+        )
+        return None
+
+    return dispatcher_class(obj)
