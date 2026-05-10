@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Self
 
-from ...dispatchers.dispatcher_template import (
+from ...dispatchers.dispatcher_handler import (
     CollectionValues,
     DispatcherTemplate,
 )
