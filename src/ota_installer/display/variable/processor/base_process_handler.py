@@ -1,7 +1,7 @@
 # src/ota_installer/display/variables/processors/base_processor.py
 from dataclasses import dataclass, field
 
-from ....dispatchers.dispatcher_handler import DispatcherProtocol
+from ....dispatcher.dispatcher_handler import DispatcherProtocol
 
 
 @dataclass

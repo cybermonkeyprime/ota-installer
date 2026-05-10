@@ -3,9 +3,9 @@ from dataclasses import dataclass, field
 from enum import Enum
 from typing import Self
 
-from ....dispatchers.dispatcher_type import DispatcherType
-from ....variables.variable_manager import VariableManager
-from ...variables.processors.base_process_handler import BaseProcessor
+from ....dispatcher.dispatcher_type import DispatcherType
+from ....variable.variable_manager import VariableManager
+from ...variable.processor.base_process_handler import BaseProcessor
 from ..variable_item_info import VariableItem
 from ..variable_table_builder import VariableTableBuilder
 
