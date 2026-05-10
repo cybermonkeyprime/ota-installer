@@ -33,7 +33,10 @@ class TaskOperationExecutor(object):
     @decorators.Encapsulate()
     def execute(self) -> Self:
         """Executes the command without returning output."""
-        if run(self.command_string, shell=True, check=True).returncode != 0:
+        if (
+            run(args=self.command_string, shell=True, check=True).returncode
+            != 0
+        ):
             logger.exception(
                 f"Command execution failed: {self.command_string}"
             )
