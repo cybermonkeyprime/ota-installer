@@ -1,5 +1,5 @@
 # src/ota_installer/tasks/plugin_loader.py
-from ..components import (
+from ..component import (
     t01_payload_image_extractor,
     t02_payload_image_renamer,
     t03_boot_image_extractor,

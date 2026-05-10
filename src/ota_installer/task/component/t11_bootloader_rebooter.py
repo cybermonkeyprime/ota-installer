@@ -1,11 +1,11 @@
 # src/ota_installer/tasks/components/t11_bootloader_rebooter.py
 from dataclasses import dataclass, field
 
-from ... import decorators
-from ...task_group_handler import ApplicationTask
-from ...variables.variable_manager import VariableManager
-from ..operations.task_operation_details import TaskOperationDetails
-from ..plugins.task_plugin_registry import task_plugin
+from ... import decorator
+from ...task_group.task_group_handler import ApplicationTask
+from ...variable.variable_manager import VariableManager
+from ..operation.task_operation_details import TaskOperationDetails
+from ..plugin.task_plugin_registry import task_plugin
 from .base_task import BaseTask
 
 ENUM_VALUES = TaskOperationDetails.REBOOT_TO_BOOTLOADER.value
@@ -29,7 +29,7 @@ class BootloaderRebooter(BaseTask):
             enum_values=ENUM_VALUES, command_string=ENUM_VALUES.command_string
         )
 
-    @decorators.DoublePaddedFooterWrapper(
+    @decorator.DoublePaddedFooterWrapper(
         message=f"{ENUM_VALUES.title} finished successfully!"
     )
     def perform_task(self) -> None:

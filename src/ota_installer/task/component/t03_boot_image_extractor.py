@@ -2,12 +2,12 @@
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from ... import decorators
-from ...task_group_handler import PreparationTask
-from ...variables.variable_manager import VariableManager
-from ..operations.task_operation_details import TaskOperationDetails
-from ..operations.task_operation_processor import image_handler
-from ..plugins.task_plugin_registry import task_plugin
+from ... import decorator
+from ...task_group.task_group_handler import PreparationTask
+from ...variable.variable_manager import VariableManager
+from ..operation.task_operation_details import TaskOperationDetails
+from ..operation.task_operation_processor import image_handler
+from ..plugin.task_plugin_registry import task_plugin
 from .base_task import BaseTask
 
 ENUM_VALUES = TaskOperationDetails.EXTRACT_STOCK_BOOT_IMAGE.value
@@ -41,7 +41,7 @@ class BootImageExtractor(BaseTask):
         """Constructs the command string for the payload dumper."""
         return f"payload_dumper {self.instance.file_paths.payload} {options}"
 
-    @decorators.DoublePaddedFooterWrapper(
+    @decorator.DoublePaddedFooterWrapper(
         message=f"{ENUM_VALUES.title} finished sucessfully!"
     )
     def perform_task(self) -> None:

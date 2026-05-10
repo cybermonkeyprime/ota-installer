@@ -4,14 +4,14 @@ from pathlib import Path
 
 from loguru import logger
 
-from ... import decorators
-from ...images.magisk_image_handler import (
+from ... import decorator
+from ...image.magisk_image_handler import (
     MagiskImagePath,
 )
-from ...task_group_handler import ApplicationTask, MigrationTask
-from ...variables.variable_manager import VariableManager
-from ..operations.task_operation_details import TaskOperationDetails
-from ..plugins.task_plugin_registry import task_plugin
+from ...task_group.task_group_handler import ApplicationTask, MigrationTask
+from ...variable.variable_manager import VariableManager
+from ..operation.task_operation_details import TaskOperationDetails
+from ..plugin.task_plugin_registry import task_plugin
 from .base_task import BaseTask
 
 ENUM_VALUES = TaskOperationDetails.PULL_MAGISK_IMAGE.value
@@ -51,7 +51,7 @@ class MagiskImagePuller(BaseTask):
             MagiskImagePath.LOCAL_PATH.value / self.instance.file_paths.magisk
         )
 
-    @decorators.DoublePaddedFooterWrapper(
+    @decorator.DoublePaddedFooterWrapper(
         message=f"{ENUM_VALUES.title} finished successfully!"
     )
     def perform_task(self) -> None:

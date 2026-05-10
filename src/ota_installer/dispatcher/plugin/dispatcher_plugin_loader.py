@@ -2,16 +2,16 @@
 from ...directory.directory_handler import (
     DirectoryDispatcher,
 )
-from ...images.boot_image_handler import (
+from ...image.boot_image_handler import (
     ImageTypeDispatcher,
 )
-from ...images.generic_image_handler import (
+from ...image.generic_image_handler import (
     FileTypeDispatcher,
 )
-from ...task_group_handler import (
+from ...task_group.task_group_handler import (
     TaskGroupTypeDispatcher,
 )
-from ...variables.variable_handler import (
+from ...variable.variable_handler import (
     VariableTypeDispatcher,
 )
 # Final

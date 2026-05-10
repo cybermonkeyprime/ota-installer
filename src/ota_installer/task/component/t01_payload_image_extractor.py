@@ -2,11 +2,11 @@
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from ... import decorators
-from ...task_group_handler import PreparationTask
-from ...variables.variable_manager import VariableManager
-from ..operations.task_operation_details import TaskOperationDetails
-from ..plugins.task_plugin_registry import task_plugin
+from ... import decorator
+from ...task_group.task_group_handler import PreparationTask
+from ...variable.variable_manager import VariableManager
+from ..operation.task_operation_details import TaskOperationDetails
+from ..plugin.task_plugin_registry import task_plugin
 from .base_task import BaseTask
 
 ENUM_VALUES = TaskOperationDetails.EXTRACT_PAYLOAD_IMAGE.value
@@ -30,7 +30,7 @@ class PayloadImageExtractor(BaseTask):
         """Constructs the command string for extraction."""
         return f'7z e "{self.instance.path}" payload.bin -o"{Path.home()}" -y'
 
-    @decorators.DoublePaddedFooterWrapper(
+    @decorator.DoublePaddedFooterWrapper(
         message=f"{ENUM_VALUES.title} finished sucessfully!"
     )
     def perform_task(self) -> None:
