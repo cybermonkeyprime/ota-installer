@@ -3,8 +3,8 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from functools import wraps
 
-from ..containers.decorators import Decorators
-from .protocols.decorator_protocols import StringReturningDecorator
+from .container.decorator_container import Decorators
+from .protocol.decorator_protocols import StringReturningDecorator
 
 type R = str
 
@@ -33,5 +33,3 @@ class ColorizedIndentPrinter(StringReturningDecorator):
             return f"{result}"
 
         return wrapper
-
-

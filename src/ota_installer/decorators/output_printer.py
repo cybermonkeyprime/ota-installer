@@ -5,7 +5,7 @@ from functools import wraps
 
 from rich.console import Console
 
-from .protocols.decorator_protocols import GenericDecorator
+from .protocol.decorator_protocols import GenericDecorator
 
 console = Console()
 
@@ -38,5 +38,3 @@ class OutputPrinter(GenericDecorator):
             return result
 
         return wrapper
-
-

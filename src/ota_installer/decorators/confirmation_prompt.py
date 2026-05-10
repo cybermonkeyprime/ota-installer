@@ -7,7 +7,7 @@ import pyinputplus as pyip
 from rich.console import Console
 
 from ..styles.palette import RichColors
-from .protocols.decorator_protocols import GenericDecorator
+from .protocol.decorator_protocols import GenericDecorator
 
 console = Console()
 
@@ -94,5 +94,3 @@ class ConfirmationPrompt(GenericDecorator):
 def my_function():
     """Function implementation."""
     pass
-
-

@@ -4,7 +4,7 @@ from dataclasses import dataclass, field
 from functools import wraps
 
 from ..styles.palette import RichColors
-from .protocols.decorator_protocols import StringReturningDecorator
+from .protocol.decorator_protocols import StringReturningDecorator
 
 type R = str
 

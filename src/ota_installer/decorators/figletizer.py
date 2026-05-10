@@ -5,7 +5,7 @@ from functools import wraps
 
 from pyfiglet import figlet_format
 
-from .protocols.decorator_protocols import StringReturningDecorator
+from .protocol.decorator_protocols import StringReturningDecorator
 
 type R = str
 
@@ -32,5 +32,3 @@ class Figletizer(StringReturningDecorator):
             return f"{figlet_format(str(result), font=self.font)}"
 
         return wrapper
-
-

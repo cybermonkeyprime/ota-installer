@@ -3,9 +3,8 @@ from collections.abc import Callable
 from dataclasses import dataclass, field
 from enum import Enum, IntEnum
 from functools import wraps
-from typing import cast
 
-from .protocols.decorator_protocols import GenericDecorator
+from .protocol.decorator_protocols import GenericDecorator
 
 
 class Specs(IntEnum):

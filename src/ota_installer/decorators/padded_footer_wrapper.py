@@ -3,7 +3,7 @@ from collections.abc import Callable
 from dataclasses import dataclass, field
 from functools import wraps
 
-from .protocols.decorator_protocols import GenericDecorator
+from .protocol.decorator_protocols import GenericDecorator
 
 
 @dataclass
@@ -32,5 +32,3 @@ class PaddedFooterWrapper(GenericDecorator):
     @IndentWrapper(interval=1)  # type: ignore[return-value]
     def _add_padding(self) -> object:
         return f"{self.padding}"
-
-

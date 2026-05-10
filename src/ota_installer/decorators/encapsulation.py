@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from enum import Enum
 from functools import wraps
 
-from .protocols.decorator_protocols import GenericDecorator
+from .protocol.decorator_protocols import GenericDecorator
 
 
 class SeparatorSpecs(Enum):
@@ -41,5 +41,3 @@ class Encapsulate(GenericDecorator):
     def _print_separator(self) -> str:
         """Prints a separator line."""
         return SeparatorSpecs.CHAR.value
-
-

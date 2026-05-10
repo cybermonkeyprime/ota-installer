@@ -3,7 +3,7 @@ from collections.abc import Callable
 from dataclasses import dataclass
 
 from ..styles.indentation import indentation
-from .protocols.decorator_protocols import StringReturningDecorator
+from .protocol.decorator_protocols import StringReturningDecorator
 
 type R = str
 
@@ -28,5 +28,3 @@ class IndentWrapper(StringReturningDecorator):
         """Generates the indentation string."""
 
         return f"{indentation(char=self.char, interval=self.interval)}"
-
-

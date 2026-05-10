@@ -3,7 +3,7 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from functools import wraps
 
-from .protocols.decorator_protocols import GenericDecorator
+from .protocol.decorator_protocols import GenericDecorator
 
 type R = object
 
@@ -42,5 +42,3 @@ class ExampleWithArgs(GenericDecorator):
             return result
 
         return wrapper
-
-

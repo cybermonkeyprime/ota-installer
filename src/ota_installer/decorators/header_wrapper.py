@@ -3,7 +3,7 @@ from collections.abc import Callable
 from dataclasses import dataclass, field
 from functools import wraps
 
-from .protocols.decorator_protocols import GenericDecorator
+from .protocol.decorator_protocols import GenericDecorator
 
 
 @dataclass
@@ -33,5 +33,3 @@ class HeaderWrapper(GenericDecorator):
     def _output_message(self) -> str:
         """Outputs the header message."""
         return f"{self.message}"
-
-
