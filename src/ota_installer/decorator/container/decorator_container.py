@@ -3,10 +3,10 @@ from dependency_injector import containers, providers
 
 
 class Decorators(containers.DeclarativeContainer):
-    from ...decorators.colorizer import Colorizer
-    from ...decorators.indent_wrapper import IndentWrapper
-    from ...decorators.output_printer import OutputPrinter
-    from ...decorators.styled_indent_printer import StylizedIndentPrinter
+    from ...decorator.colorizer import Colorizer
+    from ...decorator.indent_wrapper import IndentWrapper
+    from ...decorator.output_printer import OutputPrinter
+    from ...decorator.styled_indent_printer import StylizedIndentPrinter
 
     colorizer = providers.Factory(Colorizer)
     indent_wrapper = providers.Factory(IndentWrapper)
