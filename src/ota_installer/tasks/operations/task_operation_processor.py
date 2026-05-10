@@ -11,13 +11,13 @@ from ... import decorators
 from ...dispatchers.plugins.dispatcher_plugin_handler import (
     PluginDispatcherAdapter,
 )
-from .constants.constants import (
+from .task_operation_executor import TaskOperationExecutor
+from .task_operation_info import (
     DefaultIndent,
     Indents,
     Styles,
+    TaskOpsItemType,
 )
-from .constants.task_ops_item_types import TaskOpsItemTypes
-from .task_operation_executor import TaskOperationExecutor
 from .task_operation_parser import TaskItemParser
 
 
@@ -52,7 +52,7 @@ class TaskOperationProcessor(object):
 
     def set_item(self, field_name: str, value: object) -> Self:
         """Sets the value of a task field."""
-        expected_type = TaskOpsItemTypes.get_validated_type(field_name)
+        expected_type = TaskOpsItemType.get_validated_type(field_name)
         if not isinstance(value, expected_type):
             raise TypeError(
                 f"Expected value of type {expected_type.__name__} for "
@@ -63,7 +63,7 @@ class TaskOperationProcessor(object):
 
     def get_item(self, field_name: str) -> object:
         """Retrieves the value of a task field."""
-        TaskOpsItemTypes.get_validated_type(field_name)
+        TaskOpsItemType.get_validated_type(field_name)
         return getattr(self, field_name.lower(), None)
 
     def show_index_and_title(self) -> str:

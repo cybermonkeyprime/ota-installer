@@ -6,7 +6,7 @@ from typing import Self
 
 from ... import decorators
 from ...log_setup import logger
-from .constants.constants import Indents, Messages
+from .task_operation_info import Indents, Messages
 
 
 @dataclass(frozen=True, slots=True)
@@ -53,5 +53,3 @@ class TaskOperationExecutor(object):
             )
             return ""
         return result
-
-
