@@ -5,7 +5,7 @@ from typing import Self
 
 from ....dispatchers.dispatcher_type import DispatcherType
 from ....variables.variable_manager import VariableManager
-from ...variables.processors.base_processor import BaseProcessor
+from ...variables.processors.base_process_handler import BaseProcessor
 
 
 class DirectoryItemType(Enum):
