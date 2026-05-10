@@ -8,7 +8,7 @@ from ..directory_handler import (
     set_directory,
 )
 from ..dispatchers.dispatcher_type import DispatcherType
-from ..images.magisk_image.constants.magisk_image_paths import MagiskImagePath
+from ..images.magisk_image_handler import MagiskImagePath
 from ..log_setup import logger
 from .variable_handler import (
     get_file_image_path,

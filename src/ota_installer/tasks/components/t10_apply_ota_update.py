@@ -5,7 +5,7 @@ from ... import decorators
 from ...task_group_handler import ApplicationTask
 from ...variables.variable_manager import VariableManager
 from ..operations.task_operation_details import TaskOperationDetails
-from ..plugin_registry import task_plugin
+from ..plugins.task_plugin_registry import task_plugin
 from .base_task import BaseTask
 
 ENUM_VALUES = TaskOperationDetails.APPLY_OTA_UPDATE.value

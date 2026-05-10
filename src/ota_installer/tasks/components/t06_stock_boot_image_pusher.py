@@ -6,7 +6,7 @@ from ... import decorators
 from ...task_group_handler import MigrationTask
 from ...variables.variable_manager import VariableManager
 from ..operations.task_operation_details import TaskOperationDetails
-from ..plugin_registry import task_plugin
+from ..plugins.task_plugin_registry import task_plugin
 from .base_task import BaseTask
 
 ENUM_VALUES = TaskOperationDetails.PUSH_STOCK_BOOT_IMAGE.value

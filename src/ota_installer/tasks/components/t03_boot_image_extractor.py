@@ -7,7 +7,7 @@ from ...task_group_handler import PreparationTask
 from ...variables.variable_manager import VariableManager
 from ..operations.task_operation_details import TaskOperationDetails
 from ..operations.task_operation_processor import image_handler
-from ..plugin_registry import task_plugin
+from ..plugins.task_plugin_registry import task_plugin
 from .base_task import BaseTask
 
 ENUM_VALUES = TaskOperationDetails.EXTRACT_STOCK_BOOT_IMAGE.value

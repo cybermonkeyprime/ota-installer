@@ -17,8 +17,8 @@ from .constants.constants import (
     Styles,
 )
 from .constants.task_ops_item_types import TaskOpsItemTypes
-from .task_item_parser import TaskItemParser
 from .task_operation_executor import TaskOperationExecutor
+from .task_operation_parser import TaskItemParser
 
 
 class TaskAspect(StrEnum):

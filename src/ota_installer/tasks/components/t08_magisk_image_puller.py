@@ -5,13 +5,13 @@ from pathlib import Path
 from loguru import logger
 
 from ... import decorators
-from ...images.magisk_image.constants.magisk_image_paths import (
+from ...images.magisk_image_handler import (
     MagiskImagePath,
 )
 from ...task_group_handler import ApplicationTask, MigrationTask
 from ...variables.variable_manager import VariableManager
 from ..operations.task_operation_details import TaskOperationDetails
-from ..plugin_registry import task_plugin
+from ..plugins.task_plugin_registry import task_plugin
 from .base_task import BaseTask
 
 ENUM_VALUES = TaskOperationDetails.PULL_MAGISK_IMAGE.value
