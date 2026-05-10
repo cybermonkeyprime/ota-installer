@@ -6,9 +6,11 @@ from typing import Self
 from ....dispatchers.dispatcher_type import DispatcherType
 from ....variables.variable_manager import VariableManager
 from ...variables.processors.base_process_handler import BaseProcessor
+from ..variable_item_info import VariableItem
+from ..variable_table_builder import VariableTableBuilder
 
 
-class DirectoryItemType(Enum):
+class DirectoryItemInfo(Enum):
     """Constants for task item types."""
 
     INDEX = int
@@ -68,9 +70,6 @@ class DirectoryIterationProcessor(BaseProcessor):
         return self
 
     def process_items(self) -> None:
-        from ..variable_item_info import VariableItem
-        from ..variable_table_builder import VariableTableBuilder
-
         """Processes each directory and builds a variable table."""
         builder = VariableTableBuilder(indent=3)
         for directory in self.directory_names:

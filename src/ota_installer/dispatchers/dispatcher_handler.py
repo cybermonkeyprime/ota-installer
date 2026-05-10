@@ -1,13 +1,42 @@
-# src/ota_installer/dispatchers/templates/dispatcher_template.py
 from dataclasses import field
 from pathlib import Path
+from typing import Protocol, runtime_checkable
 
 from ..log_setup import logger
-from .dispatcher_protocol import DispatcherProtocol
 
 CollectionKeys = str
 CollectionValues = Path | str
 CollectionDictionary = dict[CollectionKeys, CollectionValues]
+
+
+@runtime_checkable
+class DispatcherProtocol(Protocol):
+    """
+    Protocol defining the interface expected of all dispatchers.
+    Ensures compatibility across dispatcher variants and promotes consistent
+    behavior.
+    """
+
+    collection: dict[str, object]
+
+    def get_value(self, key: str) -> object:
+        """
+        Retrieve a value from the internal collection using the provided key.
+        """
+        ...
+
+    def get_instance(self, key: str) -> object | None:
+        """Retrieve an instance from the collection using the provided key."""
+        ...
+
+    @staticmethod
+    def normalize_key(key: str) -> str:
+        """
+        Normalize a key string for consistent internal usage.
+        Typical implementations may use lowercasing, stripping, or other
+        formatting.
+        """
+        ...
 
 
 class DispatcherTemplate(DispatcherProtocol):
@@ -48,6 +77,3 @@ class DispatcherTemplate(DispatcherProtocol):
     def normalize_key(key: str) -> str:
         """Normalize dictionary keys for consistent dispatcher behavior."""
         return key.lower().strip()
-
-
-# Signed off by Brian Sanford on 20260429
