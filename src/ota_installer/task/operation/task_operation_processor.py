@@ -7,8 +7,8 @@ from typing import Self
 
 from loguru import logger
 
-from ... import decorators
-from ...dispatchers.plugins.dispatcher_plugin_handler import (
+from ... import decorator
+from ...dispatcher.plugin.dispatcher_plugin_handler import (
     PluginDispatcherAdapter,
 )
 from .task_operation_executor import TaskOperationExecutor
@@ -28,7 +28,7 @@ class TaskAspect(StrEnum):
     @property
     def indent_printer(self):
         return partial(
-            decorators.ColorizedIndentPrinter,
+            decorator.ColorizedIndentPrinter,
             indent=Indents[self.name],
             style=Styles[self.name],
             end="",
@@ -36,7 +36,7 @@ class TaskAspect(StrEnum):
 
 
 task_indent = partial(
-    decorators.MultiplyString,
+    decorator.MultiplyString,
     interval=(DefaultIndent.SPACING * DefaultIndent.INTERVAL),
 )
 
@@ -70,13 +70,13 @@ class TaskOperationProcessor(object):
         """Displays the index and title of the task."""
         return TaskItemParser(f"{self.index}. {self.title}:").show_header()
 
-    @decorators.FooterWrapper()
+    @decorator.FooterWrapper()
     @TaskAspect.DESCRIPTION.indent_printer()
     def show_description(self) -> str:
         """Displays the description of the task."""
         return self.description
 
-    @decorators.FooterWrapper()
+    @decorator.FooterWrapper()
     @TaskAspect.COMMAND.indent_printer()
     def show_command_string(self) -> str:
         """Displays the command string of the task."""

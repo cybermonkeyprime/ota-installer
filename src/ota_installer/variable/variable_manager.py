@@ -73,7 +73,7 @@ class VariableManager(object):
 
     def _initialize_file_paths(self) -> Self:
         """Initializes file paths."""
-        from ..images.generic_image_handler import (
+        from ..image.generic_image_handler import (
             FileImageData,
         )
 

@@ -24,7 +24,7 @@ class OutputPrinter(GenericDecorator):
 
         @wraps(function)
         def wrapper(*args, **kwargs) -> object:
-            from ..styles.palette import RichColors
+            from ..style.palette import RichColors
 
             style = RichColors[self.color.upper()]
 

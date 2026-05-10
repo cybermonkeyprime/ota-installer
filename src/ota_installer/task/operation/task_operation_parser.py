@@ -1,8 +1,8 @@
-# src/ota_installer/tasks/operations/task_item_parser.py
+# task/operation/task_operation_parser.py
 from dataclasses import dataclass
 from enum import Enum, IntEnum, StrEnum
 
-from ... import decorators
+from ... import decorator
 
 
 class TaskItemType(Enum):
@@ -32,7 +32,7 @@ class TaskItemParser(object):
     value: str
     constants: type[TaskItemAspect] = TaskItemAspect
 
-    @decorators.ColorizedIndentPrinter(
+    @decorator.ColorizedIndentPrinter(
         indent=TaskItemIndent.ASPECT.value,
         begin="",
         end="",
@@ -42,7 +42,7 @@ class TaskItemParser(object):
         """Display the aspect of the task item."""
         return f"{self.value}"
 
-    @decorators.ColorizedIndentPrinter(
+    @decorator.ColorizedIndentPrinter(
         indent=TaskItemIndent.HEADER.value,
         end=":",
         style=TaskItemStyle.HEADER.value,
@@ -52,3 +52,4 @@ class TaskItemParser(object):
         return f"{self.value}"
 
 
+# Signed off by Brian Sanford on 20260510

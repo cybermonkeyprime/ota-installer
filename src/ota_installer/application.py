@@ -2,7 +2,7 @@
 from . import decorator
 from .display.display_clear import clear_screen
 from .display.display_info import DisplayHeader
-from .exception.handlers.keyboard_interrupt_handler import (
+from .exception.keyboard_interrupt_handler import (
     KeyboardInterruptHandler,
 )
 from .task.execution.task_execution import CLIArguments, TaskExecutor

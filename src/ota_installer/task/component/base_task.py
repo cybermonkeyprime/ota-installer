@@ -2,8 +2,8 @@
 from dataclasses import dataclass
 from enum import StrEnum, auto
 
-from ..operations.task_operation_details import TaskOperation
-from ..operations.task_operation_processor import TaskOperationProcessor
+from ..operation.task_operation_details import TaskOperation
+from ..operation.task_operation_processor import TaskOperationProcessor
 
 
 class OptionalTaskField(StrEnum):
@@ -43,5 +43,3 @@ class BaseTask(object):
         for attr in OptionalTaskField:
             if value := getattr(self, attr, None):
                 self.task.set_item(attr, value)
-
-

@@ -4,7 +4,7 @@ from functools import partial
 from subprocess import check_output, run
 from typing import Self
 
-from ... import decorators
+from ... import decorator
 from ...log_setup import logger
 from .task_operation_info import Indents, Messages
 
@@ -12,12 +12,12 @@ from .task_operation_info import Indents, Messages
 @dataclass(frozen=True, slots=True)
 class Task(object):
     prompt = partial(
-        decorators.ConfirmationPrompt,
+        decorator.ConfirmationPrompt,
         comment=Messages.EXECUTE.value,
         indent=Indents.EXECUTE,
     )
     on_keypress = partial(
-        decorators.ContinueOnKeyPress,
+        decorator.ContinueOnKeyPress,
         indent=1,
     )
 
@@ -30,7 +30,7 @@ class TaskOperationExecutor(object):
 
     @Task.prompt()
     @Task.on_keypress()
-    @decorators.Encapsulate()
+    @decorator.Encapsulate()
     def execute(self) -> Self:
         """Executes the command without returning output."""
         if (
@@ -44,7 +44,7 @@ class TaskOperationExecutor(object):
 
     @Task.prompt()
     @Task.on_keypress()
-    @decorators.Encapsulate()
+    @decorator.Encapsulate()
     def execute_and_return_output(self, output_name) -> str:
         """Executes the command and returns its output."""
         result = check_output(
