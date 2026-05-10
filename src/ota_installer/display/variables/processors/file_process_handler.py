@@ -1,5 +1,6 @@
 # src/ota_installer/display/variables/processors/file_processor.py
 from dataclasses import dataclass, field
+from pathlib import Path
 from typing import Self
 
 from ....dispatchers.dispatcher_type import DispatcherType

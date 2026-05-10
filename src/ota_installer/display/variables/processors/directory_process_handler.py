@@ -1,4 +1,4 @@
-# src/ota_installer/display/variables/processors/directory_iteration_processor.py
+# display/variables/processors/directory_process_handler.py
 from dataclasses import dataclass, field
 from enum import Enum
 from typing import Self
@@ -68,8 +68,8 @@ class DirectoryIterationProcessor(BaseProcessor):
         return self
 
     def process_items(self) -> None:
-        from ..classes.variable_table_builder import VariableTableBuilder
-        from ..containers.variable_item import VariableItem
+        from ..variable_item_info import VariableItem
+        from ..variable_table_builder import VariableTableBuilder
 
         """Processes each directory and builds a variable table."""
         builder = VariableTableBuilder(indent=3)

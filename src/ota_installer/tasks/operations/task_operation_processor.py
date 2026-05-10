@@ -8,7 +8,7 @@ from typing import Self
 from loguru import logger
 
 from ... import decorators
-from ...dispatchers.factories.plugin_dispatcher_adapter import (
+from ...dispatchers.plugins.dispatcher_plugin_handler import (
     PluginDispatcherAdapter,
 )
 from .constants.constants import (

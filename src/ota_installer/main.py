@@ -1,7 +1,7 @@
 from .command_line_interface import cli
 
 # DO NOT REMOVE, PLUGIN LOADERS!!!
-from .dispatchers import dispatcher_plugin_loader
+from .dispatchers.plugins import dispatcher_plugin_loader
 from .tasks import plugin_loader
 
 
