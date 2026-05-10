@@ -1,11 +1,11 @@
 # src/ota_installer/application.py
-from . import decorators
+from . import decorator
 from .display.display_clear import clear_screen
 from .display.display_info import DisplayHeader
-from .exceptions.handlers.keyboard_interrupt_handler import (
+from .exception.handlers.keyboard_interrupt_handler import (
     KeyboardInterruptHandler,
 )
-from .tasks.execution.task_execution import CLIArguments, TaskExecutor
+from .task.execution.task_execution import CLIArguments, TaskExecutor
 from .versioning.version_handler import SoftwareVersion
 
 
@@ -23,7 +23,7 @@ def display_title():
         display_random_exit_message()
 
 
-@decorators.StylizedIndentPrinter(indent=1, style="task", use_output=False)
+@decorator.StylizedIndentPrinter(indent=1, style="task", use_output=False)
 def display_random_exit_message() -> str:
     from secrets import choice
 
@@ -45,7 +45,7 @@ def display_random_exit_message() -> str:
 
 
 @KeyboardInterruptHandler
-@decorators.FooterWrapper(message=display_random_exit_message())
+@decorator.FooterWrapper(message=display_random_exit_message())
 def task_execution(arguments: CLIArguments):
     """Execute tasks based on the provided CLI arguments."""
     (
