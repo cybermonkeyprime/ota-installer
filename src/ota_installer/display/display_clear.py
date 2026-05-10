@@ -2,7 +2,7 @@
 from os import name
 from subprocess import CompletedProcess, run
 
-from ...log_setup import logger
+from ..log_setup import logger
 
 
 def clear_screen() -> None:
