@@ -2,8 +2,8 @@
 from dataclasses import field
 from pathlib import Path
 
-from ...log_setup import logger
-from ..protocols.dispatcher_protocol import DispatcherProtocol
+from ..log_setup import logger
+from .dispatcher_protocol import DispatcherProtocol
 
 CollectionKeys = str
 CollectionValues = Path | str

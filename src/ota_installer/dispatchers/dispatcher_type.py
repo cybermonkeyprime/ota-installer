@@ -1,7 +1,7 @@
 # src/ota_installer/dispatchers/constants/dispatcher_type.py
 from enum import StrEnum, auto
 
-from ...log_setup import logger
+from ..log_setup import logger
 
 
 class DispatcherType(StrEnum):
@@ -15,19 +15,19 @@ class DispatcherType(StrEnum):
 
     @classmethod
     def _dispatcher_mapping(cls) -> dict[str, type]:
-        from ...directory_handler import (
+        from ..directory_handler import (
             DirectoryDispatcher,
         )
-        from ...images.boot_image_handler import (
+        from ..images.boot_image_handler import (
             ImageTypeDispatcher,
         )
-        from ...images.generic_image_handler import (
+        from ..images.generic_image_handler import (
             FileTypeDispatcher,
         )
-        from ...task_group_handler import (
+        from ..task_group_handler import (
             TaskGroupTypeDispatcher,
         )
-        from ...variables.variable_handler import (
+        from ..variables.variable_handler import (
             VariableTypeDispatcher,
         )
 

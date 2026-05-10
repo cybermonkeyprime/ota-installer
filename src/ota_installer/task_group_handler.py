@@ -3,9 +3,9 @@ from collections.abc import Mapping
 from dataclasses import dataclass, field
 from enum import Enum, StrEnum, auto
 
-from .dispatchers.constants.dispatcher_type import DispatcherType
-from .dispatchers.dispatcher_plugin_registry import dispatcher_plugin
-from .dispatchers.templates.dispatcher_template import DispatcherTemplate
+from .dispatchers.dispatcher_template import DispatcherTemplate
+from .dispatchers.dispatcher_type import DispatcherType
+from .dispatchers.plugins.dispatcher_plugin_registry import dispatcher_plugin
 from .log_setup import logger
 from .tasks.task_info import TaskID
 

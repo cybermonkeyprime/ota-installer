@@ -1,18 +1,18 @@
 # src/ota_installer/dispatchers/constants/dispatcher_mapping.py
-from ..images.file_image.dispatchers.file_type_dispatcher import (
-    FileTypeDispatcher,
-)
-from ...task_groups.dispatchers.task_group_type_dispatcher import (
-    TaskGroupTypeDispatcher,
-)
-from .variables.dispatchers.variable_type_dispatchers.variable_type_dispatcher import (
-    VariableTypeDispatcher,
-)
 from ..directory_handler import (
     DirectoryDispatcher,
 )
-from .images.boot_image.dispatchers.boot_image_dispatcher import (
+from ..images.boot_image_handler import (
     ImageTypeDispatcher,
+)
+from ..images.generic_image_handler import (
+    FileTypeDispatcher,
+)
+from ..task_group_handler import (
+    TaskGroupTypeDispatcher,
+)
+from ..variables.variable_handler import (
+    VariableTypeDispatcher,
 )
 
 DispatcherTypes = (

@@ -2,13 +2,13 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Self
 
-from ...dispatchers.constants.dispatcher_type import DispatcherType
-from ...dispatchers.factories.plugin_dispatcher_adapter import (
-    PluginDispatcherAdapter,
-)
-from ...dispatchers.templates.dispatcher_template import (
+from ...dispatchers.dispatcher_template import (
     CollectionValues,
     DispatcherTemplate,
+)
+from ...dispatchers.dispatcher_type import DispatcherType
+from ...dispatchers.plugins.dispatcher_plugin_handler import (
+    PluginDispatcherAdapter,
 )
 from ...log_setup import logger
 from ...task_group_handler import TaskGroupName
