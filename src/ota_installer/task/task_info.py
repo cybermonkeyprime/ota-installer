@@ -3,7 +3,7 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from enum import StrEnum, auto
 
-from .plugins.task_plugin_registry import TASK_PLUGINS
+from .plugin.task_plugin_registry import TASK_PLUGINS
 
 
 class TaskID(StrEnum):

@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import Self
 
 from ...decorator.styled_indent_printer import StylizedIndentPrinter
-from ...display.variables.processors.variable_process_handler import (
+from ...display.variable.processor.variable_process_handler import (
     VariableProcessor,
 )
 from ...log_setup import add_structured_log_sink, logger

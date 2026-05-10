@@ -2,8 +2,8 @@
 from dataclasses import dataclass
 from typing import Self
 
-from ....variables.variable_manager import VariableManager
-from ...variables.variable_functions import (
+from ....variable.variable_manager import VariableManager
+from ...variable.variable_functions import (
     set_boot_image_directories,
     set_image_file_names,
     set_log_file,

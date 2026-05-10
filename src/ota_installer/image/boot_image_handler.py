@@ -3,9 +3,9 @@ from dataclasses import dataclass, field
 from enum import Enum, StrEnum
 from pathlib import Path
 
-from ..dispatchers.dispatcher_handler import DispatcherTemplate
-from ..dispatchers.dispatcher_type import DispatcherType
-from ..dispatchers.plugins.dispatcher_plugin_registry import dispatcher_plugin
+from ..dispatcher.dispatcher_handler import DispatcherTemplate
+from ..dispatcher.dispatcher_type import DispatcherType
+from ..dispatcher.plugin.dispatcher_plugin_registry import dispatcher_plugin
 
 
 class BootImagePaths(Enum):

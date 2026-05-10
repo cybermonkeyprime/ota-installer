@@ -4,14 +4,14 @@ from dataclasses import dataclass, field
 from enum import StrEnum, auto
 from pathlib import Path
 
-from ..dispatchers.dispatcher_handler import DispatcherTemplate
-from ..dispatchers.dispatcher_type import DispatcherType
-from ..dispatchers.plugins.dispatcher_plugin_registry import dispatcher_plugin
-from ..images.boot_image_handler import (
+from ..dispatcher.dispatcher_handler import DispatcherTemplate
+from ..dispatcher.dispatcher_type import DispatcherType
+from ..dispatcher.plugin.dispatcher_plugin_registry import dispatcher_plugin
+from ..image.boot_image_handler import (
     BootImageContainer,
     BootImagePaths,
 )
-from ..images.magisk_image_handler import (
+from ..image.magisk_image_handler import (
     MagiskImageContainer,
 )
 from ..log_setup import logger
