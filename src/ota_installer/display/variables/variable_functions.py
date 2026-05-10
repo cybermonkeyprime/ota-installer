@@ -1,12 +1,10 @@
 # src/ota_installer/display/variables/functions.py
 from ...variables.variable_manager import VariableManager
-from ..variables.processors.directory_iteration_processor import (
+from ..variables.processors.file_processor import VariableFileProcessor
+from ..variables.variable_process_handler import (
     DirectoryIterationProcessor,
-)
-from ..variables.processors.file_iteration_processor import (
     FileIterationProcessor,
 )
-from ..variables.processors.file_processor import VariableFileProcessor
 
 # Directory names
 
@@ -84,5 +82,3 @@ def set_log_file(processing_function: VariableManager) -> None:
         .set_value("log_file")
         .process_items()
     )
-
-

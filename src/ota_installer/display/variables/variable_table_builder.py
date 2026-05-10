@@ -5,7 +5,7 @@ from rich.console import Console
 from rich.padding import Padding
 from rich.table import Table
 
-from ....styles.palette import RichColors
+from ...styles.palette import RichColors
 
 
 @dataclass
@@ -38,5 +38,3 @@ class VariableTableBuilder(object):
         """Renders the table to the console with specified indentation."""
         console = Console()
         console.print(Padding(self.table, (0, 0, 0, self.indent)))
-
-
