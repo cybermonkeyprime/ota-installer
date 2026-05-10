@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 from enum import Enum
 from typing import Self
 
-from ....dispatchers.constants.dispatcher_type import DispatcherType
+from ....dispatchers.dispatcher_type import DispatcherType
 from ....variables.variable_manager import VariableManager
 from ...variables.processors.base_processor import BaseProcessor
 
