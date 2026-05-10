@@ -5,7 +5,7 @@ from enum import Enum, StrEnum, auto
 
 from ..dispatcher.dispatcher_handler import DispatcherTemplate
 from ..dispatcher.dispatcher_type import DispatcherType
-from ..dispatcher.plugins.dispatcher_plugin_registry import dispatcher_plugin
+from ..dispatcher.plugin.dispatcher_plugin_registry import dispatcher_plugin
 from ..log_setup import logger
 from ..task.task_info import TaskID
 

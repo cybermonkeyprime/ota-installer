@@ -7,12 +7,12 @@ from ...dispatcher.dispatcher_handler import (
     DispatcherTemplate,
 )
 from ...dispatcher.dispatcher_type import DispatcherType
-from ...dispatcher.plugins.dispatcher_plugin_handler import (
+from ...dispatcher.plugin.dispatcher_plugin_handler import (
     PluginDispatcherAdapter,
 )
 from ...log_setup import logger
 from ...task_group.task_group_handler import TaskGroupName
-from ..managers.task_manager import TaskManager
+from ..manager.task_manager import TaskManager
 from ..task_handler import TaskDefinitions
 from .cli_arguments import CLIArguments
 

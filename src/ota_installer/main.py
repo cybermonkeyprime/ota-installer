@@ -1,8 +1,8 @@
 from .command_line_interface import cli
 
 # DO NOT REMOVE, PLUGIN LOADERS!!!
-from .dispatchers.plugins import dispatcher_plugin_loader
-from .tasks.plugins import task_plugin_loader
+from .dispatcher.plugin import dispatcher_plugin_loader
+from .task.plugin import task_plugin_loader
 
 
 def main() -> None:
