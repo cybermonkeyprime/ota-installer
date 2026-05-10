@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 from enum import Enum, StrEnum
 from pathlib import Path
 
-from ..dispatchers.dispatcher_template import DispatcherTemplate
+from ..dispatchers.dispatcher_handler import DispatcherTemplate
 from ..dispatchers.dispatcher_type import DispatcherType
 from ..dispatchers.plugins.dispatcher_plugin_registry import dispatcher_plugin
 
