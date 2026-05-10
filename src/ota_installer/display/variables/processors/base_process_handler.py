@@ -1,7 +1,7 @@
 # src/ota_installer/display/variables/processors/base_processor.py
 from dataclasses import dataclass, field
 
-from ....types.dispatcher_protocol import DispatcherProtocol
+from ....dispatchers.dispatcher_handler import DispatcherProtocol
 
 
 @dataclass
@@ -32,5 +32,3 @@ class BaseProcessor(object):
     def get_value_by_key(self, key: str) -> object:
         """Retrieves a value from the dispatcher using the provided key."""
         return self.dispatcher.get_value(key)
-
-
