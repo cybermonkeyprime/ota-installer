@@ -11,7 +11,7 @@ from .images.boot_image_handler import (
     BootImageContainer,
     BootImagePaths,
 )
-from .images.magisk_image.constants.magisk_image_paths import (
+from .images.magisk_image_handler import (
     MagiskImageContainer,
 )
 from .log_setup import logger
