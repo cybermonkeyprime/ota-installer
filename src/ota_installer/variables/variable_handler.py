@@ -2,9 +2,9 @@
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from ..dispatchers.constants.dispatcher_type import DispatcherType
-from ..dispatchers.dispatcher_plugin_registry import dispatcher_plugin
-from ..dispatchers.templates.dispatcher_template import DispatcherTemplate
+from ..dispatchers.dispatcher_template import DispatcherTemplate
+from ..dispatchers.dispatcher_type import DispatcherType
+from ..dispatchers.plugins.dispatcher_plugin_registry import dispatcher_plugin
 from .variable_info import FileNameContainer
 
 StrPathDict = dict[str, Path | str]
