@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Self
 
-from ..directory_handler import (
+from ..directory.directory_handler import (
     DirectoryTypeDefinition,
     set_directory,
 )

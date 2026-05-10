@@ -6,7 +6,7 @@ from .exceptions.handlers.keyboard_interrupt_handler import (
     KeyboardInterruptHandler,
 )
 from .tasks.execution.task_execution import CLIArguments, TaskExecutor
-from .version_handler import SoftwareVersion
+from .versioning.version_handler import SoftwareVersion
 
 
 def run() -> None:

@@ -9,7 +9,7 @@ from ..decorators import StyledFigletPrinter
 from ..decorators.colorizer import Colorizer
 from ..log_setup import logger
 from ..styles.separator import separator
-from ..version_handler import SoftwareVersion
+from ..versioning.version_handler import SoftwareVersion
 
 type Bool_Predicate = Callable[[], bool]
 type Str_Predicate = Callable[[], str]
