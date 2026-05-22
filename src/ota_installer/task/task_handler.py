@@ -13,7 +13,7 @@ task_prompt: partial = partial(decorator.ConfirmationPrompt, char=" ")
 
 
 @dataclass
-class TaskDefinitions(object):
+class TaskDefinitions:
     """Handles the definitions of various task categories."""
 
     @decorator.PaddedFooterWrapper()
