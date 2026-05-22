@@ -59,9 +59,9 @@ class FileIterationProcessor(BaseProcessor):
     processing_function: VariableManager = field(
         default_factory=VariableManager
     )
-    file_names: tuple = field(init=False)
+    file_names: tuple[str, ...] = field(init=False)
 
-    def set_file_names(self, files: tuple) -> Self:
+    def set_file_names(self, files: tuple[str, ...]) -> Self:
         """Sets the file names to be processed."""
         self.file_names = tuple(files)
         return self
@@ -84,7 +84,7 @@ class FileIterationProcessor(BaseProcessor):
             data = VariableItemContainer(
                 title=f"{file}_name", value=Path(file_path).name
             )
-            builder.add(data.title.upper(), str(data.value))
+            builder.add(title=data.title.upper(), value=str(object=data.value))
         builder.render()
 
 
