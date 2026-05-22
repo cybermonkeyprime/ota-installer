@@ -10,7 +10,7 @@ from .task_operation_info import Indents, Messages
 
 
 @dataclass(frozen=True, slots=True)
-class Task(object):
+class Task:
     prompt = partial(
         decorator.ConfirmationPrompt,
         comment=Messages.EXECUTE.value,
@@ -23,7 +23,7 @@ class Task(object):
 
 
 @dataclass
-class TaskOperationExecutor(object):
+class TaskOperationExecutor:
     """Executes shell commands with confirmation prompts and error handling."""
 
     command_string: str
