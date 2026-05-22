@@ -64,7 +64,6 @@ class VariableItemProcessor(BaseProcessor):
     processing_function: VariableManager = field(
         default_factory=VariableManager
     )
-    dispatcher_type: str = field(init=False)
     items: tuple[VariableItemSpec, ...] = field(default_factory=tuple)
     leading_newline: bool = False
     type: str = field(init=False)

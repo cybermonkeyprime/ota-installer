@@ -5,6 +5,9 @@ from pathlib import Path
 from typing import Self
 
 from ...decorator.styled_indent_printer import StylizedIndentPrinter
+from ...display.variable.processor.variable_process_handler import (
+    VariableProcessor,
+)
 from ...log_setup import add_structured_log_sink, logger
 from ...variable.variable_handler import set_variable_manager
 from ...variable.variable_manager import VariableManager
@@ -40,10 +43,6 @@ class TaskManager(object):
         return self
 
     def log_and_process_variables(self) -> None:
-        from ...display.variable.processor.variable_process_handler import (
-            VariableProcessor,
-        )
-
         """Logs and processes the variables from the variable manager."""
         logger.debug(
             f"TaskManager.log_and_process_variables(): {self.variable=}"
