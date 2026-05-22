@@ -1,9 +1,6 @@
 # src/ota_installer/dispatchers/constants/dispatcher_type.py
 from enum import StrEnum, auto
 
-from ..display.variable.processor.variable_process_handler import (
-    VariableItemProcessor,
-)
 from ..log_setup import logger
 
 
@@ -45,7 +42,7 @@ class DispatcherType(StrEnum):
     @classmethod
     def allowed_dispatchers(cls) -> tuple[str, ...]:
         """Returns a tuple of allowed dispatcher names."""
-        return tuple(key for key in cls._dispatcher_mapping().keys())
+        return tuple(key for key in cls._dispatcher_mapping())
 
     @classmethod
     def call_dispatcher(cls, key: str) -> type:
@@ -61,13 +58,11 @@ class DispatcherType(StrEnum):
                 f"Invalid dispatcher type: {process_type}."
                 f"Allowed: {allowed_dispatchers}"
             )
-            return None
 
     @classmethod
     def dispatcher_error(cls, process_type):
         if cls.call_dispatcher(process_type) is None:
             logger.error(f"Dispatcher mapping failed for: {process_type}")
-            return None
 
     @classmethod
     def retrieve_dispatcher(cls, process_type, function_data) -> type | None:
@@ -83,6 +78,10 @@ class DispatcherType(StrEnum):
     def processor(
         self, processing_function: "VariableManager"
     ) -> "VariableItemProcessor":
+        from ..display.variable.processor.variable_process_handler import (
+            VariableItemProcessor,
+        )
+
         return VariableItemProcessor(
             processing_function=processing_function,
             dispatcher_type=self.value,
