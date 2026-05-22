@@ -4,7 +4,7 @@ from pathlib import Path
 
 
 @dataclass(frozen=True, slots=True)
-class DirectoryNames(object):
+class DirectoryNames:
     """Container for directory names used in the OTA installer."""
 
     magisk: "DirectoryPaths"
@@ -19,7 +19,7 @@ class DirectoryPaths:
 
 
 @dataclass(frozen=True, slots=True)
-class FileNameInfo(object):
+class FileNameInfo:
     """Represents information about a file name."""
 
     path: Path
@@ -30,7 +30,7 @@ class FileNameInfo(object):
 
 
 @dataclass(frozen=True, slots=True)
-class FilePaths(object):
+class FilePaths:
     """Container for file paths used in the OTA installer."""
 
     stock: Path
@@ -40,7 +40,7 @@ class FilePaths(object):
 
 
 @dataclass(frozen=True, slots=True)
-class FileNameContainer(object):
+class FileNameContainer:
     """Container for file name components."""
 
     device: str
@@ -50,7 +50,7 @@ class FileNameContainer(object):
 
 
 @dataclass(frozen=True, slots=True)
-class VariableTypeContainer(object):
+class VariableTypeContainer:
     """Container for variable types used in OTA installation."""
 
     file_path: Path
