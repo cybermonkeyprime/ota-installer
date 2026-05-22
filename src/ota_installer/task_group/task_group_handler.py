@@ -52,7 +52,7 @@ class TaskGroupName(StrEnum):
 
 
 @dataclass(frozen=True, slots=True)
-class TaskGroupContainer(object):
+class TaskGroupContainer:
     """Container for task group information."""
 
     group_name: str
