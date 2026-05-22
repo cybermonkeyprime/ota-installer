@@ -9,8 +9,8 @@ from ..log_setup import logger
 from ..style.separator import separator
 from ..versioning.version_handler import SoftwareVersion
 
-type Bool_Predicate = Callable[[], bool]
-type Str_Predicate = Callable[[], str]
+type BoolPredicate = Callable[[], bool]
+type StrPredicate = Callable[[], str]
 
 
 class DisplayHeader(StrEnum):
@@ -20,7 +20,7 @@ class DisplayHeader(StrEnum):
     SUBTITLE = auto()
 
     @classmethod
-    def mapping(cls) -> Mapping["DisplayHeader", Str_Predicate | str]:
+    def mapping(cls) -> Mapping["DisplayHeader", StrPredicate | str]:
         return {
             cls.TITLE: _title,
             cls.MOVE_CURSOR_UP: str(object=Control.move(y=-1)),
@@ -30,7 +30,7 @@ class DisplayHeader(StrEnum):
 
     @property
     def build(self) -> str:
-        value: Str_Predicate | str = self.mapping()[self]
+        value: StrPredicate | str = self.mapping()[self]
         return value() if callable(value) else value
 
     @decorator.OutputPrinter(suffix="")
@@ -45,7 +45,7 @@ class DisplayHeader(StrEnum):
         return self.build
 
     @classmethod
-    def get_rendering_sequence(cls) -> tuple[Bool_Predicate, ...]:
+    def get_rendering_sequence(cls) -> tuple[BoolPredicate, ...]:
         return (
             cls.TITLE.render_default,
             cls.MOVE_CURSOR_UP.render_default,
@@ -62,7 +62,7 @@ class DisplayHeader(StrEnum):
                 logger.error("An error occurred during initialization.")
 
     @staticmethod
-    def execute_component(component: Bool_Predicate | None) -> bool:
+    def execute_component(component: BoolPredicate | None) -> bool:
         """Execute a display component and return success status."""
         return component() if component else False
 
