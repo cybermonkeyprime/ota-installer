@@ -5,12 +5,11 @@ from functools import partial
 from pathlib import Path
 from typing import Self
 
-from loguru import logger
-
 from ... import decorator
 from ...dispatcher.plugin.dispatcher_plugin_handler import (
     PluginDispatcherAdapter,
 )
+from ...log_setup import logger
 from .task_operation_executor import TaskOperationExecutor
 from .task_operation_info import (
     DefaultIndent,
@@ -42,7 +41,7 @@ task_indent = partial(
 
 
 @dataclass
-class TaskOperationProcessor(object):
+class TaskOperationProcessor:
     index: int = field(init=False)
     title: str = field(init=False)
     description: str = field(init=False)
@@ -84,11 +83,11 @@ class TaskOperationProcessor(object):
 
     def show_comment(self) -> str:
         """Displays the comment of the task."""
-        return TaskItemParser(self.comment).show_aspect()
+        return TaskItemParser(value=self.comment).show_aspect()
 
     def show_reminder(self) -> str:
         """Displays the reminder of the task."""
-        return TaskItemParser(self.reminder).show_aspect()
+        return TaskItemParser(value=self.reminder).show_aspect()
 
     def execute_command_string(self) -> None:
         """Executes the command string associated with the task."""
@@ -103,7 +102,6 @@ class TaskOperationProcessor(object):
         ).execute_and_return_output(output_name)
         return output or "No output"
 
-    # @task_indent()
     def run_with_output(self) -> None:
         """Runs the task and displays its output."""
         self.show_index_and_title()
