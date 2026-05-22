@@ -4,18 +4,18 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Self
 
-from ...decorator.styled_indent_printer import StylizedIndentPrinter
-from ...display.variable.processor.variable_process_handler import (
+from ..decorator.styled_indent_printer import StylizedIndentPrinter
+from ..display.variable.processor.variable_process_handler import (
     VariableProcessor,
 )
-from ...log_setup import add_structured_log_sink, logger
-from ...variable.variable_handler import set_variable_manager
-from ...variable.variable_manager import VariableManager
-from ..task_info import TaskID
+from ..log_setup import add_structured_log_sink, logger
+from ..variable.variable_handler import set_variable_manager
+from ..variable.variable_manager import VariableManager
+from .task_info import TaskID
 
 
 @dataclass
-class TaskManager(object):
+class TaskManager:
     """Manages the execution of tasks based on a specified file name."""
 
     file_name: Path = field(default_factory=Path)
@@ -94,6 +94,7 @@ def task_iterator(
         task_class = task_id.execute
 
         task_director(instance=instance, task_name=task_class)
+    return None
 
 
 @StylizedIndentPrinter(indent=2, style="variable", end="\n\n", use_output=True)

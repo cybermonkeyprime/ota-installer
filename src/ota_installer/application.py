@@ -5,7 +5,7 @@ from .display.display_info import DisplayHeader
 from .exception.keyboard_interrupt_handler import (
     KeyboardInterruptHandler,
 )
-from .task.execution.task_execution import CLIArguments, TaskExecutor
+from .task.task_execution import CLIArguments, TaskExecutor
 from .versioning.version_handler import SoftwareVersion
 
 

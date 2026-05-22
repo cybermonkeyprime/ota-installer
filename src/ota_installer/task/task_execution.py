@@ -2,13 +2,13 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Self
 
-from ...log_setup import logger
-from ..manager.task_manager import TaskManager
-from ..task_handler import TaskDefinitions
+from ..log_setup import logger
+from .task_handler import TaskDefinitions
+from .task_manager import TaskManager
 
 
 @dataclass(frozen=True, slots=True)
-class CLIArguments(object):
+class CLIArguments:
     """Represents command-line arguments for the application."""
 
     path: Path
@@ -18,7 +18,7 @@ class CLIArguments(object):
 
 
 @dataclass(slots=True)
-class TaskExecutor(object):
+class TaskExecutor:
     arguments: CLIArguments
     task_manager: TaskManager = field(default_factory=lambda: TaskManager())
     dispatcher: type | None = field(init=False)
@@ -51,8 +51,8 @@ class TaskExecutor(object):
     def initialize_task_dispatcher(self) -> Self:
         """Initializes the task dispatcher."""
 
-        from ...dispatcher.dispatcher_info import DispatcherType
-        from ...dispatcher.plugin.dispatcher_plugin_handler import (
+        from ..dispatcher.dispatcher_info import DispatcherType
+        from ..dispatcher.plugin.dispatcher_plugin_handler import (
             PluginDispatcherAdapter,
         )
 
@@ -75,7 +75,7 @@ class TaskExecutor(object):
     @property
     def task_group_keys(self) -> tuple:
         """Returns the keys of the task groups."""
-        from ...task_group.task_group_handler import TaskGroupName
+        from ..task_group.task_group_handler import TaskGroupName
 
         return TaskGroupName.get_task_group_members()
 
