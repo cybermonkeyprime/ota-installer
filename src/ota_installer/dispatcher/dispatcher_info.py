@@ -42,7 +42,7 @@ class DispatcherType(StrEnum):
     @classmethod
     def allowed_dispatchers(cls) -> tuple[str, ...]:
         """Returns a tuple of allowed dispatcher names."""
-        return tuple(key for key in cls._dispatcher_mapping())
+        return tuple(cls._dispatcher_mapping())
 
     @classmethod
     def call_dispatcher(cls, key: str) -> type:
@@ -50,18 +50,17 @@ class DispatcherType(StrEnum):
         return cls._dispatcher_mapping()[key.upper()]
 
     @classmethod
-    def check_dispatcher(cls, process_type) -> None:
+    def check_dispatcher(cls, process_type: str) -> None:
         """Validates the dispatcher type."""
-        allowed_dispatchers = cls.allowed_dispatchers()
-        if process_type.upper() not in allowed_dispatchers:
+        if process_type.upper() not in cls.allowed_dispatchers():
             logger.error(
                 f"Invalid dispatcher type: {process_type}."
-                f"Allowed: {allowed_dispatchers}"
+                f"Allowed: {cls.allowed_dispatchers()}"
             )
 
     @classmethod
-    def dispatcher_error(cls, process_type):
-        if cls.call_dispatcher(process_type) is None:
+    def dispatcher_error(cls, process_type: str) -> None:
+        if cls.call_dispatcher(key=process_type) is None:
             logger.error(f"Dispatcher mapping failed for: {process_type}")
 
     @classmethod
@@ -71,9 +70,9 @@ class DispatcherType(StrEnum):
 
         cls.check_dispatcher(process_type)
         cls.dispatcher_error(process_type)
-        dispatcher_name = cls.call_dispatcher(process_type.upper())
+        dispatcher_class: type = cls.call_dispatcher(key=process_type.upper())
 
-        return dispatcher_name(function_data)
+        return dispatcher_class(function_data) if dispatcher_class else None
 
     def processor(
         self, processing_function: "VariableManager"
