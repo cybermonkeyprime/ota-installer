@@ -26,7 +26,7 @@ class TaskItemIndent(IntEnum):
 
 
 @dataclass
-class TaskItemParser(object):
+class TaskItemParser:
     """Parser for task items with aspect and header display capabilities."""
 
     value: str

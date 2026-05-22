@@ -4,7 +4,7 @@ from enum import Enum
 
 
 @dataclass(frozen=True, slots=True)
-class TaskOperation(object):
+class TaskOperation:
     """Represents a task operation with its details."""
 
     index: int

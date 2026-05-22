@@ -22,7 +22,7 @@ class BootImagePaths(Enum):
 
 
 @dataclass(frozen=True, slots=True)
-class BootImageContainer(object):
+class BootImageContainer:
     """Container for boot image paths."""
 
     stock: Path = BootImagePaths.STOCK.value
@@ -38,7 +38,7 @@ class BootImageType(StrEnum):
     @classmethod
     def allowed_types(cls) -> tuple:
         """Returns a tuple of allowed image type keys in lowercase."""
-        return tuple(key.lower() for key in cls.__members__.keys())
+        return tuple(key.lower() for key in cls.__members__)
 
     @staticmethod
     def normalize_key(key: str) -> str:
