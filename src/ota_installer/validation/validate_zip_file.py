@@ -11,7 +11,7 @@ class InvalidZipFileError(ValueError):
     pass
 
 
-VALID_ZIP_MIME_TYPES = {"application/java-archive"}
+VALID_ZIP_MIME_TYPES: set[str] = {"application/java-archive"}
 
 
 def validate_zip_file(path: str | Path) -> Path | None:
@@ -25,19 +25,19 @@ def validate_zip_file(path: str | Path) -> Path | None:
         logger.critical(f"Not a file: {zip_path}")
         return None
 
-    mime = magic.from_file(str(path), mime=True)
+    mime = magic.from_file(filename=str(object=path), mime=True)
 
     if mime not in VALID_ZIP_MIME_TYPES:
         logger.critical(f"Unexpected MIME type: {mime}")
         return None
 
-    if not is_zipfile(zip_path):
+    if not is_zipfile(filename=zip_path):
         logger.critical("Not a valid zip file format!")
         return None
 
     try:
-        with ZipFile(zip_path) as zf:
-            names = zf.namelist()
+        with ZipFile(file=zip_path) as zf:
+            names: list[str] = zf.namelist()
             if not names:
                 logger.critical("Zip archive is empty.")
                 return None
