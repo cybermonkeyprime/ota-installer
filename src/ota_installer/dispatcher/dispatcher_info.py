@@ -1,6 +1,9 @@
 # src/ota_installer/dispatchers/constants/dispatcher_type.py
 from enum import StrEnum, auto
 
+from ..display.variable.processor.variable_process_handler import (
+    VariableItemProcessor,
+)
 from ..log_setup import logger
 
 
@@ -76,6 +79,14 @@ class DispatcherType(StrEnum):
         dispatcher_name = cls.call_dispatcher(process_type.upper())
 
         return dispatcher_name(function_data)
+
+    def processor(
+        self, processing_function: "VariableManager"
+    ) -> "VariableItemProcessor":
+        return VariableItemProcessor(
+            processing_function=processing_function,
+            dispatcher_type=self.value,
+        )
 
 
 # Final sign off by Brian Sanford on 20260421

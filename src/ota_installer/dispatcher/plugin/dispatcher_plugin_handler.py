@@ -1,16 +1,5 @@
 # src/ota_installer/dispatchers/factories/plugin_dispatcher_adapter.py
 
-"""
-plugin_dispatcher_adapter.py
-
-Adapter that wraps dispatcher instantiation via the plugin system.
-Acts as a unified interface for downstream tasks to:
-- Load dispatcher based on type string
-- Safely access dispatcher methods (e.g., `.get_value()`)
-
-Useful in display processors and variable extraction workflows.
-"""
-
 from dataclasses import dataclass, field
 
 from ...log_setup import logger

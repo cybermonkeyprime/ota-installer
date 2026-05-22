@@ -1,13 +1,10 @@
-# display/variables/processors/directory_process_handler.py
+# display/variable/processor/directory_process_handler.py
 from dataclasses import dataclass, field
 from enum import Enum
 from typing import Self
 
-from ....dispatcher.dispatcher_type import DispatcherType
 from ....variable.variable_manager import VariableManager
 from ...variable.processor.base_process_handler import BaseProcessor
-from ..variable_item_info import VariableItem
-from ..variable_table_builder import VariableTableBuilder
 
 
 class DirectoryItemInfo(Enum):
@@ -51,6 +48,9 @@ class DirectoryIterationProcessor(BaseProcessor):
 
     def __post_init__(self):
         """Initializes the dispatcher type."""
+
+        from ....dispatcher.dispatcher_info import DispatcherType
+
         self.dispatcher_type = DispatcherType.DIRECTORY.value
         super().__post_init__()
 
@@ -71,6 +71,11 @@ class DirectoryIterationProcessor(BaseProcessor):
 
     def process_items(self) -> None:
         """Processes each directory and builds a variable table."""
+        from ..variable_item_handler import (
+            VariableItemContainer,
+            VariableTableBuilder,
+        )
+
         builder = VariableTableBuilder(indent=3)
         for directory in self.directory_names:
             title_string = (
@@ -79,6 +84,8 @@ class DirectoryIterationProcessor(BaseProcessor):
                 f"{directory}_directory"
             )
             value_string = str(self.get_value_by_key(directory))
-            data = VariableItem(title=title_string, value=value_string)
+            data = VariableItemContainer(
+                title=title_string, value=value_string
+            )
             builder.add(data.title.upper(), data.value)
         builder.render()

@@ -4,7 +4,7 @@ from enum import Enum, StrEnum
 from pathlib import Path
 
 from ..dispatcher.dispatcher_handler import DispatcherTemplate
-from ..dispatcher.dispatcher_type import DispatcherType
+from ..dispatcher.dispatcher_info import DispatcherType
 from ..dispatcher.plugin.dispatcher_plugin_registry import dispatcher_plugin
 
 

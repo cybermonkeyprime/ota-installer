@@ -2,30 +2,28 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Self
 
-from ...dispatcher.dispatcher_handler import (
-    CollectionValues,
-    DispatcherTemplate,
-)
-from ...dispatcher.dispatcher_type import DispatcherType
-from ...dispatcher.plugin.dispatcher_plugin_handler import (
-    PluginDispatcherAdapter,
-)
 from ...log_setup import logger
-from ...task_group.task_group_handler import TaskGroupName
 from ..manager.task_manager import TaskManager
 from ..task_handler import TaskDefinitions
-from .cli_arguments import CLIArguments
+
+
+@dataclass(frozen=True, slots=True)
+class CLIArguments(object):
+    """Represents command-line arguments for the application."""
+
+    path: Path
+    task_group: str | None = None
+    list: bool = False
+    version = False
 
 
 @dataclass(slots=True)
 class TaskExecutor(object):
     arguments: CLIArguments
     task_manager: TaskManager = field(default_factory=lambda: TaskManager())
-    dispatcher: DispatcherTemplate = field(init=False)
+    dispatcher: type | None = field(init=False)
     task_group: str | None = field(init=False)
-    task_definitions: TaskDefinitions = field(
-        default_factory=lambda: TaskDefinitions()
-    )
+    task_definitions: object = field(default_factory=lambda: TaskDefinitions())
     path: Path = field(init=False)
 
     def set_path(self) -> Self:
@@ -52,6 +50,12 @@ class TaskExecutor(object):
 
     def initialize_task_dispatcher(self) -> Self:
         """Initializes the task dispatcher."""
+
+        from ...dispatcher.dispatcher_info import DispatcherType
+        from ...dispatcher.plugin.dispatcher_plugin_handler import (
+            PluginDispatcherAdapter,
+        )
+
         self.dispatcher = PluginDispatcherAdapter(
             DispatcherType.TASK_GROUP.value, self.task_definitions
         ).load()
@@ -71,6 +75,8 @@ class TaskExecutor(object):
     @property
     def task_group_keys(self) -> tuple:
         """Returns the keys of the task groups."""
+        from ...task_group.task_group_handler import TaskGroupName
+
         return TaskGroupName.get_task_group_members()
 
     def execute_task_based_on_group(self) -> None:
@@ -80,7 +86,7 @@ class TaskExecutor(object):
         else:
             self.execute_single_task()
 
-    def get_dispatcher_instance(self, key: str) -> CollectionValues | None:
+    def get_dispatcher_instance(self, key: str):
         """Retrieves the dispatcher instance for a given key."""
         logger.debug(f"Retrieving dispatcher instance for key: {key}")
         return self.dispatcher.get_instance(key)
@@ -90,7 +96,8 @@ class TaskExecutor(object):
 
         if not hasattr(self, "task_iteration"):
             logger.error(
-                f"Processing {task_group_key} failed: task_iteration method not found."
+                f"Processing {task_group_key} failed: "
+                "task_iteration method not found."
             )
             raise AttributeError("task_iteration method not found.")
 
@@ -99,7 +106,9 @@ class TaskExecutor(object):
     def task_iteration(self, task_group_key: str) -> None:
         """Iterates over tasks in the specified task group."""
         logger.debug(f"Executing task iteration for: {task_group_key}")
-        dispatcher_instance = self.get_dispatcher_instance(task_group_key)
+        dispatcher_instance: Path | str | None = self.get_dispatcher_instance(
+            key=task_group_key
+        )
         self.task_manager.execute_iteration(task_group=dispatcher_instance)
 
     def execute_single_task(self) -> None:
@@ -111,7 +120,7 @@ class TaskExecutor(object):
         logger.debug(
             f"Executing single task for task group: {self.task_group}"
         )
-        self.execute_task(self.task_group)
+        self.execute_task(task_group_key=self.task_group)
 
     def execute_all_tasks(self) -> None:
         """Executes all tasks defined in the task group keys."""

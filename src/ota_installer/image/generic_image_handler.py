@@ -6,7 +6,7 @@ from pathlib import Path
 from typing import NamedTuple, Self
 
 from ..dispatcher.dispatcher_handler import DispatcherTemplate
-from ..dispatcher.dispatcher_type import DispatcherType
+from ..dispatcher.dispatcher_info import DispatcherType
 from ..dispatcher.plugin.dispatcher_plugin_registry import dispatcher_plugin
 
 

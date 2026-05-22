@@ -4,10 +4,10 @@ from pathlib import Path
 from typing import Self
 
 from ..directory.directory_handler import (
-    DirectoryTypeDefinition,
+    DirectoryDefinition,
     set_directory,
 )
-from ..dispatcher.dispatcher_type import DispatcherType
+from ..dispatcher.dispatcher_info import DispatcherType
 from ..image.magisk_image_handler import MagiskImagePath
 from ..log_setup import logger
 from .variable_handler import (
@@ -32,7 +32,7 @@ class VariableManager(object):
     path: Path = field(default_factory=Path)
 
     """ directory type validation"""
-    directory: DirectoryTypeDefinition | None = field(init=False)
+    directory: DirectoryDefinition | None = field(init=False)
 
     """dicts"""
     file_paths: FilePaths = field(init=False)
@@ -41,9 +41,9 @@ class VariableManager(object):
     directories: DirectoryNames = field(init=False)
 
     def __post_init__(self) -> None:
-        self.variables = self._initialize_variable_group(
-            self.path
-        )  # .data_tuple
+        self.variables: VariableTypeContainer = (
+            self._initialize_variable_group(file_path=self.path)
+        )
         self._initialize_file_name_attributes()
         self._initialize_file_paths()
         self._initialize_directory_paths()
@@ -57,7 +57,7 @@ class VariableManager(object):
             file_path=file_path,
             magisk_image_name="place_holder",
             file_path_stem=file_path.stem,
-            file_parts=parse_file_name(file_path),
+            file_parts=parse_file_name(raw_name=file_path),
         )
 
     def _initialize_file_name_attributes(self) -> Self:
@@ -109,10 +109,10 @@ class VariableManager(object):
 
         return self
 
-    def create_directory(self) -> DirectoryTypeDefinition | None:
+    def create_directory(self) -> DirectoryDefinition | None:
         """Creates a directory and returns its definition."""
         return (
-            DirectoryTypeDefinition(
+            DirectoryDefinition(
                 self.path.parent,
                 str(self.file_paths.stock.parent),
                 self.directories.magisk.remote_path,

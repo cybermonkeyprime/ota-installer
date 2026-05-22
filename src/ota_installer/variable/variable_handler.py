@@ -1,9 +1,10 @@
 # variables/variable_handler.py
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from pathlib import Path
 
 from ..dispatcher.dispatcher_handler import DispatcherTemplate
-from ..dispatcher.dispatcher_type import DispatcherType
+from ..dispatcher.dispatcher_info import DispatcherType
 from ..dispatcher.plugin.dispatcher_plugin_registry import dispatcher_plugin
 from .variable_info import FileNameContainer
 
@@ -34,7 +35,7 @@ def set_log_file(file_name_parts: FileNameContainer) -> str:
     return f"/tmp/ota-installer_{device}_{version}.txt"
 
 
-def set_variable_manager(path: Path) -> "VariableManager":  # noqa: F821 # pyright: ignore[reportUndefinedVariable]
+def set_variable_manager(path: Path) -> "VariableManager":
     from ..log_setup import logger
     from ..validation.validate_zip_file import validate_zip_file
     from .variable_manager import VariableManager

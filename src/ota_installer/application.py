@@ -1,6 +1,6 @@
 # src/ota_installer/application.py
 from . import decorator
-from .display.display_clear import clear_screen
+from .display.display_handler import clear_screen
 from .display.display_info import DisplayHeader
 from .exception.keyboard_interrupt_handler import (
     KeyboardInterruptHandler,
