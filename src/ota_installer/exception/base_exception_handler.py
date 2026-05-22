@@ -6,7 +6,7 @@ from .. import decorator
 
 
 @dataclass(slots=True)
-class BaseExceptionHandler(object):
+class BaseExceptionHandler:
     """Handles exceptions for a given function with customizable messages."""
 
     function: Callable
@@ -21,14 +21,12 @@ class BaseExceptionHandler(object):
         if not callable(self.function):
             return None
 
-        result = self.function(*args, **kwargs)
-        return result
+        return self.function(*args, **kwargs)
 
     @decorator.OutputPrinter(use_color=True, prefix="\n\n", suffix="\n\n")
     def print_exception_message(self, error: BaseException) -> str:
         """Prints the formatted exception message."""
-        formatted_message = self.format_message(error)
-        return formatted_message
+        return self.format_message(error)
 
     @decorator.IndentWrapper(interval=1)
     @decorator.Colorizer(style="variable")
@@ -46,3 +44,4 @@ class BaseExceptionHandler(object):
 
 if __name__ == "__main__":
     pass
+# Signed off by Brian Sanford on 20260522
