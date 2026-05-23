@@ -9,7 +9,7 @@ class SoftwareVersion(Enum):
     TITLE = "OTA-Installer"
     MAJOR_NUMBER = 2026
     MINOR_NUMBER = 5
-    PATCH_NUMBER = 10
+    PATCH_NUMBER = 22
 
     @classmethod
     def display(cls) -> str:
@@ -28,7 +28,7 @@ class SoftwareVersion(Enum):
 
 
 @dataclass(frozen=True, slots=True)
-class SoftwareInfo(object):
+class SoftwareInfo:
     """Represents a software container with versioning information."""
 
     title: str

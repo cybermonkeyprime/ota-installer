@@ -1,13 +1,10 @@
 [build-system]
-requires = ["setuptools>=42"]
-build-backend = "setuptools.build_meta"
-
-#requires = ["uv_build>=0.9.17,<0.10.0"]
-#build-backend = "uv_build"
+requires = ["uv_build>=0.9.17,<0.10.0"]
+build-backend = "uv_build"
 
 [project]
 name = "ota-installer"
-version = "2026.5.10"
+version = "2026.5.22"
 requires-python = ">=3.14"
 dependencies = [
   "dependency-injector==4.48.3",
