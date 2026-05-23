@@ -5,9 +5,9 @@ from enum import Enum, StrEnum, auto
 from pathlib import Path
 from typing import NamedTuple, Self
 
-from ..dispatcher.dispatcher_handler import DispatcherTemplate
-from ..dispatcher.dispatcher_info import DispatcherType
-from ..plugin.plugin_registry import dispatcher_plugin
+from ...dispatcher.dispatcher_handler import DispatcherTemplate
+from ...dispatcher.dispatcher_info import DispatcherType
+from ...plugin.plugin_registry import dispatcher_plugin
 
 
 # containers

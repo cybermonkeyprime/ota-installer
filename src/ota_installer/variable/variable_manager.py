@@ -8,7 +8,7 @@ from ..directory.directory_handler import (
     set_directory,
 )
 from ..dispatcher.dispatcher_info import DispatcherType
-from ..image.magisk_image_handler import MagiskImagePath
+from ..handler.image.magisk_image_handler import MagiskImagePath
 from ..log_setup import logger
 from .variable_handler import (
     get_file_image_path,
@@ -26,7 +26,7 @@ from .variable_info import (
 
 
 @dataclass
-class VariableManager(object):
+class VariableManager:
     """Manages variables for OTA installation."""
 
     path: Path = field(default_factory=Path)
@@ -73,7 +73,7 @@ class VariableManager(object):
 
     def _initialize_file_paths(self) -> Self:
         """Initializes file paths."""
-        from ..image.generic_image_handler import (
+        from ..handler.image.generic_image_handler import (
             FileImageData,
         )
 

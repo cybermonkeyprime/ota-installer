@@ -51,7 +51,7 @@ def set_variable_manager(path: Path) -> "VariableManager":
 
 
 def get_file_image_path(name: str, device: str, version) -> Path:
-    from ..image.generic_image_handler import (
+    from ..handler.image.generic_image_handler import (
         FileImageAttributes,
     )
 

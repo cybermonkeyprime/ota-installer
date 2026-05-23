@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from ... import decorator
-from ...image.magisk_image_handler import (
+from ...handler.image.magisk_image_handler import (
     MagiskImagePath,
 )
 from ...log_setup import logger

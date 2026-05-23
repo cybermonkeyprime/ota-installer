@@ -33,7 +33,7 @@ class DirectoryInfo(StrEnum):
 
 
 @dataclass
-class DirectoryDefinition(object):
+class DirectoryDefinition:
     """
     Defines the structure for a directory containing boot and magisk images.
     """
@@ -43,8 +43,8 @@ class DirectoryDefinition(object):
     magisk_image: Path = field(default_factory=Path)
 
     def __post_init__(self) -> None:
-        from ..image.boot_image_handler import BootImageContainer
-        from ..image.magisk_image_handler import MagiskImageContainer
+        from ..handler.image.boot_image_handler import BootImageContainer
+        from ..handler.image.magisk_image_handler import MagiskImageContainer
 
         """
         Initializes the boot image container after the dataclass is created.
@@ -85,7 +85,7 @@ class DirectoryDispatcher(DispatcherTemplate):
 def set_directory(
     parent_directory: Path,
 ) -> DirectoryDefinition | None:
-    from ..image.boot_image_handler import BootImagePaths
+    from ..handler.image.boot_image_handler import BootImagePaths
 
     """Creates a DirectoryTypeDefinition for the specified parent directory."""
 

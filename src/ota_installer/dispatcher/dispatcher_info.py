@@ -18,10 +18,10 @@ class DispatcherType(StrEnum):
         from ..directory.directory_handler import (
             DirectoryDispatcher,
         )
-        from ..image.boot_image_handler import (
+        from ..handler.image.boot_image_handler import (
             ImageTypeDispatcher,
         )
-        from ..image.generic_image_handler import (
+        from ..handler.image.generic_image_handler import (
             FileTypeDispatcher,
         )
         from ..task.task_group_handler import (
