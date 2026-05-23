@@ -6,7 +6,7 @@ from rich.control import Control
 
 from .. import decorator
 from ..log_setup import logger
-from ..style_handler import separator
+from ..style.style_handler import separator
 from ..versioning.version_handler import SoftwareVersion
 
 type BoolPredicate = Callable[[], bool]
