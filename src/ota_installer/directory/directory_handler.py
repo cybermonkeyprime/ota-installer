@@ -6,8 +6,8 @@ from pathlib import Path
 
 from ..dispatcher.dispatcher_handler import DispatcherTemplate
 from ..dispatcher.dispatcher_info import DispatcherType
-from ..dispatcher.plugin.dispatcher_plugin_registry import dispatcher_plugin
 from ..log_setup import logger
+from ..plugin.plugin_registry import dispatcher_plugin
 
 
 # Enums

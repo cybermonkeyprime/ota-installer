@@ -3,10 +3,10 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from ... import decorator
+from ...plugin.plugin_registry import task_plugin
 from ...task_group.task_group_handler import PreparationTask
 from ...variable.variable_manager import VariableManager
 from ..operation.task_operation_details import TaskOperationDetails
-from ..plugin.task_plugin_registry import task_plugin
 from .base_task import BaseTask
 
 ENUM_VALUES = TaskOperationDetails.RENAME_PAYLOAD_IMAGE.value

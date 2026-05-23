@@ -7,12 +7,12 @@ from typing import NamedTuple, Self
 
 from ..dispatcher.dispatcher_handler import DispatcherTemplate
 from ..dispatcher.dispatcher_info import DispatcherType
-from ..dispatcher.plugin.dispatcher_plugin_registry import dispatcher_plugin
+from ..plugin.plugin_registry import dispatcher_plugin
 
 
 # containers
 @dataclass(frozen=True, slots=True)
-class FileImagePaths(object):
+class FileImagePaths:
     """Represents file and directory paths for a file image."""
 
     file_path: Path

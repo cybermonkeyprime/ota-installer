@@ -2,16 +2,15 @@
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from loguru import logger
-
 from ... import decorator
 from ...image.magisk_image_handler import (
     MagiskImagePath,
 )
+from ...log_setup import logger
+from ...plugin.plugin_registry import task_plugin
 from ...task_group.task_group_handler import ApplicationTask, MigrationTask
 from ...variable.variable_manager import VariableManager
 from ..operation.task_operation_details import TaskOperationDetails
-from ..plugin.task_plugin_registry import task_plugin
 from .base_task import BaseTask
 
 ENUM_VALUES = TaskOperationDetails.PULL_MAGISK_IMAGE.value

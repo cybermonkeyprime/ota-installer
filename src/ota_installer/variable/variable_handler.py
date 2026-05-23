@@ -1,11 +1,10 @@
 # variables/variable_handler.py
-from collections.abc import Callable
 from dataclasses import dataclass, field
 from pathlib import Path
 
 from ..dispatcher.dispatcher_handler import DispatcherTemplate
 from ..dispatcher.dispatcher_info import DispatcherType
-from ..dispatcher.plugin.dispatcher_plugin_registry import dispatcher_plugin
+from ..plugin.plugin_registry import dispatcher_plugin
 from .variable_info import FileNameContainer
 
 StrPathDict = dict[str, Path | str]

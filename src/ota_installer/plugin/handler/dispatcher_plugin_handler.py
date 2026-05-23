@@ -3,11 +3,11 @@
 from dataclasses import dataclass, field
 
 from ...log_setup import logger
-from .dispatcher_plugin_registry import DISPATCHER_PLUGINS
+from ..plugin_registry import DISPATCHER_PLUGINS
 
 
 @dataclass
-class PluginDispatcherAdapter(object):
+class PluginDispatcherAdapter:
     """Adapter for loading and interacting with plugin dispatchers.
 
     This class provides a unified interface for loading dispatchers

@@ -6,10 +6,10 @@ from pathlib import Path
 from typing import Self
 
 from ... import decorator
-from ...dispatcher.plugin.dispatcher_plugin_handler import (
+from ...log_setup import logger
+from ...plugin.handler.dispatcher_plugin_handler import (
     PluginDispatcherAdapter,
 )
-from ...log_setup import logger
 from .task_operation_executor import TaskOperationExecutor
 from .task_operation_info import (
     DefaultIndent,

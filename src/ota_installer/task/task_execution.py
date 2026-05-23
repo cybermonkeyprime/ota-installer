@@ -52,7 +52,7 @@ class TaskExecutor:
         """Initializes the task dispatcher."""
 
         from ..dispatcher.dispatcher_info import DispatcherType
-        from ..dispatcher.plugin.dispatcher_plugin_handler import (
+        from ..plugin.handler.dispatcher_plugin_handler import (
             PluginDispatcherAdapter,
         )
 

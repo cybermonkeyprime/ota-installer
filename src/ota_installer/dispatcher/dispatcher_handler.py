@@ -50,8 +50,7 @@ class DispatcherTemplate(DispatcherProtocol):
         """Retrieve the value associated with the given key
         from the collection.
         """
-        collection_value = self.collection[self.normalize_key(key)]
-        return collection_value
+        return self.collection[self.normalize_key(key)]
 
     def get_instance(self, key: str) -> CollectionValues | None:
         """
