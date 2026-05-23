@@ -1,4 +1,4 @@
-# src/ota_installer/tasks/plugin_loader.py
+# src/ota_installer/plugin/loader/task_plugin_loader.py
 from ...task.component import (
     t01_payload_image_extractor,
     t02_payload_image_renamer,
@@ -14,4 +14,4 @@ from ...task.component import (
     t12_magisk_image_booter,
 )
 
-# Final 20260310
+# Signed off by Brian Sanford on 20260523

@@ -24,7 +24,7 @@ class DispatcherType(StrEnum):
         from ..image.generic_image_handler import (
             FileTypeDispatcher,
         )
-        from ..task_group.task_group_handler import (
+        from ..task.task_group_handler import (
             TaskGroupTypeDispatcher,
         )
         from ..variable.variable_handler import (

@@ -1,5 +1,4 @@
-# src/ota_installer/dispatchers/factories/plugin_dispatcher_adapter.py
-
+# src/ota_installer/plugin/handler/dispatcher_plugin_handler.py
 from dataclasses import dataclass, field
 
 from ...log_setup import logger
@@ -48,3 +47,6 @@ def load_plugin_dispatcher(dispatcher_type: str, obj: type) -> type | None:
         return None
 
     return dispatcher_class(obj)
+
+
+# Signed off by Brian Sanford on 20260523

@@ -1,3 +1,4 @@
+# src/ota_installer/plugin/plugin_registry.py
 from collections.abc import Callable
 
 DISPATCHER_PLUGINS: dict[str, Callable] = {}
@@ -29,3 +30,6 @@ def register_plugin(plugin_dict: dict[str, Callable], name: str) -> Callable:
         return cls
 
     return decorator
+
+
+# Signed off by Brian Sanford on 20260523

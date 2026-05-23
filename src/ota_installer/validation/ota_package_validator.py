@@ -14,7 +14,7 @@ class InvalidZipFileError(ValueError):
 VALID_ZIP_MIME_TYPES: set[str] = {"application/java-archive"}
 
 
-def validate_zip_file(path: str | Path) -> Path | None:
+def validate_ota_package(path: str | Path) -> Path | None:
     zip_path = Path(path)
 
     if not zip_path.exists():

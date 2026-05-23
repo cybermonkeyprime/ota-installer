@@ -1,4 +1,4 @@
-# src/ota_installer/dispatchers/plugin_loader.py
+# src/ota_installer/plugin/loader/dispatcher_plugin_loader.py
 from ...directory.directory_handler import (
     DirectoryDispatcher,
 )
@@ -8,10 +8,10 @@ from ...image.boot_image_handler import (
 from ...image.generic_image_handler import (
     FileTypeDispatcher,
 )
-from ...task_group.task_group_handler import (
+from ...task.task_group_handler import (
     TaskGroupTypeDispatcher,
 )
 from ...variable.variable_handler import (
     VariableTypeDispatcher,
 )
-# Final
+# Signed off by Brian Sanford on 20260523

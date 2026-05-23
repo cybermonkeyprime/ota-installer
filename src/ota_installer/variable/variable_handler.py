@@ -36,12 +36,12 @@ def set_log_file(file_name_parts: FileNameContainer) -> str:
 
 def set_variable_manager(path: Path) -> "VariableManager":
     from ..log_setup import logger
-    from ..validation.validate_zip_file import validate_zip_file
+    from ..validation.ota_package_validator import validate_ota_package
     from .variable_manager import VariableManager
 
     """Create a VariableManager instance after validating the file path. """
 
-    valid_path = validate_zip_file(path)
+    valid_path = validate_ota_package(path)
 
     if not valid_path:
         logger.error(f"Invalid file path: {path}. Aborting.")

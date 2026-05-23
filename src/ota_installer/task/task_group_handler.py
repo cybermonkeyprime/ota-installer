@@ -7,7 +7,7 @@ from ..dispatcher.dispatcher_handler import DispatcherTemplate
 from ..dispatcher.dispatcher_info import DispatcherType
 from ..log_setup import logger
 from ..plugin.plugin_registry import dispatcher_plugin
-from ..task.task_info import TaskID
+from .task_info import TaskID
 
 StrTuple = tuple[str, ...]
 TaskGroupMap = Mapping["TaskGroupName", object]
