@@ -4,8 +4,8 @@ from dataclasses import dataclass, field
 from enum import StrEnum, auto
 from pathlib import Path
 
-from ..dispatcher.dispatcher_handler import DispatcherTemplate
 from ..dispatcher.dispatcher_info import DispatcherType
+from ..handler.dispatcher_handler import DispatcherTemplate
 from ..log_setup import logger
 from ..plugin.plugin_registry import dispatcher_plugin
 

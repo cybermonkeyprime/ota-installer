@@ -1,11 +1,11 @@
 # src/ota_installer/display/variables/processors/base_processor.py
 from dataclasses import dataclass, field
 
-from ....dispatcher.dispatcher_handler import DispatcherProtocol
+from ....handler.dispatcher_handler import DispatcherProtocol
 
 
 @dataclass
-class BaseProcessor(object):
+class BaseProcessor:
     """Base class for processing with a dispatcher."""
 
     processing_function: object = field(init=False)
