@@ -3,11 +3,11 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Self
 
-from ..directory.directory_handler import (
+from ..dispatcher.dispatcher_info import DispatcherType
+from ..handler.directory_handler import (
     DirectoryDefinition,
     set_directory,
 )
-from ..dispatcher.dispatcher_info import DispatcherType
 from ..handler.image.magisk_image_handler import MagiskImagePath
 from ..log_setup import logger
 from .variable_handler import (

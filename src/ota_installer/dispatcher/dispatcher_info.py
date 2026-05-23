@@ -15,7 +15,7 @@ class DispatcherType(StrEnum):
 
     @classmethod
     def _dispatcher_mapping(cls) -> dict[str, type]:
-        from ..directory.directory_handler import (
+        from ..handler.directory_handler import (
             DirectoryDispatcher,
         )
         from ..handler.image.boot_image_handler import (
