@@ -1,35 +1,50 @@
 # src/ota_installer/plugin/plugin_registry.py
 from collections.abc import Callable
 
-DISPATCHER_PLUGINS: dict[str, Callable] = {}
-TASK_PLUGINS: dict[str, Callable] = {}
-
 ClassType = type[object]
+
+
+class PluginRegistry:
+    def __init__(self) -> None:
+        self.plugins: dict[str, Callable] = {}
+
+    def register_plugin(self, name):
+        def decorator(cls):
+            if name in self.plugins:
+                raise ValueError(f"Plugin '{name}' already registered")
+
+            self.plugins[name] = cls
+            return cls
+
+        return decorator
+
+    def get(self, name: str) -> ClassType | None:
+        key = name.lower().strip()
+        return self.plugins.get(key)
+
+    def __contains__(self, name: str) -> bool:
+        key = name.lower().strip()
+        return key in self.plugins
+
+    def __getitem__(self, name: str) -> ClassType:
+        key = name.lower().strip()
+        return self.plugins[key] or None
+
+
+DISPATCHER_PLUGINS = PluginRegistry()
+TASK_PLUGINS = PluginRegistry()
 
 
 def dispatcher_plugin(name: str) -> Callable:
     """Decorator to register a dispatcher plugin."""
 
-    return register_plugin(DISPATCHER_PLUGINS, name)
+    return DISPATCHER_PLUGINS.register_plugin(name)
 
 
 def task_plugin(name: str) -> Callable:
     """Decorator to register a task plugin."""
 
-    return register_plugin(TASK_PLUGINS, name)
-
-
-def register_plugin(plugin_dict: dict[str, Callable], name: str) -> Callable:
-    """Decorator to register a plugin in the given dictionary."""
-
-    def decorator(cls: ClassType) -> ClassType:
-        if name in plugin_dict:
-            raise ValueError(f"Plugin '{name}' already registered")
-
-        plugin_dict[name] = cls
-        return cls
-
-    return decorator
+    return TASK_PLUGINS.register_plugin(name)
 
 
 # Signed off by Brian Sanford on 20260523
