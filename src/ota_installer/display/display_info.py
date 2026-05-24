@@ -5,9 +5,9 @@ from enum import Enum, StrEnum, auto
 from rich.control import Control
 
 from .. import decorator
+from ..handler.version_handler import SoftwareVersion
 from ..log_setup import logger
 from ..style.style_handler import separator
-from ..versioning.version_handler import SoftwareVersion
 
 type BoolPredicate = Callable[[], bool]
 type StrPredicate = Callable[[], str]
