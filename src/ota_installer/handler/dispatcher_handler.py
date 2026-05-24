@@ -1,3 +1,4 @@
+# src/ota_installer/handler/dispatcher_handler.py
 from dataclasses import field
 from pathlib import Path
 from typing import Protocol, runtime_checkable
@@ -76,3 +77,6 @@ class DispatcherTemplate(DispatcherProtocol):
     def normalize_key(key: str) -> str:
         """Normalize dictionary keys for consistent dispatcher behavior."""
         return key.lower().strip()
+
+
+# Signed off by Brian Sanford on 20260523

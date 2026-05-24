@@ -1,4 +1,4 @@
-# variables/variable_handler.py
+# src/ota_installer/handler/variable_handler.py
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -86,4 +86,4 @@ class VariableTypeDispatcher(DispatcherTemplate):
         }
 
 
-# Signed off by Brian Sanford on 20260509
+# Signed off by Brian Sanford on 20260523
