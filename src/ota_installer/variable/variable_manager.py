@@ -9,13 +9,13 @@ from ..handler.directory_handler import (
     set_directory,
 )
 from ..handler.image.magisk_image_handler import MagiskImagePath
-from ..log_setup import logger
-from .variable_handler import (
+from ..handler.variable_handler import (
     get_file_image_path,
     parse_file_name,
     set_log_file,
     set_variable_manager,
 )
+from ..log_setup import logger
 from .variable_info import (
     DirectoryNames,
     DirectoryPaths,

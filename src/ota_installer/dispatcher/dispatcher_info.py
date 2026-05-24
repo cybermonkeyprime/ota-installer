@@ -15,19 +15,11 @@ class DispatcherType(StrEnum):
 
     @classmethod
     def _dispatcher_mapping(cls) -> dict[str, type]:
-        from ..handler.directory_handler import (
+        from ..plugin.loader.dispatcher_plugin_loader import (
             DirectoryDispatcher,
-        )
-        from ..handler.image.boot_image_handler import (
-            ImageTypeDispatcher,
-        )
-        from ..handler.image.generic_image_handler import (
             FileTypeDispatcher,
-        )
-        from ..task.task_group_handler import (
+            ImageTypeDispatcher,
             TaskGroupTypeDispatcher,
-        )
-        from ..variable.variable_handler import (
             VariableTypeDispatcher,
         )
 

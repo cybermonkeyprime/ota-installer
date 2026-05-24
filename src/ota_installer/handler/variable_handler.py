@@ -5,7 +5,7 @@ from pathlib import Path
 from ..dispatcher.dispatcher_info import DispatcherType
 from ..handler.dispatcher_handler import DispatcherTemplate
 from ..plugin.plugin_registry import dispatcher_plugin
-from .variable_info import FileNameContainer
+from ..variable.variable_info import FileNameContainer
 
 StrPathDict = dict[str, Path | str]
 
@@ -37,7 +37,7 @@ def set_log_file(file_name_parts: FileNameContainer) -> str:
 def set_variable_manager(path: Path) -> "VariableManager":
     from ..log_setup import logger
     from ..validation.ota_package_validator import validate_ota_package
-    from .variable_manager import VariableManager
+    from ..variable.variable_manager import VariableManager
 
     """Create a VariableManager instance after validating the file path. """
 
