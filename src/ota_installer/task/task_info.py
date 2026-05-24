@@ -41,7 +41,7 @@ class TaskID(StrEnum):
 
 
 @dataclass(frozen=True, slots=True)
-class TaskContainer(object):
+class TaskContainer:
     """Container for task information."""
 
     task_name: str

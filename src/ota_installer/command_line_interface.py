@@ -4,9 +4,9 @@ from pathlib import Path
 import typer
 
 from . import application
+from .handler.task_group_handler import TaskGroupName
 from .log_setup import enable_debug_logging
 from .task.task_execution import CLIArguments
-from .task.task_group_handler import TaskGroupName
 from .versioning.version_handler import SoftwareVersion
 
 cli = typer.Typer(help="Manually Install Android Device OTA Firmware")

@@ -8,7 +8,7 @@ from ...handler.image.boot_image_handler import (
 from ...handler.image.generic_image_handler import (
     FileTypeDispatcher,
 )
-from ...task.task_group_handler import (
+from ...handler.task_group_handler import (
     TaskGroupTypeDispatcher,
 )
 from ...handler.variable_handler import (

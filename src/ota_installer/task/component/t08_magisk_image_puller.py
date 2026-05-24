@@ -6,9 +6,9 @@ from ... import decorator
 from ...handler.image.magisk_image_handler import (
     MagiskImagePath,
 )
+from ...handler.task_group_handler import MigrationTask
 from ...log_setup import logger
 from ...plugin.plugin_registry import task_plugin
-from ...task.task_group_handler import MigrationTask
 from ...variable.variable_manager import VariableManager
 from ..operation.task_operation_details import TaskOperationDetails
 from .base_task import BaseTask
