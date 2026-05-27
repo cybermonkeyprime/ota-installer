@@ -1,5 +1,4 @@
 # src/ota_installer/handler/dispatcher_handler.py
-from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Protocol, runtime_checkable
 
@@ -45,7 +44,7 @@ class DispatcherTemplate(DispatcherProtocol):
     A template class for dispatching tasks based on a key-value collection.
     """
 
-    collection: CollectionDictionary = field(default_factory=dict)
+    collection: CollectionDictionary = {}
 
     def get_value(self, key: str) -> object | None:
         """Retrieve the value associated with the given key
