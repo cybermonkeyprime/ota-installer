@@ -1,5 +1,5 @@
 # src/ota_installer/handler/dispatcher_handler.py
-from dataclasses import field
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Protocol, runtime_checkable
 
@@ -51,7 +51,11 @@ class DispatcherTemplate(DispatcherProtocol):
         """Retrieve the value associated with the given key
         from the collection.
         """
-        return self.collection[self.normalize_key(key)]
+        if result := self.collection.get(self.normalize_key(key)):
+            logger.exception(f"Value is {key} not found")
+            raise
+
+        return result
 
     def get_instance(self, key: str) -> CollectionValues | None:
         """

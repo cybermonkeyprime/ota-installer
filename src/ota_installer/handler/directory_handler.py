@@ -49,15 +49,15 @@ class DirectoryDefinition:
         """
         Initializes the boot image container after the dataclass is created.
         """
-        self.boot_image = self.create_container(
+        self.boot_image = self._create_container(
             BootImageContainer, self._boot_image
         )
-        self.magisk_image_container = self.create_container(
+        self.magisk_image_container = self._create_container(
             MagiskImageContainer
         )
 
-    def create_container(
-        self, container_cls: Callable, *args, **kwargs
+    def _create_container(
+        self, container_cls: type, *args, **kwargs
     ) -> Callable | None:
         """Creates an instance of the specified container class."""
         logger.debug(f"Creating {container_cls.__name__} with args: {args}")
@@ -90,7 +90,7 @@ def set_directory(
     """Creates a DirectoryTypeDefinition for the specified parent directory."""
 
     logger.debug("Creating Directories")
-    if not any([parent_directory.exists(), parent_directory.is_dir()]):
+    if not parent_directory.exists() or not parent_directory.is_dir():
         logger.error("Invalid parent directory: %s", parent_directory)
         return None
 
