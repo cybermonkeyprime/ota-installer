@@ -27,7 +27,7 @@ class SoftwareVersion(Enum):
         return f"{cls.TITLE.value} - {cls.display()}"
 
 
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True)
 class SoftwareInfo:
     """Represents a software container with versioning information."""
 
