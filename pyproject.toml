@@ -33,18 +33,6 @@ ota-installer = "ota_installer.main:main"
 [tool.setuptools.packages.find]
 where = ["src"]
 
-[tool.pyright]
-include = ["."]
-exclude = ["**/node_modules", "**/__pycache__"]
-ignore = ["**/plugin_loader.py"]
-reportMissingImports = true                     #"none" or "warning" to downgrade to a warning
-reportMissingTypeStubs = false
-typeCheckingMode = "basic"
-pythonVersion = "3.14"
-pythonPlatform = "Linux"
-defineConstant = { DEBUG = true }
-useLibraryCodeForTypes = true
-
 requires-python = ">=3.14"
 dependencies = []
 
