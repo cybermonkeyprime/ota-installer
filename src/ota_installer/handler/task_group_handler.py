@@ -66,13 +66,9 @@ class BehaviorBase(Enum):
         return self.value.value
 
     @classmethod
-    def get_member_names(cls) -> tuple:
+    def get_member_names(cls) -> StrTuple:
         """Extracts task names from an enumeration."""
-        result: StrTuple = tuple(
-            enum_member.value.value for enum_member in cls
-        )
-        logger.debug(f"enum_task_names(): {result=}")
-        return result
+        return tuple(enum_member.value.value for enum_member in cls)
 
 
 class ApplicationTask(BehaviorBase):
