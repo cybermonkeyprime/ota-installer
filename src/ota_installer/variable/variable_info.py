@@ -4,13 +4,6 @@ from pathlib import Path
 
 
 @dataclass(frozen=True, slots=True)
-class DirectoryNames:
-    """Container for directory names used in the OTA installer."""
-
-    magisk: "DirectoryPaths"
-
-
-@dataclass(frozen=True, slots=True)
 class DirectoryPaths:
     """Represents the local and remote directory paths."""
 
@@ -19,12 +12,19 @@ class DirectoryPaths:
 
 
 @dataclass(frozen=True, slots=True)
+class DirectoryNames:
+    """Container for directory names used in the OTA installer."""
+
+    magisk: DirectoryPaths
+
+
+@dataclass(frozen=True, slots=True)
 class FileNameInfo:
     """Represents information about a file name."""
 
     path: Path
     stem: str
-    parts: "FileNameContainer"
+    parts: FileNameContainer
     device: str
     version: str
 
