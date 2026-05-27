@@ -16,7 +16,7 @@ class PluginDispatcherAdapter:
     dispatcher: str = field(default_factory=str)
     object_processor: type = field(default=type)
 
-    def load(self) -> type | None:
+    def load(self) -> object | None:
         """Load the dispatcher based on the specified type."""
         logger.debug(f"Loading dispatcher: {self.dispatcher}")
         return load_plugin_dispatcher(
@@ -26,7 +26,7 @@ class PluginDispatcherAdapter:
     def get_value(self, key: str) -> object:
         """Retrieve a value from the dispatcher using the specified key."""
         dispatcher = self.load()
-        if not dispatcher:
+        if dispatcher is None:
             logger.error(
                 f"Failed to load dispatcher '{self.dispatcher}'. "
                 f"Cannot retrieve value for key: {key}"
@@ -35,12 +35,12 @@ class PluginDispatcherAdapter:
         return dispatcher.get_value(key=key)
 
 
-def load_plugin_dispatcher(dispatcher_type: str, obj: type) -> type | None:
+def load_plugin_dispatcher(dispatcher_type: str, obj: type) -> object | None:
     """Load a registered plugin dispatcher based on the dispatcher type."""
     logger.debug(f"Loading plugin dispatcher for type: {dispatcher_type}")
     dispatcher_class = DISPATCHER_PLUGINS.get(dispatcher_type)
 
-    if not dispatcher_class:
+    if dispatcher_class is None:
         logger.error(
             f"No plugin dispatcher registered for: {dispatcher_type!r}",
         )
