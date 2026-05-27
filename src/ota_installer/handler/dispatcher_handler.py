@@ -53,6 +53,7 @@ class DispatcherTemplate(DispatcherProtocol):
         """
 
         result = self.collection.get(self.normalize_key(key))
+
         if not result:
             logger.exception(f"Value is {key} not found")
 
