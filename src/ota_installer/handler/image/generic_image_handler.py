@@ -1,9 +1,8 @@
 # images/generic_image_handler.py
 from collections.abc import Mapping
-from dataclasses import dataclass, field
+from dataclasses import astuple, dataclass, field
 from enum import Enum, StrEnum, auto
 from pathlib import Path
-from typing import NamedTuple, Self
 
 from ...dispatcher.dispatcher_info import DispatcherType
 from ...handler.dispatcher_handler import DispatcherTemplate
@@ -19,11 +18,16 @@ class FileImagePaths:
     directory_path: Path
 
 
-class FileImageData(NamedTuple):
+@dataclass(frozen=True, slots=True)
+class FileImageData:
     """Contains information about the file image data."""
 
     device: str
     version: str
+
+    def __iter__(self):
+        # Enables unpacking and loop iteration
+        return iter(astuple(self))
 
 
 # enums
