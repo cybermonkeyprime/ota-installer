@@ -51,9 +51,10 @@ class DispatcherTemplate(DispatcherProtocol):
         """Retrieve the value associated with the given key
         from the collection.
         """
-        if result := self.collection.get(self.normalize_key(key)):
+
+        result = self.collection.get(self.normalize_key(key))
+        if not result:
             logger.exception(f"Value is {key} not found")
-            raise
 
         return result
 
