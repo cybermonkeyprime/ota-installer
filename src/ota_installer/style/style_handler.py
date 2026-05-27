@@ -17,7 +17,7 @@ class RichColors(StrEnum):
 
     def beginning(self):
         """Constructs the beginning tag for the rich style."""
-        return self.tag
+        return self.tag()
 
     def ending(self):
         """Constructs the ending tag for the rich style."""
