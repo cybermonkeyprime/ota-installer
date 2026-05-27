@@ -1,7 +1,7 @@
 # src/ota_installer/plugin/plugin_registry.py
 from collections.abc import Callable
 
-ClassType = type[object]
+ClassType = Callable | None
 
 
 class PluginRegistry:
@@ -18,7 +18,7 @@ class PluginRegistry:
 
         return decorator
 
-    def get(self, name: str) -> ClassType | None:
+    def get(self, name: str) -> ClassType:
         key = name.lower().strip()
         return self.plugins.get(key)
 
@@ -28,7 +28,7 @@ class PluginRegistry:
 
     def __getitem__(self, name: str) -> ClassType:
         key = name.lower().strip()
-        return self.plugins[key] or None
+        return self.plugins.get(key)
 
 
 DISPATCHER_PLUGINS = PluginRegistry()
