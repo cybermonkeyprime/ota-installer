@@ -20,19 +20,23 @@ class TaskDefinitions:
     @task_prompt(comment="perform the Preparation Tasks")
     def preparation(self) -> tuple:
         """Returns the preparation task definitions."""
-        return PreparationTask.get_member_names()
+        return self._get_task_definitions(PreparationTask)
 
     @decorator.PaddedFooterWrapper()
     @task_prompt(comment="perform the Migration Tasks")
     def migration(self) -> tuple:
         """Returns the migration task definitions."""
-        return MigrationTask.get_member_names()
+        return self._get_task_definitions(MigrationTask)
 
     @decorator.PaddedFooterWrapper()
     @task_prompt(comment="perform the Application Tasks")
     def application(self) -> tuple:
         """Returns the application task definitions."""
-        return ApplicationTask.get_member_names()
+        return self._get_task_definitions(ApplicationTask)
+
+    def _get_task_definitions(self, task_class) -> tuple:
+        """Helper method to get task definitions from a task class."""
+        return task_class.get_member_names()
 
 
 # Signed off by Brian Sanford on 20260523

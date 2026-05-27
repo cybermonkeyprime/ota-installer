@@ -13,7 +13,7 @@ StrPathDict = dict[str, Path | str]
 def parse_file_name(raw_name: Path) -> "FileNameContainer":
     """Parse the raw file name into its components."""
 
-    build_structure: list[str] = Path(raw_name).stem.split(sep="-")
+    build_structure: list[str] = raw_name.stem.split(sep="-")
     device, pkg_type, build_id, *signature = build_structure
     return FileNameContainer(
         device=device,
@@ -50,7 +50,7 @@ def set_variable_manager(path: Path) -> "VariableManager":
     return VariableManager(path=valid_path)
 
 
-def get_file_image_path(name: str, device: str, version) -> Path:
+def get_file_image_path(name: str, device: str, version: str) -> Path:
     from ..handler.image.generic_image_handler import (
         FileImageAttributes,
     )
