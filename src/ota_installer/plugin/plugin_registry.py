@@ -1,12 +1,12 @@
 # src/ota_installer/plugin/plugin_registry.py
 from collections.abc import Callable
 
-ClassType = type[object] | None
+ClassType = type[object]
 
 
 class PluginRegistry:
     def __init__(self) -> None:
-        self.plugins: dict[str, type[object]] = {}
+        self.plugins: dict[str, ClassType] = {}
 
     def register_plugin(self, name):
         def decorator(cls):
@@ -18,7 +18,7 @@ class PluginRegistry:
 
         return decorator
 
-    def get(self, name: str) -> ClassType:
+    def get(self, name: str) -> ClassType | None:
         key = name.lower().strip()
         return self.plugins.get(key)
 
@@ -26,7 +26,7 @@ class PluginRegistry:
         key = name.lower().strip()
         return key in self.plugins
 
-    def __getitem__(self, name: str) -> ClassType:
+    def __getitem__(self, name: str) -> ClassType | None:
         key = name.lower().strip()
         return self.plugins.get(key)
 
