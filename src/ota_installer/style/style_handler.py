@@ -17,11 +17,15 @@ class RichColors(StrEnum):
 
     def beginning(self):
         """Constructs the beginning tag for the rich style."""
-        return f"[{self.value}]"
+        return self.tag
 
     def ending(self):
         """Constructs the ending tag for the rich style."""
-        return f"[/{self.value}]"
+        return self.tag(closing=True)
+
+    def tag(self, closing: bool = False) -> str:
+        """Constructs the tag for the rich style."""
+        return f"[/{self.value}]" if closing else f"[{self.value}]"
 
 
 class SeparatorType(Enum):
@@ -53,7 +57,7 @@ def indentation(interval: int = 1, char: str = " ", spaces: int = 4) -> str:
     )
 
 
-def separator(cls=SeparatorType) -> str:
+def separator(cls: type[SeparatorType] = SeparatorType) -> str:
     """Generates a formatted separator string."""
     return indentation(
         char=cls.CHAR.value,
