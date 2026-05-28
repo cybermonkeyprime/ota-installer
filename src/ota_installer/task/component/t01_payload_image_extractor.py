@@ -31,7 +31,7 @@ class PayloadImageExtractor(BaseTask):
         return f'7z e "{self.instance.path}" payload.bin -o"{Path.home()}" -y'
 
     @decorator.DoublePaddedFooterWrapper(
-        message=f"{ENUM_VALUES.title} finished sucessfully!"
+        message=f"{ENUM_VALUES.title} finished successfully!"
     )
     def perform_task(self) -> None:
         """Executes the task to extract the payload image."""
