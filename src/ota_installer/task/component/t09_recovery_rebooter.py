@@ -8,7 +8,9 @@ from ...variable.variable_manager import VariableManager
 from ..operation.task_operation_details import TaskOperationDetails
 from .base_task import BaseTask
 
-ENUM_VALUES = TaskOperationDetails.REBOOT_TO_RECOVERY.value
+TITLE = "REBOOT_TO_RECOVERY"
+TASK_OPS = TaskOperationDetails[TITLE]
+ENUM_VALUES = TASK_OPS.value
 
 
 @dataclass
@@ -23,15 +25,13 @@ class RecoveryRebooter(BaseTask):
             command_string=ENUM_VALUES.command_string,
         )
 
-    @decorator.DoublePaddedFooterWrapper(
-        message=f"{ENUM_VALUES.title} finished sucessfully!"
-    )
+    @decorator.DoublePaddedFooterWrapper(message=f"{TASK_OPS.success_message}")
     def perform_task(self) -> None:
         """Executes the task to reboot into recovery mode."""
         self.task.run_with_output()
 
 
-@task_plugin(ApplicationTask.REBOOT_TO_RECOVERY.value)
+@task_plugin(ApplicationTask[TITLE].value)
 @dataclass
 class RecoveryRebooterPlugin(RecoveryRebooter):
     """Plugin for the RecoveryRebooter task."""

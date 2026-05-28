@@ -13,7 +13,7 @@ class OptionalTaskField(StrEnum):
 
 
 @dataclass
-class BaseTask(object):
+class BaseTask:
     """Represents a base task with associated properties."""
 
     def __init__(

@@ -5,11 +5,12 @@ from pathlib import Path
 from ... import decorator
 from ...handler.task_group_handler import MigrationTask
 from ...plugin.plugin_registry import task_plugin
+from ...task.task_info import TaskID
 from ...variable.variable_manager import VariableManager
 from ..operation.task_operation_details import TaskOperationDetails
 from .base_task import BaseTask
 
-TITLE = "PUSH_STOCK_BOOT_IMAGE"
+TITLE = TaskID.PUSH_STOCK_IMAGE.name
 TASK_OPS = TaskOperationDetails[TITLE]
 ENUM_VALUES = TASK_OPS.value
 

@@ -41,5 +41,5 @@ class MagiskImageFinder(BaseTask):
         result = self.task.execute_and_return_output("Patched Boot Image")
         if result:
             self.instance.image_name["patched"] = result
-        if self.task.reminder:
+        if getattr(self.task, "reminder", None):
             self.task.show_reminder()

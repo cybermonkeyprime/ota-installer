@@ -46,7 +46,7 @@ class TaskOperationDetails(Enum):
         command_string="adb devices",
         reminder="",
     )
-    PUSH_STOCK_BOOT_IMAGE = TaskOperation(
+    PUSH_STOCK_IMAGE = TaskOperation(
         index=2,
         title="Push Stock Boot Image",
         description="📤 Pushing the stock boot image to your device.",

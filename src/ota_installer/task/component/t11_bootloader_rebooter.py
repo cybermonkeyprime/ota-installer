@@ -8,10 +8,11 @@ from ...variable.variable_manager import VariableManager
 from ..operation.task_operation_details import TaskOperationDetails
 from .base_task import BaseTask
 
-ENUM_VALUES = TaskOperationDetails.REBOOT_TO_BOOTLOADER.value
+TITLE = "REBOOT_TO_BOOTLOADER"
+TASK_OPS = TaskOperationDetails[TITLE]
+ENUM_VALUES = TASK_OPS.value
 
 
-@task_plugin(ApplicationTask.REBOOT_TO_BOOTLOADER.value)
 @dataclass
 class BootloaderRebooter(BaseTask):
     """Handles the rebooting process to the bootloader.
@@ -29,9 +30,15 @@ class BootloaderRebooter(BaseTask):
             enum_values=ENUM_VALUES, command_string=ENUM_VALUES.command_string
         )
 
-    @decorator.DoublePaddedFooterWrapper(
-        message=f"{ENUM_VALUES.title} finished successfully!"
-    )
+    @decorator.DoublePaddedFooterWrapper(message=f"{TASK_OPS.success_message}")
     def perform_task(self) -> None:
         """Executes the reboot task and outputs the result."""
         self.task.run_with_output()
+
+
+@task_plugin(ApplicationTask[TITLE].value)
+@dataclass
+class BootloaderRebooterPlugin(BootloaderRebooter):
+    """Plugin for the RecoveryRebooter task."""
+
+    pass

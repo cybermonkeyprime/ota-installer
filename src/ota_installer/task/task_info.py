@@ -16,9 +16,9 @@ class TaskID(StrEnum):
     BACKUP_STOCK_BOOT_IMAGE = auto()
     # migration
     CHECK_ADB_CONNECTION = auto()
-    PUSH_STOCK_BOOT_IMAGE = auto()
-    FIND_PATCHED_BOOT_IMAGE = auto()
-    PULL_PATCHED_BOOT_IMAGE = auto()
+    PUSH_STOCK_IMAGE = auto()
+    FIND_MAGISK_IMAGE = auto()
+    PULL_MAGISK_IMAGE = auto()
     # application
     REBOOT_TO_RECOVERY = auto()
     APPLY_OTA_UPDATE = auto()
@@ -26,7 +26,7 @@ class TaskID(StrEnum):
     BOOT_TO_MAGISK_IMAGE = auto()
 
     @property
-    def execute(self) -> Callable:
+    def execute(self) -> Callable | None:
         """
         The Dispatcher: Fetches the registered plugin function.
         Fails loudly if the task exists in TaskID but wasn't loaded.
@@ -37,7 +37,7 @@ class TaskID(StrEnum):
                 f"registered plugin. Check plugin_loader.py imports!"
             )
 
-        return TASK_PLUGINS[self.value]
+        return TASK_PLUGINS.get(self.value)
 
 
 @dataclass(frozen=True, slots=True)

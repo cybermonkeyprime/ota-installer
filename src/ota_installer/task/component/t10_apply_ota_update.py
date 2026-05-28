@@ -8,10 +8,11 @@ from ...variable.variable_manager import VariableManager
 from ..operation.task_operation_details import TaskOperationDetails
 from .base_task import BaseTask
 
-ENUM_VALUES = TaskOperationDetails.APPLY_OTA_UPDATE.value
+TITLE = "APPLY_OTA_UPDATE"
+TASK_OPS = TaskOperationDetails[TITLE]
+ENUM_VALUES = TASK_OPS.value
 
 
-@task_plugin(ApplicationTask.APPLY_OTA_UPDATE.value)
 @dataclass
 class ADBSideloader(BaseTask):
     """Task to apply OTA updates using ADB sideload."""
@@ -31,12 +32,18 @@ class ADBSideloader(BaseTask):
         """Creates the command string for ADB sideload."""
         return f"adb sideload {self.instance.path}"
 
-    @decorator.DoublePaddedFooterWrapper(
-        message=f"{ENUM_VALUES.title} finished successfully!"
-    )
+    @decorator.DoublePaddedFooterWrapper(message=f"{TASK_OPS.success_message}")
     def perform_task(self) -> None:
         """Executes the ADB sideload task and runs it with output."""
         self.task.run_with_output()
 
 
-# Signed off by Brian Sanford on 20260318
+@task_plugin(ApplicationTask[TITLE].value)
+@dataclass
+class ADBSideloaderPlugin(ADBSideloader):
+    """Plugin for the RecoveryRebooter task."""
+
+    pass
+
+
+# Signed off by Brian Sanford on 20260527
