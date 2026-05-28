@@ -24,13 +24,16 @@ class StockBootImageBackupper(BaseTask):
         """
         Initialize the command string for backing up the stock boot image.
         """
-        image_path = Path(image_handler(self.instance.file_name.device))
-        command_string = f"cp -v {image_path} {self.instance.file_paths.stock}"
-
+        self.command_string = self._create_command_string()
         super().__init__(
             enum_values=ENUM_VALUES,
-            command_string=command_string,
+            command_string=self._create_command_string(),
         )
+
+    def _create_command_string(self) -> str:
+        """Create the command string for the backup operation."""
+        image_path = Path(image_handler(self.instance.file_name.device))
+        return f"cp -v {image_path} {self.instance.file_paths.stock}"
 
     @decorator.DoublePaddedFooterWrapper(
         message=f"{ENUM_VALUES.title} finished successfully!"
@@ -38,3 +41,6 @@ class StockBootImageBackupper(BaseTask):
     def perform_task(self) -> None:
         """Execute the task to backup the stock boot image."""
         self.task.run_with_output()
+
+
+# Signed off by Brian Sanford on 20260527
