@@ -6,7 +6,8 @@ from enum import StrEnum, auto
 from ..plugin.plugin_registry import TASK_PLUGINS
 from .operation.task_operation_info import (
     TaskOperationContainer,
-    TaskOperationDetails,
+    # TaskOperationDetail,
+    get_task_detail,
 )
 
 
@@ -44,12 +45,12 @@ class TaskID(StrEnum):
         return TASK_PLUGINS.get(self.value)
 
     @property
-    def task_ops(self) -> TaskOperationDetails:
-        return TaskOperationDetails[self.name]
+    def task_ops(self) -> TaskOperationDetail:
+        return TaskOperationDetail[self.name]
 
     @property
-    def enum_values(self) -> TaskOperationContainer:
-        return self.task_ops.value
+    def enum_values(self) -> TaskOperationContainer | None:
+        return get_task_detail(self.name)
 
     @property
     def success_message(self) -> str:
@@ -64,4 +65,4 @@ class TaskContainer:
     task_class: type
 
 
-# Signed off by Brian Sanford on 20260509
+# Signed off by Brian Sanford on 20260528
