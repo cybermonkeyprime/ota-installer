@@ -37,9 +37,7 @@ class StockBootImageBackupper(BaseTask):
         image_path = Path(image_handler(self.instance.file_name.device))
         return f"cp -v {image_path} {self.instance.file_paths.stock}"
 
-    @decorator.DoublePaddedFooterWrapper(
-        message=f"{ENUM_VALUES.title} finished successfully!"
-    )
+    @decorator.DoublePaddedFooterWrapper(message=f"{TASK_OPS.success_message}")
     def perform_task(self) -> None:
         """Execute the task to backup the stock boot image."""
         self.task.run_with_output()
