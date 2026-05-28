@@ -5,12 +5,10 @@ from ... import decorator
 from ...handler.task_group_handler import ApplicationTask
 from ...plugin.plugin_registry import task_plugin
 from ...variable.variable_manager import VariableManager
-from ..operation.task_operation_details import TaskOperationDetails
+from ..task_info import TaskID
 from .base_task import BaseTask
 
-TITLE = "REBOOT_TO_BOOTLOADER"
-TASK_OPS = TaskOperationDetails[TITLE]
-ENUM_VALUES = TASK_OPS.value
+TITLE = TaskID.REBOOT_TO_BOOTLOADER
 
 
 @dataclass
@@ -27,18 +25,22 @@ class BootloaderRebooter(BaseTask):
     def __post_init__(self) -> None:
         """Initializes the BootloaderRebooter with command string."""
         super().__init__(
-            enum_values=ENUM_VALUES, command_string=ENUM_VALUES.command_string
+            enum_values=TITLE.enum_values,
+            command_string=TITLE.enum_values.command_string,
         )
 
-    @decorator.DoublePaddedFooterWrapper(message=f"{TASK_OPS.success_message}")
+    @decorator.DoublePaddedFooterWrapper(message=f"{TITLE.success_message}")
     def perform_task(self) -> None:
         """Executes the reboot task and outputs the result."""
         self.task.run_with_output()
 
 
-@task_plugin(ApplicationTask[TITLE].value)
+@task_plugin(ApplicationTask[TITLE.name].value)
 @dataclass
 class BootloaderRebooterPlugin(BootloaderRebooter):
-    """Plugin for the RecoveryRebooter task."""
+    """Plugin for the BootloaderRebooter task."""
 
     pass
+
+
+# Signed off by Brian Sanford on 20260528

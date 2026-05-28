@@ -7,17 +7,15 @@ from ...handler.image.magisk_image_handler import (
     MagiskImagePath,
 )
 from ...handler.task_group_handler import ApplicationTask, MigrationTask
+from ...log_setup import logger
 from ...plugin.plugin_registry import task_plugin
 from ...variable.variable_manager import VariableManager
-from ..operation.task_operation_details import TaskOperationDetails
+from ..task_info import TaskID
 from .base_task import BaseTask
 
-TITLE = "PULL_MAGISK_IMAGE"
-TASK_OPS = TaskOperationDetails[TITLE]
-ENUM_VALUES = TASK_OPS.value
+TITLE = TaskID.PULL_MAGISK_IMAGE
 
 
-@task_plugin(MigrationTask[TITLE].value)
 @dataclass
 class MagiskImagePuller(BaseTask):
     """Task to pull the patched boot image using adb."""
@@ -27,7 +25,7 @@ class MagiskImagePuller(BaseTask):
     def __post_init__(self) -> None:
         """Initializes the command string for pulling the image."""
         super().__init__(
-            enum_values=ENUM_VALUES,
+            enum_values=TITLE.enum_values,
             command_string=self._build_command(),
         )
 
@@ -51,8 +49,19 @@ class MagiskImagePuller(BaseTask):
             MagiskImagePath.LOCAL_PATH.value / self.instance.file_paths.magisk
         )
 
-    @decorator.DoublePaddedFooterWrapper(message=f"{TASK_OPS.success_message}")
+    @decorator.DoublePaddedFooterWrapper(message=f"{TITLE.success_message}")
     def perform_task(self) -> None:
         """Executes the task to pull the patched boot image."""
         self.task.run_with_output()
-        print(f"{ApplicationTask.REBOOT_TO_BOOTLOADER.value=}")
+        logger.debug(f"{ApplicationTask.REBOOT_TO_BOOTLOADER.value=}")
+
+
+@task_plugin(MigrationTask[TITLE.name].value)
+@dataclass
+class MagiskImagePullerPlugin(MagiskImagePuller):
+    """Plugin for the MagiskImagePuller task."""
+
+    pass
+
+
+# Signed off by Brian Sanford on 20260528

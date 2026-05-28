@@ -13,7 +13,6 @@ from .base_task import BaseTask
 TITLE = TaskID.RENAME_PAYLOAD_IMAGE
 
 
-@task_plugin(PreparationTask[TITLE.name].value)
 @dataclass
 class PayloadImageRenamer(BaseTask):
     """Renames the payload image file to a specified path."""
@@ -38,3 +37,14 @@ class PayloadImageRenamer(BaseTask):
     def perform_task(self) -> None:
         """Executes the task to rename the payload image."""
         self.task.run_with_output()
+
+
+@task_plugin(PreparationTask[TITLE.name].value)
+@dataclass
+class PayloadImageRenamerPlugin(PayloadImageRenamer):
+    """Plugin for the PayloadImageRenamer task."""
+
+    pass
+
+
+# Signed off by Brian Sanford on 20260528

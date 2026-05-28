@@ -12,7 +12,6 @@ from .base_task import BaseTask
 TITLE = TaskID.EXTRACT_PAYLOAD_IMAGE
 
 
-@task_plugin(name=PreparationTask[TITLE.name].value)
 @dataclass
 class PayloadImageExtractor(BaseTask):
     """Extracts payload images from a specified archive file."""
@@ -34,3 +33,14 @@ class PayloadImageExtractor(BaseTask):
     def perform_task(self) -> None:
         """Executes the task to extract the payload image."""
         self.task.run_with_output()
+
+
+@task_plugin(PreparationTask[TITLE.name].value)
+@dataclass
+class PayloadImageExtractorPlugin(PayloadImageExtractor):
+    """Plugin for the PayloadImageRenamer task."""
+
+    pass
+
+
+# Signed off by Brian Sanford on 20260528

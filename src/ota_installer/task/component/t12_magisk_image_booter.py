@@ -6,14 +6,11 @@ from ... import decorator
 from ...handler.task_group_handler import ApplicationTask
 from ...plugin.plugin_registry import task_plugin
 from ...variable.variable_manager import VariableManager
-from ..operation.task_operation_details import TaskOperationDetails
 from ..operation.task_operation_processor import image_handler
 from ..task_info import TaskID
 from .base_task import BaseTask
 
-TITLE = TaskID.BOOT_TO_MAGISK_IMAGE.name
-TASK_OPS = TaskOperationDetails[TITLE]
-ENUM_VALUES = TASK_OPS.value
+TITLE = TaskID.BOOT_TO_MAGISK_IMAGE
 
 
 @dataclass
@@ -29,7 +26,7 @@ class MagiskImageBooter(BaseTask):
         command_string: str = self._build_command(partition)
 
         super().__init__(
-            enum_values=ENUM_VALUES, command_string=command_string
+            enum_values=TITLE.enum_values, command_string=command_string
         )
 
     def _get_partition(self, device: str) -> str:
@@ -42,15 +39,18 @@ class MagiskImageBooter(BaseTask):
         magisk_path = Path(self.instance.file_paths.magisk)
         return f"fastboot flash {partition} {magisk_path}"
 
-    @decorator.DoublePaddedFooterWrapper(message=f"{TASK_OPS.success_message}")
+    @decorator.DoublePaddedFooterWrapper(message=f"{TITLE.success_message}")
     def perform_task(self) -> None:
         """Executes the task to flash the Magisk image."""
         self.task.run_with_output()
 
 
-@task_plugin(ApplicationTask[TITLE].value)
+@task_plugin(ApplicationTask[TITLE.name].value)
 @dataclass
 class MagiskImageBooterPlugin(MagiskImageBooter):
-    """Plugin for the RecoveryRebooter task."""
+    """Plugin for the MagiskImageBooter task."""
 
     pass
+
+
+# Signed off by Brian Sanford on 20260528

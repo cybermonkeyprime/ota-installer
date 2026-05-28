@@ -5,12 +5,10 @@ from ... import decorator
 from ...handler.task_group_handler import ApplicationTask
 from ...plugin.plugin_registry import task_plugin
 from ...variable.variable_manager import VariableManager
-from ..operation.task_operation_details import TaskOperationDetails
+from ..task_info import TaskID
 from .base_task import BaseTask
 
-TITLE = "APPLY_OTA_UPDATE"
-TASK_OPS = TaskOperationDetails[TITLE]
-ENUM_VALUES = TASK_OPS.value
+TITLE = TaskID.APPLY_OTA_UPDATE
 
 
 @dataclass
@@ -23,25 +21,25 @@ class ADBSideloader(BaseTask):
         """Initializes the command string for ADB sideload."""
         command_string = self._create_command_string()
         super().__init__(
-            enum_values=ENUM_VALUES,
+            enum_values=TITLE.enum_values,
             command_string=command_string,
-            reminder=ENUM_VALUES.reminder,
+            reminder=TITLE.enum_values.reminder,
         )
 
     def _create_command_string(self) -> str:
         """Creates the command string for ADB sideload."""
         return f"adb sideload {self.instance.path}"
 
-    @decorator.DoublePaddedFooterWrapper(message=f"{TASK_OPS.success_message}")
+    @decorator.DoublePaddedFooterWrapper(message=f"{TITLE.success_message}")
     def perform_task(self) -> None:
         """Executes the ADB sideload task and runs it with output."""
         self.task.run_with_output()
 
 
-@task_plugin(ApplicationTask[TITLE].value)
+@task_plugin(ApplicationTask[TITLE.name].value)
 @dataclass
 class ADBSideloaderPlugin(ADBSideloader):
-    """Plugin for the RecoveryRebooter task."""
+    """Plugin for the ADBSideloader task."""
 
     pass
 

@@ -6,16 +6,13 @@ from ... import decorator
 from ...handler.task_group_handler import PreparationTask
 from ...plugin.plugin_registry import task_plugin
 from ...variable.variable_manager import VariableManager
-from ..operation.task_operation_details import TaskOperationDetails
 from ..operation.task_operation_processor import image_handler
+from ..task_info import TaskID
 from .base_task import BaseTask
 
-TITLE = "BACKUP_STOCK_BOOT_IMAGE"
-TASK_OPS = TaskOperationDetails[TITLE]
-ENUM_VALUES = TASK_OPS.value
+TITLE = TaskID.BACKUP_STOCK_BOOT_IMAGE
 
 
-@task_plugin(PreparationTask[TITLE].value)
 @dataclass
 class StockBootImageBackupper(BaseTask):
     """Task to backup the stock boot image to a specified path."""
@@ -28,7 +25,7 @@ class StockBootImageBackupper(BaseTask):
         """
         self.command_string = self._create_command_string()
         super().__init__(
-            enum_values=ENUM_VALUES,
+            enum_values=TITLE.enum_values,
             command_string=self._create_command_string(),
         )
 
@@ -37,10 +34,18 @@ class StockBootImageBackupper(BaseTask):
         image_path = Path(image_handler(self.instance.file_name.device))
         return f"cp -v {image_path} {self.instance.file_paths.stock}"
 
-    @decorator.DoublePaddedFooterWrapper(message=f"{TASK_OPS.success_message}")
+    @decorator.DoublePaddedFooterWrapper(message=f"{TITLE.success_message}")
     def perform_task(self) -> None:
         """Execute the task to backup the stock boot image."""
         self.task.run_with_output()
 
 
-# Signed off by Brian Sanford on 20260527
+@task_plugin(PreparationTask[TITLE.name].value)
+@dataclass
+class StockBootImageBackupperPlugin(StockBootImageBackupper):
+    """Plugin for the StockBootImageBackupper task."""
+
+    pass
+
+
+# Signed off by Brian Sanford on 20260528

@@ -6,15 +6,12 @@ from ... import decorator
 from ...handler.task_group_handler import MigrationTask
 from ...plugin.plugin_registry import task_plugin
 from ...variable.variable_manager import VariableManager
-from ..operation.task_operation_details import TaskOperationDetails
+from ..task_info import TaskID
 from .base_task import BaseTask
 
-TITLE = "FIND_MAGISK_IMAGE"
-TASK_OPS = TaskOperationDetails[TITLE]
-ENUM_VALUES = TASK_OPS.value
+TITLE = TaskID.FIND_MAGISK_IMAGE
 
 
-@task_plugin(MigrationTask[TITLE].value)
 @dataclass
 class MagiskImageFinder(BaseTask):
     instance: VariableManager = field(default_factory=VariableManager)
@@ -23,7 +20,7 @@ class MagiskImageFinder(BaseTask):
         remote_path = Path(self.instance.directories.magisk.remote_path)
         command_string = self._create_command_string(remote_path)
         super().__init__(
-            enum_values=ENUM_VALUES,
+            enum_values=TITLE.enum_values,
             command_string=command_string,
         )
 
@@ -31,7 +28,7 @@ class MagiskImageFinder(BaseTask):
         """Constructs the command string to locate the patched boot image."""
         return f"adb shell ls {remote_path} | grep magisk_patched | head -n1"
 
-    @decorator.DoublePaddedFooterWrapper(message=f"{TASK_OPS.success_message}")
+    @decorator.DoublePaddedFooterWrapper(message=f"{TITLE.success_message}")
     def perform_task(self) -> None:
         """Executes the task of locating the patched boot image."""
         self.task.show_index_and_title()
@@ -43,3 +40,14 @@ class MagiskImageFinder(BaseTask):
             self.instance.image_name["patched"] = result
         if getattr(self.task, "reminder", None):
             self.task.show_reminder()
+
+
+@task_plugin(MigrationTask[TITLE.name].value)
+@dataclass
+class MagiskImageFinderPlugin(MagiskImageFinder):
+    """Plugin for the MagiskImageFinder task."""
+
+    pass
+
+
+# Signed off by Brian Sanford on 20260528

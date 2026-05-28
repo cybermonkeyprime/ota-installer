@@ -6,16 +6,13 @@ from ... import decorator
 from ...handler.task_group_handler import PreparationTask
 from ...plugin.plugin_registry import task_plugin
 from ...variable.variable_manager import VariableManager
-from ..operation.task_operation_details import TaskOperationDetails
 from ..operation.task_operation_processor import image_handler
+from ..task_info import TaskID
 from .base_task import BaseTask
 
-TITLE = "EXTRACT_STOCK_BOOT_IMAGE"
-TASK_OPS = TaskOperationDetails[TITLE]
-ENUM_VALUES = TASK_OPS.value
+TITLE = TaskID.EXTRACT_STOCK_BOOT_IMAGE
 
 
-@task_plugin(PreparationTask[TITLE].value)
 @dataclass
 class BootImageExtractor(BaseTask):
     """Extracts the stock boot image from a given payload file."""
@@ -31,7 +28,7 @@ class BootImageExtractor(BaseTask):
         command_string = self._build_command_string(options)
 
         super().__init__(
-            enum_values=ENUM_VALUES,
+            enum_values=TITLE.enum_values,
             command_string=command_string,
         )
 
@@ -43,10 +40,18 @@ class BootImageExtractor(BaseTask):
         """Constructs the command string for the payload dumper."""
         return f"payload_dumper {self.instance.file_paths.payload} {options}"
 
-    @decorator.DoublePaddedFooterWrapper(message=f"{TASK_OPS.success_message}")
+    @decorator.DoublePaddedFooterWrapper(message=f"{TITLE.success_message}")
     def perform_task(self) -> None:
         """Executes the task to extract the boot image."""
         self.task.run_with_output()
 
 
-# Signed off by Brian Sanford on 20260318
+@task_plugin(PreparationTask[TITLE.name].value)
+@dataclass
+class BootImageExtractorPlugin(BootImageExtractor):
+    """Plugin for the BootImageExtractor task."""
+
+    pass
+
+
+# Signed off by Brian Sanford on 20260528

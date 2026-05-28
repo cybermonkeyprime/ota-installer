@@ -102,7 +102,7 @@ class TaskOperationDetails(Enum):
         description="🔌 Checking for an ADB-connected device.",
         command_string="adb devices",
     )
-    PUSH_STOCK_BOOT_IMAGE = TaskOperationContainer(
+    PUSH_STOCK_IMAGE = TaskOperationContainer(
         index=2,
         title="Push Stock Boot Image",
         description="📤 Pushing the stock boot image to your device.",
@@ -113,13 +113,19 @@ class TaskOperationDetails(Enum):
         title="Find Magisk Image",
         description="🔍 Searching for the patched Magisk image.",
     )
+    PULL_MAGISK_IMAGE = TaskOperationContainer(
+        index=4,
+        title="Pull Magisk Image",
+        description="📥 Pulling the patched Magisk image to your computer.",
+        command_string="",
+        reminder="",
+    )
     REBOOT_TO_RECOVERY = TaskOperationContainer(
         index=1,
         title="Reboot To Recovery",
         description="♻️ Rebooting the device into recovery mode.",
         command_string="adb reboot recovery",
     )
-
     APPLY_OTA_UPDATE = TaskOperationContainer(
         index=2,
         title="Apply OTA Image",
@@ -132,7 +138,6 @@ class TaskOperationDetails(Enum):
         description="🧰 Rebooting into bootloader (fastboot) mode.",
         command_string="adb reboot bootloader",
     )
-
     BOOT_TO_MAGISK_IMAGE = TaskOperationContainer(
         index=4,
         title="Boot to Magisk Image",
