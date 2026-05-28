@@ -10,7 +10,9 @@ from ..operation.task_operation_details import TaskOperationDetails
 from ..operation.task_operation_processor import image_handler
 from .base_task import BaseTask
 
-ENUM_VALUES = TaskOperationDetails.BACKUP_STOCK_BOOT_IMAGE.value
+TITLE = "BACKUP_STOCK_BOOT_IMAGE"
+TASK_OPS = TaskOperationDetails[TITLE]
+ENUM_VALUES = TASK_OPS.value
 
 
 @task_plugin(PreparationTask.BACKUP_STOCK_BOOT_IMAGE.value)

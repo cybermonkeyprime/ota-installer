@@ -15,7 +15,7 @@ TASK_OPS = TaskOperationDetails[TITLE]
 ENUM_VALUES = TASK_OPS.value
 
 
-@task_plugin(PreparationTask.EXTRACT_STOCK_BOOT_IMAGE.value)
+@task_plugin(PreparationTask[TITLE].value)
 @dataclass
 class BootImageExtractor(BaseTask):
     """Extracts the stock boot image from a given payload file."""
