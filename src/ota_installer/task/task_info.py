@@ -4,6 +4,10 @@ from dataclasses import dataclass
 from enum import StrEnum, auto
 
 from ..plugin.plugin_registry import TASK_PLUGINS
+from .operation.task_operation_info import (
+    TaskOperationContainer,
+    TaskOperationDetails,
+)
 
 
 class TaskID(StrEnum):
@@ -38,6 +42,18 @@ class TaskID(StrEnum):
             )
 
         return TASK_PLUGINS.get(self.value)
+
+    @property
+    def task_ops(self) -> TaskOperationDetails:
+        return TaskOperationDetails[self.name]
+
+    @property
+    def enum_values(self) -> TaskOperationContainer:
+        return self.task_ops.value
+
+    @property
+    def success_message(self) -> str:
+        return f"{self.value.title()} finished successfully!"
 
 
 @dataclass(frozen=True, slots=True)

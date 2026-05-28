@@ -2,7 +2,7 @@
 from dataclasses import dataclass
 from enum import StrEnum, auto
 
-from ..operation.task_operation_details import TaskOperation
+from ..operation.task_operation_info import TaskOperationContainer
 from ..operation.task_operation_processor import TaskOperationProcessor
 
 
@@ -18,7 +18,7 @@ class BaseTask:
 
     def __init__(
         self,
-        enum_values: TaskOperation,
+        enum_values: TaskOperationContainer,
         command_string: str | None = None,
         comment: str | None = None,
         reminder: str | None = None,

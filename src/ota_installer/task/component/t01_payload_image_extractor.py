@@ -5,16 +5,14 @@ from pathlib import Path
 from ... import decorator
 from ...handler.task_group_handler import PreparationTask
 from ...plugin.plugin_registry import task_plugin
+from ...task.task_info import TaskID
 from ...variable.variable_manager import VariableManager
-from ..operation.task_operation_details import TaskOperationDetails
 from .base_task import BaseTask
 
-TITLE = "EXTRACT_PAYLOAD_IMAGE"
-TASK_OPS = TaskOperationDetails[TITLE]
-ENUM_VALUES = TASK_OPS.value
+TITLE = TaskID.EXTRACT_PAYLOAD_IMAGE
 
 
-@task_plugin(name=PreparationTask[TITLE].value)
+@task_plugin(name=PreparationTask[TITLE.name].value)
 @dataclass
 class PayloadImageExtractor(BaseTask):
     """Extracts payload images from a specified archive file."""
@@ -24,7 +22,7 @@ class PayloadImageExtractor(BaseTask):
     def __post_init__(self):
         """Initializes the command string for extracting the payload image."""
         super().__init__(
-            enum_values=ENUM_VALUES,
+            enum_values=TITLE.enum_values,
             command_string=self._create_extraction_command(),
         )
 
@@ -32,7 +30,7 @@ class PayloadImageExtractor(BaseTask):
         """Constructs the command string for extraction."""
         return f'7z e "{self.instance.path}" payload.bin -o"{Path.home()}" -y'
 
-    @decorator.DoublePaddedFooterWrapper(message=f"{TASK_OPS.success_message}")
+    @decorator.DoublePaddedFooterWrapper(message=f"{TITLE.success_message}")
     def perform_task(self) -> None:
         """Executes the task to extract the payload image."""
         self.task.run_with_output()

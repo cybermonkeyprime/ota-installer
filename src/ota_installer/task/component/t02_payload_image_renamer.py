@@ -2,19 +2,18 @@
 from dataclasses import dataclass, field
 from pathlib import Path
 
+from ota_installer.task.task_info import TaskID
+
 from ... import decorator
 from ...handler.task_group_handler import PreparationTask
 from ...plugin.plugin_registry import task_plugin
 from ...variable.variable_manager import VariableManager
-from ..operation.task_operation_details import TaskOperationDetails
 from .base_task import BaseTask
 
-TITLE = "RENAME_PAYLOAD_IMAGE"
-TASK_OPS = TaskOperationDetails[TITLE]
-ENUM_VALUES = TASK_OPS.value
+TITLE = TaskID.RENAME_PAYLOAD_IMAGE
 
 
-@task_plugin(PreparationTask[TITLE].value)
+@task_plugin(PreparationTask[TITLE.name].value)
 @dataclass
 class PayloadImageRenamer(BaseTask):
     """Renames the payload image file to a specified path."""
@@ -25,7 +24,7 @@ class PayloadImageRenamer(BaseTask):
         """Initializes the command string for renaming the payload image."""
 
         super().__init__(
-            enum_values=ENUM_VALUES,
+            enum_values=TITLE.enum_values,
             command_string=self._create_rename_command(),
         )
 
@@ -35,7 +34,7 @@ class PayloadImageRenamer(BaseTask):
         destination_path = self.instance.file_paths.payload
         return f"mv -v {source_path} {destination_path}"
 
-    @decorator.DoublePaddedFooterWrapper(message=f"{TASK_OPS.success_message}")
+    @decorator.DoublePaddedFooterWrapper(message=f"{TITLE.success_message}")
     def perform_task(self) -> None:
         """Executes the task to rename the payload image."""
         self.task.run_with_output()
