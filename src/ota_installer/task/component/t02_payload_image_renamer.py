@@ -9,10 +9,11 @@ from ...variable.variable_manager import VariableManager
 from ..operation.task_operation_details import TaskOperationDetails
 from .base_task import BaseTask
 
-ENUM_VALUES = TaskOperationDetails.RENAME_PAYLOAD_IMAGE.value
+TITLE = "RENAME_PAYLOAD_IMAGE"
+ENUM_VALUES = TaskOperationDetails[TITLE].value
 
 
-@task_plugin(PreparationTask.RENAME_PAYLOAD_IMAGE.value)
+@task_plugin(PreparationTask[TITLE].value)
 @dataclass
 class PayloadImageRenamer(BaseTask):
     """Renames the payload image file to a specified path."""
@@ -34,7 +35,7 @@ class PayloadImageRenamer(BaseTask):
         return f"mv -v {source_path} {destination_path}"
 
     @decorator.DoublePaddedFooterWrapper(
-        message=f"{ENUM_VALUES.title} finished sucessfully!"
+        message=f"{TaskOperationDetails[TITLE].success_message}"
     )
     def perform_task(self) -> None:
         """Executes the task to rename the payload image."""
