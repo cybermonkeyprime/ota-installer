@@ -15,7 +15,7 @@ TASK_OPS = TaskOperationDetails[TITLE]
 ENUM_VALUES = TASK_OPS.value
 
 
-@task_plugin(PreparationTask.BACKUP_STOCK_BOOT_IMAGE.value)
+@task_plugin(PreparationTask[TITLE].value)
 @dataclass
 class StockBootImageBackupper(BaseTask):
     """Task to backup the stock boot image to a specified path."""

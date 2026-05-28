@@ -8,10 +8,12 @@ from ...variable.variable_manager import VariableManager
 from ..operation.task_operation_details import TaskOperationDetails
 from .base_task import BaseTask
 
-ENUM_VALUES = TaskOperationDetails.CHECK_ADB_CONNECTION.value
+TITLE = "CHECK_ADB_CONNECTION"
+TASK_OPS = TaskOperationDetails[TITLE]
+ENUM_VALUES = TASK_OPS.value
 
 
-@task_plugin(MigrationTask.CHECK_ADB_CONNECTION.value)
+@task_plugin(MigrationTask[TITLE].value)
 @dataclass
 class ADBConnectionChecker(BaseTask):
     """Checks the ADB connection status and performs the task."""
@@ -25,9 +27,7 @@ class ADBConnectionChecker(BaseTask):
             command_string=ENUM_VALUES.command_string,
         )
 
-    @decorator.DoublePaddedFooterWrapper(
-        message=f"{ENUM_VALUES.title} finished successfully!"
-    )
+    @decorator.DoublePaddedFooterWrapper(message=f"{TASK_OPS.success_message}")
     def perform_task(self) -> None:
         """Executes the ADB connection check task."""
         self.task.run_with_output()

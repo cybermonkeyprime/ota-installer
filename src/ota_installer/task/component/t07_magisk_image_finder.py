@@ -29,9 +29,7 @@ class MagiskImageFinder(BaseTask):
         """Constructs the command string to locate the patched boot image."""
         return f"adb shell ls {remote_path} | grep magisk_patched | head -n1"
 
-    @decorator.DoublePaddedFooterWrapper(
-        message=f"{ENUM_VALUES.title} finished successfully!"
-    )
+    @decorator.DoublePaddedFooterWrapper(message=f"{TASK_OPS.success_message}")
     def perform_task(self) -> None:
         """Executes the task of locating the patched boot image."""
         self.task.show_index_and_title()
