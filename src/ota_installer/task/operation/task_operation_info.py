@@ -151,8 +151,9 @@ def get_task_detail(key) -> TaskOperationContainer:
     }
     result = details.get(key)
     if result is None:
-        logger.error(f"Key does not exist: {key}")
-        raise
+        message = f"Task detail key does not exist: {key}"
+        logger.error(message)
+        raise KeyError(message)
     return result
 
 

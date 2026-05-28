@@ -44,7 +44,6 @@ pythonVersion = "3.14"
 pythonPlatform = "Linux"
 defineConstant = { DEBUG = true }
 useLibraryCodeForTypes = true
-
 requires-python = ">=3.14"
 dependencies = []
 
