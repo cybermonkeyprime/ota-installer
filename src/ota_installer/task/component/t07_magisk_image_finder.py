@@ -9,10 +9,12 @@ from ...variable.variable_manager import VariableManager
 from ..operation.task_operation_details import TaskOperationDetails
 from .base_task import BaseTask
 
-ENUM_VALUES = TaskOperationDetails.FIND_MAGISK_IMAGE.value
+TITLE = "FIND_MAGISK_IMAGE"
+TASK_OPS = TaskOperationDetails[TITLE]
+ENUM_VALUES = TASK_OPS.value
 
 
-@task_plugin(MigrationTask.FIND_PATCHED_BOOT_IMAGE.value)
+@task_plugin(MigrationTask[TITLE].value)
 @dataclass
 class MagiskImageFinder(BaseTask):
     instance: VariableManager = field(default_factory=VariableManager)
