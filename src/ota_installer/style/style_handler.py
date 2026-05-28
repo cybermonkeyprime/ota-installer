@@ -1,5 +1,6 @@
+# src/ota_installer/style/style_handler.py
 from dataclasses import dataclass
-from enum import Enum, StrEnum
+from enum import StrEnum
 
 
 class RichColors(StrEnum):
@@ -15,6 +16,10 @@ class RichColors(StrEnum):
     WARNING = "yellow"
     NON_ERROR = "white"
 
+    def tag(self, closing: bool = False) -> str:
+        """Constructs the tag for the rich style."""
+        return f"[/{self.value}]" if closing else f"[{self.value}]"
+
     def beginning(self):
         """Constructs the beginning tag for the rich style."""
         return self.tag()
@@ -23,12 +28,9 @@ class RichColors(StrEnum):
         """Constructs the ending tag for the rich style."""
         return self.tag(closing=True)
 
-    def tag(self, closing: bool = False) -> str:
-        """Constructs the tag for the rich style."""
-        return f"[/{self.value}]" if closing else f"[{self.value}]"
 
-
-class SeparatorType(Enum):
+@dataclass(frozen=True, slots=True)
+class SeparatorType:
     """Enumeration for separator constants."""
 
     CHAR = "-"
@@ -60,7 +62,10 @@ def indentation(interval: int = 1, char: str = " ", spaces: int = 4) -> str:
 def separator(cls: type[SeparatorType] = SeparatorType) -> str:
     """Generates a formatted separator string."""
     return indentation(
-        char=cls.CHAR.value,
-        spaces=cls.SPACING.value,
-        interval=cls.INTERVAL.value,
+        char=cls.CHAR,
+        spaces=cls.SPACING,
+        interval=cls.INTERVAL,
     )
+
+
+# Signed off by Brian Sanford on 20260527

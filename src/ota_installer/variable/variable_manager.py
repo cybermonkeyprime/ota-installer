@@ -111,13 +111,10 @@ class VariableManager:
 
     def create_directory(self) -> DirectoryDefinition | None:
         """Creates a directory and returns its definition."""
-        return (
-            DirectoryDefinition(
-                self.path.parent,
-                str(self.file_paths.stock.parent),
-                self.directories.magisk.remote_path,
-            )
-            or None
+        return DirectoryDefinition(
+            self.path.parent,
+            str(self.file_paths.stock.parent),
+            self.directories.magisk.remote_path,
         )
 
     def get_dispatcher(self, process_type) -> type | None:
