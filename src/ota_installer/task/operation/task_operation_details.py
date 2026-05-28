@@ -95,6 +95,10 @@ class TaskOperationDetails(Enum):
         reminder="",
     )
 
+    @property
+    def success_message(self) -> str:
+        return f"{self.value.title} finished successfully!"
+
 
 def main():
     pass

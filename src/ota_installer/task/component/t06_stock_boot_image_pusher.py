@@ -9,10 +9,12 @@ from ...variable.variable_manager import VariableManager
 from ..operation.task_operation_details import TaskOperationDetails
 from .base_task import BaseTask
 
-ENUM_VALUES = TaskOperationDetails.PUSH_STOCK_BOOT_IMAGE.value
+TITLE = "PUSH_STOCK_BOOT_IMAGE"
+
+ENUM_VALUES = TaskOperationDetails[TITLE].value
 
 
-@task_plugin(MigrationTask.PUSH_STOCK_BOOT_IMAGE.value)
+@task_plugin(MigrationTask[TITLE].value)
 @dataclass
 class StockBootImagePusher(BaseTask):
     """Task to push the stock boot image to the device using adb."""
@@ -35,7 +37,7 @@ class StockBootImagePusher(BaseTask):
         return f'adb push "{stock_image_path}" /sdcard/'
 
     @decorator.DoublePaddedFooterWrapper(
-        message=f"{ENUM_VALUES.title} finished sucessfully!"
+        message=f"{TaskOperationDetails[TITLE].success_message}"
     )
     def perform_task(self) -> None:
         """Executes the task to push the stock boot image."""
