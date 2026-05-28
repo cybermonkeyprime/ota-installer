@@ -2,6 +2,8 @@
 from dataclasses import dataclass
 from enum import Enum, IntEnum, StrEnum, auto
 
+from ...log_setup import logger
+
 
 class Styles(StrEnum):
     """Constants for styles."""
@@ -75,7 +77,7 @@ class TaskOperationContainer:
     reminder: str | None = None
 
 
-def get_task_detail(key):
+def get_task_detail(key) -> TaskOperationContainer:
     from ota_installer.task.task_info import TaskID
 
     details = {
@@ -147,7 +149,11 @@ def get_task_detail(key):
             description="💾 Flashing the patched Magisk image with fastboot.",
         ),
     }
-    return details.get(key)
+    result = details.get(key)
+    if result is None:
+        logger.error(f"Key does not exist: {key}")
+        raise
+    return result
 
 
 # Signed off by Brian Sanford on 20260510

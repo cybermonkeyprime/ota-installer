@@ -6,7 +6,6 @@ from enum import StrEnum, auto
 from ..plugin.plugin_registry import TASK_PLUGINS
 from .operation.task_operation_info import (
     TaskOperationContainer,
-    # TaskOperationDetail,
     get_task_detail,
 )
 
@@ -45,11 +44,7 @@ class TaskID(StrEnum):
         return TASK_PLUGINS.get(self.value)
 
     @property
-    def task_ops(self) -> TaskOperationDetail:
-        return TaskOperationDetail[self.name]
-
-    @property
-    def enum_values(self) -> TaskOperationContainer | None:
+    def enum_values(self) -> TaskOperationContainer:
         return get_task_detail(self.name)
 
     @property
