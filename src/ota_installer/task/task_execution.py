@@ -3,7 +3,7 @@ from pathlib import Path
 from typing import Self
 
 from ..log_setup import logger
-from ..task.task_handler import TaskDefinitionInfo, TaskDefinitions
+from ..task.task_handler import TaskDefinitionInfo
 from .task_manager import TaskManager
 
 
