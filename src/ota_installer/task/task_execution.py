@@ -3,7 +3,7 @@ from pathlib import Path
 from typing import Self
 
 from ..log_setup import logger
-from ..task.task_handler import TaskDefinitions
+from ..task.task_handler import TaskDefinitionInfo, TaskDefinitions
 from .task_manager import TaskManager
 
 
@@ -23,7 +23,9 @@ class TaskExecutor:
     task_manager: TaskManager = field(default_factory=lambda: TaskManager())
     dispatcher: type | None = field(init=False)
     task_group: str | None = field(init=False)
-    task_definitions: object = field(default_factory=lambda: TaskDefinitions())
+    task_definitions: object = field(
+        default_factory=lambda: TaskDefinitionInfo
+    )
     path: Path = field(init=False)
 
     def set_path(self) -> Self:
