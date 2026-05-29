@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from functools import partial
 
 from .. import decorator
-from ..handler.task_group_handler import (
+from ..task.task_group_handler import (
     ApplicationTask,
     MigrationTask,
     PreparationTask,

@@ -3,8 +3,8 @@ from collections.abc import Mapping
 from dataclasses import dataclass, field
 from enum import Enum, StrEnum, auto
 
+from ..dispatcher.dispatcher_handler import DispatcherTemplate
 from ..dispatcher.dispatcher_info import DispatcherType
-from ..handler.dispatcher_handler import DispatcherTemplate
 from ..log_setup import logger
 from ..plugin.plugin_registry import dispatcher_plugin
 from ..task.task_info import TaskID

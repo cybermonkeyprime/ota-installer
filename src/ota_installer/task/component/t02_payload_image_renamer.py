@@ -5,8 +5,8 @@ from pathlib import Path
 from ota_installer.task.task_info import TaskID
 
 from ... import decorator
-from ...handler.task_group_handler import PreparationTask
 from ...plugin.plugin_registry import task_plugin
+from ...task.task_group_handler import PreparationTask
 from ...variable.variable_manager import VariableManager
 from .base_task import BaseTask
 

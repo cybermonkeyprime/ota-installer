@@ -3,10 +3,10 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from ... import decorator
-from ...handler.task_group_handler import MigrationTask
 from ...plugin.plugin_registry import task_plugin
+from ...task.task_group_handler import MigrationTask
+from ...task.task_info import TaskID
 from ...variable.variable_manager import VariableManager
-from ..task_info import TaskID
 from .base_task import BaseTask
 
 TITLE = TaskID.FIND_MAGISK_IMAGE
@@ -38,6 +38,7 @@ class MagiskImageFinder(BaseTask):
         result = self.task.execute_and_return_output("Patched Boot Image")
         if result:
             self.instance.image_name["patched"] = result
+            print(f"{self.instance.image_name["patched"]=}")
         if getattr(self.task, "reminder", None):
             self.task.show_reminder()
 

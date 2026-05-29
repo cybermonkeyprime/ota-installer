@@ -4,8 +4,8 @@ from dataclasses import dataclass, field
 from enum import StrEnum, auto
 from pathlib import Path
 
+from ..dispatcher.dispatcher_handler import DispatcherTemplate
 from ..dispatcher.dispatcher_info import DispatcherType
-from ..handler.dispatcher_handler import DispatcherTemplate
 from ..log_setup import logger
 from ..plugin.plugin_registry import dispatcher_plugin
 
@@ -43,8 +43,8 @@ class DirectoryDefinition:
     magisk_image: Path = field(default_factory=Path)
 
     def __post_init__(self) -> None:
-        from ..handler.image.boot_image_handler import BootImageContainer
-        from ..handler.image.magisk_image_handler import MagiskImageContainer
+        from ..image.boot_image_handler import BootImageContainer
+        from ..image.magisk_image_handler import MagiskImageContainer
 
         """
         Initializes the boot image container after the dataclass is created.
@@ -85,7 +85,7 @@ class DirectoryDispatcher(DispatcherTemplate):
 def set_directory(
     parent_directory: Path,
 ) -> DirectoryDefinition | None:
-    from ..handler.image.boot_image_handler import BootImagePaths
+    from ..image.boot_image_handler import BootImagePaths
 
     """Creates a DirectoryTypeDefinition for the specified parent directory."""
 

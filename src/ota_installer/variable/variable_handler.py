@@ -2,10 +2,8 @@
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from ota_installer.variable.variable_manager import VariableManager
-
+from ..dispatcher.dispatcher_handler import DispatcherTemplate
 from ..dispatcher.dispatcher_info import DispatcherType
-from ..handler.dispatcher_handler import DispatcherTemplate
 from ..plugin.plugin_registry import dispatcher_plugin
 from ..variable.variable_info import FileNameContainer
 
@@ -53,7 +51,7 @@ def set_variable_manager(path: Path) -> "VariableManager":
 
 
 def get_file_image_path(name: str, device: str, version: str) -> Path:
-    from ..handler.image.generic_image_handler import (
+    from ..image.generic_image_handler import (
         FileImageAttributes,
     )
 

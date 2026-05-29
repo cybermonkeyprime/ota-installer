@@ -2,8 +2,8 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Self
 
-from ..handler.task_handler import TaskDefinitions
 from ..log_setup import logger
+from ..task.task_handler import TaskDefinitions
 from .task_manager import TaskManager
 
 
@@ -75,7 +75,7 @@ class TaskExecutor:
     @property
     def task_group_keys(self) -> tuple:
         """Returns the keys of the task groups."""
-        from ..handler.task_group_handler import TaskGroupName
+        from ..task.task_group_handler import TaskGroupName
 
         return TaskGroupName.get_task_group_members()
 

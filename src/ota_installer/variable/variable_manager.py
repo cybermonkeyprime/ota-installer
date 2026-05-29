@@ -3,12 +3,12 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Self
 
-from ..dispatcher.dispatcher_info import DispatcherType
-from ..handler.directory_handler import (
+from ..directory.directory_handler import (
     DirectoryDefinition,
     set_directory,
 )
-from ..handler.image.magisk_image_handler import MagiskImagePath
+from ..dispatcher.dispatcher_info import DispatcherType
+from ..image.magisk_image_handler import MagiskImagePath
 from ..log_setup import logger
 from ..variable.variable_handler import (
     get_file_image_path,
@@ -73,7 +73,7 @@ class VariableManager:
 
     def _initialize_file_paths(self) -> Self:
         """Initializes file paths."""
-        from ..handler.image.generic_image_handler import (
+        from ..image.generic_image_handler import (
             FileImageData,
         )
 

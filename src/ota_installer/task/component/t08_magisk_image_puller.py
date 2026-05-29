@@ -3,12 +3,12 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from ... import decorator
-from ...handler.image.magisk_image_handler import (
+from ...image.magisk_image_handler import (
     MagiskImagePath,
 )
-from ...handler.task_group_handler import ApplicationTask, MigrationTask
 from ...log_setup import logger
 from ...plugin.plugin_registry import task_plugin
+from ...task.task_group_handler import ApplicationTask, MigrationTask
 from ...variable.variable_manager import VariableManager
 from ..task_info import TaskID
 from .base_task import BaseTask

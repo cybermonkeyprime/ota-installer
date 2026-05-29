@@ -3,8 +3,8 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from ... import decorator
-from ...handler.task_group_handler import MigrationTask
 from ...plugin.plugin_registry import task_plugin
+from ...task.task_group_handler import MigrationTask
 from ...task.task_info import TaskID
 from ...variable.variable_manager import VariableManager
 from .base_task import BaseTask
