@@ -5,8 +5,8 @@ from .display.display_info import DisplayHeader
 from .exception.keyboard_interrupt_handler import (
     KeyboardInterruptHandler,
 )
-from .handler.version_handler import SoftwareVersion
 from .task.task_execution import CLIArguments, TaskExecutor
+from .versioning.version_handler import SoftwareVersion
 
 
 def run() -> None:

@@ -1,4 +1,4 @@
-from .handler.version_handler import SoftwareVersion
+from .versioning.version_handler import SoftwareVersion
 
 version = SoftwareVersion
 __version__ = (
