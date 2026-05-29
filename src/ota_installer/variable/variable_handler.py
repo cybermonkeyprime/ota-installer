@@ -2,6 +2,8 @@
 from dataclasses import dataclass, field
 from pathlib import Path
 
+from ota_installer.variable.variable_manager import VariableManager
+
 from ..dispatcher.dispatcher_info import DispatcherType
 from ..handler.dispatcher_handler import DispatcherTemplate
 from ..plugin.plugin_registry import dispatcher_plugin
@@ -10,7 +12,7 @@ from ..variable.variable_info import FileNameContainer
 StrPathDict = dict[str, Path | str]
 
 
-def parse_file_name(raw_name: Path) -> "FileNameContainer":
+def parse_file_name(raw_name: Path) -> FileNameContainer:
     """Parse the raw file name into its components."""
 
     build_structure: list[str] = raw_name.stem.split(sep="-")
