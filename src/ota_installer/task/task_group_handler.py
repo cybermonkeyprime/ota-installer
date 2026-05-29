@@ -20,11 +20,11 @@ class TaskGroupName(StrEnum):
     MIGRATION = auto()
     APPLICATION = auto()
 
-    def _get_value(self, obj: type) -> object:
+    def _get_value(self, _Class: type) -> object:
         """Retrieve the value from the given object based on the
         task group name.
         """
-        return getattr(obj, self.name).render
+        return getattr(_Class, self.value.upper()).render
 
     @classmethod
     def create_dictionary(cls, obj) -> TaskGroupMap:

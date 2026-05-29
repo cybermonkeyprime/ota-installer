@@ -48,4 +48,32 @@ class TaskDefinitionInfo(Enum):
         return task_class.get_member_names()
 
 
+TASK_DEFINITION_MAPPING = {
+    "PREPARATION": TaskDefinitionContainer(
+        PreparationTask, "Preparation Task"
+    ),
+    "MIGRATION": TaskDefinitionContainer(MigrationTask, "Migration Task"),
+    "APPLICATION": TaskDefinitionContainer(
+        ApplicationTask, "Application Task"
+    ),
+}
+
+
+@decorator.PaddedFooterWrapper()
+def render_task_definition(group: TaskGroupName) -> tuple:
+    definition = TASK_DEFINITION_MAPPING[group]
+    task_class = definition._class
+    display_name = definition._name
+
+    def result():
+        return task_class.get_member_names()
+
+    decorated_function = decorator.ConfirmationPrompt(
+        char=" ",
+        comment=f"perform the {display_name}s",
+    )(result)
+
+    return decorated_function()
+
+
 # Signed off by Brian Sanford on 20260523
