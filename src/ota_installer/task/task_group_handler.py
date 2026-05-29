@@ -24,7 +24,7 @@ class TaskGroupName(StrEnum):
         """Retrieve the value from the given object based on the
         task group name.
         """
-        return getattr(obj, self.value.upper()).render
+        return getattr(obj, self.name).render
 
     @classmethod
     def create_dictionary(cls, obj) -> TaskGroupMap:

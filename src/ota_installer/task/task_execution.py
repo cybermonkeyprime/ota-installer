@@ -65,14 +65,7 @@ class TaskExecutor:
 
     def task_group_in_dispatcher_collection(self):
         """Checks if the task group is in the dispatcher collection."""
-        result = self.task_group in self.dispatcher.collection
-        if not result:
-            message = (
-                f"TaskName: {self.task_group} is not in Dispatcher Collection"
-            )
-            logger.error(message)
-            raise ValueError(message)
-        return result
+        return self.task_group in self.dispatcher.collection
 
     @property
     def task_group_rules(self) -> bool:
