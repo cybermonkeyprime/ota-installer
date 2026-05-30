@@ -9,7 +9,6 @@ from ..display.variable.processor.variable_process_handler import (
     VariableProcessor,
 )
 from ..log_setup import add_structured_log_sink, logger
-from ..variable.variable_handler import set_variable_manager
 from ..variable.variable_manager import VariableManager
 from .task_info import TaskID
 
@@ -95,6 +94,21 @@ def task_iterator(
 
         task_director(instance=instance, task_name=task_class)
     return None
+
+
+def set_variable_manager(path: Path) -> VariableManager:
+    from ..log_setup import logger
+    from ..validation.ota_package_validator import validate_ota_package
+
+    """Create a VariableManager instance after validating the file path. """
+
+    valid_path = validate_ota_package(path)
+
+    if not valid_path:
+        logger.error(f"Invalid file path: {path}. Aborting.")
+        raise SystemExit()
+
+    return VariableManager(path=valid_path)
 
 
 @StylizedIndentPrinter(indent=2, style="variable", end="\n\n", use_output=True)

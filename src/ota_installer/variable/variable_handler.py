@@ -24,7 +24,7 @@ class VariableTypeDispatcher(DispatcherTemplate):
     def _initialize_collection(self) -> StrPathDict:
         """Creates a collection of paths and log file."""
         return {
-            "path.nme": Path(self.obj.path).name,
+            "path.name": Path(self.obj.path).name,
             "path.parent": Path(self.obj.path).parent,
             "log_file": self.obj.file_paths.log_file,
         }
