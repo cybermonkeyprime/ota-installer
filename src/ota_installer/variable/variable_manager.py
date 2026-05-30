@@ -113,6 +113,8 @@ class VariableManager:
         )
 
     def get_dispatcher(self, process_type) -> type | None:
+        from .variable_functions import set_variable_manager
+
         """Retrieves the dispatcher for the given process type."""
         function_call = set_variable_manager(self.path)
         logger.debug("VariableManager.get_dispatcher(): function_call)")

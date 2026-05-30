@@ -2,6 +2,8 @@
 from dataclasses import dataclass
 from enum import Enum
 
+from ota_installer.task import task_group_handler
+
 from .. import decorator
 from ..task.task_group_handler import (
     ApplicationTask,
@@ -13,10 +15,34 @@ from ..task.task_group_handler import (
 
 @dataclass(frozen=True)
 class TaskDefinitionContainer:
-    """Handles the definitions of various task categories."""
+    """
+    Handles the definitions of various task categories and their UI rendering.
+    """
 
     _class: type
     _name: str
+
+    def __call__(self, *args, **kwargs) -> tuple:
+        """
+        Executes the task's generation logic wrapped in the required UI
+            decorators.
+        """
+
+        # 1. This encapsulates your internal execution context
+        def result():
+            return self._class.get_member_names()
+
+        # 2. Define the execution closure and apply your outer decorator
+        @decorator.PaddedFooterWrapper()
+        def execute_pipeline():
+            # Apply your dynamic inner decorator
+            decorated_function = decorator.ConfirmationPrompt(
+                char=" ", comment=f"perform the {self._name}s"
+            )(result)
+
+            return decorated_function()
+
+        return execute_pipeline()
 
 
 class TaskDefinitionInfo(Enum):
@@ -49,31 +75,15 @@ class TaskDefinitionInfo(Enum):
 
 
 TASK_DEFINITION_MAPPING = {
-    "PREPARATION": TaskDefinitionContainer(
+    TaskGroupName.PREPARATION.value: TaskDefinitionContainer(
         PreparationTask, "Preparation Task"
     ),
-    "MIGRATION": TaskDefinitionContainer(MigrationTask, "Migration Task"),
-    "APPLICATION": TaskDefinitionContainer(
+    TaskGroupName.MIGRATION.value: TaskDefinitionContainer(
+        MigrationTask, "Migration Task"
+    ),
+    TaskGroupName.APPLICATION.value: TaskDefinitionContainer(
         ApplicationTask, "Application Task"
     ),
 }
-
-
-@decorator.PaddedFooterWrapper()
-def render_task_definition(group: TaskGroupName) -> tuple:
-    definition = TASK_DEFINITION_MAPPING[group]
-    task_class = definition._class
-    display_name = definition._name
-
-    def result():
-        return task_class.get_member_names()
-
-    decorated_function = decorator.ConfirmationPrompt(
-        char=" ",
-        comment=f"perform the {display_name}s",
-    )(result)
-
-    return decorated_function()
-
 
 # Signed off by Brian Sanford on 20260523

@@ -24,7 +24,7 @@ class TaskGroupName(StrEnum):
         """Retrieve the value from the given object based on the
         task group name.
         """
-        return getattr(_Class, self.value.upper()).render
+        return getattr(_Class, self.value)
 
     @classmethod
     def create_dictionary(cls, obj) -> TaskGroupMap:
@@ -117,7 +117,19 @@ class TaskGroupTypeDispatcher(DispatcherTemplate):
         """Populate the collection with enum member names and their
         corresponding values.
         """
-        return TaskGroupName.create_dictionary(self.obj)
+        # Guard clause: If a dictionary mapping is passed directly, use it
+        if isinstance(self.obj, dict):
+            # Ensure keys are normalized to lowercase strings if that's what get_instance expects
+            return {str(k).lower(): v for k, v in self.obj.items()}
+
+        # Fall back to using the Enum introspection method if it's a class type
+        if isinstance(self.obj, type):
+            return TaskGroupName.create_dictionary(self.obj)
+
+        logger.error(
+            f"Unsupported object type passed to dispatcher: {type(self.obj)}"
+        )
+        return {}
 
 
 # Signed off by Brian Sanford on 20260523
