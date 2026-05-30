@@ -42,6 +42,7 @@ class TaskDefinitionContainer:
 
             return decorated_function()
 
+        # 3. Fire the pipeline and hand back the final tuple payload
         return execute_pipeline()
 
 
