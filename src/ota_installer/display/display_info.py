@@ -6,7 +6,7 @@ from rich.control import Control
 
 from .. import decorator
 from ..log_setup import logger
-from ..style.style_handler import separator
+from ..style.style_handler import SEPARATOR
 from ..versioning.version_handler import SoftwareVersion
 
 type BoolPredicate = Callable[[], bool]
@@ -24,7 +24,7 @@ class DisplayHeader(StrEnum):
         return {
             cls.TITLE: _title,
             cls.MOVE_CURSOR_UP: str(object=Control.move(y=-1)),
-            cls.SEPARATOR: _separator,
+            cls.SEPARATOR: f"{SEPARATOR()}> ",
             cls.SUBTITLE: _subtitle,
         }
 
@@ -74,12 +74,6 @@ def _title() -> str:
         title.
     """
     return f" {SoftwareVersion.TITLE.value}"
-
-
-def _separator(indent: int = 9, char: str = "-") -> str:
-    """Generates a formatted display separator."""
-    formatted_separator = separator()
-    return f"{formatted_separator}> "
 
 
 @decorator.Colorizer(style="version")

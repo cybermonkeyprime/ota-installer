@@ -37,23 +37,22 @@ class StyleContainer:
     spacing: int
     interval: int
 
+    def __call__(self) -> str:
+        """Creates an indentation string."""
+        return self.character * self.spacing * self.interval
 
-SEPARATOR_TYPE = StyleContainer("-", 4, 10)
+
+SEPARATOR = StyleContainer(character="-", spacing=4, interval=10)
 
 
 def indentation(interval: int = 1, char: str = " ", spaces: int = 4) -> str:
     """Creates an indentation string."""
-    style = StyleContainer(
-        interval=interval, character=char[0], spacing=spaces
-    )
-    return style.character * style.spacing * style.interval
+    return StyleContainer(char[0], spaces, interval)()
 
 
-def separator(cls: StyleContainer = SEPARATOR_TYPE) -> str:
+def separator(cls: StyleContainer = SEPARATOR) -> str:
     """Generates a formatted separator string."""
-    return indentation(
-        char=cls.character, spaces=cls.spacing, interval=cls.interval
-    )
+    return cls()
 
 
 # Signed off by Brian Sanford on 20260527
