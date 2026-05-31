@@ -30,8 +30,10 @@ class DisplayHeader(StrEnum):
 
     @property
     def build(self) -> str:
-        value: StrPredicate | str = self.mapping()[self]
-        return value() if callable(value) else value
+        value = self.mapping()[self]
+        if not callable(value):
+            return value
+        return value()
 
     @decorator.OutputPrinter(suffix="")
     def render_default(self) -> str:
