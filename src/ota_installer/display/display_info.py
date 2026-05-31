@@ -10,7 +10,7 @@ from ..style.style_handler import SEPARATOR
 from ..versioning.version_handler import SoftwareVersion
 
 type BoolPredicate = Callable[[], bool]
-type StrPredicate = Callable[[], str]
+type StrPredicate = Callable[[], str] | str
 
 
 class DisplayHeader(StrEnum):
@@ -23,26 +23,23 @@ class DisplayHeader(StrEnum):
     def mapping(cls) -> Mapping[DisplayHeader, StrPredicate | str]:
         return {
             cls.TITLE: _title,
-            cls.MOVE_CURSOR_UP: str(object=Control.move(y=-1)),
-            cls.SEPARATOR: f"{SEPARATOR()}> ",
+            cls.MOVE_CURSOR_UP: lambda: str(object=Control.move(y=-1)),
+            cls.SEPARATOR: lambda: f"{SEPARATOR()}> ",
             cls.SUBTITLE: _subtitle,
         }
 
     @property
-    def build(self) -> str:
-        value = self.mapping()[self]
-        if not callable(value):
-            return value
-        return value()
+    def build(self) -> StrPredicate:
+        return self.mapping()[self]
 
     @decorator.OutputPrinter(suffix="")
-    def render_default(self) -> str:
+    def render_default(self) -> StrPredicate:
         """Render the component with default styling."""
         return self.build
 
     @decorator.OutputPrinter(suffix="")
     @decorator.Colorizer(style="title")
-    def render_green(self) -> str:
+    def render_green(self) -> StrPredicate:
         """Render the component with green title styling."""
         return self.build
 
