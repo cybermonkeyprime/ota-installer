@@ -30,21 +30,15 @@ class RichColors(StrEnum):
 
 
 @dataclass(frozen=True, slots=True)
-class SeparatorType:
-    """Container for separator constants."""
-
-    CHAR = "-"
-    SPACING = 4
-    INTERVAL = 10
-
-
-@dataclass(frozen=True, slots=True)
 class StyleContainer:
     """Container for style attributes."""
 
     character: str
     spacing: int
     interval: int
+
+
+SEPARATOR_TYPE = StyleContainer("-", 4, 10)
 
 
 def indentation(interval: int = 1, char: str = " ", spaces: int = 4) -> str:
@@ -55,10 +49,10 @@ def indentation(interval: int = 1, char: str = " ", spaces: int = 4) -> str:
     return style.character * style.spacing * style.interval
 
 
-def separator(cls: type[SeparatorType] = SeparatorType) -> str:
+def separator(cls: StyleContainer = SEPARATOR_TYPE) -> str:
     """Generates a formatted separator string."""
     return indentation(
-        char=cls.CHAR, spaces=cls.SPACING, interval=cls.INTERVAL
+        char=cls.character, spaces=cls.spacing, interval=cls.interval
     )
 
 
