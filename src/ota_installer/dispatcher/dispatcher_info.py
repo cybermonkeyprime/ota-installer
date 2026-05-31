@@ -1,5 +1,6 @@
 # src/ota_installer/dispatchers/constants/dispatcher_type.py
 from enum import StrEnum, auto
+from pathlib import Path
 
 from ..log_setup import logger
 
@@ -66,6 +67,13 @@ class DispatcherType(StrEnum):
 
         return dispatcher_class(function_data) if dispatcher_class else None
 
+    @classmethod
+    def get_dispatcher(cls, process_type, path) -> type | None:
+        """Retrieves the dispatcher for the given process type."""
+        function_call = set_variable_manager(path)
+        logger.debug("VariableManager.get_dispatcher(): function_call)")
+        return cls.retrieve_dispatcher(process_type, function_call)
+
     def processor(
         self, processing_function: "VariableManager"
     ) -> "VariableItemProcessor":
@@ -77,6 +85,22 @@ class DispatcherType(StrEnum):
             processing_function=processing_function,
             dispatcher_type=self.value,
         )
+
+
+def set_variable_manager(path: Path) -> "VariableManager":
+    from ..log_setup import logger
+    from ..validation.ota_package_validator import validate_ota_package
+    from ..variable.variable_manager import VariableManager
+
+    """Create a VariableManager instance after validating the file path. """
+
+    valid_path = validate_ota_package(path)
+
+    if not valid_path:
+        logger.error(f"Invalid file path: {path}. Aborting.")
+        raise SystemExit()
+
+    return VariableManager(path=valid_path)
 
 
 # Final sign off by Brian Sanford on 20260421
