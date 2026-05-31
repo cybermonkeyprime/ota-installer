@@ -9,12 +9,10 @@ from ..directory.directory_handler import (
 )
 from ..dispatcher.dispatcher_info import DispatcherType
 from ..image.magisk_image_handler import MagiskImagePath
-from ..log_setup import logger
 from ..variable.variable_functions import (
     get_file_image_path,
     parse_file_name,
     set_log_file,
-    set_variable_manager,
 )
 from .variable_info import (
     DirectoryNames,

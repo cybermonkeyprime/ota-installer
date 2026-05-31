@@ -30,6 +30,22 @@ def set_log_file(file_name_parts: FileNameContainer) -> str:
     return f"/tmp/ota-installer_{device}_{version}.txt"
 
 
+def set_variable_manager(path: Path) -> "VariableManager":
+    from ..log_setup import logger
+    from ..validation.ota_package_validator import validate_ota_package
+    from ..variable.variable_manager import VariableManager
+
+    """Create a VariableManager instance after validating the file path. """
+
+    valid_path = validate_ota_package(path)
+
+    if not valid_path:
+        logger.error(f"Invalid file path: {path}. Aborting.")
+        raise SystemExit()
+
+    return VariableManager(path=valid_path)
+
+
 def get_file_image_path(name: str, device: str, version: str) -> Path:
     from ..image.generic_image_handler import (
         FileImageAttributes,
