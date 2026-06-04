@@ -42,10 +42,10 @@ class VariableManager:
         self.variables: VariableTypeContainer = (
             self._initialize_variable_group(file_path=self.path)
         )
-        self._initialize_file_name_attributes()
-        self._initialize_file_paths()
-        self._initialize_directory_paths()
-        self._initialize_image_names()
+        self.file_name = self._initialize_file_name_attributes()
+        self.file_paths = self._initialize_file_paths()
+        self.directories = self._initialize_directory_paths()
+        self.image_name = self._initialize_image_names()
 
     def _initialize_variable_group(
         self, file_path: Path
@@ -58,18 +58,17 @@ class VariableManager:
             file_parts=parse_file_name(raw_name=file_path),
         )
 
-    def _initialize_file_name_attributes(self) -> Self:
+    def _initialize_file_name_attributes(self) -> FileNameInfo:
         """Initializes file name attributes."""
-        self.file_name = FileNameInfo(
+        return FileNameInfo(
             path=self.variables.file_path,
             stem=self.variables.file_path_stem,
             parts=self.variables.file_parts,
             device=self.variables.file_parts.device,
             version=self.variables.file_parts.build_id,
         )
-        return self
 
-    def _initialize_file_paths(self) -> Self:
+    def _initialize_file_paths(self) -> FilePaths:
         """Initializes file paths."""
         from ..image.generic_image_handler import (
             FileImageData,
@@ -78,30 +77,28 @@ class VariableManager:
         image_data = FileImageData(
             self.file_name.device, self.file_name.version
         )
-        self.file_paths = FilePaths(
+        return FilePaths(
             stock=get_file_image_path("stock", *image_data),
             magisk=get_file_image_path("magisk", *image_data),
             payload=get_file_image_path("payload", *image_data),
             log_file=set_log_file(self.file_name.parts),
         )
-        return self
 
-    def _initialize_directory_paths(self) -> Self:
+    def _initialize_directory_paths(self) -> DirectoryNames:
         """Initializes directory paths."""
         self.ota_parent_directory = self.path.parent
         self.directory = set_directory(self.file_name.path.parent)
 
-        self.directories = DirectoryNames(
+        return DirectoryNames(
             magisk=DirectoryPaths(
                 local_path=MagiskImagePath.LOCAL_PATH.value,
                 remote_path=MagiskImagePath.REMOTE_PATH.value,
             )
         )
-        return self
 
-    def _initialize_image_names(self) -> Self:
+    def _initialize_image_names(self) -> dict[str, str]:
         """Initializes image names."""
-        self.image_name = {
+        return {
             "patched": self.variables.magisk_image_name,
         }
 

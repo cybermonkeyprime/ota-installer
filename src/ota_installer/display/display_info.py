@@ -10,7 +10,7 @@ from ..style.style_handler import SEPARATOR
 from ..versioning.version_handler import SoftwareVersion
 
 type BoolPredicate = Callable[[], bool]
-type StrPredicate = Callable[[], str] | str
+type DisplayProvidor = Callable[[], str]
 
 
 class DisplayHeader(StrEnum):
@@ -20,7 +20,8 @@ class DisplayHeader(StrEnum):
     SUBTITLE = auto()
 
     @classmethod
-    def mapping(cls) -> Mapping[DisplayHeader, StrPredicate | str]:
+    def mapping(cls) -> Mapping[DisplayHeader, DisplayProvidor]:
+        """Map enum variants strictly to Callables ensuring a pure pipeline."""
         return {
             cls.TITLE: _title,
             cls.MOVE_CURSOR_UP: lambda: str(object=Control.move(y=-1)),
@@ -29,17 +30,19 @@ class DisplayHeader(StrEnum):
         }
 
     @property
-    def build(self) -> StrPredicate:
-        return self.mapping()[self]
+    def build(self) -> str:
+        """Resolve the provider mapping and return the pure string value."""
+        provider = self.mapping()[self]
+        return provider()
 
     @decorator.OutputPrinter(suffix="")
-    def render_default(self) -> StrPredicate:
+    def render_default(self) -> str:
         """Render the component with default styling."""
         return self.build
 
     @decorator.OutputPrinter(suffix="")
     @decorator.Colorizer(style="title")
-    def render_green(self) -> StrPredicate:
+    def render_green(self) -> str:
         """Render the component with green title styling."""
         return self.build
 

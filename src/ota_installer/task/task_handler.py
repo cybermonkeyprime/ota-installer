@@ -11,7 +11,7 @@ from ..task.task_group_handler import (
 
 
 @dataclass(frozen=True)
-class TaskDefinitionContainer:
+class TaskDefinitionRenderer:
     """
     Handles the definitions of various task categories and their UI rendering.
     """
@@ -44,13 +44,13 @@ class TaskDefinitionContainer:
 
 
 TASK_DEFINITION_MAPPING = {
-    TaskGroupName.PREPARATION.value: TaskDefinitionContainer(
+    TaskGroupName.PREPARATION.value: TaskDefinitionRenderer(
         PreparationTask, "Preparation Task"
     ),
-    TaskGroupName.MIGRATION.value: TaskDefinitionContainer(
+    TaskGroupName.MIGRATION.value: TaskDefinitionRenderer(
         MigrationTask, "Migration Task"
     ),
-    TaskGroupName.APPLICATION.value: TaskDefinitionContainer(
+    TaskGroupName.APPLICATION.value: TaskDefinitionRenderer(
         ApplicationTask, "Application Task"
     ),
 }
