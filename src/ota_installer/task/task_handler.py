@@ -1,4 +1,5 @@
 # src/ota_installer/handler/task_handler.py
+from collections.abc import Callable, Mapping
 from dataclasses import dataclass
 
 from .. import decorator
@@ -33,7 +34,7 @@ class TaskDefinitionRenderer:
         @decorator.PaddedFooterWrapper()
         def execute_pipeline():
             # Apply your dynamic inner decorator
-            decorated_function = decorator.ConfirmationPrompt(
+            decorated_function: Callable = decorator.ConfirmationPrompt(
                 char=" ", comment=f"perform the {self._name}s"
             )(result)
 
@@ -43,7 +44,7 @@ class TaskDefinitionRenderer:
         return execute_pipeline()
 
 
-TASK_DEFINITION_MAPPING = {
+TASK_DEFINITION_MAPPING: Mapping[str, TaskDefinitionRenderer] = {
     TaskGroupName.PREPARATION.value: TaskDefinitionRenderer(
         PreparationTask, "Preparation Task"
     ),

@@ -1,4 +1,5 @@
 # src/ota_installer/handler/dispatcher_handler.py
+from collections.abc import Mapping
 from pathlib import Path
 from typing import Protocol, runtime_checkable
 
@@ -6,7 +7,7 @@ from ..log_setup import logger
 
 CollectionKeys = str
 CollectionValues = Path | str
-CollectionDictionary = dict[CollectionKeys, CollectionValues]
+CollectionDictionary = Mapping[CollectionKeys, CollectionValues]
 
 
 @runtime_checkable

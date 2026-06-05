@@ -1,5 +1,5 @@
 # src/ota_installer/handler/directory_handler.py
-from collections.abc import Callable
+from collections.abc import Callable, Mapping
 from dataclasses import dataclass, field
 from enum import StrEnum, auto
 from pathlib import Path
@@ -20,7 +20,7 @@ class DirectoryInfo(StrEnum):
     REMOTE = auto()
 
     @classmethod
-    def mapping(cls, obj: Callable) -> dict:
+    def mapping(cls, obj: Callable) -> Mapping[str, Path]:
         """Creates a directory collection from the boot image."""
         boot_image = obj.directory.boot_image
         magisk_image = obj.directories.magisk
@@ -30,6 +30,9 @@ class DirectoryInfo(StrEnum):
             cls.LOCAL: Path(magisk_image.local_path),
             cls.REMOTE: Path(magisk_image.remote_path),
         }
+
+    def get_key(self, obj) -> Path:
+        return self.mapping(obj)[self.value.upper()]
 
 
 @dataclass
@@ -82,9 +85,7 @@ class DirectoryDispatcher(DispatcherTemplate):
 
 
 # functions
-def set_directory(
-    parent_directory: Path,
-) -> DirectoryDefinition:
+def set_directory(parent_directory: Path) -> DirectoryDefinition:
     from ..image.boot_image_handler import BootImagePaths
 
     """Creates a DirectoryTypeDefinition for the specified parent directory."""
