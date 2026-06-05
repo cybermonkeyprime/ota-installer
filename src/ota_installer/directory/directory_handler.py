@@ -84,15 +84,15 @@ class DirectoryDispatcher(DispatcherTemplate):
 # functions
 def set_directory(
     parent_directory: Path,
-) -> DirectoryDefinition | None:
+) -> DirectoryDefinition:
     from ..image.boot_image_handler import BootImagePaths
 
     """Creates a DirectoryTypeDefinition for the specified parent directory."""
 
     logger.debug("Creating Directories")
     if not parent_directory.exists() or not parent_directory.is_dir():
-        logger.error("Invalid parent directory: %s", parent_directory)
-        return None
+        logger.error(f"Invalid parent directory: {parent_directory}")
+        raise SystemExit
 
     return DirectoryDefinition(
         parent_directory,

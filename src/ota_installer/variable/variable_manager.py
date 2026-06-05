@@ -4,7 +4,6 @@ from pathlib import Path
 
 from ..directory.directory_handler import (
     DirectoryDefinition,
-    set_directory,
 )
 from ..dispatcher.dispatcher_info import DispatcherType
 from ..image.magisk_image_handler import MagiskImagePath
@@ -29,19 +28,18 @@ class VariableManager:
     path: Path = field(default_factory=Path)
 
     """ directory type validation"""
-    directory: DirectoryDefinition | None = field(init=False)
+    directory: DirectoryDefinition = field(init=False)
 
     """dicts"""
+    variables: VariableTypeContainer = field(init=False)
     file_paths: FilePaths = field(init=False)
     file_name: FileNameInfo = field(init=False)
     image_name: dict[str, str] = field(default_factory=dict, init=False)
     directories: DirectoryNames = field(init=False)
 
     def __post_init__(self) -> None:
-        self.variables: VariableTypeContainer = (
-            self._initialize_variable_group(file_path=self.path)
-        )
-        if self.variables:
+        self.variables = self._initialize_variable_group(file_path=self.path)
+        if self.variables is not None:
             self.file_name = self._initialize_file_name_attributes()
             self.file_paths = self._initialize_file_paths()
             self.directories = self._initialize_directory_paths()
@@ -85,6 +83,8 @@ class VariableManager:
         )
 
     def _initialize_directory_paths(self) -> DirectoryNames:
+        from ..directory.directory_handler import set_directory
+
         """Initializes directory paths."""
         self.ota_parent_directory = self.path.parent
         self.directory = set_directory(self.file_name.path.parent)
