@@ -91,8 +91,9 @@ def set_directory(
 
     logger.debug("Creating Directories")
     if not parent_directory.exists() or not parent_directory.is_dir():
-        logger.error(f"Invalid parent directory: {parent_directory}")
-        raise SystemExit
+        message = f"Invalid parent directory: {parent_directory}"
+        logger.error(message)
+        raise SystemExit(message)
 
     return DirectoryDefinition(
         parent_directory,
