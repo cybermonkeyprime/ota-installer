@@ -1,7 +1,6 @@
 # src/ota_installer/variables/variable_manager.py
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Self
 
 from ..directory.directory_handler import (
     DirectoryDefinition,
@@ -42,10 +41,11 @@ class VariableManager:
         self.variables: VariableTypeContainer = (
             self._initialize_variable_group(file_path=self.path)
         )
-        self.file_name = self._initialize_file_name_attributes()
-        self.file_paths = self._initialize_file_paths()
-        self.directories = self._initialize_directory_paths()
-        self.image_name = self._initialize_image_names()
+        if self.variables:
+            self.file_name = self._initialize_file_name_attributes()
+            self.file_paths = self._initialize_file_paths()
+            self.directories = self._initialize_directory_paths()
+            self.image_name = self._initialize_image_names()
 
     def _initialize_variable_group(
         self, file_path: Path
