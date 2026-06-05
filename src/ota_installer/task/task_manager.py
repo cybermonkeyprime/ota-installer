@@ -34,8 +34,10 @@ class TaskManager:
         self.variable = set_variable_manager(self.file_name)
         if self.variable:
             add_structured_log_sink(self.variable.file_paths.log_file)
-        else:
+
+        if not self.variable:
             logger.error("Failed to initialize variable manager.")
+
         return self
 
     def set_posix_path(self) -> Self:
