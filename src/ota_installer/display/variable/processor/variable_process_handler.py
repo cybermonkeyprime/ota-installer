@@ -1,3 +1,4 @@
+from collections.abc import Callable
 from dataclasses import dataclass
 from typing import Self
 
@@ -20,13 +21,12 @@ class VariableProcessor:
 
     def process_file_names(self) -> Self:
         """Processes OTA and image file names."""
-        file_types = {set_ota_file_name, set_image_file_names}
-        self._process_items(file_types)
+        self._process_items({set_ota_file_name, set_image_file_names})
         return self
 
     def process_directory_names(self) -> Self:
         """Processes OTA, boot image, and Magisk image directory names."""
-        directory_types = {
+        directory_types: set[Callable] = {
             set_ota_file_directory,
             set_boot_image_directories,
             set_magisk_image_directories,
@@ -35,7 +35,7 @@ class VariableProcessor:
         print()
         return self
 
-    def _process_items(self, functions: set) -> None:
+    def _process_items(self, functions: set[Callable]) -> None:
         """Executes a set of processing functions."""
         for function in functions:
             function(self.variable_manager)
