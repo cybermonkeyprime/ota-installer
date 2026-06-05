@@ -26,16 +26,6 @@ class SoftwareVersion(Enum):
         version."""
         return f"{cls.TITLE.value} - {cls.display()}"
 
-    @classmethod
-    def __call__(cls) -> SoftwareInfo:
-        """Creates a SoftwareContainer instance with versioning information."""
-        return SoftwareInfo(
-            title=cls.TITLE.value,
-            major_number=cls.MAJOR_NUMBER.value,
-            minor_number=cls.MINOR_NUMBER.value,
-            patch_number=cls.PATCH_NUMBER.value,
-        )
-
 
 @dataclass(frozen=True)
 class SoftwareInfo:
@@ -45,15 +35,6 @@ class SoftwareInfo:
     major_number: int
     minor_number: int
     patch_number: int
-
-    def __call__(self) -> SoftwareInfo:
-        """Creates a SoftwareContainer instance with versioning information."""
-        return SoftwareInfo(
-            title=SoftwareVersion.TITLE.value,
-            major_number=SoftwareVersion.MAJOR_NUMBER.value,
-            minor_number=SoftwareVersion.MINOR_NUMBER.value,
-            patch_number=SoftwareVersion.PATCH_NUMBER.value,
-        )
 
 
 def _create_software_info() -> SoftwareInfo:
