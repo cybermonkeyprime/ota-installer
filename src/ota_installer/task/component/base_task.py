@@ -40,6 +40,10 @@ class BaseTask:
         self.task.set_item("title", self.enum_values.title)
         self.task.set_item("description", self.enum_values.description)
 
-        for attr in OptionalTaskField:
-            if value := getattr(self, attr, None):
-                self.task.set_item(attr, value)
+        self._find_optional_fields()
+
+    def _find_optional_fields(self):
+        for field in OptionalTaskField:
+            value = getattr(self, field.value, None)
+            if value is not None:
+                self.task.set_item(field.value, value)
