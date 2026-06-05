@@ -6,8 +6,6 @@ from functools import wraps
 from .container.decorator_container import Decorators
 from .protocol.decorator_protocols import StringReturningDecorator
 
-type R = str
-
 
 @dataclass
 class ColorizedIndentPrinter(StringReturningDecorator):
@@ -21,15 +19,15 @@ class ColorizedIndentPrinter(StringReturningDecorator):
     end: str = ""
     style: str = "variable"
 
-    def __call__(self, function: Callable) -> Callable:
+    def __call__(self, func: Callable) -> Callable:
         """Wraps the given function to apply colorization and indentation."""
 
         @Decorators.output_printer(use_color=False)
         @Decorators.colorizer(style=self.style)
         @Decorators.indent_wrapper(interval=self.indent)
-        @wraps(function)
-        def wrapper(*args, **kwargs) -> R:
-            result = function(*args, **kwargs)
+        @wraps(func)
+        def wrapper(*args, **kwargs) -> str:
+            result = func(*args, **kwargs)
             return f"{result}"
 
         return wrapper
