@@ -36,14 +36,17 @@ class BaseTask:
         Sets the task items based on the provided enum values and optional
         parameters.
         """
-        self.task.set_item("index", self.enum_values.index)
-        self.task.set_item("title", self.enum_values.title)
-        self.task.set_item("description", self.enum_values.description)
+        self._set_required_fields()
+        self._set_optional_fields()
 
-        self._find_optional_fields()
+    def _set_required_fields(self) -> None:
+        required_fields = {"index", "title", "description"}
+        for field in required_fields:
+            self.task.set_item(field, getattr(self.enum_values, field))
 
-    def _find_optional_fields(self):
-        for field in OptionalTaskField:
-            value = getattr(self, field.value, None)
+    def _set_optional_fields(self) -> None:
+        for _field in OptionalTaskField:
+            name = _field.name.lower()
+            value = getattr(self, name, None)
             if value is not None:
-                self.task.set_item(field.value, value)
+                self.task.set_item(name, value)
