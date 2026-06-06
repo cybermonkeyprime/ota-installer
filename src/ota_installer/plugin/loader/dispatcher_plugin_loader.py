@@ -1,5 +1,5 @@
 # src/ota_installer/plugin/loader/dispatcher_plugin_loader.py
-from ...directory.directory_handler import DirectoryDispatcher
+from ...directory.directory_handler import DirectoryHandler
 from ...image.boot_image_handler import ImageTypeDispatcher
 from ...image.generic_image_handler import FileTypeDispatcher
 from ...task.task_group_handler import TaskGroupTypeDispatcher

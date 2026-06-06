@@ -2,9 +2,7 @@
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from ..directory.directory_handler import (
-    DirectoryDefinition,
-)
+from ..directory.directory_handler import DirectoryConfig
 from ..dispatcher.dispatcher_info import DispatcherType
 from ..image.magisk_image_handler import MagiskImagePath
 from ..variable.variable_functions import (
@@ -28,7 +26,7 @@ class VariableManager:
     path: Path = field(default_factory=Path)
 
     """ directory type validation"""
-    directory: DirectoryDefinition = field(init=False)
+    directory: DirectoryConfig = field(init=False)
 
     """dicts"""
     variables: VariableTypeContainer = field(init=False)
@@ -104,9 +102,9 @@ class VariableManager:
 
         return self
 
-    def create_directory(self) -> DirectoryDefinition | None:
+    def create_directory(self) -> DirectoryConfig | None:
         """Creates a directory and returns its definition."""
-        return DirectoryDefinition(
+        return DirectoryConfig(
             self.path.parent,
             str(self.file_paths.stock.parent),
             self.directories.magisk.remote_path,
@@ -114,6 +112,3 @@ class VariableManager:
 
     def get_dispatcher(self, process_type) -> type | None:
         return DispatcherType.get_dispatcher(process_type, self.path)
-
-
-StrPathDict = dict[str, Path | str]

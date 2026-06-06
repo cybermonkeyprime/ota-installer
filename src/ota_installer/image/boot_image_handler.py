@@ -1,4 +1,4 @@
-# images/boot_image_handler.py
+# src/ota_installer/images/boot_image_handler.py
 from dataclasses import dataclass, field
 from enum import Enum, StrEnum
 from pathlib import Path
@@ -18,7 +18,7 @@ class BootImagePaths(Enum):
     @classmethod
     def path_list(cls) -> tuple[Path, ...]:
         """List of all boot image paths."""
-        return tuple(Path(enum_member.value) for enum_member in cls)
+        return tuple(enum_member.value for enum_member in cls)
 
 
 @dataclass(frozen=True, slots=True)

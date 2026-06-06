@@ -11,7 +11,7 @@ from ..plugin.plugin_registry import dispatcher_plugin
 
 
 # Enums
-class DirectoryInfo(StrEnum):
+class DirectoryType(StrEnum):
     """Enumeration for directory types used in OTA installation."""
 
     STOCK = auto()
@@ -20,7 +20,7 @@ class DirectoryInfo(StrEnum):
     REMOTE = auto()
 
     @classmethod
-    def mapping(cls, obj: Callable) -> Mapping[str, Path]:
+    def from_object(cls, obj: Callable) -> Mapping[str, Path]:
         """Creates a directory collection from the boot image."""
         boot_image = obj.directory.boot_image
         magisk_image = obj.directories.magisk
@@ -31,12 +31,12 @@ class DirectoryInfo(StrEnum):
             cls.REMOTE: Path(magisk_image.remote_path),
         }
 
-    def get_key(self, obj) -> Path:
-        return self.mapping(obj)[self.value.upper()]
+    def get_path(self, obj) -> Path:
+        return self.from_object(obj)[self.value.upper()]
 
 
 @dataclass
-class DirectoryDefinition:
+class DirectoryConfig:
     """
     Defines the structure for a directory containing boot and magisk images.
     """
@@ -52,14 +52,14 @@ class DirectoryDefinition:
         """
         Initializes the boot image container after the dataclass is created.
         """
-        self.boot_image = self._create_container(
+        self.boot_image: Callable | None = self._initialize_container(
             BootImageContainer, self._boot_image
         )
-        self.magisk_image_container = self._create_container(
-            MagiskImageContainer
+        self.magisk_image_container: Callable | None = (
+            self._initialize_container(MagiskImageContainer)
         )
 
-    def _create_container(
+    def _initialize_container(
         self, container_cls: type, *args, **kwargs
     ) -> Callable | None:
         """Creates an instance of the specified container class."""
@@ -70,14 +70,14 @@ class DirectoryDefinition:
 # dispatcher
 @dispatcher_plugin(DispatcherType.DIRECTORY.value)
 @dataclass
-class DirectoryDispatcher(DispatcherTemplate):
+class DirectoryHandler(DispatcherTemplate):
     obj: type = field(default_factory=lambda: type)
 
     def __post_init__(self) -> None:
         """
         Initializes the directory collection based on the provided object.
         """
-        self.collection = DirectoryInfo.mapping(self.obj)
+        self.collection = DirectoryType.from_object(self.obj)
         logger.debug(
             f"DirectoryDispatcher initialized with collection: "
             f"{self.collection}"
@@ -85,7 +85,7 @@ class DirectoryDispatcher(DispatcherTemplate):
 
 
 # functions
-def set_directory(parent_directory: Path) -> DirectoryDefinition:
+def set_directory(parent_directory: Path) -> DirectoryConfig:
     from ..image.boot_image_handler import BootImagePaths
 
     """Creates a DirectoryTypeDefinition for the specified parent directory."""
@@ -96,7 +96,7 @@ def set_directory(parent_directory: Path) -> DirectoryDefinition:
         logger.error(message)
         raise SystemExit(message)
 
-    return DirectoryDefinition(
+    return DirectoryConfig(
         parent_directory,
         str(BootImagePaths.STOCK.value),
         BootImagePaths.MAGISK.value,

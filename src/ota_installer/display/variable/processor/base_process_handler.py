@@ -14,7 +14,7 @@ class BaseProcessor:
 
     def __post_init__(self) -> None:
         """Initializes the dispatcher based on the dispatcher type."""
-        if not self.dispatcher_type:
+        if self.dispatcher_type is None:
             raise ValueError(
                 "dispatcher_type must be set in subclass before __post_init__"
             )
@@ -23,7 +23,7 @@ class BaseProcessor:
             self.dispatcher_type
         )
 
-        if not self.dispatcher:
+        if self.dispatcher is None:
             raise RuntimeError(
                 "Dispatcher creation failed for process type: "
                 "f{self.dispatcher_type}"
