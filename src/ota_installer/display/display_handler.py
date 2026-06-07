@@ -8,7 +8,7 @@ from ..log_setup import logger
 
 
 @dataclass(frozen=True, slots=True)
-class DisplayObjectProcessor(object):
+class DisplayObjectProcessor:
     """
     Processor class for creating display objects based on the provided
         callable and argument.
