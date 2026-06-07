@@ -48,6 +48,6 @@ class BaseTask:
     def _set_optional_fields(self) -> None:
         """Sets the optional fields for the task if they are provided."""
         for field in OptionalTaskField:
-            value = getattr(self, field.name.lower(), None)
+            value = getattr(self, field.name.lower())
             if value is not None:
                 self.task.set_item(field.name.lower(), value)
