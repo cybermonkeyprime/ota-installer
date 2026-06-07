@@ -14,7 +14,7 @@ __call__.
 class GenericDecorator(Protocol[R]):
     """GenericDecorator: for decorators that preserve the return type."""
 
-    def __call__[**P](self, func: Callable[P, R]) -> Callable[P, R]: ...
+    def __call__(self, func: Callable[..., R]) -> Callable[..., R]: ...
 
 
 class StringReturningDecorator(Protocol):
@@ -23,7 +23,7 @@ class StringReturningDecorator(Protocol):
     str.
     """
 
-    def __call__[**P](self, func: Callable[P, str]) -> Callable[P, str]: ...
+    def __call__(self, func: Callable[..., str]) -> Callable[..., str]: ...
 
 
-# Signed off by Brian Sanford on 20260318
+# Signed off by Brian Sanford on 20260607
