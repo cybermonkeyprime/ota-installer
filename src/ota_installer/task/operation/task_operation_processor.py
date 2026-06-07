@@ -7,9 +7,8 @@ from typing import Self
 
 from ... import decorator
 from ...log_setup import logger
-from ...plugin.handler.dispatcher_plugin_handler import (
-    PluginDispatcherAdapter,
-)
+from ...plugin.handler.dispatcher_plugin_handler import PluginDispatcherAdapter
+from ...style.style_handler import StyleRenderer
 from .task_operation_executor import TaskOperationExecutor
 from .task_operation_info import (
     DefaultIndent,
@@ -34,9 +33,10 @@ class TaskAspect(StrEnum):
         )
 
 
-task_indent = partial(
-    decorator.MultiplyString,
-    interval=(DefaultIndent.SPACING * DefaultIndent.INTERVAL),
+TASK_INDENT = StyleRenderer(
+    character="_",
+    spacing=DefaultIndent.SPACING,
+    interval=DefaultIndent.INTERVAL,
 )
 
 

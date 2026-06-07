@@ -2,7 +2,7 @@
 from collections.abc import Callable
 from dataclasses import dataclass
 
-from ..style.style_handler import indentation
+from ..style.style_handler import StyleRenderer
 from .protocol.decorator_protocols import StringReturningDecorator
 
 type R = str
@@ -14,12 +14,13 @@ class IndentWrapper(StringReturningDecorator):
 
     interval: int = 0
     char = " "
+    spacing = 4
 
-    def __call__(self, function: Callable) -> Callable:
+    def __call__(self, func: Callable) -> Callable:
         """Wraps the function to add indentation to its output."""
 
         def wrapper(*args, **kwargs) -> R:
-            result = function(*args, **kwargs)
+            result = func(*args, **kwargs)
             return f"{self.indent()}{result}"
 
         return wrapper
@@ -27,4 +28,4 @@ class IndentWrapper(StringReturningDecorator):
     def indent(self):
         """Generates the indentation string."""
 
-        return f"{indentation(char=self.char, interval=self.interval)}"
+        return StyleRenderer(self.char, self.spacing, self.interval)()

@@ -40,7 +40,7 @@ class BaseTask:
         self._set_optional_fields()
 
     def _set_required_fields(self) -> None:
-        required_fields = {"index", "title", "description"}
+        required_fields = ("index", "title", "description")
         for field in required_fields:
             self.task.set_item(field, getattr(self.enum_values, field))
 

@@ -30,7 +30,7 @@ class RichColors(StrEnum):
 
 
 @dataclass(frozen=True, slots=True)
-class StyleContainer:
+class StyleRenderer:
     """Container for style attributes."""
 
     character: str
@@ -42,15 +42,15 @@ class StyleContainer:
         return self.character * self.spacing * self.interval
 
 
-SEPARATOR = StyleContainer(character="-", spacing=4, interval=10)
+SEPARATOR = StyleRenderer(character="-", spacing=4, interval=10)
 
 
 def indentation(interval: int = 1, char: str = " ", spaces: int = 4) -> str:
     """Creates an indentation string."""
-    return StyleContainer(char[0], spaces, interval)()
+    return StyleRenderer(char[0], spaces, interval)()
 
 
-def separator(cls: StyleContainer = SEPARATOR) -> str:
+def separator(cls: StyleRenderer = SEPARATOR) -> str:
     """Generates a formatted separator string."""
     return cls()
 
