@@ -40,11 +40,13 @@ class BaseTask:
         self._set_optional_fields()
 
     def _set_required_fields(self) -> None:
+        """Sets the required fields for the task."""
         required_fields = ("index", "title", "description")
         for field in required_fields:
             self.task.set_item(field, getattr(self.enum_values, field))
 
     def _set_optional_fields(self) -> None:
+        """Sets the optional fields for the task if they are provided."""
         for field in OptionalTaskField:
             value = getattr(self, field.name.lower(), None)
             if value is not None:
