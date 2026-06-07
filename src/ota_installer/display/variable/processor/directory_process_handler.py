@@ -26,13 +26,13 @@ class DirectoryItemInfo(Enum):
         key = field_name.upper()
 
         # Explicit membership check: 'Look Before You Leap'
-        if not key:
+        if key not in cls._member_names_:
             raise AttributeError(
                 f"Invalid field: '{field_name}'. "
                 f"Allowed fields are: {', '.join(cls._member_names_)}"
             ) from None
 
-        return cls[field_name.upper()].value
+        return cls[key].value
 
 
 @dataclass
