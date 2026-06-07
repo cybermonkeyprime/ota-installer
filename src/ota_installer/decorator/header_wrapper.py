@@ -16,14 +16,13 @@ class HeaderWrapper(GenericDecorator):
     from .indent_wrapper import IndentWrapper
     from .output_printer import OutputPrinter
 
-    def __call__(self, function: Callable) -> Callable:
+    def __call__(self, func: Callable) -> Callable:
         """Wraps the function to display a header message before execution."""
 
-        @wraps(function)
+        @wraps(func)
         def wrapper(*args, **kwargs) -> object:
             self._output_message()
-            result = function(*args, **kwargs)
-            return result
+            return func(*args, **kwargs)
 
         return wrapper
 
