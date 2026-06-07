@@ -10,10 +10,10 @@ from .protocol.decorator_protocols import GenericDecorator
 class ExceptionHandler(GenericDecorator):
     """Decorator to handle exceptions in a function and log them."""
 
-    def __call__(self, function: Callable) -> Callable:
+    def __call__(self, func: Callable) -> Callable:
         """Wraps the function to catch and log exceptions."""
 
-        @wraps(function)
+        @wraps(func)
         def wrapper(*args, **kwargs) -> object | None:
             """
             Wrapper function that executes the original function and logs
@@ -22,12 +22,13 @@ class ExceptionHandler(GenericDecorator):
             from ..log_setup import logger
 
             result = None
-            try:
-                result = function(*args, **kwargs)
-            except Exception as err:
-                logger.exception(
-                    f"{type(err).__name__} occured in {function.__name__}"
-                )
+            if func:
+                try:
+                    result = func(*args, **kwargs)
+                except Exception as err:
+                    logger.exception(
+                        f"{type(err).__name__} occured in {func.__name__}"
+                    )
             return result
 
         return wrapper
