@@ -20,15 +20,15 @@ class Encapsulate(GenericDecorator):
     from .multiply_string import MultiplyString
     from .output_printer import OutputPrinter
 
-    def __call__(self, function: Callable) -> Callable:
+    def __call__(self, func: Callable) -> Callable:
         """
         Wraps the function with separator calls before and after execution.
         """
 
-        @wraps(function)
+        @wraps(func)
         def wrapper(*args, **kwargs) -> object:
             self._print_separator()
-            result = function(*args, **kwargs)
+            result = func(*args, **kwargs)
             self._print_separator()
             return result
 
