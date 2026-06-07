@@ -26,20 +26,15 @@ class Task:
 class TaskOperationExecutor:
     """Executes shell commands with confirmation prompts and error handling."""
 
-    command_string: str
+    command: str
 
     @Task.prompt()
     @Task.on_keypress()
     @decorator.Encapsulate()
     def execute(self) -> Self:
         """Executes the command without returning output."""
-        if (
-            run(args=self.command_string, shell=True, check=True).returncode
-            != 0
-        ):
-            logger.exception(
-                f"Command execution failed: {self.command_string}"
-            )
+        if run(args=self.command, shell=True, check=True).returncode != 0:
+            logger.exception(f"Command execution failed: {self.command}")
         return self
 
     @Task.prompt()
@@ -47,12 +42,11 @@ class TaskOperationExecutor:
     @decorator.Encapsulate()
     def execute_and_return_output(self, output_name) -> str:
         """Executes the command and returns its output."""
-        result = check_output(
-            self.command_string, shell=True, text=True
-        ).strip()
-        if result is None:
+        try:
+            result = check_output(self.command, shell=True, text=True).strip()
+        except Exception as e:
             logger.exception(
-                f"{output_name} execution failed: {self.command_string}"
+                f"{output_name} execution failed: {self.command} - {e}"
             )
             return ""
         return result
