@@ -15,12 +15,12 @@ class StyledFigletPrinter(GenericDecorator):
     end: str = "\n"
     use_output: bool = False
 
-    def __call__(self, function: Callable) -> Callable:
+    def __call__(self, func: Callable) -> Callable:
         """Wraps the function to apply figlet and color styles."""
         from . import Colorizer, Figletizer
         from .output_printer import OutputPrinter
 
-        decorated_function = Figletizer(font=self.font)(function)  # type: ignore[reportArgumentType]
+        decorated_function = Figletizer(font=self.font)(func)  # type: ignore[reportArgumentType]
         decorated_function = Colorizer(style=self.style)(decorated_function)
 
         if self.use_output:
@@ -28,7 +28,7 @@ class StyledFigletPrinter(GenericDecorator):
                 decorated_function
             )
 
-        return wraps(function)(decorated_function)
+        return wraps(func)(decorated_function)
 
 
 @StyledFigletPrinter(style="variable", font="slant", use_output=True)
