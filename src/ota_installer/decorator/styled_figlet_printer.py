@@ -20,15 +20,13 @@ class StyledFigletPrinter(GenericDecorator):
         from . import Colorizer, Figletizer
         from .output_printer import OutputPrinter
 
-        decorated_function = Figletizer(font=self.font)(func)  # type: ignore[reportArgumentType]
-        decorated_function = Colorizer(style=self.style)(decorated_function)
+        decorated_func = Figletizer(font=self.font)(func)  # type: ignore[reportArgumentType]
+        decorated_func = Colorizer(style=self.style)(decorated_func)
 
         if self.use_output:
-            decorated_function = OutputPrinter(suffix=self.end)(
-                decorated_function
-            )
+            decorated_func = OutputPrinter(suffix=self.end)(decorated_func)
 
-        return wraps(func)(decorated_function)
+        return wraps(func)(decorated_func)
 
 
 @StyledFigletPrinter(style="variable", font="slant", use_output=True)
