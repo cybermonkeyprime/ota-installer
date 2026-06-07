@@ -45,8 +45,7 @@ class BaseTask:
             self.task.set_item(field, getattr(self.enum_values, field))
 
     def _set_optional_fields(self) -> None:
-        for _field in OptionalTaskField:
-            name = _field.name.lower()
-            value = getattr(self, name, None)
+        for field in OptionalTaskField:
+            value = getattr(self, field.name.lower(), None)
             if value is not None:
-                self.task.set_item(name, value)
+                self.task.set_item(field.name.lower(), value)
