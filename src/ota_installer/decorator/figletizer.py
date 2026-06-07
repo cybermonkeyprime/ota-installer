@@ -1,13 +1,16 @@
 # src/ota_installer/decorators/figletizer.py
 from collections.abc import Callable
 from dataclasses import dataclass
+from enum import StrEnum, auto
 from functools import wraps
 
 from pyfiglet import figlet_format
 
 from .protocol.decorator_protocols import StringReturningDecorator
 
-type R = str
+
+class FontType(StrEnum):
+    SLANT = auto()
 
 
 @dataclass
@@ -19,16 +22,16 @@ class Figletizer(StringReturningDecorator):
 
     font: str = "slant"
 
-    def __call__(self, function: Callable) -> Callable:
+    def __call__(self, func: Callable) -> Callable:
         """Wraps the given function to format its output with figlet."""
 
-        @wraps(function)
-        def wrapper(*args, **kwargs) -> R:
+        @wraps(func)
+        def wrapper(*args, **kwargs) -> str:
             """
             Wrapper function that calls the original function and formats its
             output.
             """
-            result = function(*args, **kwargs)
-            return f"{figlet_format(str(result), font=self.font)}"
+            result = func(*args, **kwargs)
+            return f"{figlet_format(str(result), font=FontType.SLANT)}"
 
         return wrapper
