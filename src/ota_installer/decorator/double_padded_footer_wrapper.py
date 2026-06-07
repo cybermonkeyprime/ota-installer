@@ -1,11 +1,18 @@
 # src/ota_installer/decorators/double_padded_footer_wrapper.py
 from collections.abc import Callable
 from dataclasses import dataclass, field
+from enum import StrEnum
 from functools import wraps
 
 from ..log_setup import logger
 from .container.decorator_container import Decorators
 from .protocol.decorator_protocols import GenericDecorator
+
+
+class StyleType(StrEnum):
+    BEGIN = ""
+    MESSAGE = "Finished!"
+    END = ""
 
 
 @dataclass
@@ -18,16 +25,17 @@ class DoublePaddedFooterWrapper(GenericDecorator):
     message: str = field(default="Finished!")
     ending: str = field(default="")
 
-    def __call__(self, function: Callable) -> Callable:
+    def __call__(self, func: Callable) -> Callable:
         """Wraps the function to add a double padded footer."""
+        style = StyleType
 
-        @wraps(function)
+        @wraps(func)
         def wrapper(*args, **kwargs) -> object:
-            result = function(*args, **kwargs)
-            self._print_footer(self.beginning)
-            logger.debug(self.message)
-            self._print_footer(self.message)
-            self._print_footer(self.ending)
+            result = func(*args, **kwargs)
+            self._print_footer(style.BEGIN)
+            logger.debug(style.MESSAGE)
+            self._print_footer(style.MESSAGE)
+            self._print_footer(style.END)
             return result
 
         return wrapper

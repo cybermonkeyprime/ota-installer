@@ -1,5 +1,4 @@
 # src/ota_installer/tasks/operations/task_operation_executor.py
-from collections.abc import Callable
 from dataclasses import dataclass
 from functools import partial
 from subprocess import check_output, run
@@ -12,12 +11,12 @@ from .task_operation_info import Indents, Messages
 
 @dataclass(frozen=True, slots=True)
 class Task:
-    prompt: Callable = partial(
+    prompt = partial(
         decorator.ConfirmationPrompt,
         comment=Messages.EXECUTE.value,
         indent=Indents.EXECUTE,
     )
-    on_keypress: Callable = partial(
+    on_keypress = partial(
         decorator.ContinueOnKeyPress,
         indent=1,
     )
