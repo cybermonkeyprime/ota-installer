@@ -19,19 +19,17 @@ class StylizedIndentPrinter(GenericDecorator):
     end: str = ""
     use_output: bool = False
 
-    def __call__(self, function: Callable) -> Callable:
+    def __call__(self, func: Callable) -> Callable:
         """
         Wraps the given function with stylized indentation and colorization.
         """
         from . import Colorizer, IndentWrapper
         from .output_printer import OutputPrinter
 
-        decorated_function = IndentWrapper(interval=self.indent)(function)  # pyright: ignore[reportArgumentType]
-        decorated_function = Colorizer(style=self.style)(decorated_function)
+        decorated_func = IndentWrapper(interval=self.indent)(func)  # pyright: ignore[reportArgumentType]
+        decorated_func = Colorizer(style=self.style)(decorated_func)
 
         if self.use_output:
-            decorated_function = OutputPrinter(suffix=self.end)(
-                decorated_function
-            )
+            decorated_function = OutputPrinter(suffix=self.end)(decorated_func)
 
-        return wraps(function)(decorated_function)
+        return wraps(func)(decorated_function)

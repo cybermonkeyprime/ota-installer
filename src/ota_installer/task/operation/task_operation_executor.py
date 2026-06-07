@@ -1,4 +1,5 @@
 # src/ota_installer/tasks/operations/task_operation_executor.py
+from collections.abc import Callable
 from dataclasses import dataclass
 from functools import partial
 from subprocess import check_output, run
@@ -11,12 +12,12 @@ from .task_operation_info import Indents, Messages
 
 @dataclass(frozen=True, slots=True)
 class Task:
-    prompt = partial(
+    prompt: Callable = partial(
         decorator.ConfirmationPrompt,
         comment=Messages.EXECUTE.value,
         indent=Indents.EXECUTE,
     )
-    on_keypress = partial(
+    on_keypress: Callable = partial(
         decorator.ContinueOnKeyPress,
         indent=1,
     )
@@ -42,11 +43,11 @@ class TaskOperationExecutor:
     @decorator.Encapsulate()
     def execute_and_return_output(self, output_name) -> str:
         """Executes the command and returns its output."""
-        try:
-            result = check_output(self.command, shell=True, text=True).strip()
-        except Exception as e:
-            logger.exception(
-                f"{output_name} execution failed: {self.command} - {e}"
-            )
-            return ""
+        result = (
+            check_output(self.command, shell=True, text=True).strip()
+            if self.command
+            else ""
+        )
+        if not result:
+            logger.exception(f"{output_name} execution failed: {self.command}")
         return result
