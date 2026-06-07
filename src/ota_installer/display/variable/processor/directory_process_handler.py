@@ -56,7 +56,7 @@ class DirectoryIterationProcessor(BaseProcessor):
 
     def set_directory_names(self, directory_names: tuple[str, ...]) -> Self:
         """Sets the directory names for processing."""
-        self.directory_names = tuple(directory_names)
+        self.directory_names = directory_names
         return self
 
     def set_directory_type(self, directory_type: str) -> Self:
