@@ -23,21 +23,6 @@ class VariableFileProcessor(BaseProcessor):
         self.dispatcher_type = DispatcherType.VARIABLE.value
         super().__post_init__()
 
-    def set_title(self, name: str) -> Self:
-        """Sets the title of the variable."""
-        self.title = name
-        return self
-
-    def set_value(self, value: str) -> Self:
-        """Sets the value of the variable."""
-        self.value = value
-        return self
-
-    def set_item(self, name: str = "", value: str = "") -> Self:
-        if name:
-            setattr(self, name, value)
-        return self
-
     def process_items(self) -> Self:
         """Processes the items and renders the variable table."""
         from ..variable_item_handler import (

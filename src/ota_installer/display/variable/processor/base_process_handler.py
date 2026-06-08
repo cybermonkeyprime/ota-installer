@@ -1,5 +1,6 @@
 # src/ota_installer/display/variables/processors/base_processor.py
 from dataclasses import dataclass, field
+from typing import Self
 
 from ....dispatcher.dispatcher_handler import DispatcherProtocol
 
@@ -32,3 +33,8 @@ class BaseProcessor:
     def get_value_by_key(self, key: str) -> object:
         """Retrieves a value from the dispatcher using the provided key."""
         return self.dispatcher.get_value(key)
+
+    def set_item(self, name: str = "", value: str | tuple = "") -> Self:
+        if name:
+            setattr(self, name, value)
+        return self
