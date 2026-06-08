@@ -1,7 +1,6 @@
 # display/variable/processor/directory_process_handler.py
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Self
 
 from ....variable.variable_manager import VariableManager
 from ...variable.processor.base_process_handler import BaseProcessor
@@ -53,21 +52,6 @@ class DirectoryIterationProcessor(BaseProcessor):
 
         self.dispatcher_type = DispatcherType.DIRECTORY.value
         super().__post_init__()
-
-    def set_directory_names(self, directory_names: tuple[str, ...]) -> Self:
-        """Sets the directory names for processing."""
-        self.directory_names = directory_names
-        return self
-
-    def set_directory_type(self, directory_type: str) -> Self:
-        """Sets the type of directories being processed."""
-        self.directory_type = str(directory_type)
-        return self
-
-    def set_variable_prefix(self, variable_prefix: str) -> Self:
-        """Sets the prefix for variable names."""
-        self.variable_prefix = str(variable_prefix)
-        return self
 
     def process_items(self) -> None:
         """Processes each directory and builds a variable table."""

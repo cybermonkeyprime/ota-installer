@@ -1,4 +1,8 @@
 # src/ota_installer/display/variables/functions.py
+from collections.abc import Callable
+from dataclasses import dataclass
+from enum import Enum
+
 from ...variable.variable_manager import VariableManager
 from ..variable.processor.directory_process_handler import (
     DirectoryIterationProcessor,
@@ -8,81 +12,69 @@ from ..variable.processor.file_process_handler import (
     VariableFileProcessor,
 )
 
-# Directory names
+
+@dataclass(frozen=True, slots=True)
+class ProcessorRenderer:
+    Class: type
+    mapping: dict[str, str | tuple]
+
+    def __call__(self, variable_manager: VariableManager) -> None:
+        _object = self.Class(variable_manager)
+        for key, value in self.mapping.items():
+            _object.set_item(key, value)
+        _object.process_items()
 
 
-def set_ota_file_directory(
-    processing_function: VariableManager,
-) -> None:
-    from ..variable.processor.file_process_handler import VariableFileProcessor
-
-    """Sets the OTA file directory in the processing function."""
-    (
-        VariableFileProcessor(processing_function)
-        .set_item("title", "ota_file_directory")
-        .set_item("value", "path.parent")
-        .process_items()
+class ProcessorConfig(Enum):
+    OTA_DIRECTORY = ProcessorRenderer(
+        VariableFileProcessor,
+        {"title": "ota_file_directory", "value": "path.parent"},
+    )
+    MAGISK_DIRECTORY = ProcessorRenderer(
+        DirectoryIterationProcessor,
+        {
+            "directory_names": ("local", "remote"),
+            "directory_type": "magisk",
+            "variable_prefix": "_",
+        },
+    )
+    BOOT_DIRECTORY = ProcessorRenderer(
+        DirectoryIterationProcessor,
+        {
+            "directory_names": ("stock", "magisk"),
+            "directory_type": "",
+            "variable_prefix": "",
+        },
+    )
+    OTA_NAME = ProcessorRenderer(
+        VariableFileProcessor,
+        {"title": "ota_file_name", "value": "path.name"},
+    )
+    IMAGE_FILE = ProcessorRenderer(
+        FileIterationProcessor,
+        mapping={"file_names": ("payload", "stock", "magisk")},
+    )
+    LOG_FILE = ProcessorRenderer(
+        VariableFileProcessor, {"title": "log_file", "value": "log_file"}
     )
 
+    def __call__(self, variable_manager: VariableManager) -> None:
+        self.value(variable_manager)
 
-def set_magisk_image_directories(
-    processing_function: VariableManager,
-) -> None:
-    """Sets the Magisk image directories in the processing function."""
-    (
-        DirectoryIterationProcessor(processing_function)
-        .set_item("directory_names", ("local", "remote"))
-        .set_item("directory_type", "magisk")
-        .set_item("variable_prefix", "_")
-        .process_items()
-    )
+    @classmethod
+    def directories(cls) -> frozenset[Callable]:
+        return frozenset(
+            (cls.OTA_DIRECTORY, cls.BOOT_DIRECTORY, cls.MAGISK_DIRECTORY)
+        )
 
+    @classmethod
+    def files(cls) -> frozenset[Callable]:
+        return frozenset((cls.OTA_NAME, cls.IMAGE_FILE))
 
-def set_boot_image_directories(
-    processing_function: VariableManager,
-) -> None:
-    """Sets the boot image directories in the processing function."""
-    (
-        DirectoryIterationProcessor(processing_function)
-        .set_item("directory_names", ("stock", "magisk"))
-        .set_item("directory_type", "")
-        .set_item("variable_prefix", "")
-        .process_items()
-    )
-
-
-# File names
-
-
-def set_ota_file_name(processing_function: VariableManager) -> None:
-    """Sets the OTA file name in the processing function."""
-    (
-        VariableFileProcessor(processing_function)
-        .set_item("title", "ota_file_name")
-        .set_item("value", "path.name")
-        .process_items()
-    )
-
-
-def set_image_file_names(
-    processing_function: VariableManager,
-) -> None:
-    """Sets the image file names in the processing function."""
-    (
-        FileIterationProcessor(processing_function)
-        .set_item("file_names", ("payload", "stock", "magisk"))
-        .process_items()
-    )
-
-
-# Log files
-
-
-def set_log_file(processing_function: VariableManager) -> None:
-    """Sets the log file in the processing function."""
-    (
-        VariableFileProcessor(processing_function)
-        .set_item("title", "log_file")
-        .set_item("value", "log_file")
-        .process_items()
-    )
+    @classmethod
+    def process_items(
+        cls, enum_classes: frozenset[Callable], processor: VariableManager
+    ) -> None:
+        """Executes a set of processing functions."""
+        for enum_class in enum_classes:
+            enum_class(processor)
