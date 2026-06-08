@@ -81,13 +81,11 @@ class ProcessorGroup(Enum):
         if isinstance(self.value, frozenset):
             for enum_class in self.value:
                 enum_class(self.processor)
-            print()
 
     def process_item(self) -> None:
         """Processes the log file."""
         if not isinstance(self.value, frozenset):
             self.value(self.processor)
-            print()
 
     @classmethod
     def process_file_names(cls) -> type:

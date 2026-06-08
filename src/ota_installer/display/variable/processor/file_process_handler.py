@@ -36,10 +36,12 @@ class VariableFileProcessor(BaseProcessor):
         )
 
         if self.title == "log_file":
-            builder.newline()
+            print()
 
         builder.add(f"{data.title.upper()}", data.value)
         builder.render()
+        if self.title == "log_file":
+            print()
         return self
 
 
@@ -76,6 +78,7 @@ class FileIterationProcessor(BaseProcessor):
                 title=f"{file}_name", value=Path(file_path).name
             )
             builder.add(title=data.title.upper(), value=str(object=data.value))
+        print()
         builder.render()
 
 
