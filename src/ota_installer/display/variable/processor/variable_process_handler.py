@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from typing import Self
 
 from ....variable.variable_manager import VariableManager
-from ...variable.variable_functions import ProcessorConfig
+from ...variable.variable_handler import ProcessorConfig
 
 
 @dataclass(slots=True)
