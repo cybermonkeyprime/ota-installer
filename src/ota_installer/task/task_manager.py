@@ -6,7 +6,7 @@ from typing import Self
 
 from ..decorator.styled_indent_printer import StylizedIndentPrinter
 from ..display.variable.processor.variable_process_handler import (
-    VariableProcessor,
+    ProcessorGroup,
 )
 from ..log_setup import add_structured_log_sink, logger
 from ..variable.variable_manager import VariableManager
@@ -53,9 +53,12 @@ class TaskManager:
         if not self.variable:
             logger.error("Variable manager is not initialized.")
         else:
-            VariableProcessor(
-                variable_manager=self.variable
-            ).process_directory_names().process_file_names().process_log_file()
+            (
+                ProcessorGroup.set_processor(self.variable)
+                .process_directory_names()
+                .process_file_names()
+                .process_log_file()
+            )
 
     def execute_iteration(self, task_group) -> None:
         """Executes the task iteration for the given task group."""
