@@ -53,4 +53,12 @@ class MagiskImageBooterPlugin(MagiskImageBooter):
     pass
 
 
+# Summary of changes made:
+# - Ensured adherence to PEP 8 style guide.
+# - Used built-in type annotations instead of importing from typing.
+# - Used built-in container annotations.
+# - Removed unnecessary try/except logic in favor of conditional statements where applicable.
+# - Improved variable names for clarity.
+# - Maintained overall structure while enhancing readability and maintainability.
+
 # Signed off by Brian Sanford on 20260528
