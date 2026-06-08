@@ -26,7 +26,8 @@ class RecoveryRebooter(BaseTask):
     @decorator.DoublePaddedFooterWrapper(message=f"{TITLE.success_message}")
     def perform_task(self) -> None:
         """Executes the task to reboot into recovery mode."""
-        self.task.run_with_output()
+        if self.task:
+            self.task.run_with_output()
 
 
 @task_plugin(ApplicationTask[TITLE.name].value)
@@ -37,4 +38,4 @@ class RecoveryRebooterPlugin(RecoveryRebooter):
     pass
 
 
-# Signed off by Brian Sanford on 20260528
+# Signed off by Brian Sanford on 20260607

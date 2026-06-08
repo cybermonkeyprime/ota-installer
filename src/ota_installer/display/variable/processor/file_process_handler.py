@@ -33,7 +33,12 @@ class VariableFileProcessor(BaseProcessor):
         self.value = value
         return self
 
-    def process_items(self) -> Self | None:
+    def set_item(self, name: str = "", value: str = "") -> Self:
+        if name:
+            setattr(self, name, value)
+        return self
+
+    def process_items(self) -> Self:
         """Processes the items and renders the variable table."""
         from ..variable_item_handler import (
             VariableItemContainer,
@@ -50,6 +55,7 @@ class VariableFileProcessor(BaseProcessor):
 
         builder.add(f"{data.title.upper()}", data.value)
         builder.render()
+        return self
 
 
 @dataclass(slots=True)
