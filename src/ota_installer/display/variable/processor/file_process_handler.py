@@ -35,14 +35,16 @@ class VariableFileProcessor(BaseProcessor):
             title=self.title, value=str(self.get_value_by_key(self.value))
         )
 
-        if self.title == "log_file":
-            print()
+        self.newline(("log_file", "ota_file_name"))
 
         builder.add(f"{data.title.upper()}", data.value)
         builder.render()
-        if self.title == "log_file":
-            print()
+        self.newline(("log_file", "ota_file_name"))
         return self
+
+    def newline(self, values: tuple):
+        if self.title in values:
+            print()
 
 
 @dataclass(slots=True)
@@ -78,7 +80,6 @@ class FileIterationProcessor(BaseProcessor):
                 title=f"{file}_name", value=Path(file_path).name
             )
             builder.add(title=data.title.upper(), value=str(object=data.value))
-        print()
         builder.render()
 
 
