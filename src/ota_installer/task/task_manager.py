@@ -5,8 +5,8 @@ from pathlib import Path
 from typing import Self
 
 from ..decorator.styled_indent_printer import StylizedIndentPrinter
-from ..display.variable.processor.process_handler import (
-    ProcessorGroup,
+from ..display.display_variable_handler import (
+    DisplayVariablePipeline,
 )
 from ..log_setup import add_structured_log_sink, logger
 from ..variable.variable_manager import VariableManager
@@ -54,7 +54,7 @@ class TaskManager:
             logger.error("Variable manager is not initialized.")
         else:
             (
-                ProcessorGroup.set_processor(self.variable)
+                DisplayVariablePipeline(self.variable)
                 .process_directory_names()
                 .process_file_names()
                 .process_log_file()

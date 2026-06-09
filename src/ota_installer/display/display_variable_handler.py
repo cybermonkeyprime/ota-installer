@@ -1,20 +1,21 @@
-# src/ota_installer/display/variable/processor/variable_process_handler.py
+# src/ota_installer/display/variable/processor/display_variable_handler.py
 from collections.abc import Callable
 from dataclasses import dataclass
 from enum import Enum
+from typing import Self
 
-from ....variable.variable_manager import VariableManager
-from .directory_process_handler import (
+from ..variable.variable_manager import VariableManager
+from .variable.processor.directory_process_handler import (
     DirectoryIterationProcessor,
 )
-from .file_process_handler import (
+from .variable.processor.file_process_handler import (
     FileIterationProcessor,
     VariableFileProcessor,
 )
 
 
 @dataclass(frozen=True, slots=True)
-class ProcessorRenderer:
+class DisplayVariableRenderer:
     class_type: type
     mapping: dict[str, str | tuple]
 
@@ -25,12 +26,12 @@ class ProcessorRenderer:
         instance.process_items()
 
 
-class ProcessorConfig(Enum):
-    OTA_DIRECTORY = ProcessorRenderer(
+class DisplayVariableDefinition(Enum):
+    OTA_DIRECTORY = DisplayVariableRenderer(
         VariableFileProcessor,
         {"title": "ota_file_directory", "value": "path.parent"},
     )
-    BOOT_DIRECTORY = ProcessorRenderer(
+    BOOT_DIRECTORY = DisplayVariableRenderer(
         DirectoryIterationProcessor,
         {
             "directory_names": ("stock", "magisk"),
@@ -38,7 +39,7 @@ class ProcessorConfig(Enum):
             "variable_prefix": "",
         },
     )
-    MAGISK_DIRECTORY = ProcessorRenderer(
+    MAGISK_DIRECTORY = DisplayVariableRenderer(
         DirectoryIterationProcessor,
         {
             "directory_names": ("local", "remote"),
@@ -46,14 +47,14 @@ class ProcessorConfig(Enum):
             "variable_prefix": "_",
         },
     )
-    OTA_FILE = ProcessorRenderer(
+    OTA_FILE = DisplayVariableRenderer(
         VariableFileProcessor, {"title": "ota_file_name", "value": "path.name"}
     )
-    IMAGE_FILE = ProcessorRenderer(
+    IMAGE_FILE = DisplayVariableRenderer(
         FileIterationProcessor,
         mapping={"file_names": ("payload", "stock", "magisk")},
     )
-    LOG_FILE = ProcessorRenderer(
+    LOG_FILE = DisplayVariableRenderer(
         VariableFileProcessor, {"title": "log_file", "value": "log_file"}
     )
 
@@ -71,41 +72,32 @@ class ProcessorConfig(Enum):
         return frozenset((cls.OTA_FILE, cls.IMAGE_FILE))
 
 
-class ProcessorGroup(Enum):
-    FILE = ProcessorConfig.files()
-    DIRECTORY = ProcessorConfig.directories()
-    LOG = ProcessorConfig.LOG_FILE
+class DisplayVariableGroup(Enum):
+    FILE = DisplayVariableDefinition.files()
+    DIRECTORY = DisplayVariableDefinition.directories()
+    LOG = (DisplayVariableDefinition.LOG_FILE,)
 
-    def process_items(self) -> None:
+    def process(self, processor: VariableManager) -> None:
         """Executes a set of processing functions."""
-        if isinstance(self.value, frozenset):
-            for enum_class in self.value:
-                enum_class(self.processor)
+        for enum_class in self.value:
+            enum_class(processor)
 
-    def process_item(self) -> None:
-        """Processes the log file."""
-        if not isinstance(self.value, frozenset):
-            self.value(self.processor)
 
-    @classmethod
-    def process_file_names(cls) -> type:
-        cls.FILE.process_items()
-        return cls
+@dataclass(frozen=True, slots=True)
+class DisplayVariablePipeline:
+    variable_manager: VariableManager
 
-    @classmethod
-    def process_directory_names(cls) -> type:
-        cls.DIRECTORY.process_items()
-        return cls
+    def process_directory_names(self) -> Self:
+        DisplayVariableGroup.DIRECTORY.process(self.variable_manager)
+        return self
 
-    @classmethod
-    def process_log_file(cls) -> type:
-        cls.LOG.process_item()
-        return cls
+    def process_file_names(self) -> Self:
+        DisplayVariableGroup.FILE.process(self.variable_manager)
+        return self
 
-    @classmethod
-    def set_processor(cls, processor: VariableManager):
-        cls.processor = processor
-        return cls
+    def process_log_file(self) -> Self:
+        DisplayVariableGroup.LOG.process(self.variable_manager)
+        return self
 
 
 # Signed off by Brian Sanford on 20260608
