@@ -1,5 +1,4 @@
 # src/ota_installer/display/variable/processor/display_variable_handler.py
-from collections.abc import Callable
 from dataclasses import dataclass
 from enum import Enum
 from typing import Self
@@ -62,16 +61,14 @@ class DisplayVariableDefinition(Enum):
         self.value(variable_manager)
 
     @classmethod
-    def directories(cls) -> frozenset[Callable]:
+    def directories(cls) -> tuple[DisplayVariableDefinition, ...]:
         """Returns a set of directory-related display variable definitions."""
-        return frozenset(
-            (cls.OTA_DIRECTORY, cls.BOOT_DIRECTORY, cls.MAGISK_DIRECTORY)
-        )
+        return (cls.OTA_DIRECTORY, cls.BOOT_DIRECTORY, cls.MAGISK_DIRECTORY)
 
     @classmethod
-    def files(cls) -> frozenset[Callable]:
+    def files(cls) -> tuple[DisplayVariableDefinition, ...]:
         """Returns a set of file-related display variable definitions."""
-        return frozenset((cls.OTA_FILE, cls.IMAGE_FILE))
+        return (cls.OTA_FILE, cls.IMAGE_FILE)
 
 
 class DisplayVariableGroup(Enum):
