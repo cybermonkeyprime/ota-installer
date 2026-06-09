@@ -21,6 +21,7 @@ class VariableFileProcessor(BaseProcessor):
     def __post_init__(self) -> None:
         """Initializes the dispatcher type after the dataclass is created."""
         self.dispatcher_type = DispatcherType.VARIABLE.value
+        self.newline_insertions = ("log_file", "ota_file_name")
         super().__post_init__()
 
     def process_items(self) -> Self:
@@ -35,15 +36,15 @@ class VariableFileProcessor(BaseProcessor):
             title=self.title, value=str(self.get_value_by_key(self.value))
         )
 
-        self.newline(("log_file", "ota_file_name"))
+        self.newline()
 
         builder.add(f"{data.title.upper()}", data.value)
         builder.render()
-        self.newline(("log_file", "ota_file_name"))
+        self.newline()
         return self
 
-    def newline(self, values: tuple):
-        if self.title in values:
+    def newline(self) -> None:
+        if self.title in self.newline_insertions:
             print()
 
 
