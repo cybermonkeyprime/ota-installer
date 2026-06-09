@@ -63,16 +63,20 @@ class DisplayVariableDefinition(Enum):
 
     @classmethod
     def directories(cls) -> frozenset[Callable]:
+        """Returns a set of directory-related display variable definitions."""
         return frozenset(
             (cls.OTA_DIRECTORY, cls.BOOT_DIRECTORY, cls.MAGISK_DIRECTORY)
         )
 
     @classmethod
     def files(cls) -> frozenset[Callable]:
+        """Returns a set of file-related display variable definitions."""
         return frozenset((cls.OTA_FILE, cls.IMAGE_FILE))
 
 
 class DisplayVariableGroup(Enum):
+    """Enumeration for grouping display variable definitions."""
+
     FILE = DisplayVariableDefinition.files()
     DIRECTORY = DisplayVariableDefinition.directories()
     LOG = (DisplayVariableDefinition.LOG_FILE,)
@@ -85,17 +89,22 @@ class DisplayVariableGroup(Enum):
 
 @dataclass(frozen=True, slots=True)
 class DisplayVariablePipeline:
+    """Pipeline for processing display variables."""
+
     variable_manager: VariableManager
 
     def process_directory_names(self) -> Self:
+        """Processes directory names."""
         DisplayVariableGroup.DIRECTORY.process(self.variable_manager)
         return self
 
     def process_file_names(self) -> Self:
+        """Processes file names."""
         DisplayVariableGroup.FILE.process(self.variable_manager)
         return self
 
     def process_log_file(self) -> Self:
+        """Processes the log file."""
         DisplayVariableGroup.LOG.process(self.variable_manager)
         return self
 
