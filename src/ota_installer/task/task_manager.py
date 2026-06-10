@@ -57,7 +57,6 @@ class TaskManager:
                 DisplayVariablePipeline(self.variable)
                 .process_directory_names()
                 .process_file_names()
-                .process_log_file()
             )
 
     def execute_iteration(self, task_group) -> None:

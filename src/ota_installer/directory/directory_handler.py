@@ -1,7 +1,7 @@
 # src/ota_installer/handler/directory_handler.py
-from collections.abc import Callable, Mapping
+from collections.abc import Mapping
 from dataclasses import dataclass, field
-from enum import StrEnum, auto
+from enum import Enum, StrEnum, auto
 from pathlib import Path
 
 from ..dispatcher.dispatcher_handler import DispatcherTemplate
@@ -20,7 +20,7 @@ class DirectoryType(StrEnum):
     REMOTE = auto()
 
     @classmethod
-    def from_object(cls, obj: Callable) -> Mapping[str, Path]:
+    def from_object(cls, obj: "VariableManager") -> Mapping[str, Path]:
         """Creates a directory collection from the boot image."""
         boot_image = obj.directory.boot_image
         magisk_image = obj.directories.magisk
@@ -35,6 +35,23 @@ class DirectoryType(StrEnum):
         return self.from_object(obj)[self.value.upper()]
 
 
+class DirectoryContainer(Enum):
+    from ..image.boot_image_handler import BootImageContainer
+    from ..image.magisk_image_handler import MagiskImageContainer
+
+    BOOT = BootImageContainer
+    MAGISK = MagiskImageContainer
+
+    @property
+    def container(self):
+        return self.value
+
+    def __call__(self, *args, **kwargs):
+        """Creates an instance of the specified container class."""
+        logger.debug(f"Creating {self.container.__name__} with args: {args}")
+        return self.container(*args) if args else None
+
+
 @dataclass
 class DirectoryConfig:
     """
@@ -42,41 +59,27 @@ class DirectoryConfig:
     """
 
     parent_directory: Path
-    _boot_image: str = field(default="")
+    _boot_image: Path = field(default_factory=Path)
     magisk_image: Path = field(default_factory=Path)
 
     def __post_init__(self) -> None:
-        from ..image.boot_image_handler import BootImageContainer
-        from ..image.magisk_image_handler import MagiskImageContainer
-
         """
         Initializes the boot image container after the dataclass is created.
         """
-        self.boot_image: Callable | None = self._initialize_container(
-            BootImageContainer, self._boot_image
-        )
-        self.magisk_image_container: Callable | None = (
-            self._initialize_container(MagiskImageContainer)
-        )
-
-    def _initialize_container(
-        self, container_cls: type, *args, **kwargs
-    ) -> Callable | None:
-        """Creates an instance of the specified container class."""
-        logger.debug(f"Creating {container_cls.__name__} with args: {args}")
-        return container_cls(*args) if args else None
+        self.boot_image = DirectoryContainer.BOOT(self._boot_image)
+        self.magisk_image_container = DirectoryContainer.MAGISK("", "")
 
 
 # dispatcher
 @dispatcher_plugin(DispatcherType.DIRECTORY.value)
 @dataclass
 class DirectoryHandler(DispatcherTemplate):
+    """Handles directory operations for the dispatcher."""
+
     obj: type = field(default_factory=lambda: type)
 
     def __post_init__(self) -> None:
-        """
-        Initializes the directory collection based on the provided object.
-        """
+        """Initializes the directory collection based on provided object."""
         self.collection = DirectoryType.from_object(self.obj)
         logger.debug(
             f"DirectoryDispatcher initialized with collection: "
@@ -86,9 +89,8 @@ class DirectoryHandler(DispatcherTemplate):
 
 # functions
 def set_directory(parent_directory: Path) -> DirectoryConfig:
-    from ..image.boot_image_handler import BootImagePaths
-
     """Creates a DirectoryTypeDefinition for the specified parent directory."""
+    from ..image.boot_image_handler import BootImagePaths
 
     logger.debug("Creating Directories")
     if not parent_directory.exists() or not parent_directory.is_dir():
@@ -98,7 +100,7 @@ def set_directory(parent_directory: Path) -> DirectoryConfig:
 
     return DirectoryConfig(
         parent_directory,
-        str(BootImagePaths.STOCK.value),
+        (BootImagePaths.STOCK.value),
         BootImagePaths.MAGISK.value,
     )
 

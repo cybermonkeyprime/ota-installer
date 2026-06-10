@@ -25,12 +25,24 @@ class DisplayVariableRenderer:
         instance.process_items()
 
 
-class DisplayVariableDefinition(Enum):
-    OTA_DIRECTORY = DisplayVariableRenderer(
+class DisplayVariableBehavior(Enum):
+    """Base class for display variable behaviors."""
+
+    def __call__(self, variable_manager: VariableManager) -> None:
+        self.value(variable_manager)
+
+    @classmethod
+    def list(cls) -> tuple[DisplayVariableBehavior, ...]:
+        """Returns a set of directory-related display variable definitions."""
+        return tuple(cls)
+
+
+class DisplayVariableDirectory(DisplayVariableBehavior):
+    OTA = DisplayVariableRenderer(
         VariableFileProcessor,
         {"title": "ota_file_directory", "value": "path.parent"},
     )
-    BOOT_DIRECTORY = DisplayVariableRenderer(
+    BOOT = DisplayVariableRenderer(
         DirectoryIterationProcessor,
         {
             "directory_names": ("stock", "magisk"),
@@ -38,7 +50,7 @@ class DisplayVariableDefinition(Enum):
             "variable_prefix": "",
         },
     )
-    MAGISK_DIRECTORY = DisplayVariableRenderer(
+    MAGISK = DisplayVariableRenderer(
         DirectoryIterationProcessor,
         {
             "directory_names": ("local", "remote"),
@@ -46,37 +58,27 @@ class DisplayVariableDefinition(Enum):
             "variable_prefix": "_",
         },
     )
-    OTA_FILE = DisplayVariableRenderer(
+
+
+class DisplayVariableFile(DisplayVariableBehavior):
+    OTA = DisplayVariableRenderer(
         VariableFileProcessor, {"title": "ota_file_name", "value": "path.name"}
     )
-    IMAGE_FILE = DisplayVariableRenderer(
+    IMAGE = DisplayVariableRenderer(
         FileIterationProcessor,
         mapping={"file_names": ("payload", "stock", "magisk")},
     )
-    LOG_FILE = DisplayVariableRenderer(
+    LOG = DisplayVariableRenderer(
         VariableFileProcessor, {"title": "log_file", "value": "log_file"}
     )
-
-    def __call__(self, variable_manager: VariableManager) -> None:
-        self.value(variable_manager)
-
-    @classmethod
-    def directories(cls) -> tuple[DisplayVariableDefinition, ...]:
-        """Returns a set of directory-related display variable definitions."""
-        return (cls.OTA_DIRECTORY, cls.BOOT_DIRECTORY, cls.MAGISK_DIRECTORY)
-
-    @classmethod
-    def files(cls) -> tuple[DisplayVariableDefinition, ...]:
-        """Returns a set of file-related display variable definitions."""
-        return (cls.OTA_FILE, cls.IMAGE_FILE)
 
 
 class DisplayVariableGroup(Enum):
     """Enumeration for grouping display variable definitions."""
 
-    FILE = DisplayVariableDefinition.files()
-    DIRECTORY = DisplayVariableDefinition.directories()
-    LOG = (DisplayVariableDefinition.LOG_FILE,)
+    FILE = DisplayVariableFile.list()
+    DIRECTORY = DisplayVariableDirectory.list()
+    # LOG = (DisplayVariableFile.LOG,)
 
     def process(self, processor: VariableManager) -> None:
         """Executes a set of processing functions."""
@@ -98,11 +100,6 @@ class DisplayVariablePipeline:
     def process_file_names(self) -> Self:
         """Processes file names."""
         DisplayVariableGroup.FILE.process(self.variable_manager)
-        return self
-
-    def process_log_file(self) -> Self:
-        """Processes the log file."""
-        DisplayVariableGroup.LOG.process(self.variable_manager)
         return self
 
 
