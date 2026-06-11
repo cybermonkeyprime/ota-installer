@@ -2,6 +2,7 @@
 from enum import StrEnum, auto
 
 from ..log_setup import logger
+from ..plugin.plugin_registry import DISPATCHER_PLUGINS
 
 
 class DispatcherType(StrEnum):

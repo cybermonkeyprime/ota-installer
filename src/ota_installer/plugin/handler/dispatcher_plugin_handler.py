@@ -1,6 +1,7 @@
 # src/ota_installer/plugin/handler/dispatcher_plugin_handler.py
 from dataclasses import dataclass, field
 
+from ...dispatcher.dispatcher_info import DispatcherType
 from ...log_setup import logger
 from ..plugin_registry import DISPATCHER_PLUGINS
 
@@ -16,33 +17,28 @@ class PluginDispatcherAdapter:
     dispatcher: str = field(default_factory=str)
     object_processor: type = field(default=type)
 
-    def load(self) -> object | None:
+    def load(self) -> object:
         """Load the dispatcher based on the specified type."""
         logger.debug(f"Loading dispatcher: {self.dispatcher}")
+        if self.dispatcher not in DispatcherType:
+            message = f"{self.dispatcher.upper()} not found in DispatcherType"
+            logger.error(message)
+            raise ValueError(message)
         return load_plugin_dispatcher(
-            dispatcher_type=self.dispatcher, obj=self.object_processor
+            dispatcher_type=self.dispatcher,
+            obj=self.object_processor,
         )
-
-    def get_value(self, key: str) -> object:
-        """Retrieve a value from the dispatcher using the specified key."""
-        dispatcher = self.load()
-        if dispatcher is None:
-            logger.error(
-                f"Failed to load dispatcher '{self.dispatcher}'. "
-                f"Cannot retrieve value for key: {key}"
-            )
-            return None
-        return dispatcher.get_value(key=key)
 
 
 def load_plugin_dispatcher(dispatcher_type: str, obj: type) -> object | None:
     """Load a registered plugin dispatcher based on the dispatcher type."""
     logger.debug(f"Loading plugin dispatcher for type: {dispatcher_type}")
-    dispatcher_class = DISPATCHER_PLUGINS.get(dispatcher_type)
+    valid_dispatcher = DispatcherType(dispatcher_type)
+    dispatcher_class = DISPATCHER_PLUGINS.get(valid_dispatcher)
 
     if dispatcher_class is None:
         logger.error(
-            f"No plugin dispatcher registered for: {dispatcher_type!r}",
+            f"No plugin dispatcher registered for: {valid_dispatcher!r}",
         )
         return None
 
