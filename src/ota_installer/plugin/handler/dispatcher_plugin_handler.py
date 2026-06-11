@@ -41,7 +41,7 @@ class PluginDispatcherAdapter:
         """Load a registered plugin dispatcher based on the dispatcher type."""
         logger.debug(f"Loading plugin dispatcher for type: {dispatcher_type}")
         valid_dispatcher = DispatcherType(dispatcher_type)
-        dispatcher_class = DISPATCHER_PLUGINS.get(valid_dispatcher)
+        dispatcher_class = DISPATCHER_PLUGINS[valid_dispatcher]
 
         if dispatcher_class is None:
             message = (
