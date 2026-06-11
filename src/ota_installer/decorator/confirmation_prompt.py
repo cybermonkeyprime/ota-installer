@@ -1,19 +1,71 @@
 # src/ota_installer/decorators/confirmation_prompt.py
 from collections.abc import Callable
 from dataclasses import dataclass, field
+from enum import StrEnum
 from functools import wraps
 
 import pyinputplus as pyip
 from rich.console import Console
 
+from ota_installer.decorator.colorizer import Colorizer
+
 from ..style.style_handler import RichColors
-from .protocol.decorator_protocols import GenericDecorator
 
 console = Console()
 
 
-@dataclass
-class ConfirmationPrompt(GenericDecorator):
+class PromptType(StrEnum):
+    KEY_OPTION = "/".join(["Y", "N"])
+    ERROR = "Invalid Option!"
+    REQUEST = "Do you want to "
+
+    @classmethod
+    def get_request(cls, action: str) -> str:
+        """Construct the prompt message."""
+        return f"{cls.REQUEST}{action}"
+
+    @classmethod
+    def get_key_option(cls) -> str:
+        """Return a string of valid key options."""
+        style = RichColors["non_error".upper()]
+        return f"{style.beginning()}{cls.KEY_OPTION}{style.ending()}"
+
+    @classmethod
+    def get_message(cls, indent, action) -> str:
+        """Construct the prompt message."""
+        return f"{indent}{cls.get_request(action)}? [{cls.get_key_option()}]: "
+
+    @staticmethod
+    def get_confirmation() -> str:
+        """Get user confirmation input."""
+        return pyip.inputYesNo(default="no", limit=3, blank=True) == "yes"
+
+    @staticmethod
+    def get_display(indent, action) -> None:
+        """Display the confirmation prompt message."""
+
+        def func():
+            return PromptType.get_message(indent, action)
+
+        decorated_func = Colorizer(style="task")(func)
+        console.print(decorated_func(), end="")
+
+    @staticmethod
+    def on_error() -> str:
+        """Return the message for invalid options."""
+        from .indent_wrapper import IndentWrapper
+
+        def func():
+            return PromptType.ERROR
+
+        decorated_func = Colorizer(style="variable")(func)
+        decorated_func = IndentWrapper(interval=1)(decorated_func)
+
+        return decorated_func()
+
+
+@dataclass(frozen=True, slots=True)
+class ConfirmationPrompt:
     """
     Decorator to prompt for user confirmation before executing a function.
     """
@@ -29,63 +81,18 @@ class ConfirmationPrompt(GenericDecorator):
     from . import Colorizer
     from .indent_wrapper import IndentWrapper
 
-    def __call__(self, function: Callable) -> Callable:
+    def __call__(self, func: Callable) -> Callable:
         """Wrap the function with a confirmation prompt."""
 
-        @wraps(function)
+        @wraps(func)
         def wrapper(*args, **kwargs) -> Callable | None:
-            console.print(self.display_prompt(), end="")
-            if not self.auto_confirm and not self.get_confirmation():
+            prompt = PromptType
+            prompt.get_display(self.begin, self.comment)
+            if not self.auto_confirm and not prompt.get_confirmation():
                 return None
-            return function(*args, **kwargs)
+            return func(*args, **kwargs)
 
         return wrapper
-
-    # @Printer(prefix="", suffix="")
-    @Colorizer(style="task")
-    def display_prompt(self) -> str:
-        """Display the confirmation prompt message."""
-
-        return f"{self.begin}{self.prompt_message()}? [{self.ending()}]: "
-
-    def prompt_message(self) -> str:
-        """Construct the prompt message."""
-
-        return f"Do you want to {self.comment}"
-
-    def get_confirmation(self) -> bool:
-        """Get user confirmation input."""
-
-        return pyip.inputYesNo(default="no", limit=3, blank=True) == "yes"
-
-    def valid_options(self) -> list[str]:
-        """Return valid options for confirmation."""
-
-        return ["Y", "N"]
-
-    def key_options(self) -> str:
-        """Return a string of valid key options."""
-
-        return "/".join(self.valid_options())
-
-    @Colorizer(style="variable")
-    @IndentWrapper(interval=1)
-    def invalid_option_message(self) -> str:
-        """Return the message for invalid options."""
-
-        return "Invalid Option!"
-
-    @IndentWrapper(interval=1)
-    def beginning(self) -> str:
-        """Return the beginning part of the prompt."""
-
-        return self.begin
-
-    def ending(self) -> str:
-        """Return the ending part of the prompt with styled options."""
-
-        style = RichColors["non_error".upper()]
-        return f"{style.beginning()}{self.key_options()}{style.ending()}"
 
 
 @ConfirmationPrompt(

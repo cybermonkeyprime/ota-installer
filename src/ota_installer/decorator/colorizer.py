@@ -24,16 +24,16 @@ class Colorizer(StringReturningDecorator):
         if self.color is None:
             raise ValueError(f"Invalid style: {self.style}")
 
-    def __call__(self, function: Callable) -> Callable:
+    def __call__(self, func: Callable) -> Callable:
         """Wraps the function to apply color styling to its return value."""
 
-        @wraps(function)
+        @wraps(func)
         def wrapper(*args, **kwargs) -> R:
             """
             Wrapper function that executes the original function and styles
             its output.
             """
-            result = function(*args, **kwargs)
+            result = func(*args, **kwargs)
             return f"{self.color.beginning()}{result}{self.color.ending()}"
 
         return wrapper
