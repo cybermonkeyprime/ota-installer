@@ -1,4 +1,4 @@
-# __main__.py
+# src/ota_installer/__main__.py
 
 
 def main():
@@ -11,3 +11,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+# Signed off by Brian Sanford on 20260610
