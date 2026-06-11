@@ -1,10 +1,10 @@
 # src/ota_installer/decorators/continue_on_keypress.py
 from collections.abc import Callable
 from dataclasses import dataclass, field
-from enum import Enum, IntEnum
+from enum import IntEnum, StrEnum
 from functools import wraps
 
-from .protocol.decorator_protocols import GenericDecorator
+from ..style.style_handler import StyleRenderer
 
 
 class Specs(IntEnum):
@@ -13,7 +13,7 @@ class Specs(IntEnum):
 
 
 @dataclass
-class ContinueOnKeyPress(GenericDecorator):
+class ContinueOnKeyPress:
     """Decorator that pauses execution until the user presses the Enter key."""
 
     indent: int = field(default=1)
@@ -24,15 +24,8 @@ class ContinueOnKeyPress(GenericDecorator):
     from .multiply_string import MultiplyString
     from .output_printer import OutputPrinter
 
-    def __post_init__(self) -> None:
-        self.specs = Enum(
-            "Specs",
-            {
-                "CHAR": self.char[0],
-                "SPACING": Specs.SPACING,
-                "INTERVAL": Specs.INTERVAL,
-            },
-        )
+    class Message(StrEnum):
+        PROMPT = "Press the Enter key to continue... "
 
     @ExceptionHandler()
     def __call__(self, function: Callable) -> Callable:
@@ -52,19 +45,16 @@ class ContinueOnKeyPress(GenericDecorator):
         Creates an indentation string based on the specified character and
         indent level.
         """
-        return self.string()
-
-    @MultiplyString(interval=(Specs.SPACING.value * Specs.INTERVAL.value))
-    def string(self) -> str:
-        """Generates a string for display based on the specified character."""
-        return f"{self.char[0]}"
+        render_style = StyleRenderer(
+            self.char[0], Specs.SPACING, Specs.INTERVAL
+        )
+        return render_style()
 
     @OutputPrinter(prefix="\n", suffix="")
     @Colorizer(style="title")
     def display_message(self) -> str:
         """Displays a message prompting the user to continue."""
-        message = "Press the Enter key to continue... "
-        return message
+        return self.Message.PROMPT
 
 
 if __name__ == "__main__":
