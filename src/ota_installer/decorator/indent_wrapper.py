@@ -29,3 +29,6 @@ class IndentWrapper(StringReturningDecorator):
         """Generates the indentation string."""
 
         return StyleRenderer(self.char, self.spacing, self.interval)()
+
+
+# Signed off by Brian Sanford on 20260611

@@ -6,6 +6,12 @@ from ...log_setup import logger
 from ..plugin_registry import DISPATCHER_PLUGINS
 
 
+class DispatcherError(Exception):
+    """Custom exception for dispatcher errors."""
+
+    pass
+
+
 @dataclass
 class PluginDispatcherAdapter:
     """Adapter for loading and interacting with plugin dispatchers.
@@ -23,23 +29,25 @@ class PluginDispatcherAdapter:
         if self.dispatcher not in DispatcherType:
             message = f"{self.dispatcher.upper()} not found in DispatcherType"
             logger.error(message)
-            raise ValueError(message)
-        return load_plugin_dispatcher(
+            raise DispatcherError(message)
+        return self._load_plugin_dispatcher(
             dispatcher_type=self.dispatcher,
             obj=self.object_processor,
         )
 
+    def _load_plugin_dispatcher(
+        self, dispatcher_type: str, obj: type
+    ) -> object:
+        """Load a registered plugin dispatcher based on the dispatcher type."""
+        logger.debug(f"Loading plugin dispatcher for type: {dispatcher_type}")
+        valid_dispatcher = DispatcherType(dispatcher_type)
+        dispatcher_class = DISPATCHER_PLUGINS.get(valid_dispatcher)
 
-def load_plugin_dispatcher(dispatcher_type: str, obj: type) -> object | None:
-    """Load a registered plugin dispatcher based on the dispatcher type."""
-    logger.debug(f"Loading plugin dispatcher for type: {dispatcher_type}")
-    valid_dispatcher = DispatcherType(dispatcher_type)
-    dispatcher_class = DISPATCHER_PLUGINS.get(valid_dispatcher)
+        if dispatcher_class is None:
+            message = (
+                f"No plugin dispatcher registered for: {valid_dispatcher!r}",
+            )
+            logger.error(message)
+            raise DispatcherError(message)
 
-    if dispatcher_class is None:
-        logger.error(
-            f"No plugin dispatcher registered for: {valid_dispatcher!r}",
-        )
-        return None
-
-    return dispatcher_class(obj)
+        return dispatcher_class(obj)
