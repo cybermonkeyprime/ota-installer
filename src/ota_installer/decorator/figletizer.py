@@ -6,21 +6,19 @@ from functools import wraps
 
 from pyfiglet import figlet_format
 
-from .protocol.decorator_protocols import StringReturningDecorator
-
 
 class FontType(StrEnum):
     SLANT = auto()
 
 
-@dataclass
-class Figletizer(StringReturningDecorator):
+@dataclass(frozen=True, slots=True)
+class Figletizer:
     """
     Decorator that formats the output of a function using a specified figlet
     font.
     """
 
-    font: str = "slant"
+    font: FontType = FontType.SLANT
 
     def __call__(self, func: Callable) -> Callable:
         """Wraps the given function to format its output with figlet."""
