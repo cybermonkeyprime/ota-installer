@@ -19,16 +19,16 @@ class OutputPrinter(GenericDecorator):
     suffix: str = "\n"
     color: str = "non_error"
 
-    def __call__(self, function) -> Callable:
+    def __call__(self, func) -> Callable:
         """Wraps the function to print its output with specified formatting."""
 
-        @wraps(function)
+        @wraps(func)
         def wrapper(*args, **kwargs) -> object:
             from ..style.style_handler import RichColors
 
             style = RichColors[self.color.upper()]
 
-            result = function(*args, **kwargs)
+            result = func(*args, **kwargs)
             if result is not None:
                 console.print(
                     f"{style.beginning()}{self.prefix}{result}{style.ending()}",
@@ -38,3 +38,6 @@ class OutputPrinter(GenericDecorator):
             return result
 
         return wrapper
+
+
+# Signed off by Brian Sanford on 20260611
