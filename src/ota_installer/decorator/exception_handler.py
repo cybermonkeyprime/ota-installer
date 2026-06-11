@@ -14,7 +14,7 @@ class ExceptionHandler(GenericDecorator):
         """Wraps the function to catch and log exceptions."""
 
         @wraps(func)
-        def wrapper(*args, **kwargs) -> object | None:
+        def wrapper(*args, **kwargs) -> object:
             """
             Wrapper function that executes the original function and logs
             exceptions.
@@ -22,13 +22,12 @@ class ExceptionHandler(GenericDecorator):
             from ..log_setup import logger
 
             result = None
-            if func:
+            if callable(func):
                 try:
                     result = func(*args, **kwargs)
                 except Exception as err:
-                    logger.exception(
-                        f"{type(err).__name__} occured in {func.__name__}"
-                    )
+                    name = getattr(func, "__name__", "func")
+                    logger.exception(f"{type(err).__name__} occured in {name}")
             return result
 
         return wrapper
