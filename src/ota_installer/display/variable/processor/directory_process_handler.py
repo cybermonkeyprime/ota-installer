@@ -18,14 +18,8 @@ class DirectoryItemInfo(Enum):
 
     @classmethod
     def get_validated_type(cls, field_name: str) -> type:
-        """
-        Validates field existence using a whitelist check.
-        Raises AttributeError immediately on failure (Fail-Fast).
-        """
-        key = field_name.upper()
-
-        # Explicit membership check: 'Look Before You Leap'
-        if key not in cls._member_names_:
+        """Validates field existence using a whitelist check."""
+        if (key := field_name.upper()) not in cls._member_names_:
             raise AttributeError(
                 f"Invalid field: '{field_name}'. "
                 f"Allowed fields are: {', '.join(cls._member_names_)}"
@@ -47,7 +41,6 @@ class DirectoryIterationProcessor(BaseProcessor):
 
     def __post_init__(self):
         """Initializes the dispatcher type."""
-
         from ....dispatcher.dispatcher_info import DispatcherType
 
         self.dispatcher_type = DispatcherType.DIRECTORY.value
@@ -73,3 +66,6 @@ class DirectoryIterationProcessor(BaseProcessor):
             )
             builder.add(data.title.upper(), data.value)
         builder.render()
+
+
+# Signed off by Brian Sanford on 20260611

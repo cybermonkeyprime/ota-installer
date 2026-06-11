@@ -22,12 +22,9 @@ class ExceptionHandler(GenericDecorator):
             from ..log_setup import logger
 
             result = None
-            if callable(func):
-                try:
-                    result = func(*args, **kwargs)
-                except Exception as err:
-                    name = getattr(func, "__name__", "func")
-                    logger.exception(f"{type(err).__name__} occured in {name}")
+            if callable(func) and not (result := func(*args, **kwargs)):
+                name = getattr(func, "__name__", "func")
+                logger.exception(f"{name} occured in {name}")
             return result
 
         return wrapper
