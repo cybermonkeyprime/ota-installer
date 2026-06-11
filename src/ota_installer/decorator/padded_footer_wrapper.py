@@ -16,12 +16,12 @@ class PaddedFooterWrapper(GenericDecorator):
     from .indent_wrapper import IndentWrapper
     from .output_printer import OutputPrinter
 
-    def __call__(self, function: Callable) -> Callable:
+    def __call__(self, func: Callable) -> Callable:
         """Wraps the given function to add a padded footer."""
 
-        @wraps(function)
+        @wraps(func)
         def wrapper(*args, **kwargs) -> Callable:
-            result = function(*args, **kwargs)
+            result = func(*args, **kwargs)
             self._add_padding()
             return result
 
@@ -30,5 +30,5 @@ class PaddedFooterWrapper(GenericDecorator):
     @OutputPrinter(use_color=True)
     @Colorizer(style="variable")
     @IndentWrapper(interval=1)  # type: ignore[return-value]
-    def _add_padding(self) -> object:
-        return f"{self.padding}"
+    def _add_padding(self) -> str:
+        return self.padding
