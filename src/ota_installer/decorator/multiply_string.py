@@ -14,12 +14,12 @@ class MultiplyString(GenericDecorator):
 
     interval: int = 0
 
-    def __call__(self, function: Callable) -> Callable:
+    def __call__(self, func: Callable) -> Callable:
         """Wraps the function to multiply its string result."""
 
-        @wraps(function)
+        @wraps(func)
         def wrapper(*args, **kwargs) -> R:
-            result = function(*args, **kwargs)
+            result = func(*args, **kwargs)
             return f"{str(result) * self.interval}"
 
         return wrapper
