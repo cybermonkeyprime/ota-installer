@@ -12,6 +12,10 @@ class Specs(IntEnum):
     INTERVAL = 20
 
 
+class Message(StrEnum):
+    PROMPT = "Press the Enter key to continue... "
+
+
 @dataclass
 class ContinueOnKeyPress:
     """Decorator that pauses execution until the user presses the Enter key."""
@@ -23,9 +27,6 @@ class ContinueOnKeyPress:
     from .exception_handler import ExceptionHandler
     from .multiply_string import MultiplyString
     from .output_printer import OutputPrinter
-
-    class Message(StrEnum):
-        PROMPT = "Press the Enter key to continue... "
 
     @ExceptionHandler()
     def __call__(self, function: Callable) -> Callable:
@@ -50,11 +51,17 @@ class ContinueOnKeyPress:
         )
         return render_style()
 
-    @OutputPrinter(prefix="\n", suffix="")
-    @Colorizer(style="title")
     def display_message(self) -> str:
         """Displays a message prompting the user to continue."""
-        return self.Message.PROMPT
+        from .colorizer import Colorizer
+        from .output_printer import OutputPrinter
+
+        def func():
+            return Message.PROMPT
+
+        decorated_func = OutputPrinter(prefix="\n", suffix="")(func)
+        decorated_func = Colorizer(style="title")(decorated_func)
+        return decorated_func()
 
 
 if __name__ == "__main__":
