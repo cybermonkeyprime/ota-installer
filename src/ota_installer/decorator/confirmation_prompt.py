@@ -7,8 +7,6 @@ from functools import wraps
 import pyinputplus as pyip
 from rich.console import Console
 
-from ota_installer.decorator.colorizer import Colorizer
-
 from ..style.style_handler import RichColors
 
 console = Console()
@@ -18,50 +16,6 @@ class PromptType(StrEnum):
     KEY_OPTION = "/".join(["Y", "N"])
     ERROR = "Invalid Option!"
     REQUEST = "Do you want to "
-
-    @classmethod
-    def get_request(cls, action: str) -> str:
-        """Construct the prompt message."""
-        return f"{cls.REQUEST}{action}"
-
-    @classmethod
-    def get_key_option(cls) -> str:
-        """Return a string of valid key options."""
-        style = RichColors["non_error".upper()]
-        return f"{style.beginning()}{cls.KEY_OPTION}{style.ending()}"
-
-    @classmethod
-    def get_message(cls, indent, action) -> str:
-        """Construct the prompt message."""
-        return f"{indent}{cls.get_request(action)}? [{cls.get_key_option()}]: "
-
-    @staticmethod
-    def get_confirmation() -> str:
-        """Get user confirmation input."""
-        return pyip.inputYesNo(default="no", limit=3, blank=True) == "yes"
-
-    @staticmethod
-    def get_display(indent, action) -> None:
-        """Display the confirmation prompt message."""
-
-        def func():
-            return PromptType.get_message(indent, action)
-
-        decorated_func = Colorizer(style="task")(func)
-        console.print(decorated_func(), end="")
-
-    @staticmethod
-    def on_error() -> str:
-        """Return the message for invalid options."""
-        from .indent_wrapper import IndentWrapper
-
-        def func():
-            return PromptType.ERROR
-
-        decorated_func = Colorizer(style="variable")(func)
-        decorated_func = IndentWrapper(interval=1)(decorated_func)
-
-        return decorated_func()
 
 
 @dataclass(frozen=True, slots=True)
@@ -78,17 +32,55 @@ class ConfirmationPrompt:
     style: str = field(default="")
     auto_confirm: bool = False
 
-    from . import Colorizer
-    from .indent_wrapper import IndentWrapper
+    def get_request(self, action: str) -> str:
+        """Construct the prompt message."""
+        return f"{PromptType.REQUEST}{action}"
+
+    def get_key_option(self) -> str:
+        """Return a string of valid key options."""
+        style = RichColors["non_error".upper()]
+        return f"{style.beginning()}{PromptType.KEY_OPTION}{style.ending()}"
+
+    def get_message(self) -> str:
+        """Construct the prompt message."""
+        return f"{self.indent}{self.comment}? [{self.get_key_option()}]: "
+
+    @staticmethod
+    def get_confirmation() -> str:
+        """Get user confirmation input."""
+        return pyip.inputYesNo(default="no", limit=3, blank=True) == "yes"
+
+    def get_display(self) -> None:
+        """Display the confirmation prompt message."""
+        from . import Colorizer
+
+        def func():
+            return self.get_message()
+
+        decorated_func = Colorizer(style="task")(func)
+        console.print(decorated_func(), end="")
+
+    @staticmethod
+    def on_error() -> str:
+        """Return the message for invalid options."""
+        from . import Colorizer
+        from .indent_wrapper import IndentWrapper
+
+        def func():
+            return PromptType.ERROR
+
+        decorated_func = Colorizer(style="variable")(func)
+        decorated_func = IndentWrapper(interval=1)(decorated_func)
+
+        return decorated_func()
 
     def __call__(self, func: Callable) -> Callable:
         """Wrap the function with a confirmation prompt."""
 
         @wraps(func)
         def wrapper(*args, **kwargs) -> Callable | None:
-            prompt = PromptType
-            prompt.get_display(self.begin, self.comment)
-            if not self.auto_confirm and not prompt.get_confirmation():
+            self.get_display()
+            if not self.auto_confirm and not self.get_confirmation():
                 return None
             return func(*args, **kwargs)
 
