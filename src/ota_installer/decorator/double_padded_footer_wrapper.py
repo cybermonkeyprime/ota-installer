@@ -9,10 +9,9 @@ from .container.decorator_container import Decorators
 from .protocol.decorator_protocols import GenericDecorator
 
 
-class StyleType(StrEnum):
-    BEGIN = ""
+class DecoratorType(StrEnum):
     MESSAGE = "Finished!"
-    END = ""
+    STYLE = "variable"
 
 
 @dataclass
@@ -27,25 +26,27 @@ class DoublePaddedFooterWrapper(GenericDecorator):
 
     def __call__(self, func: Callable) -> Callable:
         """Wraps the function to add a double padded footer."""
-        style = StyleType
+        style = DecoratorType
 
         @wraps(func)
         def wrapper(*args, **kwargs) -> object:
             result = func(*args, **kwargs)
-            self._print_footer(style.BEGIN)
             logger.debug(style.MESSAGE)
             self._print_footer(style.MESSAGE)
-            self._print_footer(style.END)
             return result
 
         return wrapper
 
-    @Decorators.output_printer(use_color=False)
-    @Decorators.colorizer(style="variable")
-    @Decorators.indent_wrapper(interval=1)
-    def _print_footer(self, message: str) -> str:
+    def _print_footer(self, text: str) -> str:
         """Outputs the footer messages."""
-        return message
+
+        def func():
+            return text
+
+        decorated_func = Decorators.output_printer(use_color=False)(func)
+        decorated_func = Decorators.colorizer(style="variable")(decorated_func)
+        decorated_func = Decorators.indent_wrapper(interval=1)(decorated_func)
+        return decorated_func()
 
 
 if __name__ == "__main__":
