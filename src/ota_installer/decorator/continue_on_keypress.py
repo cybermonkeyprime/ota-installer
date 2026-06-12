@@ -1,15 +1,8 @@
 # src/ota_installer/decorators/continue_on_keypress.py
 from collections.abc import Callable
 from dataclasses import dataclass, field
-from enum import IntEnum, StrEnum
+from enum import StrEnum
 from functools import wraps
-
-from ..style.style_handler import StyleRenderer
-
-
-class Specs(IntEnum):
-    SPACING = 4
-    INTERVAL = 20
 
 
 class Message(StrEnum):
@@ -25,7 +18,6 @@ class ContinueOnKeyPress:
 
     from .colorizer import Colorizer
     from .exception_handler import ExceptionHandler
-    from .multiply_string import MultiplyString
     from .output_printer import OutputPrinter
 
     @ExceptionHandler()
@@ -40,16 +32,6 @@ class ContinueOnKeyPress:
             return result
 
         return wrapper
-
-    def create_indentation(self) -> str:
-        """
-        Creates an indentation string based on the specified character and
-        indent level.
-        """
-        render_style = StyleRenderer(
-            self.char[0], Specs.SPACING, Specs.INTERVAL
-        )
-        return render_style()
 
     def display_message(self) -> str:
         """Displays a message prompting the user to continue."""
