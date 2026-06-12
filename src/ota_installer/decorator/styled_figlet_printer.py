@@ -3,6 +3,8 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from functools import wraps
 
+from ota_installer.decorator.figletizer import FontType
+
 from .protocol.decorator_protocols import GenericDecorator
 
 
@@ -11,7 +13,7 @@ class StyledFigletPrinter(GenericDecorator):
     """Decorator for printing styled figlet text."""
 
     style: str = "variable"
-    font: str = "slant"
+    font: FontType = FontType.SLANT
     end: str = "\n"
     use_output: bool = False
 
@@ -29,7 +31,7 @@ class StyledFigletPrinter(GenericDecorator):
         return wraps(func)(decorated_func)
 
 
-@StyledFigletPrinter(style="variable", font="slant", use_output=True)
+@StyledFigletPrinter(style="variable", font=FontType.SLANT, use_output=True)
 def welcome_message() -> str:
     """Returns a welcome message for the OTA Installer."""
     return "OTA Installer ready!"
@@ -37,3 +39,4 @@ def welcome_message() -> str:
 
 if __name__ == "__main__":
     welcome_message()
+# Signed off by Brian Sanford on 20260611
