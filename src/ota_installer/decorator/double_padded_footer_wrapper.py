@@ -1,17 +1,11 @@
 # src/ota_installer/decorators/double_padded_footer_wrapper.py
 from collections.abc import Callable
 from dataclasses import dataclass, field
-from enum import StrEnum
 from functools import wraps
 
 from ..log_setup import logger
 from .container.decorator_container import Decorators
 from .protocol.decorator_protocols import GenericDecorator
-
-
-class DecoratorType(StrEnum):
-    MESSAGE = "Finished!"
-    STYLE = "variable"
 
 
 @dataclass
@@ -26,27 +20,24 @@ class DoublePaddedFooterWrapper(GenericDecorator):
 
     def __call__(self, func: Callable) -> Callable:
         """Wraps the function to add a double padded footer."""
-        style = DecoratorType
 
         @wraps(func)
         def wrapper(*args, **kwargs) -> object:
             result = func(*args, **kwargs)
-            logger.debug(style.MESSAGE)
-            self._print_footer(style.MESSAGE)
+            self._print_footer(self.beginning)
+            logger.debug(self.message)
+            self._print_footer(self.message)
+            self._print_footer(self.ending)
             return result
 
         return wrapper
 
-    def _print_footer(self, text: str) -> str:
+    @Decorators.output_printer(use_color=False)
+    @Decorators.colorizer(style="variable")
+    @Decorators.indent_wrapper(interval=1)
+    def _print_footer(self, message: str) -> str:
         """Outputs the footer messages."""
-
-        def func():
-            return text
-
-        decorated_func = Decorators.output_printer(use_color=False)(func)
-        decorated_func = Decorators.colorizer(style="variable")(decorated_func)
-        decorated_func = Decorators.indent_wrapper(interval=1)(decorated_func)
-        return decorated_func()
+        return f"{message}"
 
 
 if __name__ == "__main__":

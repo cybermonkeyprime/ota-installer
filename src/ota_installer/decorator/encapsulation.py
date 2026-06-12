@@ -1,16 +1,9 @@
 # src/ota_installer/decorators/encapsulation.py
 from collections.abc import Callable
 from dataclasses import dataclass
-from enum import Enum
 from functools import wraps
 
 from .protocol.decorator_protocols import GenericDecorator
-
-
-class SeparatorSpecs(Enum):
-    CHAR = "="
-    SPACING = 4
-    INTERVAL = 20
 
 
 @dataclass
@@ -34,10 +27,10 @@ class Encapsulate(GenericDecorator):
 
         return wrapper
 
-    @OutputPrinter(prefix="\n", suffix="\n\n")
-    @MultiplyString(
-        interval=(SeparatorSpecs.SPACING.value * SeparatorSpecs.INTERVAL.value)
-    )
     def _print_separator(self) -> str:
         """Prints a separator line."""
-        return SeparatorSpecs.CHAR.value
+        from ..style.style_handler import separator
+        from .output_printer import OutputPrinter
+
+        decorated_func = OutputPrinter(prefix="\n", suffix="\n\n")(separator)
+        return decorated_func()

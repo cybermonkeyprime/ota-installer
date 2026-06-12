@@ -7,7 +7,7 @@ from functools import wraps
 import pyinputplus as pyip
 from rich.console import Console
 
-from ..style.style_handler import RichColors
+from ..style.style_handler import RichColors, indentation
 
 console = Console()
 
@@ -34,7 +34,7 @@ class ConfirmationPrompt:
 
     def get_request(self, action: str) -> str:
         """Construct the prompt message."""
-        return f"{PromptType.REQUEST}{action}"
+        return f"{PromptType.REQUEST.value}{action}"
 
     def get_key_option(self) -> str:
         """Return a string of valid key options."""
@@ -43,7 +43,10 @@ class ConfirmationPrompt:
 
     def get_message(self) -> str:
         """Construct the prompt message."""
-        return f"{self.indent}{self.comment}? [{self.get_key_option()}]: "
+        return (
+            f"{indentation(self.indent)}{self.get_request(self.comment)}? "
+            f"[{self.get_key_option()}]: "
+        )
 
     @staticmethod
     def get_confirmation() -> str:
