@@ -28,6 +28,10 @@ class ColorizedIndentPrinter(StringReturningDecorator):
         @wraps(func)
         def wrapper(*args, **kwargs) -> str:
             result = func(*args, **kwargs)
-            return f"{result}"
+
+            return f"{self.begin}{result}{self.end}"
 
         return wrapper
+
+
+# Signed off by Brian Sanford on 20260611

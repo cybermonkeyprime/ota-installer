@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from enum import StrEnum, auto
 
 from ..plugin.plugin_registry import TASK_PLUGINS
+from ..style.style_handler import indentation
 from .operation.task_operation_info import (
     TaskOperationContainer,
     get_task_detail,
@@ -49,7 +50,10 @@ class TaskID(StrEnum):
 
     @property
     def success_message(self) -> str:
-        return f"{self.value.title()} finished successfully!"
+        return (
+            f"{indentation(2)}"
+            f"{self.value.lower().replace('_', ' ').capitalize()} finished successfully!"
+        )
 
 
 @dataclass(frozen=True, slots=True)

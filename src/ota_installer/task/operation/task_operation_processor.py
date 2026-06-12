@@ -67,7 +67,7 @@ class TaskOperationProcessor:
 
     def show_index_and_title(self) -> str:
         """Displays the index and title of the task."""
-        return TaskItemParser(f"{self.index}. {self.title}:").show_header()
+        return TaskItemParser(f"{self.index}. {self.title}?").show_header()
 
     @decorator.FooterWrapper()
     @TaskAspect.DESCRIPTION.indent_printer()
