@@ -19,6 +19,22 @@ class DisplayType(Enum):
     CONCISE = SoftwareVersion.formatted()
 
 
+@dataclass(frozen=True)
+class DisplayRenderer:
+    value: str
+    decorator: Callable | None
+
+    def __call__(self):
+        """Return the value processed by the decorator if available."""
+
+        def func():
+            return self.value
+
+        callback = self.decorator(func) if self.decorator else func
+
+        return callback()
+
+
 class DisplayHeader(StrEnum):
     TITLE = auto()
     MOVE_CURSOR_UP = auto()
@@ -29,18 +45,16 @@ class DisplayHeader(StrEnum):
     def mapping(cls) -> Mapping[DisplayHeader, DisplayProvidor]:
         """Map enum variants strictly to Callables ensuring a pure pipeline."""
         return {
-            cls.TITLE: DisplayContainer(
+            cls.TITLE: DisplayRenderer(
                 f" {SoftwareVersion.TITLE.value}",
                 decorator.StyledFigletPrinter(style="title", font="slant"),
             ),
-            cls.MOVE_CURSOR_UP: DisplayContainer(
-                str(Control.move(y=-1)), None
-            ),
-            cls.SEPARATOR: DisplayContainer(
+            cls.MOVE_CURSOR_UP: DisplayRenderer(str(Control.move(y=-1)), None),
+            cls.SEPARATOR: DisplayRenderer(
                 f"{SEPARATOR()}> ",
                 decorator.Colorizer(style="title"),
             ),
-            cls.SUBTITLE: DisplayContainer(
+            cls.SUBTITLE: DisplayRenderer(
                 f"{DisplayType.VERBOSE.value}\n",
                 decorator.Colorizer(style="version"),
             ),
@@ -57,14 +71,14 @@ class DisplayHeader(StrEnum):
 
     @decorator.OutputPrinter(suffix="")
     def render(self):
-        """Resolve the provider mapping and return the pure string value."""
+        """Render the display component as a string."""
         provider = self.mapping()[self]
         return provider()
 
     @classmethod
     @decorator.FooterWrapper(message="")
     def render_all(cls) -> None:
-        """Render the display header by invoking the components in sequence."""
+        """Render all display headers in sequence."""
         for component in cls.get_rendering_sequence():
             if not cls.execute_component(component):
                 logger.error("An error occurred during initialization.")
@@ -75,23 +89,10 @@ class DisplayHeader(StrEnum):
         return component() if component else False
 
 
-@dataclass(frozen=True)
-class DisplayContainer:
-    value: str
-    decorator: Callable | None
-
-    def __call__(self):
-        def func():
-            return self.value
-
-        callback = self.decorator(func) if self.decorator else func
-        return callback()
-
-
 def main() -> None:
     DisplayHeader.render_all()
 
 
 if __name__ == "__main__":
     main()
-# Signed off by Brian Sanford on 20260508
+# Signed off by Brian Sanford on 20260612
