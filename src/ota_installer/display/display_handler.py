@@ -14,7 +14,7 @@ class DisplayObjectProcessor:
         callable and argument.
     """
 
-    function: Callable
+    func: Callable
 
     @singledispatchmethod
     def process_object(self, argument: str | object | None) -> str:
@@ -24,12 +24,12 @@ class DisplayObjectProcessor:
     @process_object.register
     def _(self) -> str:
         """Process the argument when it is None."""
-        return self.function()
+        return self.func()
 
     @process_object.register
     def _(self, argument: str) -> str:
         """Process the argument when it is a string."""
-        return self.function(argument)
+        return self.func(argument)
 
 
 def clear_screen() -> None:

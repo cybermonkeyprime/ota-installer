@@ -1,5 +1,6 @@
 # display/display_info.py
 from collections.abc import Callable, Mapping
+from dataclasses import dataclass
 from enum import Enum, StrEnum, auto
 
 from rich.control import Control
@@ -13,6 +14,11 @@ type BoolPredicate = Callable[[], bool]
 type DisplayProvidor = Callable[[], str]
 
 
+class DisplayType(Enum):
+    VERBOSE = SoftwareVersion.display()
+    CONCISE = SoftwareVersion.formatted()
+
+
 class DisplayHeader(StrEnum):
     TITLE = auto()
     MOVE_CURSOR_UP = auto()
@@ -23,37 +29,37 @@ class DisplayHeader(StrEnum):
     def mapping(cls) -> Mapping[DisplayHeader, DisplayProvidor]:
         """Map enum variants strictly to Callables ensuring a pure pipeline."""
         return {
-            cls.TITLE: _title,
-            cls.MOVE_CURSOR_UP: lambda: str(object=Control.move(y=-1)),
-            cls.SEPARATOR: lambda: f"{SEPARATOR()}> ",
-            cls.SUBTITLE: _subtitle,
+            cls.TITLE: DisplayContainer(
+                f" {SoftwareVersion.TITLE.value}",
+                decorator.StyledFigletPrinter(style="title", font="slant"),
+            ),
+            cls.MOVE_CURSOR_UP: DisplayContainer(
+                str(Control.move(y=-1)), None
+            ),
+            cls.SEPARATOR: DisplayContainer(
+                f"{SEPARATOR()}> ",
+                decorator.Colorizer(style="title"),
+            ),
+            cls.SUBTITLE: DisplayContainer(
+                f"{DisplayType.VERBOSE.value}\n",
+                decorator.Colorizer(style="version"),
+            ),
         }
-
-    @property
-    def build(self) -> str:
-        """Resolve the provider mapping and return the pure string value."""
-        provider = self.mapping()[self]
-        return provider()
-
-    @decorator.OutputPrinter(suffix="")
-    def render_default(self) -> str:
-        """Render the component with default styling."""
-        return self.build
-
-    @decorator.OutputPrinter(suffix="")
-    @decorator.Colorizer(style="title")
-    def render_green(self) -> str:
-        """Render the component with green title styling."""
-        return self.build
 
     @classmethod
     def get_rendering_sequence(cls) -> tuple[BoolPredicate, ...]:
         return (
-            cls.TITLE.render_default,
-            cls.MOVE_CURSOR_UP.render_default,
-            cls.SEPARATOR.render_green,
-            cls.SUBTITLE.render_default,
+            cls.TITLE.render,
+            cls.MOVE_CURSOR_UP.render,
+            cls.SEPARATOR.render,
+            cls.SUBTITLE.render,
         )
+
+    @decorator.OutputPrinter(suffix="")
+    def render(self):
+        """Resolve the provider mapping and return the pure string value."""
+        provider = self.mapping()[self]
+        return provider()
 
     @classmethod
     @decorator.FooterWrapper(message="")
@@ -69,24 +75,17 @@ class DisplayHeader(StrEnum):
         return component() if component else False
 
 
-@decorator.StyledFigletPrinter(style="title", font="slant")
-def _title() -> str:
-    """
-    Generate and return a stylized string representation of the application
-        title.
-    """
-    return f" {SoftwareVersion.TITLE.value}"
+@dataclass(frozen=True)
+class DisplayContainer:
+    value: str
+    decorator: Callable | None
 
+    def __call__(self):
+        def func():
+            return self.value
 
-@decorator.Colorizer(style="version")
-def _subtitle() -> str:
-    """Generate a subtitle displaying the current software version."""
-    return f"{DisplayType.VERBOSE.value}\n"
-
-
-class DisplayType(Enum):
-    VERBOSE = SoftwareVersion.display()
-    CONCISE = SoftwareVersion.formatted()
+        callback = self.decorator(func) if self.decorator else func
+        return callback()
 
 
 def main() -> None:
