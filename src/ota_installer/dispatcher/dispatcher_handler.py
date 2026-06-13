@@ -1,7 +1,8 @@
 # src/ota_installer/handler/dispatcher_handler.py
-from collections.abc import Mapping
+from collections.abc import Mapping, Callable
 from pathlib import Path
 from typing import Protocol, runtime_checkable
+from enum import StrEnum, auto
 
 from ..log_setup import logger
 
@@ -59,25 +60,28 @@ class DispatcherTemplate(DispatcherProtocol):
 
         return result
 
-    def get_instance(self, key: str) -> CollectionValues | None:
+    def get_instance(self, key: str) -> Callable:
         """
         Attempt to retrieve and instantiate the value associated with
             the given key.
         """
 
         normalized_key = self.normalize_key(key)
-        task = self.collection.get(normalized_key)
+        callback = self.collection.get(normalized_key)
 
-        if task is None:
-            logger.critical(f"Key not found in collection: {normalized_key}")
-            return None
+        if callback is None:
+            message = f"Key not found in collection: {normalized_key}"
+            logger.critical(message)
+            raise ValueError(message)
 
-        if not callable(task):
-            logger.error(
-                f"Value for '{normalized_key}' is not a callable task."
+        if not callable(callback):
+            message = (
+                "Expected a callable object, "
+                f"but got {type(callback).__name__}"
             )
-            return None
-        return task()
+            logger.error(message)
+            raise TypeError(message)
+        return callback()
 
     @staticmethod
     def normalize_key(key: str) -> str:

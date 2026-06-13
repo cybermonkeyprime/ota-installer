@@ -25,6 +25,14 @@ class TaskItemIndent(IntEnum):
     ASPECT = 2
 
 
+cip = decorator.ColorizedIndentPrinter(
+    indent=TaskItemIndent.ASPECT.value,
+    begin="",
+    end="",
+    style=TaskItemStyle.ASPECT.value,
+)
+
+
 @dataclass
 class TaskItemParser:
     """Parser for task items with aspect and header display capabilities."""
@@ -32,19 +40,18 @@ class TaskItemParser:
     value: str
     constants: type[TaskItemAspect] = TaskItemAspect
 
-    @decorator.ColorizedIndentPrinter(
-        indent=TaskItemIndent.ASPECT.value,
-        begin="",
-        end="",
-        style=TaskItemStyle.ASPECT.value,
-    )
     def show_aspect(self) -> str:
         """Display the aspect of the task item."""
-        return f"{self.value}"
+
+        def func():
+            return f"{self.value}"
+
+        decorated_func = cip(func)
+        return decorated_func()
 
     @decorator.ColorizedIndentPrinter(
         indent=TaskItemIndent.HEADER.value,
-        end=":",
+        end="",
         style=TaskItemStyle.HEADER.value,
     )
     def show_header(self) -> str:

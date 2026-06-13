@@ -35,7 +35,7 @@ class DirectoryType(StrEnum):
         return self.from_object(obj)[self.value.upper()]
 
 
-class DirectoryContainer(Enum):
+class DirectoryRender(Enum):
     from ..image.boot_image_handler import BootImageContainer
     from ..image.magisk_image_handler import MagiskImageContainer
 
@@ -66,8 +66,8 @@ class DirectoryConfig:
         """
         Initializes the boot image container after the dataclass is created.
         """
-        self.boot_image = DirectoryContainer.BOOT(self._boot_image)
-        self.magisk_image_container = DirectoryContainer.MAGISK("", "")
+        self.boot_image = DirectoryRender.BOOT(self._boot_image)
+        self.magisk_image_container = DirectoryRender.MAGISK("", "")
 
 
 # dispatcher
@@ -81,10 +81,11 @@ class DirectoryHandler(DispatcherTemplate):
     def __post_init__(self) -> None:
         """Initializes the directory collection based on provided object."""
         self.collection = DirectoryType.from_object(self.obj)
-        logger.debug(
-            f"DirectoryDispatcher initialized with collection: "
+        message = (
+            "DirectoryDispatcher initialized with collection: "
             f"{self.collection}"
         )
+        logger.debug(message)
 
 
 # functions
