@@ -7,7 +7,6 @@ from rich.control import Control
 
 from .. import decorator
 from ..log_setup import logger
-from ..style.style_handler import SEPARATOR
 from ..versioning.version_handler import SoftwareVersion
 
 type BoolPredicate = Callable[[], bool]
@@ -43,6 +42,8 @@ class DisplayHeader(StrEnum):
 
     @classmethod
     def mapping(cls) -> Mapping[DisplayHeader, DisplayProvidor]:
+        from ..style.style_handler import SEPARATOR
+
         """Map enum variants strictly to Callables ensuring a pure pipeline."""
         return {
             cls.TITLE: DisplayRenderer(

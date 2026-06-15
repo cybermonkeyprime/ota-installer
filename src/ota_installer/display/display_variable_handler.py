@@ -33,7 +33,7 @@ class DisplayVariableBehavior(Enum):
 
     @classmethod
     def list(cls) -> tuple[DisplayVariableBehavior, ...]:
-        """Returns a set of directory-related display variable definitions."""
+        """Returns tuple of directory-related display variable definitions."""
         return tuple(cls)
 
 
@@ -62,14 +62,16 @@ class DisplayVariableDirectory(DisplayVariableBehavior):
 
 class DisplayVariableFile(DisplayVariableBehavior):
     OTA = DisplayVariableRenderer(
-        VariableFileProcessor, {"title": "ota_file_name", "value": "path.name"}
+        VariableFileProcessor,
+        {"title": "ota_file_name", "value": "path.name"},
     )
     IMAGE = DisplayVariableRenderer(
         FileIterationProcessor,
         mapping={"file_names": ("payload", "stock", "magisk")},
     )
     LOG = DisplayVariableRenderer(
-        VariableFileProcessor, {"title": "log_file", "value": "log_file"}
+        VariableFileProcessor,
+        {"title": "log_file", "value": "log_file"},
     )
 
 
