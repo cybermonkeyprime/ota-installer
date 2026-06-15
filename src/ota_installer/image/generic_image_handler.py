@@ -70,13 +70,13 @@ class FileImageAttributes(Enum):
 
         return f"{self.device}-{self.title}-{self.build_id}.{self.extension}"
 
-    def set_device(self, device: str) -> "FileImageAttributes":
+    def set_device(self, device: str) -> FileImageAttributes:
         """Sets the device attribute and returns the enum instance."""
 
         self.device = str(device)
         return self
 
-    def set_version(self, build_id: str) -> "FileImageAttributes":
+    def set_version(self, build_id: str) -> FileImageAttributes:
         """Sets the version attribute and returns the enum instance."""
 
         self.build_id = str(build_id)

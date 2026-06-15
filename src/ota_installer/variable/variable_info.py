@@ -1,6 +1,10 @@
 # variables/variable_info.py
 from dataclasses import dataclass
+from enum import Enum
 from pathlib import Path
+from typing import Any, Generic, TypeVar
+
+T = TypeVar("T")
 
 
 @dataclass(frozen=True, slots=True)
@@ -50,13 +54,31 @@ class FileNameContainer:
 
 
 @dataclass(frozen=True, slots=True)
-class VariableTypeContainer:
+class VariableContext:
     """Container for variable types used in OTA installation."""
 
     file_path: Path
     magisk_image_name: str
     file_path_stem: str
     file_parts: FileNameContainer
+
+
+@dataclass(frozen=True)
+class VariableRenderer(Generic[T]):
+    class_type: type[T]
+
+    def __call__(self, **arguments: Any) -> T:
+        return self.class_type(**arguments)
+
+
+class VariableType(Enum):
+    CONTEXT = VariableRenderer(VariableContext)
+    FILE_NAME = VariableRenderer(FileNameInfo)
+    FILE_PATH = VariableRenderer(FilePaths)
+    DIRECTORY = VariableRenderer(DirectoryNames)
+
+    def build(self, **kwargs: Any) -> Any:
+        return self.value(**kwargs)
 
 
 # Signed off by Brian Sanford on 20260509
