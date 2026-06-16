@@ -4,10 +4,10 @@ from pathlib import Path
 
 from ..directory.directory_info import DirectoryConfig, set_directory
 from ..dispatcher.dispatcher_info import DispatcherType
-from ..image.generic_image_handler import (
+from ..image.generic_image_info import (
     FileImageData,
 )
-from ..image.magisk_image_handler import MagiskImagePath
+from ..image.magisk_image_info import MagiskImagePath
 from ..variable.variable_functions import (
     get_file_image_path,
     parse_file_name,

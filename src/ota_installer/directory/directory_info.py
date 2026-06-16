@@ -36,8 +36,8 @@ class DirectoryType(StrEnum):
 
 
 class DirectoryRender(Enum):
-    from ..image.boot_image_handler import BootImageContainer
-    from ..image.magisk_image_handler import MagiskImageContainer
+    from ..image.boot_image_info import BootImageContainer
+    from ..image.magisk_image_info import MagiskImageContainer
 
     BOOT = BootImageContainer
     MAGISK = MagiskImageContainer
@@ -91,7 +91,7 @@ class DirectoryHandler(DispatcherTemplate):
 # functions
 def set_directory(parent_directory: Path) -> DirectoryConfig:
     """Creates a DirectoryTypeDefinition for the specified parent directory."""
-    from ..image.boot_image_handler import BootImagePaths
+    from ..image.boot_image_info import BootImagePaths
 
     logger.debug("Creating Directories")
     if not parent_directory.exists() or not parent_directory.is_dir():

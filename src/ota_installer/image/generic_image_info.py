@@ -1,4 +1,4 @@
-# images/generic_image_handler.py
+# src/ota_installer/image/generic_image_info.py
 from collections.abc import Mapping
 from dataclasses import astuple, dataclass, field
 from enum import Enum, StrEnum, auto
@@ -84,7 +84,7 @@ class FileImageAttributes(Enum):
 
     def set_file_path(self) -> Path:
         """Constructs the full file path for the image file."""
-        from .boot_image_handler import BootImagePaths
+        from .boot_image_info import BootImagePaths
 
         boot_image_path = BootImagePaths[self.name].value
         return Path(boot_image_path) / self.file_name

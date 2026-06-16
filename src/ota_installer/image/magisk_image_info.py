@@ -1,4 +1,4 @@
-# src/directories/constants/magisk_paths.py
+# src/ota_installer/image/magisk_image_info.py
 from dataclasses import dataclass
 from enum import Enum
 from pathlib import Path

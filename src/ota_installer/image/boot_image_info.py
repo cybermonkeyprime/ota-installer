@@ -1,4 +1,4 @@
-# src/ota_installer/images/boot_image_handler.py
+# src/ota_installer/image/boot_image_info.py
 from dataclasses import dataclass, field
 from enum import Enum, StrEnum
 from pathlib import Path
