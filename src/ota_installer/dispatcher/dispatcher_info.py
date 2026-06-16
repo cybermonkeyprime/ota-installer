@@ -82,18 +82,6 @@ class DispatcherType(StrEnum):
         logger.debug("VariableManager.get_dispatcher(): function_call)")
         return cls.retrieve_dispatcher(process_type, function_call)
 
-    def processor(
-        self, processing_function: "VariableManager"
-    ) -> "VariableItemProcessor":
-        from ..display.variable.processor.variable_process_info import (
-            VariableItemProcessor,
-        )
-
-        return VariableItemProcessor(
-            processing_function=processing_function,
-            dispatcher_type=self.value,
-        )
-
 
 @runtime_checkable
 class DispatcherProtocol(Protocol):
