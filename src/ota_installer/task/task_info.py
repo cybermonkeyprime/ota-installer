@@ -1,5 +1,5 @@
 # tasks/task_info.py
-from collections.abc import Callable
+from collections.abc import Callable, Mapping
 from dataclasses import dataclass
 from enum import StrEnum, auto
 
@@ -57,11 +57,57 @@ class TaskID(StrEnum):
 
 
 @dataclass(frozen=True, slots=True)
-class TaskContainer:
+class TaskRenderer:
     """Container for task information."""
 
-    task_name: str
     task_class: type
+    task_name: str
+
+    def __call__(self, *args, **kwargs) -> tuple:
+        """
+        Executes the task's generation logic wrapped in the required UI
+            decorators.
+        """
+        from .. import decorator
+
+        # 1. This encapsulates your internal execution context
+        def result():
+            return self.task_class.get_member_names()
+
+        # 2. Define the execution closure and apply your outer decorator
+        @decorator.PaddedFooterWrapper()
+        def execute_pipeline():
+            # Apply your dynamic inner decorator
+            decorated_function: Callable = decorator.ConfirmationPrompt(
+                char=" ", comment=f"perform the {self.task_name}s"
+            )(result)
+
+            return decorated_function()
+
+        # 3. Fire the pipeline and hand back the final tuple payload
+        return execute_pipeline()
 
 
+def fetch_task_mapping() -> Mapping[str, TaskRenderer]:
+    from ..task.task_group_handler import (
+        ApplicationTask,
+        MigrationTask,
+        PreparationTask,
+        TaskGroupName,
+    )
+
+    return {
+        TaskGroupName.PREPARATION.value: TaskRenderer(
+            PreparationTask, "Preparation Task"
+        ),
+        TaskGroupName.MIGRATION.value: TaskRenderer(
+            MigrationTask, "Migration Task"
+        ),
+        TaskGroupName.APPLICATION.value: TaskRenderer(
+            ApplicationTask, "Application Task"
+        ),
+    }
+
+
+TASK_GROUP_MAPPING = fetch_task_mapping()
 # Signed off by Brian Sanford on 20260528
