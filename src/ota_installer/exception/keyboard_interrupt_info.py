@@ -1,8 +1,8 @@
-# src/ota_installer/exceptions/handlers/keyboard_interrupt_handler.py
+# src/ota_installer/exceptions/handlers/keyboard_interrupt_info.py
 from dataclasses import dataclass
 
-from .base_exception_handler import BaseExceptionHandler
-from .exception_handler_factory import exception_handler_factory
+from .base_exception_info import BaseExceptionHandler
+from .exception_factory_info import exception_handler_factory
 
 
 @exception_handler_factory(KeyboardInterrupt)

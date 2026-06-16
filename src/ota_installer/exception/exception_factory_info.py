@@ -1,7 +1,7 @@
-# src/ota_installer/exceptions/handlers/exception_handler_factory.py
+# src/ota_installer/exceptions/handlers/exception_factory_info.py
 from collections.abc import Callable
 
-from .base_exception_handler import BaseExceptionHandler
+from .base_exception_info import BaseExceptionHandler
 
 
 def exception_handler_factory(
