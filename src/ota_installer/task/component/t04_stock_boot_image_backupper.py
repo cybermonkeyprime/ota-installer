@@ -4,7 +4,7 @@ from pathlib import Path
 
 from ... import decorator
 from ...plugin.plugin_registry import task_plugin
-from ...task.task_group_handler import PreparationTask
+from ...task.task_group_info import PreparationTask
 from ...variable.variable_manager import VariableManager
 from ..operation.task_operation_processor import image_handler
 from ..task_info import TaskID

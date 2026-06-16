@@ -8,7 +8,7 @@ from ...image.magisk_image_handler import (
 )
 from ...log_setup import logger
 from ...plugin.plugin_registry import task_plugin
-from ...task.task_group_handler import ApplicationTask, MigrationTask
+from ...task.task_group_info import ApplicationTask, MigrationTask
 from ...variable.variable_manager import VariableManager
 from ..task_info import TaskID
 from .base_task import BaseTask

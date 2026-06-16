@@ -74,7 +74,7 @@ class TaskExecutor:
     @property
     def task_group_keys(self) -> tuple:
         """Returns the keys of the task groups."""
-        from ..task.task_group_handler import TaskGroupName
+        from ..task.task_group_info import TaskGroupName
 
         return TaskGroupName.get_task_group_members()
 
