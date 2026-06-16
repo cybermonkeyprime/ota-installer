@@ -88,7 +88,7 @@ class TaskRenderer:
         return execute_pipeline()
 
 
-def fetch_task_mapping() -> Mapping[str, TaskRenderer]:
+def fetch_task_groups() -> Mapping[str, TaskRenderer]:
     from ..task.task_group_handler import (
         ApplicationTask,
         MigrationTask,
@@ -109,5 +109,4 @@ def fetch_task_mapping() -> Mapping[str, TaskRenderer]:
     }
 
 
-TASK_GROUP_MAPPING = fetch_task_mapping()
 # Signed off by Brian Sanford on 20260528

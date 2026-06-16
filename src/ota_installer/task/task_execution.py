@@ -3,9 +3,7 @@ from pathlib import Path
 from typing import Self
 
 from ..log_setup import logger
-from ..task.task_info import (
-    TASK_GROUP_MAPPING,
-)
+from ..task.task_info import fetch_task_groups
 from .task_manager import TaskManager
 
 
@@ -25,9 +23,6 @@ class TaskExecutor:
     task_manager: TaskManager = field(default_factory=lambda: TaskManager())
     dispatcher: type | None = field(init=False)
     task_group: str | None = field(init=False)
-    task_definitions: object = field(
-        default_factory=lambda: TASK_GROUP_MAPPING
-    )
     path: Path = field(init=False)
 
     def set_path(self) -> Self:
@@ -61,7 +56,7 @@ class TaskExecutor:
         )
 
         self.dispatcher = PluginDispatcherAdapter(
-            DispatcherType.TASK_GROUP.value, self.task_definitions
+            DispatcherType.TASK_GROUP.value, fetch_task_groups()
         ).load()
         return self
 
