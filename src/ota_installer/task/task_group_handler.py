@@ -15,14 +15,12 @@ TaskGroupMap = Mapping["TaskGroupName", object]
 
 @dataclass(frozen=True, slots=True)
 class TaskGroupRenderer:
-    """Container for task information."""
-
     task_class: type
     task_name: str
 
     def __call__(self, *args, **kwargs) -> tuple:
         """
-        Executes the task's generation logic wrapped in the required UI
+        Executes the task group's generation logic wrapped in the required UI
             decorators.
         """
         from .. import decorator
