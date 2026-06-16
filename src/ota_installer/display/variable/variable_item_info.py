@@ -57,7 +57,7 @@ def set_ota_file_directory(
 ) -> None:
     """Sets the OTA file directory in the processing function."""
 
-    from ..variable.processor.file_process_handler import VariableFileProcessor
+    from ..variable.processor.file_process_info import VariableFileProcessor
 
     (
         VariableFileProcessor(processing_function)
@@ -72,7 +72,7 @@ def set_magisk_image_directories(
 ) -> None:
     """Sets the Magisk image directories in the processing function."""
 
-    from ..variable.processor.directory_process_handler import (
+    from ..variable.processor.directory_process_info import (
         DirectoryIterationProcessor,
     )
 
@@ -90,7 +90,7 @@ def set_boot_image_directories(
 ) -> None:
     """Sets the boot image directories in the processing function."""
 
-    from ..variable.processor.directory_process_handler import (
+    from ..variable.processor.directory_process_info import (
         DirectoryIterationProcessor,
     )
 
@@ -109,7 +109,7 @@ def set_boot_image_directories(
 def set_ota_file_name(processing_function: VariableManager) -> None:
     """Sets the OTA file name in the processing function."""
 
-    from ..variable.processor.file_process_handler import VariableFileProcessor
+    from ..variable.processor.file_process_info import VariableFileProcessor
 
     (
         VariableFileProcessor(processing_function)
@@ -124,7 +124,7 @@ def set_image_file_names(
 ) -> None:
     """Sets the image file names in the processing function."""
 
-    from ..variable.processor.file_process_handler import (
+    from ..variable.processor.file_process_info import (
         FileIterationProcessor,
     )
 
@@ -138,7 +138,7 @@ def set_image_file_names(
 def set_log_file(processing_function: VariableManager) -> None:
     """Sets the log file in the processing function."""
 
-    from ..variable.processor.file_process_handler import VariableFileProcessor
+    from ..variable.processor.file_process_info import VariableFileProcessor
 
     (
         VariableFileProcessor(processing_function)

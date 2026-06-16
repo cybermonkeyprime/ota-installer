@@ -1,7 +1,14 @@
 # src/ota_installer/dispatchers/constants/dispatcher_type.py
+from collections.abc import Callable, Mapping
 from enum import StrEnum, auto
+from pathlib import Path
+from typing import Protocol, runtime_checkable
 
 from ..log_setup import logger
+
+CollectionKeys = str
+CollectionValues = Path | str
+CollectionDictionary = Mapping[CollectionKeys, CollectionValues]
 
 
 class DispatcherType(StrEnum):
@@ -78,7 +85,7 @@ class DispatcherType(StrEnum):
     def processor(
         self, processing_function: "VariableManager"
     ) -> "VariableItemProcessor":
-        from ..display.variable.processor.variable_process_handler import (
+        from ..display.variable.processor.variable_process_info import (
             VariableItemProcessor,
         )
 
@@ -86,6 +93,84 @@ class DispatcherType(StrEnum):
             processing_function=processing_function,
             dispatcher_type=self.value,
         )
+
+
+@runtime_checkable
+class DispatcherProtocol(Protocol):
+    """
+    Protocol defining the interface expected of all dispatchers.
+    Ensures compatibility across dispatcher variants and promotes consistent
+    behavior.
+    """
+
+    collection: dict[str, object]
+
+    def get_value(self, key: str) -> object:
+        """
+        Retrieve a value from the internal collection using the provided key.
+        """
+        ...
+
+    def get_instance(self, key: str) -> object | None:
+        """Retrieve an instance from the collection using the provided key."""
+        ...
+
+    @staticmethod
+    def normalize_key(key: str) -> str:
+        """
+        Normalize a key string for consistent internal usage.
+        Typical implementations may use lowercasing, stripping, or other
+        formatting.
+        """
+        ...
+
+
+class DispatcherTemplate(DispatcherProtocol):
+    """
+    A template class for dispatching tasks based on a key-value collection.
+    """
+
+    collection: CollectionDictionary = {}
+
+    def get_value(self, key: str) -> object | None:
+        """Retrieve the value associated with the given key
+        from the collection.
+        """
+
+        result = self.collection.get(self.normalize_key(key))
+
+        if not result:
+            logger.exception(f"Value is {key} not found")
+
+        return result
+
+    def get_instance(self, key: str) -> Callable:
+        """
+        Attempt to retrieve and instantiate the value associated with
+            the given key.
+        """
+
+        normalized_key = self.normalize_key(key)
+        callback = self.collection.get(normalized_key)
+
+        if callback is None:
+            message = f"Key not found in collection: {normalized_key}"
+            logger.critical(message)
+            raise ValueError(message)
+
+        if not callable(callback):
+            message = (
+                "Expected a callable object, "
+                f"but got {type(callback).__name__}"
+            )
+            logger.error(message)
+            raise TypeError(message)
+        return callback()
+
+    @staticmethod
+    def normalize_key(key: str) -> str:
+        """Normalize dictionary keys for consistent dispatcher behavior."""
+        return key.lower().strip()
 
 
 # Final sign off by Brian Sanford on 20260421
