@@ -1,6 +1,6 @@
 # src/ota_installer/image/generic_image_info.py
 from collections.abc import Mapping
-from dataclasses import astuple, dataclass, field
+from dataclasses import dataclass, field
 from enum import Enum, StrEnum, auto
 from pathlib import Path
 
@@ -22,19 +22,15 @@ class FileImageData:
     """Contains information about the file image data."""
 
     device: str
-    version: str
+    build_id: str
 
-    def __iter__(self):
-        # Enables unpacking and loop iteration
-        return iter(astuple(self))
-
-    def __call__(self, name) -> Path:
-        """Retrieve the file image path based on name, device, and version."""
+    def __call__(self, name: str) -> Path:
+        """Generates the formatted file name based on attributes."""
 
         return (
             FileImageAttributes[name.upper()]
             .set_device(self.device)
-            .set_version(self.version)
+            .set_version(self.build_id)
             .set_file_path()
         )
 
@@ -72,6 +68,14 @@ class FileImageAttributes(Enum):
         self.extension = extension
         self.device = ""
         self.build_id = ""
+
+    @classmethod
+    def fetch_mapping(cls):
+        return {
+            cls.PAYLOAD.name: (cls.PAYLOAD.name, "bin"),
+            cls.STOCK.name: ("boot", "img"),
+            cls.MAGISK.name: (cls.MAGISK.name, "img"),
+        }
 
     @property
     def file_name(self) -> str:

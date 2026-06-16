@@ -4,9 +4,7 @@ from pathlib import Path
 
 from ..directory.directory_info import DirectoryConfig, set_directory
 from ..dispatcher.dispatcher_info import DispatcherType
-from ..image.generic_image_info import (
-    FileImageData,
-)
+from ..image.generic_image_info import FileImageData, FileImageNames
 from ..image.magisk_image_info import MagiskImagePath
 from ..variable.variable_functions import (
     parse_file_name,
@@ -59,9 +57,9 @@ class VariableManager:
                 self.file_name.device, self.file_name.version
             )
             self.file_paths = VariableType.FILE_PATH.build(
-                stock=image_data("stock"),
-                magisk=image_data("magisk"),
-                payload=image_data("payload"),
+                stock=image_data(FileImageNames.STOCK),
+                magisk=image_data(FileImageNames.MAGISK),
+                payload=image_data(FileImageNames.PAYLOAD),
                 log_file=set_log_file(self.file_name.parts),
             )
 
