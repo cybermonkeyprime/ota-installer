@@ -19,7 +19,6 @@ class TaskManager:
 
     file_name: Path = field(default_factory=Path)
     function: Callable = field(default=type)
-    # iteration: type = field(init=False)
     variable: VariableManager = field(init=False)
 
     def set_file_name(self, arguments) -> Self:

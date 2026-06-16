@@ -1,5 +1,5 @@
 # src/ota_installer/handler/task_group_handler.py
-from collections.abc import Mapping
+from collections.abc import Callable, Mapping
 from dataclasses import dataclass, field
 from enum import Enum, StrEnum, auto
 
@@ -11,6 +11,38 @@ from ..task.task_info import TaskID
 
 StrTuple = tuple[str, ...]
 TaskGroupMap = Mapping["TaskGroupName", object]
+
+
+@dataclass(frozen=True, slots=True)
+class TaskGroupRenderer:
+    """Container for task information."""
+
+    task_class: type
+    task_name: str
+
+    def __call__(self, *args, **kwargs) -> tuple:
+        """
+        Executes the task's generation logic wrapped in the required UI
+            decorators.
+        """
+        from .. import decorator
+
+        # 1. This encapsulates your internal execution context
+        def result():
+            return self.task_class.get_member_names()
+
+        # 2. Define the execution closure and apply your outer decorator
+        @decorator.PaddedFooterWrapper()
+        def execute_pipeline():
+            # Apply your dynamic inner decorator
+            decorated_function: Callable = decorator.ConfirmationPrompt(
+                char=" ", comment=f"perform the {self.task_name}s"
+            )(result)
+
+            return decorated_function()
+
+        # 3. Fire the pipeline and hand back the final tuple payload
+        return execute_pipeline()
 
 
 class TaskGroupName(StrEnum):
@@ -49,6 +81,18 @@ class TaskGroupName(StrEnum):
     def get_task_group_members(cls) -> StrTuple:
         """Returns the keys of the task groups."""
         return tuple(enum.value for enum in cls)
+
+    @classmethod
+    def mapping(cls) -> Mapping[str, TaskGroupRenderer]:
+        return {
+            cls.PREPARATION: TaskGroupRenderer(
+                PreparationTask, "Preparation Task"
+            ),
+            cls.MIGRATION: TaskGroupRenderer(MigrationTask, "Migration Task"),
+            cls.APPLICATION: TaskGroupRenderer(
+                ApplicationTask, "Application Task"
+            ),
+        }
 
 
 @dataclass(frozen=True, slots=True)
