@@ -1,4 +1,4 @@
-# display/variable/variable_item_handler.py
+# display/variable/variable_item_info.py
 from dataclasses import dataclass
 
 from rich.console import Console
