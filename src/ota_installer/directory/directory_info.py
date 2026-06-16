@@ -1,4 +1,4 @@
-# src/ota_installer/handler/directory_handler.py
+# src/ota_installer/handler/directory_info.py
 from collections.abc import Mapping
 from dataclasses import dataclass, field
 from enum import Enum, StrEnum, auto
