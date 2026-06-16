@@ -80,7 +80,7 @@ class TaskGroupName(StrEnum):
         return tuple(enum.value for enum in cls)
 
     @classmethod
-    def mapping(cls) -> Mapping[str, TaskGroupRenderer]:
+    def fetch_mapping(cls) -> Mapping[str, TaskGroupRenderer]:
         return {
             cls.PREPARATION: TaskGroupRenderer(
                 PreparationTask, "Preparation Task"

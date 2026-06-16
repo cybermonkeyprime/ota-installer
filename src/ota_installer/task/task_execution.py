@@ -56,7 +56,7 @@ class TaskExecutor:
         )
 
         self.dispatcher = PluginDispatcherAdapter(
-            DispatcherType.TASK_GROUP.value, TaskGroupName.mapping()
+            DispatcherType.TASK_GROUP.value, TaskGroupName.fetch_mapping()
         ).load()
         return self
 

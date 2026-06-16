@@ -44,18 +44,3 @@ def set_variable_manager(path: Path) -> "VariableManager":
         raise SystemExit()
 
     return VariableManager(path=valid_path)
-
-
-def get_file_image_path(name: str, device: str, version: str) -> Path:
-    from ..image.generic_image_info import (
-        FileImageAttributes,
-    )
-
-    """Retrieve the file image path based on name, device, and version. """
-
-    return (
-        FileImageAttributes[name.upper()]
-        .set_device(device)
-        .set_version(version)
-        .set_file_path()
-    )

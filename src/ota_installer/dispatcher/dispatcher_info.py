@@ -21,7 +21,7 @@ class DispatcherType(StrEnum):
     VARIABLE = auto()
 
     @classmethod
-    def _dispatcher_mapping(cls) -> dict[str, type]:
+    def fetch_mapping(cls) -> dict[str, type]:
         from ..plugin.loader.dispatcher_plugin_loader import (
             DirectoryHandler,
             FileTypeDispatcher,
@@ -41,12 +41,12 @@ class DispatcherType(StrEnum):
     @classmethod
     def allowed_dispatchers(cls) -> tuple[str, ...]:
         """Returns a tuple of allowed dispatcher names."""
-        return tuple(cls._dispatcher_mapping())
+        return tuple(cls.fetch_mapping())
 
     @classmethod
     def call_dispatcher(cls, key: str) -> type:
         """Retrieves the dispatcher class based on the key."""
-        return cls._dispatcher_mapping()[key.upper()]
+        return cls.fetch_mapping()[key.upper()]
 
     @classmethod
     def check_dispatcher(cls, process_type: str) -> None:

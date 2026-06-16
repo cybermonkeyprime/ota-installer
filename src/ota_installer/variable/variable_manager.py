@@ -9,7 +9,6 @@ from ..image.generic_image_info import (
 )
 from ..image.magisk_image_info import MagiskImagePath
 from ..variable.variable_functions import (
-    get_file_image_path,
     parse_file_name,
     set_log_file,
 )
@@ -60,9 +59,9 @@ class VariableManager:
                 self.file_name.device, self.file_name.version
             )
             self.file_paths = VariableType.FILE_PATH.build(
-                stock=get_file_image_path("stock", *image_data),
-                magisk=get_file_image_path("magisk", *image_data),
-                payload=get_file_image_path("payload", *image_data),
+                stock=image_data("stock"),
+                magisk=image_data("magisk"),
+                payload=image_data("payload"),
                 log_file=set_log_file(self.file_name.parts),
             )
 

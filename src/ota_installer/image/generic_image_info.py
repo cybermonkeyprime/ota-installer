@@ -28,6 +28,16 @@ class FileImageData:
         # Enables unpacking and loop iteration
         return iter(astuple(self))
 
+    def __call__(self, name) -> Path:
+        """Retrieve the file image path based on name, device, and version."""
+
+        return (
+            FileImageAttributes[name.upper()]
+            .set_device(self.device)
+            .set_version(self.version)
+            .set_file_path()
+        )
+
 
 # enums
 class FileImageNames(StrEnum):
