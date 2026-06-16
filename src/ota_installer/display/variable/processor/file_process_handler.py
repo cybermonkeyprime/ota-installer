@@ -26,7 +26,7 @@ class VariableFileProcessor(BaseProcessor):
 
     def process_items(self) -> Self:
         """Processes the items and renders the variable table."""
-        from ..variable_item_handler import (
+        from ..variable_item_info import (
             VariableItemContainer,
             VariableTableBuilder,
         )
@@ -69,7 +69,7 @@ class FileIterationProcessor(BaseProcessor):
 
     def process_items(self) -> None:
         """Processes each file name and builds a variable table."""
-        from ..variable_item_handler import (
+        from ..variable_item_info import (
             VariableItemContainer,
             VariableTableBuilder,
         )

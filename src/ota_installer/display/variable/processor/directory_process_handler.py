@@ -48,7 +48,7 @@ class DirectoryIterationProcessor(BaseProcessor):
 
     def process_items(self) -> None:
         """Processes each directory and builds a variable table."""
-        from ..variable_item_handler import (
+        from ..variable_item_info import (
             VariableItemContainer,
             VariableTableBuilder,
         )

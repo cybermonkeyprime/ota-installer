@@ -2,12 +2,13 @@
 from collections.abc import Callable, Mapping
 from dataclasses import dataclass
 from enum import Enum, StrEnum, auto
+from subprocess import CompletedProcess, run
 
 from rich.control import Control
 
 from .. import decorator
 from ..log_setup import logger
-from ..versioning.version_handler import SoftwareVersion
+from ..versioning.version_info import SoftwareVersion
 
 type BoolPredicate = Callable[[], bool]
 type DisplayProvidor = Callable[[], str]
@@ -42,7 +43,7 @@ class DisplayHeader(StrEnum):
 
     @classmethod
     def mapping(cls) -> Mapping[DisplayHeader, DisplayProvidor]:
-        from ..style.style_handler import SEPARATOR
+        from ..style.style_info import SEPARATOR
 
         """Map enum variants strictly to Callables ensuring a pure pipeline."""
         return {
@@ -88,6 +89,50 @@ class DisplayHeader(StrEnum):
     def execute_component(component: BoolPredicate | None) -> bool:
         """Execute a display component and return success status."""
         return component() if component else False
+
+
+@dataclass(frozen=True, slots=True)
+class DisplayObjectProcessor:
+    """
+    Processor class for creating display objects based on the provided
+        callable and argument.
+    """
+
+    from functools import singledispatchmethod
+
+    func: Callable
+
+    @singledispatchmethod
+    def process_object(self, argument: str | object | None) -> str:
+        """Process the provided argument using a callable."""
+        raise ValueError(f"Unsupported type: {type(argument).__name__}")
+
+    @process_object.register
+    def _(self) -> str:
+        """Process the argument when it is None."""
+        return self.func()
+
+    @process_object.register
+    def _(self, argument: str) -> str:
+        """Process the argument when it is a string."""
+        return self.func(argument)
+
+
+def clear_screen() -> None:
+    """Clears the terminal screen."""
+    if not execute_clear_command():
+        logger.error("Failed to clear the screen.")
+
+
+def execute_clear_command() -> CompletedProcess:
+    from os import name
+
+    """Executes the command to clear the terminal screen."""
+    command = "cls" if name == "nt" else "clear"
+    result = run(command, check=True)
+    if result.returncode != 0:
+        raise RuntimeError("Command failed to execute.")
+    return result
 
 
 def main() -> None:

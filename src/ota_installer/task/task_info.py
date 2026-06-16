@@ -1,10 +1,9 @@
 # tasks/task_info.py
-from collections.abc import Callable, Mapping
-from dataclasses import dataclass
+from collections.abc import Callable
 from enum import StrEnum, auto
 
 from ..plugin.plugin_registry import TASK_PLUGINS
-from ..style.style_handler import indentation
+from ..style.style_info import indentation
 from .operation.task_operation_info import (
     TaskOperationContainer,
     get_task_detail,
