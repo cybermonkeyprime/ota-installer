@@ -1,4 +1,4 @@
-# src/ota_installer/display/variable/processor/display_variable_handler.py
+# src/ota_installer/display/variable/processor/display_variable_info.py
 from dataclasses import dataclass
 from enum import Enum
 from typing import Self
