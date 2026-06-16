@@ -1,4 +1,4 @@
-# display/variable/processor/directory_process_handler.py
+# display/variable/processor/directory_process_info.py
 from dataclasses import dataclass, field
 from enum import Enum
 

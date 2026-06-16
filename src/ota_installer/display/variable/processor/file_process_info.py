@@ -1,4 +1,4 @@
-# src/ota_installer/display/variable/processor/file_process_handler.py
+# src/ota_installer/display/variable/processor/base_process_info.py
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Self
