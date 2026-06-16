@@ -4,10 +4,10 @@ from enum import Enum
 from typing import Self
 
 from ..variable.variable_manager import VariableManager
-from .variable.processor.directory_process_handler import (
+from .variable.processor.directory_process_info import (
     DirectoryIterationProcessor,
 )
-from .variable.processor.file_process_handler import (
+from .variable.processor.file_process_info import (
     FileIterationProcessor,
     VariableFileProcessor,
 )
