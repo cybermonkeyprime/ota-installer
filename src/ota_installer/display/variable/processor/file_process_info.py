@@ -5,7 +5,7 @@ from typing import Self
 
 from ....dispatcher.dispatcher_info import DispatcherType
 from ....variable.variable_manager import VariableManager
-from ...variable.processor.base_process_handler import BaseProcessor
+from ...variable.processor.base_process_info import BaseProcessor
 
 
 @dataclass(slots=True)

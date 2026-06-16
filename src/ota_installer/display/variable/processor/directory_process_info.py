@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 from enum import Enum
 
 from ....variable.variable_manager import VariableManager
-from ...variable.processor.base_process_handler import BaseProcessor
+from ...variable.processor.base_process_info import BaseProcessor
 
 
 class DirectoryItemInfo(Enum):
