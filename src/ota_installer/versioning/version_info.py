@@ -9,7 +9,7 @@ class SoftwareVersion(Enum):
     TITLE = "OTA-Installer"
     MAJOR_NUMBER = 2026
     MINOR_NUMBER = 6
-    PATCH_NUMBER = 8
+    PATCH_NUMBER = 16
 
     @classmethod
     def display(cls) -> str:
