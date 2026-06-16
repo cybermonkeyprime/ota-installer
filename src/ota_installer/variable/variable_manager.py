@@ -2,7 +2,6 @@
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from ..directory.directory_handler import DirectoryConfig
 from ..dispatcher.dispatcher_info import DispatcherType
 from ..image.magisk_image_handler import MagiskImagePath
 from ..variable.variable_functions import (
@@ -24,6 +23,8 @@ from .variable_info import (
 class VariableManager:
     """Manages variables for OTA installation."""
 
+    from ..directory.directory_info import DirectoryConfig
+
     path: Path = field(default_factory=Path)
 
     """ directory type validation"""
@@ -38,7 +39,7 @@ class VariableManager:
     directories: DirectoryNames = field(init=False)
 
     def __post_init__(self) -> None:
-        from ..directory.directory_handler import set_directory
+        from ..directory.directory_info import set_directory
         from ..image.generic_image_handler import (
             FileImageData,
         )
