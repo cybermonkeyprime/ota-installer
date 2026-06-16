@@ -1,4 +1,4 @@
-# display/variable/processor/directory_process_info.py
+# src/ota_installer/display/variable/processor/directory_process_info.py
 from dataclasses import dataclass, field
 from enum import Enum
 
