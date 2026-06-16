@@ -4,8 +4,7 @@ from dataclasses import astuple, dataclass, field
 from enum import Enum, StrEnum, auto
 from pathlib import Path
 
-from ..dispatcher.dispatcher_handler import DispatcherTemplate
-from ..dispatcher.dispatcher_info import DispatcherType
+from ..dispatcher.dispatcher_info import DispatcherTemplate, DispatcherType
 from ..plugin.plugin_registry import dispatcher_plugin
 
 
