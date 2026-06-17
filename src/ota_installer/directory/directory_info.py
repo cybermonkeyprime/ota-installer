@@ -38,17 +38,13 @@ class DirectoryRender(Enum):
     from ..image.boot_image_info import BootImageContainer
     from ..image.magisk_image_info import MagiskImageContainer
 
-    BOOT = BootImageContainer
+    BOOT = BootImageContainer.create
     MAGISK = MagiskImageContainer
-
-    @property
-    def container(self):
-        return self.value
 
     def __call__(self, *args, **kwargs):
         """Creates an instance of the specified container class."""
-        logger.debug(f"Creating {self.container.__name__} with args: {args}")
-        return self.container(*args) if args else None
+        logger.debug(f"Creating directory container: {self.name}")
+        return self.value(*args) if args else None
 
 
 @dataclass
@@ -65,7 +61,7 @@ class DirectoryConfig:
         """
         Initializes the boot image container after the dataclass is created.
         """
-        self.boot_image = DirectoryRender.BOOT(self._boot_image)
+        self.boot_image = DirectoryRender.BOOT()
         self.magisk_image_container = DirectoryRender.MAGISK("", "")
 
 
@@ -100,8 +96,8 @@ def set_directory(parent_directory: Path) -> DirectoryConfig:
 
     return DirectoryConfig(
         parent_directory,
-        (FileImageNames.STOCK.get_path()),
-        FileImageNames.MAGISK.get_path(),
+        (FileImageNames.STOCK.fetch_directory_path()),
+        FileImageNames.MAGISK.fetch_directory_path(),
     )
 
 

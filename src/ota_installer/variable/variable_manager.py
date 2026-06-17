@@ -38,6 +38,7 @@ class VariableManager:
     directories: DirectoryNames = field(init=False)
 
     def __post_init__(self) -> None:
+        from ..image.boot_image_info import BootImageContainer
 
         self.variables = VariableType.CONTEXT.build(
             file_path=self.path,
@@ -66,11 +67,12 @@ class VariableManager:
             self.ota_parent_directory = self.path.parent
             self.directory = set_directory(self.file_name.path.parent)
 
+            self.boot_directories = BootImageContainer.create()
             self.directories = VariableType.DIRECTORY.build(
                 magisk=DirectoryPaths(
                     local_path=MagiskImagePath.LOCAL_PATH.value,
                     remote_path=MagiskImagePath.REMOTE_PATH.value,
-                )
+                ),
             )
             self.image_name = {
                 "patched": self.variables.magisk_image_name,
@@ -78,4 +80,4 @@ class VariableManager:
 
     def get_dispatcher(self, process_type) -> type | None:
         """Retrieves the dispatcher for the given process type."""
-        return DispatcherType.get_dispatcher(process_type, self.path)
+        return DispatcherType.get_dispatcher(process_type, self)

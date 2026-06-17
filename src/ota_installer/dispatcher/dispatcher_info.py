@@ -74,13 +74,10 @@ class DispatcherType(StrEnum):
         return dispatcher_class(function_data) if dispatcher_class else None
 
     @classmethod
-    def get_dispatcher(cls, process_type, path) -> type | None:
-        from ..variable.variable_functions import set_variable_manager
-
+    def get_dispatcher(cls, process_type, function_data) -> type | None:
         """Retrieves the dispatcher for the given process type."""
-        function_call = set_variable_manager(path)
-        logger.debug("VariableManager.get_dispatcher(): function_call)")
-        return cls.retrieve_dispatcher(process_type, function_call)
+        logger.debug("DispatcherType.get_dispatcher(): function_data")
+        return cls.retrieve_dispatcher(process_type, function_data)
 
 
 @runtime_checkable

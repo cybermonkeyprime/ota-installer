@@ -2,6 +2,7 @@
 from dataclasses import dataclass, field
 from enum import StrEnum
 from pathlib import Path
+from typing import Self
 
 from ..dispatcher.dispatcher_info import DispatcherTemplate, DispatcherType
 from ..plugin.plugin_registry import dispatcher_plugin
@@ -12,10 +13,13 @@ from .generic_image_info import FileImageNames
 class BootImageContainer:
     """Container for boot image paths."""
 
-    # stock: Path = FileImageNames.STOCK.get_path()
-    stock: Path = FileImageNames.STOCK.get_path()
+    stock: Path
 
-    magisk: Path = FileImageNames.MAGISK.get_path()
+    magisk: Path
+
+    @classmethod
+    def create(cls) -> Self:
+        return cls(**FileImageNames.boot_directories())
 
 
 class BootImageType(StrEnum):

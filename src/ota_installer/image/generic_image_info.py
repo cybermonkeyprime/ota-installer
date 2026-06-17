@@ -24,98 +24,71 @@ class FileImageData:
     device: str
     build_id: str
 
-    def __call__(self, name: str) -> Path:
-        """Generates the formatted file name based on attributes."""
+    def __call__(self, image: FileImageNames | str) -> Path:
+        if isinstance(image, FileImageNames):
+            return image.path(self.device, self.build_id)
 
+        return FileImageNames[image.upper()].path(
+            self.device,
+            self.build_id,
+        )
+
+
+@dataclass(frozen=True, slots=True)
+class FileImageInfo:
+    directory: Path
+    title: str
+    extension: str
+
+    def path(self, device: str, build_id: str) -> Path:
         return (
-            FileImageAttributes[name.upper()]
-            .set_device(self.device)
-            .set_version(self.build_id)
-            .set_file_path()
+            self.directory
+            / f"{device}-{self.title}-{build_id}.{self.extension}"
         )
 
 
 # enums
-class FileImageNames(StrEnum):
-    """Enumeration for File Image Names."""
+class FileImageNames(Enum):
+    PAYLOAD = FileImageInfo(Path.home(), "payload", "bin")
+    STOCK = FileImageInfo(
+        Path.home() / "Android" / "boot-images" / "stock",
+        "boot",
+        "img",
+    )
+    MAGISK = FileImageInfo(
+        Path.home() / "Android" / "boot-images" / "magisk",
+        "magisk",
+        "img",
+    )
 
-    STOCK = auto()
-    PAYLOAD = auto()
-    MAGISK = auto()
-
-    @classmethod
-    def create_path_dictionary(cls, file_paths) -> dict[str, str]:
-        """create the dictionary with enum member names and their
-        corresponding values.
-        """
-        return {
-            enum_member: getattr(file_paths, enum_member)
-            for enum_member in cls
-        }
-
-    @classmethod
-    def path_list(cls):
-        """List of all boot image paths."""
-        return tuple(cls.fetch_path_mapping().items())
-
-    @classmethod
-    def fetch_path_mapping(cls):
-        return {
-            cls.PAYLOAD: Path.home(),
-            cls.STOCK: Path.home() / "Android" / "boot-images" / "stock",
-            cls.MAGISK: Path.home() / "Android" / "boot-images" / "magisk",
-        }
-
-    def get_path(self):
-        return self.fetch_path_mapping()[self]
-
-
-class FileImageAttributes(Enum):
-    """
-    Enumeration to describe file image attributes with associated metadata.
-    """
-
-    PAYLOAD = (FileImageNames.PAYLOAD.value, "bin")
-    STOCK = ("boot", "img")
-    MAGISK = (FileImageNames.MAGISK.value, "img")
-
-    def __init__(self, title: str, extension: str):
-        self.title = title
-        self.extension = extension
-        self.device = ""
-        self.build_id = ""
-
-    @classmethod
-    def fetch_mapping(cls):
-        return {
-            cls.PAYLOAD.name: (cls.PAYLOAD.name, "bin"),
-            cls.STOCK.name: ("boot", "img"),
-            cls.MAGISK.name: (cls.MAGISK.name, "img"),
-        }
+    def path(self, device: str, build_id: str) -> Path:
+        return self.value.path(device, build_id)
 
     @property
-    def file_name(self) -> str:
-        """Generates the formatted file name based on attributes."""
+    def directory(self) -> Path:
+        return self.value.directory
 
-        return f"{self.device}-{self.title}-{self.build_id}.{self.extension}"
+    @classmethod
+    def path_list(cls) -> tuple[Path, ...]:
+        return tuple(member.directory for member in cls)
 
-    def set_device(self, device: str) -> FileImageAttributes:
-        """Sets the device attribute and returns the enum instance."""
+    @classmethod
+    def boot_directories(cls) -> dict[str, Path]:
+        return {
+            cls.STOCK.name.lower(): cls.STOCK.directory,
+            cls.MAGISK.name.lower(): cls.MAGISK.directory,
+        }
 
-        self.device = str(device)
-        return self
+    def fetch_directory_path(self) -> Path:
+        return self.directory
 
-    def set_version(self, build_id: str) -> FileImageAttributes:
-        """Sets the version attribute and returns the enum instance."""
-
-        self.build_id = str(build_id)
-        return self
-
-    def set_file_path(self) -> Path:
-        """Constructs the full file path for the image file."""
-
-        boot_image_path = FileImageNames[self.name].get_path()
-        return Path(boot_image_path) / self.file_name
+    @classmethod
+    def create_path_dictionary(cls, file_paths) -> dict[str, Path]:
+        """Compatibility helper for FileImageHandler collection building."""
+        return {
+            member.name.lower(): getattr(file_paths, member.name.lower())
+            for member in cls
+        }
 
 
 # dispatcher

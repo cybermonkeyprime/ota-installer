@@ -45,6 +45,7 @@ class DisplayVariableDirectory(DisplayVariableBehavior):
     BOOT = DisplayVariableRenderer(
         DirectoryIterationProcessor,
         {
+            "source": "directory.boot_image",
             "directory_names": ("stock", "magisk"),
             "directory_type": "",
             "variable_prefix": "",
@@ -53,6 +54,7 @@ class DisplayVariableDirectory(DisplayVariableBehavior):
     MAGISK = DisplayVariableRenderer(
         DirectoryIterationProcessor,
         {
+            "source": "directories.magisk",
             "directory_names": ("local", "remote"),
             "directory_type": "magisk",
             "variable_prefix": "_",
