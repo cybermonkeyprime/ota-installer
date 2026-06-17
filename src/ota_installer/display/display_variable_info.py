@@ -1,4 +1,6 @@
 # src/ota_installer/display/variable/processor/display_variable_info.py
+from __future__ import annotations
+
 from dataclasses import dataclass
 from enum import Enum
 from typing import Self
@@ -14,97 +16,107 @@ from .variable.processor.file_process_info import (
 
 
 @dataclass(frozen=True, slots=True)
-class DisplayVariableRenderer:
-    class_type: type
-    mapping: dict[str, str | tuple]
+class DisplayStep:
+    name: str
+    processor_type: type
+    config: dict[str, object]
 
-    def __call__(self, variable_manager: VariableManager) -> None:
-        instance = self.class_type(variable_manager)
-        for key, value in self.mapping.items():
-            instance.set_item(key, value)
-        instance.process_items()
+    def build(self, variable_manager: VariableManager):
+        processor = self.processor_type(variable_manager)
 
+        for key, value in self.config.items():
+            processor.set_item(key, value)
 
-class DisplayVariableBehavior(Enum):
-    """Base class for display variable behaviors."""
+        return processor
 
-    def __call__(self, variable_manager: VariableManager) -> None:
-        self.value(variable_manager)
-
-    @classmethod
-    def list(cls) -> tuple[DisplayVariableBehavior, ...]:
-        """Returns tuple of directory-related display variable definitions."""
-        return tuple(cls)
+    def run(self, variable_manager: VariableManager) -> None:
+        processor = self.build(variable_manager)
+        processor.process_items()
 
 
-class DisplayVariableDirectory(DisplayVariableBehavior):
-    OTA = DisplayVariableRenderer(
-        VariableFileProcessor,
-        {"title": "ota_file_directory", "value": "path.parent"},
-    )
-    BOOT = DisplayVariableRenderer(
-        DirectoryIterationProcessor,
-        {
+DIRECTORY_DISPLAY_STEPS = (
+    DisplayStep(
+        name="ota_file_directory",
+        processor_type=VariableFileProcessor,
+        config={
+            "title": "ota_file_directory",
+            "value": "path.parent",
+        },
+    ),
+    DisplayStep(
+        name="boot_directories",
+        processor_type=DirectoryIterationProcessor,
+        config={
             "source": "directory.boot_image",
             "directory_names": ("stock", "magisk"),
             "directory_type": "",
             "variable_prefix": "",
         },
-    )
-    MAGISK = DisplayVariableRenderer(
-        DirectoryIterationProcessor,
-        {
+    ),
+    DisplayStep(
+        name="magisk_directories",
+        processor_type=DirectoryIterationProcessor,
+        config={
             "source": "directories.magisk",
             "directory_names": ("local", "remote"),
             "directory_type": "magisk",
             "variable_prefix": "_",
         },
-    )
+    ),
+)
 
 
-class DisplayVariableFile(DisplayVariableBehavior):
-    OTA = DisplayVariableRenderer(
-        VariableFileProcessor,
-        {"title": "ota_file_name", "value": "path.name"},
-    )
-    IMAGE = DisplayVariableRenderer(
-        FileIterationProcessor,
-        mapping={"file_names": ("payload", "stock", "magisk")},
-    )
-    LOG = DisplayVariableRenderer(
-        VariableFileProcessor,
-        {"title": "log_file", "value": "log_file"},
-    )
+FILE_DISPLAY_STEPS = (
+    DisplayStep(
+        name="ota_file_name",
+        processor_type=VariableFileProcessor,
+        config={
+            "title": "ota_file_name",
+            "value": "path.name",
+        },
+    ),
+    DisplayStep(
+        name="image_file_names",
+        processor_type=FileIterationProcessor,
+        config={
+            "file_names": ("payload", "stock", "magisk"),
+        },
+    ),
+    DisplayStep(
+        name="log_file",
+        processor_type=VariableFileProcessor,
+        config={
+            "title": "log_file",
+            "value": "log_file",
+        },
+    ),
+)
 
 
-class DisplayVariableGroup(Enum):
-    """Enumeration for grouping display variable definitions."""
+def process_display_steps(
+    variable_manager: VariableManager,
+    steps: tuple[DisplayStep, ...],
+) -> None:
+    for step in steps:
+        step.run(variable_manager)
 
-    FILE = DisplayVariableFile.list()
-    DIRECTORY = DisplayVariableDirectory.list()
-    # LOG = (DisplayVariableFile.LOG,)
 
-    def process(self, processor: VariableManager) -> None:
-        """Executes a set of processing functions."""
-        for enum_class in self.value:
-            enum_class(processor)
+def process_directory_display(variable_manager: VariableManager) -> None:
+    process_display_steps(variable_manager, DIRECTORY_DISPLAY_STEPS)
+
+
+def process_file_display(variable_manager: VariableManager) -> None:
+    process_display_steps(variable_manager, FILE_DISPLAY_STEPS)
 
 
 @dataclass(frozen=True, slots=True)
 class DisplayVariablePipeline:
-    """Pipeline for processing display variables."""
-
     variable_manager: VariableManager
 
     def process_directory_names(self) -> Self:
-        """Processes directory names."""
-        DisplayVariableGroup.DIRECTORY.process(self.variable_manager)
+        process_directory_display(self.variable_manager)
         return self
 
     def process_file_names(self) -> Self:
-        """Processes file names."""
-        DisplayVariableGroup.FILE.process(self.variable_manager)
+        process_file_display(self.variable_manager)
         return self
-
-
-# Signed off by Brian Sanford on 20260608
