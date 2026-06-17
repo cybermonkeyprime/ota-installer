@@ -53,6 +53,22 @@ class FileImageNames(StrEnum):
             for enum_member in cls
         }
 
+    @classmethod
+    def path_list(cls):
+        """List of all boot image paths."""
+        return tuple(cls.fetch_path_mapping().items())
+
+    @classmethod
+    def fetch_path_mapping(cls):
+        return {
+            cls.PAYLOAD: Path.home(),
+            cls.STOCK: Path.home() / "Android" / "boot-images" / "stock",
+            cls.MAGISK: Path.home() / "Android" / "boot-images" / "magisk",
+        }
+
+    def get_path(self):
+        return self.fetch_path_mapping()[self]
+
 
 class FileImageAttributes(Enum):
     """
@@ -97,9 +113,8 @@ class FileImageAttributes(Enum):
 
     def set_file_path(self) -> Path:
         """Constructs the full file path for the image file."""
-        from .boot_image_info import BootImagePaths
 
-        boot_image_path = BootImagePaths[self.name].value
+        boot_image_path = FileImageNames[self.name].get_path()
         return Path(boot_image_path) / self.file_name
 
 

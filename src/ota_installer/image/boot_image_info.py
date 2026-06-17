@@ -1,32 +1,21 @@
 # src/ota_installer/image/boot_image_info.py
 from dataclasses import dataclass, field
-from enum import Enum, StrEnum
+from enum import StrEnum
 from pathlib import Path
 
 from ..dispatcher.dispatcher_info import DispatcherTemplate, DispatcherType
 from ..plugin.plugin_registry import dispatcher_plugin
-
-
-class BootImagePaths(Enum):
-    """Enumeration for boot image paths."""
-
-    PAYLOAD = Path.home()
-    STOCK = Path.home() / "Android" / "boot-images" / "stock"
-    MAGISK = Path.home() / "Android" / "boot-images" / "magisk"
-
-    @classmethod
-    def path_list(cls) -> tuple[Path, ...]:
-        """List of all boot image paths."""
-        return tuple(enum_member.value for enum_member in cls)
+from .generic_image_info import FileImageNames
 
 
 @dataclass(frozen=True, slots=True)
 class BootImageContainer:
     """Container for boot image paths."""
 
-    stock: Path = BootImagePaths.STOCK.value
+    # stock: Path = FileImageNames.STOCK.get_path()
+    stock: Path = FileImageNames.STOCK.get_path()
 
-    magisk: Path = BootImagePaths.MAGISK.value
+    magisk: Path = FileImageNames.MAGISK.get_path()
 
 
 class BootImageType(StrEnum):
@@ -65,4 +54,4 @@ class ImageTypeDispatcher(DispatcherTemplate):
         return BootImageType.validate_key(key)
 
 
-# Signed off by Brian Sanford on 20260508
+# Signed off by Brian Sanford on 20260616
