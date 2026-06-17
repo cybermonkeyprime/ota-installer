@@ -9,7 +9,7 @@ from ..plugin.plugin_registry import dispatcher_plugin
 from ..task.task_info import TaskID
 
 StrTuple = tuple[str, ...]
-TaskGroupMap = Mapping["TaskGroupName", object]
+TaskGroupMap = Mapping[str, object]
 
 
 @dataclass(frozen=True, slots=True)
