@@ -1,8 +1,5 @@
 # src/ota_installer/display/variable/processor/display_variable_info.py
-from __future__ import annotations
-
 from dataclasses import dataclass
-from enum import Enum
 from typing import Self
 
 from ..variable.variable_manager import VariableManager

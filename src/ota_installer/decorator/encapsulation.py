@@ -29,7 +29,7 @@ class Encapsulate(GenericDecorator):
 
     def _print_separator(self) -> str:
         """Prints a separator line."""
-        from ..style.style_handler import separator
+        from ..style.style_info import separator
         from .output_printer import OutputPrinter
 
         decorated_func = OutputPrinter(prefix="\n", suffix="\n\n")(separator)

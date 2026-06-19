@@ -1,4 +1,4 @@
-# src/ota_installer/style/style_handler.py
+# src/ota_installer/style/style_info.py
 from dataclasses import dataclass
 from enum import StrEnum
 
