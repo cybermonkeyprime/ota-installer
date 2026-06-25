@@ -66,7 +66,7 @@ def enable_debug_logging() -> None:
     )
 
 
-def add_structured_log_sink(path: str | Path) -> None:
+def add_structured_log_sink(path: Path) -> None:
     """Add a structured log sink to the specified path."""
     logger.add(
         str(path),
@@ -83,7 +83,7 @@ def log_messages() -> None:
     """Log various messages at different severity levels."""
     logger.trace("A trace message.")
     logger.debug("A debug message.")
-    logger.debug("An info message.")
+    logger.info("An info message.")
     logger.success("A success message.")
     logger.warning("A warning message.")
     logger.error("An error message.")
