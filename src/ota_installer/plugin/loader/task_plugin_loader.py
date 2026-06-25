@@ -14,4 +14,3 @@ from ...task.component import (
     t12_magisk_image_booter,
 )
 
-# Signed off by Brian Sanford on 20260523

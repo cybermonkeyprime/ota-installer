@@ -55,4 +55,3 @@ def separator(cls: StyleRenderer = SEPARATOR) -> str:
     return cls()
 
 
-# Signed off by Brian Sanford on 20260527

@@ -51,4 +51,3 @@ class MagiskImageFinderPlugin(MagiskImageFinder):
     pass
 
 
-# Signed off by Brian Sanford on 20260528

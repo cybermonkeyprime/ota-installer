@@ -61,4 +61,3 @@ class MagiskImageBooterPlugin(MagiskImageBooter):
 # - Improved variable names for clarity.
 # - Maintained overall structure while enhancing readability and maintainability.
 
-# Signed off by Brian Sanford on 20260528

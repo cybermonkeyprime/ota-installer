@@ -34,4 +34,3 @@ class ColorizedIndentPrinter(StringReturningDecorator):
         return wrapper
 
 
-# Signed off by Brian Sanford on 20260611

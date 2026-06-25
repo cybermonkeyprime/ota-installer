@@ -47,4 +47,3 @@ def task_plugin(name: str) -> Callable:
     return TASK_PLUGINS.register_plugin(name)
 
 
-# Signed off by Brian Sanford on 20260523

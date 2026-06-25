@@ -51,4 +51,3 @@ class ADBSideloaderPlugin(ADBSideloader):
 # - Improved variable names for clarity.
 # - Ensured adherence to PEP 8 style guidelines.
 
-# Signed off by Brian Sanford on 20260607

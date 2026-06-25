@@ -158,4 +158,3 @@ class DispatcherTemplate(DispatcherProtocol):
         return key.lower().strip()
 
 
-# Final sign off by Brian Sanford on 20260421

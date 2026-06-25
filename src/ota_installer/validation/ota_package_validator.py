@@ -48,4 +48,3 @@ def validate_ota_package(path: str | Path) -> Path | None:
     return zip_path.resolve()
 
 
-# Signed off by Brian Sanford on 20260502
