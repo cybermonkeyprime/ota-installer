@@ -46,7 +46,7 @@ class VariableManager:
             file_path_stem=self.path.stem,
             file_parts=parse_file_name(raw_name=self.path),
         )
-        if self.variables is not None:
+        if self.variables:
             self.file_name = VariableType.FILE_NAME.build(
                 path=self.variables.file_path,
                 stem=self.variables.file_path_stem,
