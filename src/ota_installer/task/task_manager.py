@@ -21,7 +21,7 @@ class TaskManager:
     function: Callable = field(default=type)
     variable: VariableManager = field(init=False)
 
-    def set_file_name(self, arguments) -> Self:
+    def set_file_name(self, arguments: str) -> Self:
         """Sets the file name for the task manager."""
         self.file_name = Path(arguments)
         return self
@@ -33,8 +33,7 @@ class TaskManager:
         self.variable = set_variable_manager(self.file_name)
         if self.variable:
             add_structured_log_sink(self.variable.file_paths.log_file)
-
-        if not self.variable:
+        else:
             logger.error("Failed to initialize variable manager.")
 
         return self
@@ -49,7 +48,7 @@ class TaskManager:
         logger.debug(
             f"TaskManager.log_and_process_variables(): {self.variable=}"
         )
-        if not self.variable:
+        if self.variable is None:
             logger.error("Variable manager is not initialized.")
         else:
             (
