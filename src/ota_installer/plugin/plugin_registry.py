@@ -8,11 +8,10 @@ class PluginRegistry:
     def __init__(self) -> None:
         self.plugins: dict[str, ClassType] = {}
 
-    def register_plugin(self, name):
+    def register_plugin(self, name: str) -> Callable:
         def decorator(cls):
             if name in self.plugins:
                 raise ValueError(f"Plugin '{name}' already registered")
-
             self.plugins[name] = cls
             return cls
 
@@ -47,3 +46,4 @@ def task_plugin(name: str) -> Callable:
     return TASK_PLUGINS.register_plugin(name)
 
 
+# Signed off by Brian Sanford on 20260625
