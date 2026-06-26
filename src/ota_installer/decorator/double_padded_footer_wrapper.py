@@ -37,8 +37,10 @@ class DoublePaddedFooterWrapper(GenericDecorator):
     @Decorators.indent_wrapper(interval=1)
     def _print_footer(self, message: str) -> str:
         """Outputs the footer messages."""
-        return f"{message}"
+        return message
 
 
 if __name__ == "__main__":
     pass
+
+# Signed off by Brian Sanford on 20260625
