@@ -53,3 +53,4 @@ class PluginDispatcherAdapter:
         return dispatcher_class(obj)
 
 
+# Signed off by Brian Sanford on 20260625
