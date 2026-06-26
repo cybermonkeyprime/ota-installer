@@ -48,3 +48,4 @@ class VariableTableBuilder:
         console.print(Padding(self.table, (0, 0, 0, self.indent)))
 
 
+# Signed off by Brian Sanford on 20260625
