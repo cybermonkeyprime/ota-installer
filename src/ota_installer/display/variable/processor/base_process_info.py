@@ -35,6 +35,10 @@ class BaseProcessor:
         return self.dispatcher.get_value(key)
 
     def set_item(self, name: str = "", value: str | tuple = "") -> Self:
+        """Sets an attribute on the instance."""
         if name:
             setattr(self, name, value)
         return self
+
+
+# Signed off by Brian Sanford on 20260625
