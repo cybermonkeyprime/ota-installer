@@ -13,7 +13,7 @@ console = Console()
 
 
 class PromptType(StrEnum):
-    KEY_OPTION = "/".join(["Y", "N"])
+    KEY_OPTION = "Y/N"
     ERROR = "Invalid Option!"
     REQUEST = "Do you want to "
 
@@ -49,7 +49,7 @@ class ConfirmationPrompt:
         )
 
     @staticmethod
-    def get_confirmation() -> str:
+    def get_confirmation() -> bool:
         """Get user confirmation input."""
         return pyip.inputYesNo(default="no", limit=3, blank=True) == "yes"
 
@@ -96,3 +96,6 @@ class ConfirmationPrompt:
 def my_function():
     """Function implementation."""
     pass
+
+
+# Signed off by Brian Sanford on 20260625
