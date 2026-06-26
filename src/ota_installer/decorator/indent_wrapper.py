@@ -31,3 +31,4 @@ class IndentWrapper(StringReturningDecorator):
         return StyleRenderer(self.char, self.spacing, self.interval)()
 
 
+# Signed off by Brian Sanford on 20260625
