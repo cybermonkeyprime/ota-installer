@@ -10,9 +10,6 @@ from .protocol.decorator_protocols import GenericDecorator
 class Encapsulate(GenericDecorator):
     """Decorator class to encapsulate function calls with separators."""
 
-    from .multiply_string import MultiplyString
-    from .output_printer import OutputPrinter
-
     def __call__(self, func: Callable) -> Callable:
         """
         Wraps the function with separator calls before and after execution.
@@ -34,3 +31,6 @@ class Encapsulate(GenericDecorator):
 
         decorated_func = OutputPrinter(prefix="\n", suffix="\n\n")(separator)
         return decorated_func()
+
+
+# Signed off by Brian Sanford on 20260625
