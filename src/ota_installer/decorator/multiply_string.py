@@ -20,6 +20,13 @@ class MultiplyString(GenericDecorator):
         @wraps(func)
         def wrapper(*args, **kwargs) -> R:
             result = func(*args, **kwargs)
-            return f"{str(result) * self.interval}"
+            return (
+                str(result) * self.interval
+                if self.interval > 0
+                else str(result)
+            )
 
         return wrapper
+
+
+# Signed off by Brian Sanford on 20260625
