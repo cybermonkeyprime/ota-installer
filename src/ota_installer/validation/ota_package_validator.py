@@ -35,16 +35,11 @@ def validate_ota_package(path: str | Path) -> Path | None:
         logger.critical("Not a valid zip file format!")
         return None
 
-    try:
-        with ZipFile(file=zip_path) as zf:
-            names: list[str] = zf.namelist()
-            if not names:
-                logger.critical("Zip archive is empty.")
-                return None
-    except BadZipFile:
-        logger.critical("Invalid zip structure")
+    if not ZipFile(zip_path).namelist():
+        logger.critical("Zip archive is empty.")
         return None
 
     return zip_path.resolve()
 
 
+# Signed off by Brian Sanford on 20260625
