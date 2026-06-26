@@ -117,3 +117,6 @@ class DisplayVariablePipeline:
     def process_file_names(self) -> Self:
         process_file_display(self.variable_manager)
         return self
+
+
+# Signed off by Brian Sanford on 20260625
