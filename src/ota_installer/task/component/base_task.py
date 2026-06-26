@@ -51,3 +51,6 @@ class BaseTask:
             value = getattr(self, field.name.lower())
             if value is not None:
                 self.task.set_item(field.name.lower(), value)
+
+
+# Signed off by Brian Sanford on 20260625
