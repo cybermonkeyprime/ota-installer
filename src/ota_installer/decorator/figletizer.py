@@ -25,10 +25,7 @@ class Figletizer:
 
         @wraps(func)
         def wrapper(*args, **kwargs) -> str:
-            """
-            Wrapper function that calls the original function and formats its
-            output.
-            """
+            """Calls the original function and formats its output."""
             result = func(*args, **kwargs)
             return f"{figlet_format(str(result), font=FontType.SLANT)}"
 
