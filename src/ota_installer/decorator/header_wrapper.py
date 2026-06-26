@@ -31,4 +31,7 @@ class HeaderWrapper(GenericDecorator):
     @IndentWrapper(interval=1)  # type: ignore[return-value]
     def _output_message(self) -> str:
         """Outputs the header message."""
-        return f"{self.message}"
+        return self.message
+
+
+# Signed off by Brian Sanford on 20260625
