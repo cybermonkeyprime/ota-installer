@@ -16,11 +16,12 @@ class Example(GenericDecorator):
     start_message: str = "Beginning"
     end_message: str = "Ending"
 
-    def __call__(self, *args, **kwargs) -> object:
+    def __call__(self, *args, **kwargs) -> Callable:
         """Wraps the function to log messages before and after execution."""
-        print(f"{self.start_message} {self.func.__name__}")
+        name = getattr(self.func, __name__, "name")
+        print(f"{self.start_message} {name}")
         result = self.func(*args, **kwargs)
-        print(f"{self.end_message} {self.func.__name__}")
+        print(f"{self.end_message} {name}")
         return result
 
 
@@ -31,14 +32,18 @@ class ExampleWithArgs(GenericDecorator):
     begin: str = "Beginning"
     end: str = "Ending"
 
-    def __call__(self, function: Callable) -> Callable:
+    def __call__(self, func: Callable) -> Callable:
         """Wraps the function to log messages before and after execution."""
 
-        @wraps(function)
-        def wrapper(*args, **kwargs) -> object:
-            print(f"{self.begin} {function.__name__}")
-            result = function(*args, **kwargs)
-            print(f"{self.end} {function.__name__}")
+        @wraps(func)
+        def wrapper(*args, **kwargs) -> Callable:
+            name = getattr(func, __name__, "name")
+            print(f"{self.begin} {name}")
+            result = func(*args, **kwargs)
+            print(f"{self.end} {name}")
             return result
 
         return wrapper
+
+
+# Signed off by Brian Sanford on 20260625
