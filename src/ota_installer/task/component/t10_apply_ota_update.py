@@ -33,7 +33,10 @@ class ADBSideloader(BaseTask):
     @decorator.DoublePaddedFooterWrapper(message=f"{TITLE.success_message}")
     def perform_task(self) -> None:
         """Executes the ADB sideload task and runs it with output."""
-        self.task.run_with_output()
+        if self.instance.path:
+            self.task.run_with_output()
+        else:
+            raise ValueError("No path provided for ADB sideload.")
 
 
 @task_plugin(ApplicationTask[TITLE.name].value)
@@ -44,10 +47,4 @@ class ADBSideloaderPlugin(ADBSideloader):
     pass
 
 
-# Summary of changes made:
-# - Updated docstrings to Google-style format.
-# - Used built-in type annotations and container annotations.
-# - Replaced try/except logic with conditional statements where applicable.
-# - Improved variable names for clarity.
-# - Ensured adherence to PEP 8 style guidelines.
-
+# Signed off by Brian Sanford on 20260626
