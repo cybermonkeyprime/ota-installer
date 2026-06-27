@@ -14,25 +14,27 @@ class TimeIt(GenericDecorator):
     start_time: float = 0
     end_time: float = 0
 
-    def __call__(self, function: Callable) -> Callable:
+    def __call__(self, func: Callable) -> Callable:
         """Wrap the function to measure its execution time."""
 
-        @wraps(function)
+        @wraps(func)
         def wrapper(*args, **kwargs) -> object:
             self.start_time = time.perf_counter()
-            result = function(*args, **kwargs)
+            result = func(*args, **kwargs)
             self.end_time = time.perf_counter()
-            self._log_execution_time(function, args, kwargs)
+            self._log_execution_time(func, args, kwargs)
             return result
 
         return wrapper
 
     def _log_execution_time(
-        self, function: Callable, args: tuple, kwargs: dict
+        self, func: Callable, args: tuple, kwargs: dict
     ) -> None:
         """Log the execution time of the function."""
         total_time = self.end_time - self.start_time
-        function_signature = f"{function.__name__}{args} {kwargs}"
+        name = getattr(func, __name__, "func")
+        function_signature = f"{name}{args} {kwargs}"
         print(f"Function {function_signature} took {total_time:.4f} seconds")
 
 
+# Signed off by Brian Sanford on 20260626
