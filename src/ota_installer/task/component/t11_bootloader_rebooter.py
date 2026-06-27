@@ -13,12 +13,7 @@ TITLE = TaskID.REBOOT_TO_BOOTLOADER
 
 @dataclass
 class BootloaderRebooter(BaseTask):
-    """Handles the rebooting process to the bootloader.
-
-    This task is responsible for executing the command to reboot
-    the system into the bootloader mode and providing feedback
-    upon completion.
-    """
+    """Handles the rebooting process to the bootloader."""
 
     instance: VariableManager = field(default_factory=VariableManager)
 
@@ -43,3 +38,4 @@ class BootloaderRebooterPlugin(BootloaderRebooter):
     pass
 
 
+# Signed off by Brian Sanford on 20260626
