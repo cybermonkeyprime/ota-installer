@@ -1,5 +1,6 @@
 # src/ota_installer/tasks/operations/task_operation_executor.py
 from dataclasses import dataclass
+from enum import StrEnum
 from functools import partial
 from subprocess import check_output, run
 from typing import Self
@@ -9,11 +10,15 @@ from ...log_setup import logger
 from .task_operation_info import Indents, Messages
 
 
+class TaskType(StrEnum):
+    EXECUTE = Messages.EXECUTE.value
+    OUTPUT = ""
+
+
 @dataclass(frozen=True, slots=True)
 class Task:
     prompt = partial(
         decorator.ConfirmationPrompt,
-        comment=Messages.EXECUTE.value,
         indent=Indents.EXECUTE,
     )
     on_keypress = partial(
@@ -28,7 +33,7 @@ class TaskOperationExecutor:
 
     command: str
 
-    @Task.prompt()
+    @Task.prompt(TaskType.EXECUTE)
     @Task.on_keypress()
     @decorator.Encapsulate()
     def execute(self) -> Self:
@@ -37,7 +42,7 @@ class TaskOperationExecutor:
             logger.exception(f"Command execution failed: {self.command}")
         return self
 
-    @Task.prompt()
+    @Task.prompt(TaskType.OUTPUT)
     @Task.on_keypress()
     @decorator.Encapsulate()
     def execute_and_return_output(self, output_name) -> str:
@@ -50,3 +55,6 @@ class TaskOperationExecutor:
         if not result:
             logger.exception(f"{output_name} execution failed: {self.command}")
         return result
+
+
+# Signed off by Brian Sanford on 20260626
