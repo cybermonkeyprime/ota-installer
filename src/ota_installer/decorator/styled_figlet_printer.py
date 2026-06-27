@@ -39,3 +39,5 @@ def welcome_message() -> str:
 
 if __name__ == "__main__":
     welcome_message()
+
+# Signed off by Brian Sanford on 20260626
