@@ -18,10 +18,9 @@ class BaseExceptionHandler:
 
     def handle(self, *args, **kwargs) -> Callable | None:
         """Executes the function and handles exceptions."""
-        if not callable(self.function):
-            return None
-
-        return self.function(*args, **kwargs)
+        if callable(self.function):
+            return self.function(*args, **kwargs)
+        return None
 
     @decorator.OutputPrinter(use_color=True, prefix="\n\n", suffix="\n\n")
     def print_exception_message(self, error: BaseException) -> str:
@@ -32,10 +31,7 @@ class BaseExceptionHandler:
     @decorator.Colorizer(style="variable")
     def format_message(self, error: BaseException) -> str:
         """Formats the error message based on the exception type."""
-        error_message = self.custom_messages.get(
-            type(error), self.default_message
-        )
-        return f"{error_message}"
+        return self.custom_messages.get(type(error), self.default_message)
 
     def __call__(self, *args, **kwargs) -> Callable | None:
         """Allows the instance to be called as a function."""
@@ -44,3 +40,5 @@ class BaseExceptionHandler:
 
 if __name__ == "__main__":
     pass
+
+# Signed off by Brian Sanford on 20260626
