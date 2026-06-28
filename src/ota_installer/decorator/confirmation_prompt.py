@@ -16,6 +16,7 @@ class PromptType(StrEnum):
     KEY_OPTION = "Y/N"
     ERROR = "Invalid Option!"
     REQUEST = "Do you want to "
+    EXECUTE = "execute the command"
 
 
 @dataclass(frozen=True, slots=True)
@@ -43,8 +44,9 @@ class ConfirmationPrompt:
 
     def get_message(self) -> str:
         """Construct the prompt message."""
+        message = self.comment or PromptType.EXECUTE
         return (
-            f"{indentation(self.indent)}{self.get_request(self.comment)}? "
+            f"{indentation(self.indent)}{self.get_request(message)}? "
             f"[{self.get_key_option()}]: "
         )
 

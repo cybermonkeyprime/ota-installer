@@ -2,7 +2,7 @@
 from collections.abc import Callable, Mapping
 from enum import StrEnum, auto
 from pathlib import Path
-from typing import Protocol, runtime_checkable
+from typing import Protocol, cast, runtime_checkable
 
 from ..log_setup import logger
 
@@ -82,11 +82,7 @@ class DispatcherType(StrEnum):
 
 @runtime_checkable
 class DispatcherProtocol(Protocol):
-    """
-    Protocol defining the interface expected of all dispatchers.
-    Ensures compatibility across dispatcher variants and promotes consistent
-    behavior.
-    """
+    """Protocol defining the interface expected of all dispatchers."""
 
     collection: dict[str, object]
 
@@ -102,11 +98,7 @@ class DispatcherProtocol(Protocol):
 
     @staticmethod
     def normalize_key(key: str) -> str:
-        """
-        Normalize a key string for consistent internal usage.
-        Typical implementations may use lowercasing, stripping, or other
-        formatting.
-        """
+        """Normalize a key string for consistent internal usage."""
         ...
 
 
@@ -124,7 +116,7 @@ class DispatcherTemplate(DispatcherProtocol):
 
         result = self.collection.get(self.normalize_key(key))
 
-        if not result:
+        if result is None:
             logger.exception(f"Value is {key} not found")
 
         return result
@@ -141,7 +133,7 @@ class DispatcherTemplate(DispatcherProtocol):
         if callback is None:
             message = f"Key not found in collection: {normalized_key}"
             logger.critical(message)
-            raise ValueError(message)
+            raise KeyError(message)
 
         if not callable(callback):
             message = (
@@ -150,7 +142,7 @@ class DispatcherTemplate(DispatcherProtocol):
             )
             logger.error(message)
             raise TypeError(message)
-        return callback()
+        return cast(Callable, callback)()
 
     @staticmethod
     def normalize_key(key: str) -> str:
@@ -158,3 +150,4 @@ class DispatcherTemplate(DispatcherProtocol):
         return key.lower().strip()
 
 
+# Signed off by Brian Sanford on 20260628

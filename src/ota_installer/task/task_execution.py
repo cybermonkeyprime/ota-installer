@@ -67,8 +67,9 @@ class TaskExecutor:
     @property
     def task_group_rules(self) -> bool:
         """Validates task group rules."""
-        return all(
-            [self.task_group, self.task_group_in_dispatcher_collection()]
+        return (
+            bool(self.task_group)
+            and self.task_group_in_dispatcher_collection()
         )
 
     @property
