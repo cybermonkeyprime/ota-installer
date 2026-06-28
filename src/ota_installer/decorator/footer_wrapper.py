@@ -30,4 +30,4 @@ class FooterWrapper:
     @IndentWrapper(interval=1)  # type: ignore[return-value]
     def _output_message(self) -> str:
         """Outputs the footer message."""
-        return f"{self.message}"
+        return self.message
