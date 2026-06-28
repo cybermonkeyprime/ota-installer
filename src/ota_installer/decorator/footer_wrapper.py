@@ -3,11 +3,9 @@ from collections.abc import Callable
 from dataclasses import dataclass, field
 from functools import wraps
 
-from .protocol.decorator_protocols import GenericDecorator
-
 
 @dataclass
-class FooterWrapper(GenericDecorator):
+class FooterWrapper:
     """Decorator that wraps a function with a footer message output."""
 
     message: str = field(default="")
@@ -33,5 +31,3 @@ class FooterWrapper(GenericDecorator):
     def _output_message(self) -> str:
         """Outputs the footer message."""
         return f"{self.message}"
-
-
