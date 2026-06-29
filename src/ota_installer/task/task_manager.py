@@ -82,9 +82,7 @@ def _is_executable(task: object) -> bool:
 StringTuple = tuple[str, ...]
 
 
-def task_iterator(
-    instance: VariableManager, task_group: StringTuple
-) -> object | None:
+def task_iterator(instance: VariableManager, task_group: StringTuple) -> str:
     """Iterates over a task group and executes each task."""
 
     logger.debug(f"Iterating over task group: {task_group}")
@@ -95,9 +93,9 @@ def task_iterator(
     for task_name in task_group:
         task_id = TaskID(task_name)
         task_class = task_id.execute
-
-        task_director(instance=instance, task_name=task_class)
-    return None
+        if callable(task_class):
+            task_director(instance=instance, task_name=task_class)
+    return ""
 
 
 @StylizedIndentPrinter(indent=2, style="variable", end="\n\n", use_output=True)
