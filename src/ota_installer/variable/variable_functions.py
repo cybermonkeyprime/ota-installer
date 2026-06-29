@@ -9,8 +9,7 @@ StrPathDict = dict[str, Path | str]
 def parse_file_name(raw_name: Path) -> FileNameContainer:
     """Parse the raw file name into its components."""
 
-    build_structure: list[str] = raw_name.stem.split(sep="-")
-    device, pkg_type, build_id, *signature = build_structure
+    device, pkg_type, build_id, *signature = raw_name.stem.split(sep="-")
     return FileNameContainer(
         device=device,
         pkg_type=pkg_type,
@@ -20,6 +19,7 @@ def parse_file_name(raw_name: Path) -> FileNameContainer:
 
 
 def is_base_global(build_id: str) -> bool:
+    """Check if the build ID is base global."""
     return not any(char.isalpha() for char in build_id.split(".")[-1])
 
 
@@ -40,7 +40,11 @@ def set_variable_manager(path: Path) -> "VariableManager":
     valid_path = validate_ota_package(path)
 
     if not valid_path:
-        logger.error(f"Invalid file path: {path}. Aborting.")
-        raise SystemExit()
+        message = f"Invalid file path: {path}. Aborting."
+        logger.error(message)
+        raise FileNotFoundError(message)
 
     return VariableManager(path=valid_path)
+
+
+# Signed off by Brian Sanford on 20260629
