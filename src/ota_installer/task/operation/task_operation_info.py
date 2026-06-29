@@ -77,7 +77,7 @@ class TaskOperationContainer:
     reminder: str | None = None
 
 
-def get_task_detail(key) -> TaskOperationContainer:
+def get_task_detail(key: str) -> TaskOperationContainer:
     from ota_installer.task.task_info import TaskID
 
     details = {
@@ -157,3 +157,4 @@ def get_task_detail(key) -> TaskOperationContainer:
     return result
 
 
+# Signed off by Brian Sanford on 20260628
