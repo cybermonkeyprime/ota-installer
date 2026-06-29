@@ -102,3 +102,6 @@ def task_iterator(instance: VariableManager, task_group: StringTuple) -> str:
 def _skipped_task_group_msg() -> str:
     """Displays a message indicating that the task group was skipped."""
     return "Task Group skipped"
+
+
+# Signed off by Brian Sanford on 20260629
