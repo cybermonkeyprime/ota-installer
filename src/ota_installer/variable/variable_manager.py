@@ -81,3 +81,6 @@ class VariableManager:
     def get_dispatcher(self, process_type) -> type | None:
         """Retrieves the dispatcher for the given process type."""
         return DispatcherType.get_dispatcher(process_type, self)
+
+
+# Signed off by Brian Sanford on 20260629
