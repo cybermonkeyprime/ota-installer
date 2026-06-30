@@ -1,5 +1,5 @@
 # src/ota_installer/variables/variable_manager.py
-from dataclasses import dataclass, field
+from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
 from ..directory.directory_info import DirectoryConfig, set_directory
@@ -77,6 +77,21 @@ class VariableManager:
             self.image_name = {
                 "patched": self.variables.magisk_image_name,
             }
+            # self.set_api_adapter()
+
+    def set_api_adapter(self) -> dict:
+        from pprint import pprint
+
+        variable_api = {
+            "files_paths": asdict(self.file_paths),
+            "directory_paths": {
+                "parent": self.ota_parent_directory,
+                "boot_paths": asdict(self.boot_directories),
+            }
+            | asdict(self.directories),
+        }
+        pprint(variable_api)
+        return variable_api
 
     def get_dispatcher(self, process_type) -> type | None:
         """Retrieves the dispatcher for the given process type."""

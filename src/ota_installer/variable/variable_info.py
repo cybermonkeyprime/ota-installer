@@ -26,6 +26,9 @@ class DirectoryNames:
 
     magisk: DirectoryPaths
 
+    def __iter__(self):
+        return iter(self.__dict__.items())
+
 
 @dataclass(frozen=True, slots=True)
 class FileNameInfo:
@@ -46,6 +49,9 @@ class FilePaths:
     magisk: Path
     payload: Path
     log_file: str
+
+    def __iter__(self):
+        return iter(self.__dict__.items())
 
 
 @dataclass(frozen=True, slots=True)
