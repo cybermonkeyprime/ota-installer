@@ -4,6 +4,8 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Self
 
+from ota_installer.plugin.plugin_registry import TASK_PLUGINS
+
 from ..decorator.styled_indent_printer import StylizedIndentPrinter
 from ..display.display_variable_info import (
     DisplayVariablePipeline,
@@ -90,11 +92,14 @@ def task_relay(instance: VariableManager, task_group: StringTuple) -> str:
     if not task_group:
         return _skipped_task_group_msg()
 
-    tasks = (TaskID(name).execute for name in task_group)
+    run_director = task_director
+    get_plugin = TASK_PLUGINS
 
-    for task_class in tasks:
+    task_classes = (get_plugin[name] for name in task_group)
+
+    for task_class in task_classes:
         if callable(task_class):
-            task_director(instance=instance, task_name=task_class)
+            run_director(instance=instance, task_name=task_class)
     return ""
 
 
