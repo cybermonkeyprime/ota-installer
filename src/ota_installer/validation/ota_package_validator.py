@@ -1,6 +1,6 @@
 # src/ota_installer/validation/validate_zip_file.py
 from pathlib import Path
-from zipfile import BadZipFile, ZipFile, is_zipfile
+from zipfile import ZipFile, is_zipfile
 
 import magic
 
@@ -18,25 +18,35 @@ def validate_ota_package(path: str | Path) -> Path | None:
     zip_path = Path(path)
 
     if not zip_path.exists():
-        logger.critical(f"Path does not exist: {zip_path}")
+        message = f"Path does not exist: {zip_path}"
+        report = {"status": "Error", "reason": message}
+        logger.critical(message)
         return None
 
     if not zip_path.is_file():
-        logger.critical(f"Not a file: {zip_path}")
+        message = f"Not a file: {zip_path}"
+        report = {"status": "Error", "reason": message}
+        logger.critical(message)
         return None
 
     mime = magic.from_file(filename=str(object=path), mime=True)
 
     if mime not in VALID_ZIP_MIME_TYPES:
-        logger.critical(f"Unexpected MIME type: {mime}")
+        message = f"Unexpected MIME type: {mime}"
+        report = {"status": "Error", "reason": message}
+        logger.critical(message)
         return None
 
     if not is_zipfile(filename=zip_path):
-        logger.critical("Not a valid zip file format!")
+        message = "Not a valid zip file format!"
+        report = {"status": "Error", "reason": message}
+        logger.critical(message)
         return None
 
     if not ZipFile(zip_path).namelist():
-        logger.critical("Zip archive is empty.")
+        message = "Zip archive is empty."
+        report = {"status": "Error", "reason": message}
+        logger.critical(message)
         return None
 
     return zip_path.resolve()

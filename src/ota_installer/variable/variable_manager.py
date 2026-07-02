@@ -77,19 +77,21 @@ class VariableManager:
             self.image_name = {
                 "patched": self.variables.magisk_image_name,
             }
-            # self.set_api_adapter()
+            # self.api_adapter()
 
-    def set_api_adapter(self) -> dict:
+    def api_adapter(self) -> tuple:
         from pprint import pprint
 
-        variable_api = {
-            "files_paths": asdict(self.file_paths),
-            "directory_paths": {
-                "parent": self.ota_parent_directory,
-                "boot_paths": asdict(self.boot_directories),
+        variable_api = tuple(
+            {
+                "files_paths": asdict(self.file_paths),
+                "directory_paths": {
+                    "parent": self.ota_parent_directory,
+                    "boot_paths": asdict(self.boot_directories),
+                }
+                | asdict(self.directories),
             }
-            | asdict(self.directories),
-        }
+        )
         pprint(variable_api)
         return variable_api
 

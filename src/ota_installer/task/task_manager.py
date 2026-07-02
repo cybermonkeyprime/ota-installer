@@ -59,7 +59,7 @@ class TaskManager:
 
     def execute_iteration(self, task_group) -> None:
         """Executes the task iteration for the given task group."""
-        task_iterator(instance=self.variable, task_group=task_group)
+        task_relay(instance=self.variable, task_group=task_group)
 
 
 def task_director(instance: VariableManager, task_name: Callable) -> None:
@@ -82,7 +82,7 @@ def _is_executable(task: object) -> bool:
 StringTuple = tuple[str, ...]
 
 
-def task_iterator(instance: VariableManager, task_group: StringTuple) -> str:
+def task_relay(instance: VariableManager, task_group: StringTuple) -> str:
     """Iterates over a task group and executes each task."""
 
     logger.debug(f"Iterating over task group: {task_group}")
@@ -90,9 +90,9 @@ def task_iterator(instance: VariableManager, task_group: StringTuple) -> str:
     if not task_group:
         return _skipped_task_group_msg()
 
-    for task_name in task_group:
-        task_id = TaskID(task_name)
-        task_class = task_id.execute
+    tasks = (TaskID(name).execute for name in task_group)
+
+    for task_class in tasks:
         if callable(task_class):
             task_director(instance=instance, task_name=task_class)
     return ""
