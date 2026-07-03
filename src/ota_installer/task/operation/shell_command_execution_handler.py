@@ -10,13 +10,13 @@ from ...log_setup import logger
 from .task_operation_info import Indents, Messages
 
 
-class TaskType(StrEnum):
+class ShellType(StrEnum):
     EXECUTE = Messages.EXECUTE.value
     OUTPUT = ""
 
 
 @dataclass(frozen=True, slots=True)
-class Task:
+class Shell:
     prompt = partial(
         decorator.ConfirmationPrompt,
         indent=Indents.EXECUTE,
@@ -28,13 +28,13 @@ class Task:
 
 
 @dataclass
-class TaskOperationExecutor:
+class ShellCommandExecutionHandler:
     """Executes shell commands with confirmation prompts and error handling."""
 
     command: str
 
-    @Task.prompt(TaskType.EXECUTE)
-    @Task.on_keypress()
+    @Shell.prompt(ShellType.EXECUTE)
+    @Shell.on_keypress()
     @decorator.Encapsulate()
     def execute(self) -> Self:
         """Executes the command without returning output."""
@@ -42,8 +42,8 @@ class TaskOperationExecutor:
             logger.exception(f"Command execution failed: {self.command}")
         return self
 
-    @Task.prompt(TaskType.OUTPUT)
-    @Task.on_keypress()
+    @Shell.prompt(ShellType.OUTPUT)
+    @Shell.on_keypress()
     @decorator.Encapsulate()
     def execute_and_return_output(self, output_name) -> str:
         """Executes the command and returns its output."""
@@ -57,4 +57,4 @@ class TaskOperationExecutor:
         return result
 
 
-# Signed off by Brian Sanford on 20260626
+# Signed off by Brian Sanford on 2 260626

@@ -24,14 +24,11 @@ class TaskGroupRenderer:
         """
         from .. import decorator
 
-        # 1. This encapsulates your internal execution context
         def result():
             return self.task_class.get_member_names()
 
-        # 2. Define the execution closure and apply your outer decorator
         @decorator.PaddedFooterWrapper()
         def execute_pipeline():
-            # Apply your dynamic inner decorator
             decorated_function: Callable = decorator.ConfirmationPrompt(
                 char=" ", comment=f"perform the {self.task_name}s"
             )(result)
