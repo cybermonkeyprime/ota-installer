@@ -12,7 +12,6 @@ from ..display.display_variable_info import (
 )
 from ..log_setup import add_structured_log_sink, logger
 from ..variable.variable_manager import VariableManager
-from .task_info import TaskID
 
 
 @dataclass
@@ -50,18 +49,18 @@ class TaskManager:
         logger.debug(
             f"TaskManager.log_and_process_variables(): {self.variable=}"
         )
-        if self.variable is None:
-            logger.error("Variable manager is not initialized.")
-        else:
+        if self.variable:
             (
                 DisplayVariablePipeline(self.variable)
                 .process_directory_names()
                 .process_file_names()
             )
+        else:
+            logger.error("Variable manager is not initialized.")
 
     def execute_iteration(self, task_group) -> None:
         """Executes the task iteration for the given task group."""
-        task_relay(instance=self.variable, task_group=task_group)
+        task_pipeline(instance=self.variable, task_group=task_group)
 
 
 def task_director(instance: VariableManager, task_name: Callable) -> None:
@@ -84,7 +83,7 @@ def _is_executable(task: object) -> bool:
 StringTuple = tuple[str, ...]
 
 
-def task_relay(instance: VariableManager, task_group: StringTuple) -> str:
+def task_pipeline(instance: VariableManager, task_group: StringTuple) -> str:
     """Iterates over a task group and executes each task."""
 
     logger.debug(f"Iterating over task group: {task_group}")
