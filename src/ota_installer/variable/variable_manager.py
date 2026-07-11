@@ -46,22 +46,18 @@ class VariableManager:
             file_parts=parse_file_name(raw_name=self.path),
         )
         if self.variables:
-            file_path = self.variables.file_path
-            file_part = self.variables.file_parts
             self.file_name = VariableType.FILE_NAME.build(
-                path=file_path,
-                stem=file_path.stem,
-                parts=file_part,
-                device=file_part.device,
-                version=file_part.build_id,
+                path=self.file_path,
+                stem=self.file_path.stem,
+                parts=self.file_parts,
+                device=self.file_parts.device,
+                version=self.file_parts.build_id,
             )
-            create_image = self.file_name.parts.create_image
-            log_file = self.file_name.parts.log_file
             self.file_paths = VariableType.FILE_PATH.build(
-                stock=create_image(FileImageName.STOCK),
-                magisk=create_image(FileImageName.MAGISK),
-                payload=create_image(FileImageName.PAYLOAD),
-                log_file=log_file,
+                stock=self.create_image(FileImageName.STOCK),
+                magisk=self.create_image(FileImageName.MAGISK),
+                payload=self.create_image(FileImageName.PAYLOAD),
+                log_file=self.log_file,
             )
 
             self.ota_parent_directory = self.path.parent
@@ -77,7 +73,24 @@ class VariableManager:
             self.image_name = {
                 "patched": self.variables.magisk_image_name,
             }
+
             # self.api_adapter()
+
+    @property
+    def file_path(self):
+        return self.variables.file_path
+
+    @property
+    def file_parts(self):
+        return self.variables.file_parts
+
+    @property
+    def create_image(self):
+        return self.file_parts.create_image
+
+    @property
+    def log_file(self):
+        return self.file_parts.log_file
 
     def api_adapter(self) -> tuple:
         from pprint import pprint
