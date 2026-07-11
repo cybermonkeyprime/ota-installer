@@ -1,16 +1,16 @@
 # src/ota_installer/handler/variable_handler.py
 from pathlib import Path
 
-from ..variable.variable_info import FileNameContainer
+from ..variable.variable_info import FileNameRenderer
 
 StrPathDict = dict[str, Path | str]
 
 
-def parse_file_name(raw_name: Path) -> FileNameContainer:
+def parse_file_name(raw_name: Path) -> FileNameRenderer:
     """Parse the raw file name into its components."""
 
     device, pkg_type, build_id, *signature = raw_name.stem.split(sep="-")
-    return FileNameContainer(
+    return FileNameRenderer(
         device=device,
         pkg_type=pkg_type,
         build_id=build_id,

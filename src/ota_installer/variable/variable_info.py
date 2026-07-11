@@ -36,7 +36,7 @@ class FileNameInfo:
 
     path: Path
     stem: str
-    parts: FileNameContainer
+    parts: FileNameRenderer
     device: str
     version: str
 
@@ -55,7 +55,7 @@ class FilePaths:
 
 
 @dataclass(frozen=True, slots=True)
-class FileNameContainer:
+class FileNameRenderer:
     """Container for file name components."""
 
     device: str
@@ -85,7 +85,7 @@ class VariableContext:
     file_path: Path
     magisk_image_name: str
     file_path_stem: str
-    file_parts: FileNameContainer
+    file_parts: FileNameRenderer
 
 
 @dataclass(frozen=True)
