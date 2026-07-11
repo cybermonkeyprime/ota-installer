@@ -18,18 +18,6 @@ def parse_file_name(raw_name: Path) -> FileNameContainer:
     )
 
 
-def is_base_global(build_id: str) -> bool:
-    """Check if the build ID is base global."""
-    return not any(char.isalpha() for char in build_id.split(".")[-1])
-
-
-def set_log_file(file_name_parts: FileNameContainer) -> str:
-    """Generate a log file path based on device and version."""
-    device = file_name_parts.device
-    version = file_name_parts.build_id
-    return f"/tmp/ota-installer_{device}_{version}.txt"
-
-
 def set_variable_manager(path: Path) -> "VariableManager":
     from ..log_setup import logger
     from ..validation.ota_package_validator import validate_ota_package

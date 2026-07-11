@@ -4,11 +4,10 @@ from pathlib import Path
 
 from ..directory.directory_info import DirectoryConfig, set_directory
 from ..dispatcher.dispatcher_info import DispatcherType
-from ..image.generic_image_info import FileImageData, FileImageNames
+from ..image.generic_image_info import FileImageData, FileImageName
 from ..image.magisk_image_info import MagiskImagePath
 from ..variable.variable_functions import (
     parse_file_name,
-    set_log_file,
 )
 from .variable_info import (
     DirectoryNames,
@@ -47,21 +46,22 @@ class VariableManager:
             file_parts=parse_file_name(raw_name=self.path),
         )
         if self.variables:
+            file_path = self.variables.file_path
+            file_part = self.variables.file_parts
             self.file_name = VariableType.FILE_NAME.build(
-                path=self.variables.file_path,
-                stem=self.variables.file_path_stem,
-                parts=self.variables.file_parts,
-                device=self.variables.file_parts.device,
-                version=self.variables.file_parts.build_id,
+                path=file_path,
+                stem=file_path.stem,
+                parts=file_part,
+                device=file_part.device,
+                version=file_part.build_id,
             )
-            image_data = FileImageData(
-                self.file_name.device, self.file_name.version
-            )
+            create_image = self.file_name.parts.create_image
+            log_file = self.file_name.parts.log_file
             self.file_paths = VariableType.FILE_PATH.build(
-                stock=image_data(FileImageNames.STOCK),
-                magisk=image_data(FileImageNames.MAGISK),
-                payload=image_data(FileImageNames.PAYLOAD),
-                log_file=set_log_file(self.file_name.parts),
+                stock=create_image(FileImageName.STOCK),
+                magisk=create_image(FileImageName.MAGISK),
+                payload=create_image(FileImageName.PAYLOAD),
+                log_file=log_file,
             )
 
             self.ota_parent_directory = self.path.parent

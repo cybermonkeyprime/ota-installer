@@ -6,7 +6,7 @@ from typing import Self
 
 from ..dispatcher.dispatcher_info import DispatcherTemplate, DispatcherType
 from ..plugin.plugin_registry import dispatcher_plugin
-from .generic_image_info import FileImageNames
+from .generic_image_info import FileImageName
 
 
 @dataclass(frozen=True, slots=True)
@@ -19,7 +19,7 @@ class BootImageContainer:
 
     @classmethod
     def create(cls) -> Self:
-        return cls(**FileImageNames.boot_directories())
+        return cls(**FileImageName.boot_directories())
 
 
 class BootImageType(StrEnum):
@@ -56,5 +56,3 @@ class ImageTypeDispatcher(DispatcherTemplate):
         type value.
         """
         return BootImageType.validate_key(key)
-
-

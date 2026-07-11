@@ -86,7 +86,7 @@ class DirectoryHandler(DispatcherTemplate):
 # functions
 def set_directory(parent_directory: Path) -> DirectoryConfig:
     """Creates a DirectoryTypeDefinition for the specified parent directory."""
-    from ..image.generic_image_info import FileImageNames
+    from ..image.generic_image_info import FileImageName
 
     logger.debug("Creating Directories")
     if not parent_directory.exists() or not parent_directory.is_dir():
@@ -96,8 +96,8 @@ def set_directory(parent_directory: Path) -> DirectoryConfig:
 
     return DirectoryConfig(
         parent_directory,
-        (FileImageNames.STOCK.fetch_directory_path()),
-        FileImageNames.MAGISK.fetch_directory_path(),
+        (FileImageName.STOCK.fetch_directory_path()),
+        FileImageName.MAGISK.fetch_directory_path(),
     )
 
 

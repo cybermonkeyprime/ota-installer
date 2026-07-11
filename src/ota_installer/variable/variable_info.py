@@ -63,6 +63,20 @@ class FileNameContainer:
     build_id: str  # contains [0-9|\.]
     signature: str | None = None
 
+    @property
+    def log_file(self) -> str:
+        """Generate a log file path based on device and version."""
+        return f"/tmp/ota-installer_{self.device}_{self.build_id}.txt"
+
+    @property
+    def image_data(self):
+        from ..image.generic_image_info import FileImageData
+
+        return FileImageData(self.device, self.build_id)
+
+    def create_image(self, image):
+        return self.image_data(image)
+
 
 @dataclass(frozen=True, slots=True)
 class VariableContext:
