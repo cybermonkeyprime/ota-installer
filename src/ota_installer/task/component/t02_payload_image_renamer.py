@@ -7,7 +7,7 @@ from ota_installer.task.task_info import TaskID
 from ... import decorator
 from ...plugin.plugin_registry import task_plugin
 from ...task.task_group_info import PreparationTask
-from ...variable.variable_manager import VariableManager
+from ...variable.variable_director import VariableDirector
 from .base_task import BaseTask
 
 TITLE = TaskID.RENAME_PAYLOAD_IMAGE
@@ -17,7 +17,7 @@ TITLE = TaskID.RENAME_PAYLOAD_IMAGE
 class PayloadImageRenamer(BaseTask):
     """Renames the payload image file to a specified path."""
 
-    instance: VariableManager = field(default_factory=VariableManager)
+    instance: VariableDirector = field(default_factory=VariableDirector)
 
     def __post_init__(self) -> None:
         """Initializes the command string for renaming the payload image."""

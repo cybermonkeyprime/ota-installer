@@ -6,7 +6,7 @@ from ... import decorator
 from ...plugin.plugin_registry import task_plugin
 from ...task.task_group_info import PreparationTask
 from ...task.task_info import TaskID
-from ...variable.variable_manager import VariableManager
+from ...variable.variable_director import VariableDirector
 from .base_task import BaseTask
 
 TITLE = TaskID.EXTRACT_PAYLOAD_IMAGE
@@ -16,7 +16,7 @@ TITLE = TaskID.EXTRACT_PAYLOAD_IMAGE
 class PayloadImageExtractor(BaseTask):
     """Extracts payload images from a specified archive file."""
 
-    instance: VariableManager = field(default_factory=VariableManager)
+    instance: VariableDirector = field(default_factory=VariableDirector)
 
     def __post_init__(self):
         """Initializes the command string for extracting the payload image."""

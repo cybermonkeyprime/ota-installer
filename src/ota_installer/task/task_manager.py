@@ -11,7 +11,7 @@ from ..display.display_variable_info import (
     DisplayVariablePipeline,
 )
 from ..log_setup import add_structured_log_sink, logger
-from ..variable.variable_manager import VariableManager
+from ..variable.variable_director import VariableDirector
 
 
 @dataclass
@@ -20,7 +20,7 @@ class TaskManager:
 
     file_name: Path = field(default_factory=Path)
     function: Callable = field(default=type)
-    variable: VariableManager = field(init=False)
+    variable: VariableDirector = field(init=False)
 
     def set_file_name(self, arguments: str) -> Self:
         """Sets the file name for the task manager."""
@@ -29,9 +29,9 @@ class TaskManager:
 
     def set_variable(self) -> Self:
         """Initializes the variable manager and sets up logging."""
-        from ..variable.variable_functions import set_variable_manager
+        from ..variable.variable_functions import set_variable_director
 
-        self.variable = set_variable_manager(self.file_name)
+        self.variable = set_variable_director(self.file_name)
         if self.variable:
             add_structured_log_sink(self.variable.file_paths.log_file)
         else:
@@ -63,7 +63,7 @@ class TaskManager:
         task_pipeline(instance=self.variable, task_group=task_group)
 
 
-def task_director(instance: VariableManager, task_name: Callable) -> None:
+def task_director(instance: VariableDirector, task_name: Callable) -> None:
     """Manages the initiation of task processing."""
     logger.debug(f"Initiating task: {task_name}")
     task = task_name(instance=instance)
@@ -83,7 +83,7 @@ def _is_executable(task: object) -> bool:
 StringTuple = tuple[str, ...]
 
 
-def task_pipeline(instance: VariableManager, task_group: StringTuple) -> str:
+def task_pipeline(instance: VariableDirector, task_group: StringTuple) -> str:
     """Iterates over a task group and executes each task."""
 
     logger.debug(f"Iterating over task group: {task_group}")

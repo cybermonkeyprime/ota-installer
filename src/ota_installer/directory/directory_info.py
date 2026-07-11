@@ -19,7 +19,7 @@ class DirectoryType(StrEnum):
     REMOTE = auto()
 
     @classmethod
-    def from_object(cls, obj: "VariableManager") -> Mapping[str, Path]:
+    def from_object(cls, obj: "VariableDirector") -> Mapping[str, Path]:
         """Creates a directory collection from the boot image."""
         boot_image = obj.directory.boot_image
         magisk_image = obj.directories.magisk

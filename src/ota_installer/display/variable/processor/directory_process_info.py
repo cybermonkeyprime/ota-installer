@@ -2,7 +2,7 @@
 from dataclasses import dataclass, field
 from enum import Enum
 
-from ....variable.variable_manager import VariableManager
+from ....variable.variable_director import VariableDirector
 from ...variable.processor.base_process_info import BaseProcessor
 
 
@@ -32,8 +32,8 @@ class DirectoryItemInfo(Enum):
 class DirectoryIterationProcessor(BaseProcessor):
     """Processes directory iterations for variable management."""
 
-    processing_function: VariableManager = field(
-        default_factory=VariableManager
+    processing_function: VariableDirector = field(
+        default_factory=VariableDirector
     )
     directory_names: tuple = field(init=False)
     directory_type: str = field(init=False)

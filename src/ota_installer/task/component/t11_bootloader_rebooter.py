@@ -4,7 +4,7 @@ from dataclasses import dataclass, field
 from ... import decorator
 from ...plugin.plugin_registry import task_plugin
 from ...task.task_group_info import ApplicationTask
-from ...variable.variable_manager import VariableManager
+from ...variable.variable_director import VariableDirector
 from ..task_info import TaskID
 from .base_task import BaseTask
 
@@ -15,7 +15,7 @@ TITLE = TaskID.REBOOT_TO_BOOTLOADER
 class BootloaderRebooter(BaseTask):
     """Handles the rebooting process to the bootloader."""
 
-    instance: VariableManager = field(default_factory=VariableManager)
+    instance: VariableDirector = field(default_factory=VariableDirector)
 
     def __post_init__(self) -> None:
         """Initializes the BootloaderRebooter with command string."""

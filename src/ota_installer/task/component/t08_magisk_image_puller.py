@@ -9,7 +9,7 @@ from ...image.magisk_image_info import (
 from ...log_setup import logger
 from ...plugin.plugin_registry import task_plugin
 from ...task.task_group_info import ApplicationTask, MigrationTask
-from ...variable.variable_manager import VariableManager
+from ...variable.variable_director import VariableDirector
 from ..task_info import TaskID
 from .base_task import BaseTask
 
@@ -20,7 +20,7 @@ TITLE = TaskID.PULL_MAGISK_IMAGE
 class MagiskImagePuller(BaseTask):
     """Task to pull the patched boot image using adb."""
 
-    instance: VariableManager = field(default_factory=VariableManager)
+    instance: VariableDirector = field(default_factory=VariableDirector)
 
     def __post_init__(self) -> None:
         """Initializes the command string for pulling the image."""

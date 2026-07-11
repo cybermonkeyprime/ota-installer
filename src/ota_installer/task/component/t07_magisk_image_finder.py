@@ -6,7 +6,7 @@ from ... import decorator
 from ...plugin.plugin_registry import task_plugin
 from ...task.task_group_info import MigrationTask
 from ...task.task_info import TaskID
-from ...variable.variable_manager import VariableManager
+from ...variable.variable_director import VariableDirector
 from .base_task import BaseTask
 
 TITLE = TaskID.FIND_MAGISK_IMAGE
@@ -14,7 +14,7 @@ TITLE = TaskID.FIND_MAGISK_IMAGE
 
 @dataclass
 class MagiskImageFinder(BaseTask):
-    instance: VariableManager = field(default_factory=VariableManager)
+    instance: VariableDirector = field(default_factory=VariableDirector)
 
     def __post_init__(self) -> None:
         remote_path = Path(self.instance.directories.magisk.remote_path)

@@ -2,7 +2,7 @@
 from dataclasses import dataclass
 from typing import Self
 
-from ..variable.variable_manager import VariableManager
+from ..variable.variable_director import VariableDirector
 from .variable.processor.directory_process_info import (
     DirectoryIterationProcessor,
 )
@@ -18,16 +18,16 @@ class DisplayStep:
     processor_type: type
     config: dict[str, object]
 
-    def build(self, variable_manager: VariableManager):
-        processor = self.processor_type(variable_manager)
+    def build(self, variable_director: VariableDirector):
+        processor = self.processor_type(variable_director)
 
         for key, value in self.config.items():
             processor.set_item(key, value)
 
         return processor
 
-    def run(self, variable_manager: VariableManager) -> None:
-        processor = self.build(variable_manager)
+    def run(self, variable_director: VariableDirector) -> None:
+        processor = self.build(variable_director)
         processor.process_items()
 
 
@@ -91,31 +91,31 @@ FILE_DISPLAY_STEPS = (
 
 
 def process_display_steps(
-    variable_manager: VariableManager,
+    variable_director: VariableDirector,
     steps: tuple[DisplayStep, ...],
 ) -> None:
     for step in steps:
-        step.run(variable_manager)
+        step.run(variable_director)
 
 
-def process_directory_display(variable_manager: VariableManager) -> None:
-    process_display_steps(variable_manager, DIRECTORY_DISPLAY_STEPS)
+def process_directory_display(variable_director: VariableDirector) -> None:
+    process_display_steps(variable_director, DIRECTORY_DISPLAY_STEPS)
 
 
-def process_file_display(variable_manager: VariableManager) -> None:
-    process_display_steps(variable_manager, FILE_DISPLAY_STEPS)
+def process_file_display(variable_director: VariableDirector) -> None:
+    process_display_steps(variable_director, FILE_DISPLAY_STEPS)
 
 
 @dataclass(frozen=True, slots=True)
 class DisplayVariablePipeline:
-    variable_manager: VariableManager
+    variable_director: VariableDirector
 
     def process_directory_names(self) -> Self:
-        process_directory_display(self.variable_manager)
+        process_directory_display(self.variable_director)
         return self
 
     def process_file_names(self) -> Self:
-        process_file_display(self.variable_manager)
+        process_file_display(self.variable_director)
         return self
 
 

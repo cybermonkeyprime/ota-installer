@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import Self
 
 from ....dispatcher.dispatcher_info import DispatcherType
-from ....variable.variable_manager import VariableManager
+from ....variable.variable_director import VariableDirector
 from ...variable.processor.base_process_info import BaseProcessor
 
 
@@ -12,8 +12,8 @@ from ...variable.processor.base_process_info import BaseProcessor
 class VariableFileProcessor(BaseProcessor):
     """Processes variable files for the dispatcher."""
 
-    processing_function: VariableManager = field(
-        default_factory=VariableManager
+    processing_function: VariableDirector = field(
+        default_factory=VariableDirector
     )
     title: str = field(init=False)
     value: str = field(init=False)
@@ -52,8 +52,8 @@ class VariableFileProcessor(BaseProcessor):
 class FileIterationProcessor(BaseProcessor):
     """Processes a list of file names and builds a variable table."""
 
-    processing_function: VariableManager = field(
-        default_factory=VariableManager
+    processing_function: VariableDirector = field(
+        default_factory=VariableDirector
     )
     file_names: tuple[str, ...] = field(init=False)
 

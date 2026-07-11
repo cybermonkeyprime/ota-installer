@@ -5,7 +5,7 @@ from pathlib import Path
 from ... import decorator
 from ...plugin.plugin_registry import task_plugin
 from ...task.task_group_info import ApplicationTask
-from ...variable.variable_manager import VariableManager
+from ...variable.variable_director import VariableDirector
 from ..operation.task_operation_processor import image_handler
 from ..task_info import TaskID
 from .base_task import BaseTask
@@ -17,7 +17,7 @@ TITLE = TaskID.BOOT_TO_MAGISK_IMAGE
 class MagiskImageBooter(BaseTask):
     """Task to flash a Magisk image to a device using fastboot."""
 
-    instance: VariableManager = field(default_factory=VariableManager)
+    instance: VariableDirector = field(default_factory=VariableDirector)
 
     def __post_init__(self) -> None:
         """Initializes the command string for flashing the Magisk image."""

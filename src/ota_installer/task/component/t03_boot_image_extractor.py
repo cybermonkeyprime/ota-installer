@@ -5,7 +5,7 @@ from pathlib import Path
 from ... import decorator
 from ...plugin.plugin_registry import task_plugin
 from ...task.task_group_info import PreparationTask
-from ...variable.variable_manager import VariableManager
+from ...variable.variable_director import VariableDirector
 from ..operation.task_operation_processor import image_handler
 from ..task_info import TaskID
 from .base_task import BaseTask
@@ -17,7 +17,7 @@ TITLE = TaskID.EXTRACT_STOCK_BOOT_IMAGE
 class BootImageExtractor(BaseTask):
     """Extracts the stock boot image from a given payload file."""
 
-    instance: VariableManager = field(default_factory=VariableManager)
+    instance: VariableDirector = field(default_factory=VariableDirector)
 
     def __post_init__(self) -> None:
         """Initializes the command string for extracting the boot image."""

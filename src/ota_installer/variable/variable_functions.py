@@ -1,4 +1,4 @@
-# src/ota_installer/handler/variable_handler.py
+# src/ota_installer/variable/variable_functions.py
 from pathlib import Path
 
 from ..variable.variable_info import FileNameRenderer
@@ -18,12 +18,12 @@ def parse_file_name(raw_name: Path) -> FileNameRenderer:
     )
 
 
-def set_variable_manager(path: Path) -> "VariableManager":
+def set_variable_director(path: Path) -> "VariableDirector":
     from ..log_setup import logger
     from ..validation.ota_package_validator import validate_ota_package
-    from ..variable.variable_manager import VariableManager
+    from ..variable.variable_director import VariableDirector
 
-    """Create a VariableManager instance after validating the file path. """
+    """Create a VariableDirector instance after validating the file path. """
 
     valid_path = validate_ota_package(path)
 
@@ -32,7 +32,7 @@ def set_variable_manager(path: Path) -> "VariableManager":
         logger.error(message)
         raise FileNotFoundError(message)
 
-    return VariableManager(path=valid_path)
+    return VariableDirector(path=valid_path)
 
 
 # Signed off by Brian Sanford on 20260629

@@ -4,7 +4,7 @@ from dataclasses import dataclass, field
 from ... import decorator
 from ...plugin.plugin_registry import task_plugin
 from ...task.task_group_info import MigrationTask
-from ...variable.variable_manager import VariableManager
+from ...variable.variable_director import VariableDirector
 from ..task_info import TaskID
 from .base_task import BaseTask
 
@@ -15,7 +15,7 @@ TITLE = TaskID.CHECK_ADB_CONNECTION
 class ADBConnectionChecker(BaseTask):
     """Checks the ADB connection status and performs the task."""
 
-    instance: VariableManager = field(default_factory=VariableManager)
+    instance: VariableDirector = field(default_factory=VariableDirector)
 
     def __post_init__(self) -> None:
         """Initializes the ADBConnectionChecker with command string."""

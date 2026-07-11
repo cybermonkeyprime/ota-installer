@@ -1,10 +1,10 @@
-# src/ota_installer/variables/variable_manager.py
+# src/ota_installer/variables/variable_director.py
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
 from ..directory.directory_info import DirectoryConfig, set_directory
 from ..dispatcher.dispatcher_info import DispatcherType
-from ..image.generic_image_info import FileImageData, FileImageName
+from ..image.generic_image_info import FileImageName
 from ..image.magisk_image_info import MagiskImagePath
 from ..variable.variable_functions import (
     parse_file_name,
@@ -20,7 +20,7 @@ from .variable_info import (
 
 
 @dataclass
-class VariableManager:
+class VariableDirector:
     """Manages variables for OTA installation."""
 
     path: Path = field(default_factory=Path)
@@ -86,6 +86,7 @@ class VariableManager:
 
     @property
     def create_image(self):
+        """property that behaves like a method."""
         return self.file_parts.create_image
 
     @property

@@ -6,7 +6,7 @@ from ... import decorator
 from ...plugin.plugin_registry import task_plugin
 from ...task.task_group_info import MigrationTask
 from ...task.task_info import TaskID
-from ...variable.variable_manager import VariableManager
+from ...variable.variable_director import VariableDirector
 from .base_task import BaseTask
 
 TITLE = TaskID.PUSH_STOCK_IMAGE
@@ -16,7 +16,7 @@ TITLE = TaskID.PUSH_STOCK_IMAGE
 class StockBootImagePusher(BaseTask):
     """Task to push the stock boot image to the device using adb."""
 
-    instance: VariableManager = field(default_factory=VariableManager)
+    instance: VariableDirector = field(default_factory=VariableDirector)
 
     def __post_init__(self) -> None:
         """Initializes the command string for pushing the stock boot image."""
