@@ -24,11 +24,11 @@ class FileImageData:
     device: str
     build_id: str
 
-    def __call__(self, image: FileImageNames | str) -> Path:
-        if isinstance(image, FileImageNames):
+    def __call__(self, image: FileImageName | str) -> Path:
+        if isinstance(image, FileImageName):
             return image.path(self.device, self.build_id)
 
-        return FileImageNames[image.upper()].path(
+        return FileImageName[image.upper()].path(
             self.device,
             self.build_id,
         )
@@ -48,7 +48,7 @@ class FileImageInfo:
 
 
 # enums
-class FileImageNames(Enum):
+class FileImageName(Enum):
     PAYLOAD = FileImageInfo(Path.home(), "payload", "bin")
     STOCK = FileImageInfo(
         Path.home() / "Android" / "boot-images" / "stock",
@@ -107,8 +107,6 @@ class FileTypeDispatcher(DispatcherTemplate):
         Initializes the collection with normalized keys and corresponding
         file paths.
         """
-        self.collection = FileImageNames.create_path_dictionary(
+        self.collection = FileImageName.create_path_dictionary(
             self.obj.file_paths
         )
-
-
