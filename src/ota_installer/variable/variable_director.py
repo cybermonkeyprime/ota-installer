@@ -7,13 +7,13 @@ from ..dispatcher.dispatcher_info import DispatcherType
 from ..image.generic_image_info import FileImageName
 from ..image.magisk_image_info import MagiskImagePath
 from ..variable.variable_functions import (
-    parse_file_name,
+    get_file_parts,
 )
 from .variable_info import (
     DirectoryNames,
     DirectoryPaths,
     FileNameInfo,
-    FilePaths,
+    FilePathRenderer,
     VariableRenderer,
     VariableType,
 )
@@ -31,7 +31,7 @@ class VariableDirector:
 
     """dicts"""
     variables: VariableRenderer = field(init=False)
-    file_paths: FilePaths = field(init=False)
+    file_paths: FilePathRenderer = field(init=False)
     file_name: FileNameInfo = field(init=False)
     image_name: dict[str, str] = field(init=False)
     directories: DirectoryNames = field(init=False)
@@ -39,25 +39,15 @@ class VariableDirector:
     def __post_init__(self) -> None:
         from ..image.boot_image_info import BootImageContainer
 
-        self.variables = VariableType.CONTEXT.build(
-            file_path=self.path,
-            magisk_image_name="place_holder",
-            file_path_stem=self.path.stem,
-            file_parts=parse_file_name(raw_name=self.path),
-        )
+        self.variables = VariableType.CONTEXT.build(file_path=self.path)
         if self.variables:
             self.file_name = VariableType.FILE_NAME.build(
                 path=self.file_path,
-                stem=self.file_path.stem,
                 parts=self.file_parts,
-                device=self.file_parts.device,
-                version=self.file_parts.build_id,
             )
             self.file_paths = VariableType.FILE_PATH.build(
-                stock=self.create_image(FileImageName.STOCK),
-                magisk=self.create_image(FileImageName.MAGISK),
-                payload=self.create_image(FileImageName.PAYLOAD),
-                log_file=self.log_file,
+                device=self.file_parts.device,
+                build_id=self.file_parts.build_id,
             )
 
             self.ota_parent_directory = self.path.parent
@@ -77,21 +67,12 @@ class VariableDirector:
             # self.api_adapter()
 
     @property
-    def file_path(self):
+    def file_path(self) -> Path:
         return self.variables.file_path
 
     @property
-    def file_parts(self):
+    def file_parts(self) -> Path:
         return self.variables.file_parts
-
-    @property
-    def create_image(self):
-        """property that behaves like a method."""
-        return self.file_parts.create_image
-
-    @property
-    def log_file(self):
-        return self.file_parts.log_file
 
     def api_adapter(self) -> tuple:
         from pprint import pprint

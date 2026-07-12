@@ -4,6 +4,8 @@ from enum import Enum
 from pathlib import Path
 from typing import Any, Generic, TypeVar
 
+from ota_installer.image.generic_image_info import FileImageName
+
 from ..dispatcher.dispatcher_info import DispatcherTemplate, DispatcherType
 from ..plugin.plugin_registry import dispatcher_plugin
 
@@ -35,23 +37,61 @@ class FileNameInfo:
     """Represents information about a file name."""
 
     path: Path
-    stem: str
     parts: FileNameRenderer
-    device: str
-    version: str
+
+    @property
+    def stem(self) -> str:
+        return self.path.stem
+
+    @property
+    def device(self) -> str:
+        return self.parts.device
+
+    @property
+    def version(self) -> str:
+        return self.parts.build_id
 
 
 @dataclass(frozen=True, slots=True)
-class FilePaths:
+class FilePathRenderer:
     """Container for file paths used in the OTA installer."""
 
-    stock: Path
-    magisk: Path
-    payload: Path
-    log_file: str
+    device: str
+    build_id: str
 
     def __iter__(self):
         return iter(self.__dict__.items())
+
+    @property
+    def image_data(self) -> "FileImageData":
+        from ..image.generic_image_info import FileImageData
+
+        return FileImageData(self.device, self.build_id)
+
+    @property
+    def stock(self) -> str:
+        return self.create_image(FileImageName.STOCK)
+
+    @property
+    def magisk(self) -> str:
+        return self.create_image(FileImageName.MAGISK)
+
+    @property
+    def payload(self) -> str:
+        return self.create_image(FileImageName.PAYLOAD)
+
+    @property
+    def log_file(self) -> Path:
+        """Generate a log file path based on device and version."""
+        from tempfile import gettempdir
+
+        return (
+            Path(gettempdir())
+            / f"ota-installer_{self.device}_{self.build_id}.txt"
+        )
+
+    def create_image(self, image):
+        return self.image_data(image)
 
 
 @dataclass(frozen=True, slots=True)
@@ -63,29 +103,34 @@ class FileNameRenderer:
     build_id: str  # contains [0-9|\.]
     signature: str | None = None
 
-    @property
-    def log_file(self) -> str:
-        """Generate a log file path based on device and version."""
-        return f"/tmp/ota-installer_{self.device}_{self.build_id}.txt"
-
-    @property
-    def image_data(self):
-        from ..image.generic_image_info import FileImageData
-
-        return FileImageData(self.device, self.build_id)
-
-    def create_image(self, image):
-        return self.image_data(image)
-
 
 @dataclass(frozen=True, slots=True)
 class VariableContext:
     """Container for variable types used in OTA installation."""
 
     file_path: Path
-    magisk_image_name: str
-    file_path_stem: str
-    file_parts: FileNameRenderer
+
+    @property
+    def file_path_stem(self):
+        return self.file_path.stem
+
+    @property
+    def magisk_image_name(self) -> str:
+        return "place_holder"
+
+    @property
+    def file_parts(self) -> FileNameRenderer:
+        """Parse the raw file name into its components."""
+
+        device, pkg_type, build_id, *signature = self.file_path.stem.split(
+            sep="-"
+        )
+        return FileNameRenderer(
+            device=device,
+            pkg_type=pkg_type,
+            build_id=build_id,
+            signature="".join(signature),
+        )
 
 
 @dataclass(frozen=True)
@@ -99,7 +144,7 @@ class VariableRenderer(Generic[T]):
 class VariableType(Enum):
     CONTEXT = VariableRenderer(VariableContext)
     FILE_NAME = VariableRenderer(FileNameInfo)
-    FILE_PATH = VariableRenderer(FilePaths)
+    FILE_PATH = VariableRenderer(FilePathRenderer)
     DIRECTORY = VariableRenderer(DirectoryNames)
 
     def build(self, **kwargs: Any) -> Any:

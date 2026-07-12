@@ -6,7 +6,7 @@ from ..variable.variable_info import FileNameRenderer
 StrPathDict = dict[str, Path | str]
 
 
-def parse_file_name(raw_name: Path) -> FileNameRenderer:
+def get_file_parts(raw_name: Path) -> FileNameRenderer:
     """Parse the raw file name into its components."""
 
     device, pkg_type, build_id, *signature = raw_name.stem.split(sep="-")

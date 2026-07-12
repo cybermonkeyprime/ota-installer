@@ -1,7 +1,7 @@
 # src/ota_installer/image/generic_image_info.py
 from collections.abc import Mapping
 from dataclasses import dataclass, field
-from enum import Enum, StrEnum, auto
+from enum import Enum
 from pathlib import Path
 
 from ..dispatcher.dispatcher_info import DispatcherTemplate, DispatcherType
