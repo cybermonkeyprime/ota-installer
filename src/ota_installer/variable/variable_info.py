@@ -15,7 +15,7 @@ StrPathDict = dict[str, Path | str]
 
 
 @dataclass(frozen=False, slots=True)
-class DirectoryPaths:
+class MagiskPathGroup:
     """Represents the local and remote directory paths."""
 
     local_path: Path
@@ -26,7 +26,7 @@ class DirectoryPaths:
 class DirectoryNames:
     """Container for directory names used in the OTA installer."""
 
-    magisk: DirectoryPaths
+    magisk: MagiskPathGroup
 
     def __iter__(self):
         return iter(self.__dict__.items())
@@ -37,7 +37,7 @@ class FileNameInfo:
     """Represents information about a file name."""
 
     path: Path
-    parts: FileNameRenderer
+    parts: FilePathRenderer
 
     @property
     def stem(self) -> str:
@@ -90,6 +90,10 @@ class FilePathRenderer:
             / f"ota-installer_{self.device}_{self.build_id}.txt"
         )
 
+    @property
+    def magisk_image_name(self) -> str:
+        return "place_holder"
+
     def create_image(self, image):
         return self.image_data(image)
 
@@ -113,10 +117,6 @@ class FilePartRenderer:
     @property
     def file_path_stem(self):
         return self.file_path.stem
-
-    @property
-    def magisk_image_name(self) -> str:
-        return "place_holder"
 
     @property
     def file_parts(self) -> FilePartContainer:

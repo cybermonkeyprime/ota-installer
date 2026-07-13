@@ -7,9 +7,9 @@ from ..dispatcher.dispatcher_info import DispatcherType
 from ..image.magisk_image_info import MagiskImagePath
 from .variable_info import (
     DirectoryNames,
-    DirectoryPaths,
     FileNameInfo,
     FilePathRenderer,
+    MagiskPathGroup,
     VariableRenderer,
     VariableType,
 )
@@ -32,6 +32,8 @@ class VariableDirector:
     image_name: dict[str, str] = field(init=False)
     directories: DirectoryNames = field(init=False)
 
+    magisk_image: str = "place_holder"
+
     def __post_init__(self) -> None:
         from ..image.boot_image_info import BootImageContainer
 
@@ -50,13 +52,13 @@ class VariableDirector:
 
             self.boot_directories = BootImageContainer.create()
             self.directories = VariableType.DIRECTORY.build(
-                magisk=DirectoryPaths(
+                magisk=MagiskPathGroup(
                     local_path=MagiskImagePath.LOCAL_PATH.value,
                     remote_path=MagiskImagePath.REMOTE_PATH.value,
                 ),
             )
             self.image_name = {
-                "patched": self.variables.magisk_image_name,
+                "patched": self.file_paths.magisk_image_name,
             }
 
             # self.api_adapter()

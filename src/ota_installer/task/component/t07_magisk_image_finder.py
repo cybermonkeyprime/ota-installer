@@ -1,5 +1,5 @@
 # src/ota_installer/tasks/components/t07_magisk_image_finder.py
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from pathlib import Path
 
 from ... import decorator
@@ -37,8 +37,8 @@ class MagiskImageFinder(BaseTask):
 
         result = self.task.execute_and_return_output("Patched Boot Image")
         if result:
-            self.instance.image_name["patched"] = result
-            print(f"{self.instance.image_name["patched"]=}")
+            updated_magisk_image = replace(self.instance, magisk_image=result)
+            print(f"{updated_magisk_image=}")
         if getattr(self.task, "reminder", None):
             self.task.show_reminder()
 

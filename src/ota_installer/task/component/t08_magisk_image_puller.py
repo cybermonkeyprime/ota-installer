@@ -40,7 +40,7 @@ class MagiskImagePuller(BaseTask):
         """Constructs the source path for the patched boot image."""
         return (
             MagiskImagePath.REMOTE_PATH.value
-            / self.instance.image_name["patched"]
+            / self.instance.file_paths.magisk_image_name
         )
 
     def _get_destination_path(self) -> Path:
