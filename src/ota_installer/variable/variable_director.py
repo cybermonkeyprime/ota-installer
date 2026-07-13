@@ -4,11 +4,7 @@ from pathlib import Path
 
 from ..directory.directory_info import DirectoryConfig, set_directory
 from ..dispatcher.dispatcher_info import DispatcherType
-from ..image.generic_image_info import FileImageName
 from ..image.magisk_image_info import MagiskImagePath
-from ..variable.variable_functions import (
-    get_file_parts,
-)
 from .variable_info import (
     DirectoryNames,
     DirectoryPaths,
@@ -42,8 +38,7 @@ class VariableDirector:
         self.variables = VariableType.CONTEXT.build(file_path=self.path)
         if self.variables:
             self.file_name = VariableType.FILE_NAME.build(
-                path=self.file_path,
-                parts=self.file_parts,
+                path=self.file_path, parts=self.file_parts
             )
             self.file_paths = VariableType.FILE_PATH.build(
                 device=self.file_parts.device,

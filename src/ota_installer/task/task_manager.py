@@ -29,7 +29,7 @@ class TaskManager:
 
     def set_variable(self) -> Self:
         """Initializes the variable manager and sets up logging."""
-        from ..variable.variable_functions import set_variable_director
+        from ..variable.set_variable_director import set_variable_director
 
         self.variable = set_variable_director(self.file_name)
         if self.variable:

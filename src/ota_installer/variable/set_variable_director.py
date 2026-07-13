@@ -1,21 +1,5 @@
-# src/ota_installer/variable/variable_functions.py
+# src/ota_installer/variable/set_variable_director.py
 from pathlib import Path
-
-from ..variable.variable_info import FileNameRenderer
-
-StrPathDict = dict[str, Path | str]
-
-
-def get_file_parts(raw_name: Path) -> FileNameRenderer:
-    """Parse the raw file name into its components."""
-
-    device, pkg_type, build_id, *signature = raw_name.stem.split(sep="-")
-    return FileNameRenderer(
-        device=device,
-        pkg_type=pkg_type,
-        build_id=build_id,
-        signature="".join(signature),
-    )
 
 
 def set_variable_director(path: Path) -> "VariableDirector":
@@ -35,4 +19,4 @@ def set_variable_director(path: Path) -> "VariableDirector":
     return VariableDirector(path=valid_path)
 
 
-# Signed off by Brian Sanford on 20260629
+# Signed off by Brian Sanford on 20260712

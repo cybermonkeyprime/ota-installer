@@ -1,4 +1,4 @@
-# variables/variable_info.py
+# src/ota_installer/variable/variable_info.py
 from dataclasses import dataclass, field
 from enum import Enum
 from pathlib import Path
@@ -14,7 +14,7 @@ T = TypeVar("T")
 StrPathDict = dict[str, Path | str]
 
 
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=False, slots=True)
 class DirectoryPaths:
     """Represents the local and remote directory paths."""
 
@@ -95,7 +95,7 @@ class FilePathRenderer:
 
 
 @dataclass(frozen=True, slots=True)
-class FileNameRenderer:
+class FilePartContainer:
     """Container for file name components."""
 
     device: str
@@ -105,7 +105,7 @@ class FileNameRenderer:
 
 
 @dataclass(frozen=True, slots=True)
-class VariableContext:
+class FilePartRenderer:
     """Container for variable types used in OTA installation."""
 
     file_path: Path
@@ -119,13 +119,13 @@ class VariableContext:
         return "place_holder"
 
     @property
-    def file_parts(self) -> FileNameRenderer:
+    def file_parts(self) -> FilePartContainer:
         """Parse the raw file name into its components."""
 
         device, pkg_type, build_id, *signature = self.file_path.stem.split(
             sep="-"
         )
-        return FileNameRenderer(
+        return FilePartContainer(
             device=device,
             pkg_type=pkg_type,
             build_id=build_id,
@@ -142,7 +142,7 @@ class VariableRenderer(Generic[T]):
 
 
 class VariableType(Enum):
-    CONTEXT = VariableRenderer(VariableContext)
+    CONTEXT = VariableRenderer(FilePartRenderer)
     FILE_NAME = VariableRenderer(FileNameInfo)
     FILE_PATH = VariableRenderer(FilePathRenderer)
     DIRECTORY = VariableRenderer(DirectoryNames)
@@ -172,4 +172,4 @@ class VariableTypeDispatcher(DispatcherTemplate):
         }
 
 
-# Signed off by Brian Sanford on 20260625
+# Signed off by Brian Sanford on 20260712
