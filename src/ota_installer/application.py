@@ -1,6 +1,9 @@
 # src/ota_installer/application.py
 from . import decorator
-from .display.display_info import DisplayHeader, clear_screen
+from .display.display_info import (
+    DisplayHeaderPipeline,
+    clear_screen,
+)
 from .exception.keyboard_interrupt_info import (
     KeyboardInterruptHandler,
 )
@@ -18,7 +21,7 @@ def display_title():
     """Display the title and exit message if version is not specified."""
     arguments = CLIArguments
     if not arguments.version:
-        DisplayHeader.render_all()
+        DisplayHeaderPipeline().process_header()
         display_random_exit_message()
 
 
