@@ -1,14 +1,15 @@
 # src/ota_installer/dispatchers/constants/dispatcher_type.py
 from collections.abc import Callable, Mapping
+from dataclasses import dataclass
 from enum import StrEnum, auto
 from pathlib import Path
 from typing import Protocol, cast, runtime_checkable
 
 from ..log_setup import logger
 
-CollectionKeys = str
-CollectionValues = Path | str
-CollectionDictionary = Mapping[CollectionKeys, CollectionValues]
+type DispatcherFactory = Callable[[], object]
+type CollectionValue = Path | str | DispatcherFactory
+type CollectionDictionary = Mapping[str, CollectionValue]
 
 
 class DispatcherType(StrEnum):
@@ -21,63 +22,56 @@ class DispatcherType(StrEnum):
     VARIABLE = auto()
 
     @classmethod
-    def fetch_mapping(cls) -> dict[str, type]:
-        from ..plugin.loader.dispatcher_plugin_loader import (
-            DirectoryHandler,
-            FileTypeDispatcher,
-            ImageTypeDispatcher,
-            TaskGroupTypeDispatcher,
-            VariableTypeDispatcher,
+    def allowed_dispatchers(cls):
+        return tuple(member.value for member in cls)
+
+
+@dataclass(frozen=True, slots=True)
+class DispatcherDefinition:
+    name: DispatcherType
+    dispatcher_type: type
+
+    def build(self, function_data: object) -> object:
+        return self.dispatcher_type(function_data)
+
+
+def build_dispatcher_mapping() -> dict[DispatcherType, type]:
+    from ..plugin.loader.dispatcher_plugin_loader import (
+        DirectoryHandler,
+        FileTypeDispatcher,
+        ImageTypeDispatcher,
+        TaskGroupTypeDispatcher,
+        VariableTypeDispatcher,
+    )
+
+    return {
+        DispatcherType.FILE: FileTypeDispatcher,
+        DispatcherType.DIRECTORY: DirectoryHandler,
+        DispatcherType.IMAGE: ImageTypeDispatcher,
+        DispatcherType.TASK_GROUP: TaskGroupTypeDispatcher,
+        DispatcherType.VARIABLE: VariableTypeDispatcher,
+    }
+
+
+def build_dispatcher(
+    process_type: str,
+    function_data: object,
+) -> object:
+    normalized_type = process_type.strip().lower()
+    allowed_dispatchers = DispatcherType.allowed_dispatchers()
+
+    if normalized_type not in allowed_dispatchers:
+        message = (
+            f"Invalid dispatcher type: {process_type}. "
+            f"Allowed: {allowed_dispatchers}"
         )
+        logger.error(message)
+        raise ValueError(message)
 
-        return {
-            cls.FILE.name: FileTypeDispatcher,
-            cls.DIRECTORY.name: DirectoryHandler,
-            cls.IMAGE.name: ImageTypeDispatcher,
-            cls.TASK_GROUP.name: TaskGroupTypeDispatcher,
-            cls.VARIABLE.name: VariableTypeDispatcher,
-        }
+    dispatcher_name = DispatcherType(normalized_type)
+    dispatcher_type = build_dispatcher_mapping()[dispatcher_name]
 
-    @classmethod
-    def allowed_dispatchers(cls) -> tuple[str, ...]:
-        """Returns a tuple of allowed dispatcher names."""
-        return tuple(cls.fetch_mapping())
-
-    @classmethod
-    def call_dispatcher(cls, key: str) -> type:
-        """Retrieves the dispatcher class based on the key."""
-        return cls.fetch_mapping()[key.upper()]
-
-    @classmethod
-    def check_dispatcher(cls, process_type: str) -> None:
-        """Validates the dispatcher type."""
-        if process_type.upper() not in cls.allowed_dispatchers():
-            logger.error(
-                f"Invalid dispatcher type: {process_type}."
-                f"Allowed: {cls.allowed_dispatchers()}"
-            )
-
-    @classmethod
-    def dispatcher_error(cls, process_type: str) -> None:
-        if cls.call_dispatcher(key=process_type) is None:
-            logger.error(f"Dispatcher mapping failed for: {process_type}")
-
-    @classmethod
-    def retrieve_dispatcher(cls, process_type, function_data) -> type | None:
-        """Retrieves the dispatcher class based on the process type."""
-        logger.debug(f"Retrieving dispatcher for process type: {process_type}")
-
-        cls.check_dispatcher(process_type)
-        cls.dispatcher_error(process_type)
-        dispatcher_class: type = cls.call_dispatcher(key=process_type.upper())
-
-        return dispatcher_class(function_data) if dispatcher_class else None
-
-    @classmethod
-    def get_dispatcher(cls, process_type, function_data) -> type | None:
-        """Retrieves the dispatcher for the given process type."""
-        logger.debug("DispatcherType.get_dispatcher(): function_data")
-        return cls.retrieve_dispatcher(process_type, function_data)
+    return dispatcher_type(function_data)
 
 
 @runtime_checkable
@@ -114,10 +108,13 @@ class DispatcherTemplate(DispatcherProtocol):
         from the collection.
         """
 
+        normalized_key = self.normalize_key(key)
         result = self.collection.get(self.normalize_key(key))
 
         if result is None:
-            logger.exception(f"Value is {key} not found")
+            message = f"Key not found in collection: {normalized_key}"
+            logger.error(message)
+            raise KeyError(message)
 
         return result
 
@@ -150,4 +147,4 @@ class DispatcherTemplate(DispatcherProtocol):
         return key.lower().strip()
 
 
-# Signed off by Brian Sanford on 20260628
+# Signed off by Brian Sanford on 20260714

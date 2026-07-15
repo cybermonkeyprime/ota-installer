@@ -3,7 +3,7 @@ from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
 from ..directory.directory_info import DirectoryConfig, set_directory
-from ..dispatcher.dispatcher_info import DispatcherType
+from ..dispatcher.dispatcher_info import build_dispatcher
 from ..image.magisk_image_info import MagiskImagePath
 from .variable_info import (
     DirectoryNames,
@@ -89,7 +89,7 @@ class VariableDirector:
 
     def get_dispatcher(self, process_type) -> type | None:
         """Retrieves the dispatcher for the given process type."""
-        return DispatcherType.get_dispatcher(process_type, self)
+        return build_dispatcher(process_type, self)
 
 
 # Signed off by Brian Sanford on 20260629

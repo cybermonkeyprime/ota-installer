@@ -22,7 +22,7 @@ class TaskManager:
     function: Callable = field(default=type)
     variable: VariableDirector = field(init=False)
 
-    def set_file_name(self, arguments: str) -> Self:
+    def set_file_name(self, arguments: Path) -> Self:
         """Sets the file name for the task manager."""
         self.file_name = Path(arguments)
         return self
