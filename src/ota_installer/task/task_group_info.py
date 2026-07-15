@@ -1,5 +1,5 @@
 # src/ota_installer/handler/task_group_handler.py
-from collections.abc import Callable, Mapping
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from enum import Enum, StrEnum, auto
 
@@ -9,7 +9,7 @@ from ..plugin.plugin_registry import dispatcher_plugin
 from ..task.task_info import TaskID
 
 StrTuple = tuple[str, ...]
-TaskGroupMap = Mapping[str, object]
+TaskGroupMap = dict[str, object]
 
 
 @dataclass(frozen=True, slots=True)

@@ -1,5 +1,4 @@
 # src/ota_installer/handler/directory_info.py
-from collections.abc import Mapping
 from dataclasses import dataclass, field
 from enum import Enum, StrEnum, auto
 from pathlib import Path
@@ -19,7 +18,7 @@ class DirectoryType(StrEnum):
     REMOTE = auto()
 
     @classmethod
-    def from_object(cls, data: "VariableDirector") -> Mapping[str, Path]:
+    def from_object(cls, data: "VariableDirector") -> dict[str, Path]:
         """Creates a directory collection from the boot image."""
         boot_image = data.directory.boot_image
         magisk_image = data.directories.magisk

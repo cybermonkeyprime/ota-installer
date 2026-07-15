@@ -21,7 +21,7 @@ class CLIArguments:
 class TaskExecutor:
     arguments: CLIArguments
     task_manager: TaskManager = field(default_factory=lambda: TaskManager())
-    dispatcher: type | None = field(init=False)
+    dispatcher: object = field(init=False)
     task_group: str | None = field(init=False)
     path: Path = field(init=False)
 
@@ -72,13 +72,6 @@ class TaskExecutor:
             and self.task_group_in_dispatcher_collection()
         )
 
-    @property
-    def task_group_keys(self) -> tuple:
-        """Returns the keys of the task groups."""
-        from ..task.task_group_info import TaskGroupName
-
-        return TaskGroupName.get_task_group_members()
-
     def execute_task_based_on_group(self) -> None:
         """Executes tasks based on the task group rules."""
         if not self.task_group_rules:
@@ -124,7 +117,7 @@ class TaskExecutor:
 
     def execute_all_tasks(self) -> None:
         """Executes all tasks defined in the task group keys."""
-        for task_group_key in self.task_group_keys:
+        for task_group_key in TaskGroupName.get_task_group_members():
             self.execute_task(task_group_key)
 
 
