@@ -1,49 +1,59 @@
 # src/ota_installer/plugin/plugin_registry.py
-from collections.abc import Callable
+from collections.abc import Callable, KeysView
+from dataclasses import dataclass, field
 
 ClassType = type[object]
 
 
-class PluginRegistry:
-    def __init__(self) -> None:
-        self.plugins: dict[str, ClassType] = {}
+@dataclass
+class Registry:
+    """A reusable name-to-object registry."""
 
-    def register_plugin(self, name: str) -> Callable:
-        def decorator(cls):
-            if name in self.plugins:
-                raise ValueError(f"Plugin '{name}' already registered")
-            self.plugins[name] = cls
-            return cls
+    name: str
+    _registry: dict[str, ClassType] = field(default_factory=dict)
+
+    def register(self, key) -> Callable:
+        def decorator(obj):
+            if key in self._registry:
+                raise KeyError(f"{key!r} already registered in {self.name!r}")
+            self._registry[key] = obj
+            return obj
 
         return decorator
 
-    def get(self, name: str) -> ClassType | None:
-        key = name.lower().strip()
-        return self.plugins.get(key)
+    def get(self, key: str) -> ClassType | None:
+        if key := key.lower().strip():
+            raise KeyError(
+                f"{key!r} not found in {self.name!r}. "
+                f"Available: {list(self._registry)}"
+            )
+        return self._registry[key]
 
-    def __contains__(self, name: str) -> bool:
-        key = name.lower().strip()
-        return key in self.plugins
+    def keys(self) -> KeysView[str]:
+        return self._registry.keys()
+
+    def __contains__(self, key: str) -> bool:
+        return key in self._registry
 
     def __getitem__(self, name: str) -> ClassType | None:
         key = name.lower().strip()
-        return self.plugins.get(key)
+        return self._registry.get(key)
 
 
-DISPATCHER_PLUGINS = PluginRegistry()
-TASK_PLUGINS = PluginRegistry()
+DISPATCHER_PLUGIN = Registry("dispatcher_plugin")
+TASK_PLUGIN = Registry("task_plugin")
 
 
 def dispatcher_plugin(name: str) -> Callable:
     """Decorator to register a dispatcher plugin."""
 
-    return DISPATCHER_PLUGINS.register_plugin(name)
+    return DISPATCHER_PLUGIN.register(name)
 
 
 def task_plugin(name: str) -> Callable:
     """Decorator to register a task plugin."""
 
-    return TASK_PLUGINS.register_plugin(name)
+    return TASK_PLUGIN.register(name)
 
 
-# Signed off by Brian Sanford on 20260625
+# Signed off by Brian Sanford on 20260715
