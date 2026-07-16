@@ -35,7 +35,7 @@ class TaskID(StrEnum):
         The Dispatcher: Fetches the registered plugin function.
         Fails loudly if the task exists in TaskID but wasn't loaded.
         """
-        if self.value not in Plugin.TASK.keys():
+        if self.value not in Plugin.TASK:
             raise NotImplementedError(
                 f"LOUD FAIL: TaskID.{self.name} ('{self.value}') has no "
                 f"registered plugin. Check plugin_loader.py imports!"
@@ -51,7 +51,8 @@ class TaskID(StrEnum):
     def success_message(self) -> str:
         return (
             f"{indentation(2)}"
-            f"{self.value.lower().replace('_', ' ').capitalize()} finished successfully!"
+            f"{self.value.lower().replace('_', ' ').capitalize()} "
+            "finished successfully!"
         )
 
 
