@@ -7,7 +7,7 @@ from ...image.magisk_image_info import (
     MagiskImagePath,
 )
 from ...log_setup import logger
-from ...plugin.plugin_registry import task_plugin
+from ...plugin.plugin_registry import Plugin
 from ...task.task_group_info import ApplicationTask, MigrationTask
 from ...variable.variable_director import VariableDirector
 from ..task_info import TaskID
@@ -53,7 +53,7 @@ class MagiskImagePuller(BaseTask):
         logger.debug(f"{ApplicationTask.REBOOT_TO_BOOTLOADER.value=}")
 
 
-@task_plugin(MigrationTask[TITLE.name].value)
+@Plugin.TASK.register(MigrationTask[TITLE.name].value)
 @dataclass
 class MagiskImagePullerPlugin(MagiskImagePuller):
     """Plugin for the MagiskImagePuller task."""

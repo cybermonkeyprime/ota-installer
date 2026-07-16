@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import Self
 
 from ..dispatcher.dispatcher_info import DispatcherTemplate, DispatcherType
-from ..plugin.plugin_registry import dispatcher_plugin
+from ..plugin.plugin_registry import Plugin
 from .generic_image_info import FileImageName
 
 
@@ -46,7 +46,7 @@ class BootImageType(StrEnum):
         return cls.__members__.get(normalized_key, cls.DEFAULT).value
 
 
-@dispatcher_plugin(DispatcherType.IMAGE.value)
+@Plugin.DISPATCHER.register(name=DispatcherType.IMAGE.value)
 @dataclass
 class ImageTypeDispatcher(DispatcherTemplate):
     obj: type = field(default_factory=lambda: type)

@@ -1,7 +1,10 @@
 # src/ota_installer/plugin/plugin_registry.py
 from collections.abc import Callable, KeysView
 from dataclasses import dataclass, field
+from enum import Enum
+from typing import TypeVar
 
+PluginType = TypeVar("PluginType")
 ClassType = type[object]
 
 
@@ -12,48 +15,83 @@ class Registry:
     name: str
     _registry: dict[str, ClassType] = field(default_factory=dict)
 
-    def register(self, key) -> Callable:
-        def decorator(obj):
-            if key in self._registry:
-                raise KeyError(f"{key!r} already registered in {self.name!r}")
-            self._registry[key] = obj
+    def register(
+        self,
+        key: str,
+    ) -> Callable[[PluginType], PluginType]:
+        """Return a decorator that registers an object under the given key."""
+
+        normalized_key = key.lower().strip()
+
+        def decorator(obj: PluginType) -> PluginType:
+            if normalized_key in self._registry:
+                raise KeyError(
+                    f"{normalized_key!r} is already registered "
+                    f"in {self.name!r}"
+                )
+
+            self._registry[normalized_key] = obj
             return obj
 
         return decorator
 
-    def get(self, key: str) -> ClassType | None:
-        if key := key.lower().strip():
+    def get(self, key: str) -> ClassType:
+        """Return the registered object associated with the given key."""
+
+        normalized_key = key.lower().strip()
+
+        if normalized_key not in self._registry:
             raise KeyError(
-                f"{key!r} not found in {self.name!r}. "
+                f"{normalized_key!r} not found in {self.name!r}. "
                 f"Available: {list(self._registry)}"
             )
-        return self._registry[key]
+
+        return self._registry[normalized_key]
 
     def keys(self) -> KeysView[str]:
+        """Return a view containing the registered keys."""
+
         return self._registry.keys()
 
-    def __contains__(self, key: str) -> bool:
-        return key in self._registry
+    def __contains__(self, key: object) -> bool:
+        if not isinstance(key, str):
+            return False
 
-    def __getitem__(self, name: str) -> ClassType | None:
-        key = name.lower().strip()
-        return self._registry.get(key)
+        return key.lower().strip() in self._registry
 
-
-DISPATCHER_PLUGIN = Registry("dispatcher_plugin")
-TASK_PLUGIN = Registry("task_plugin")
+    def __getitem__(self, key: str) -> ClassType:
+        return self.get(key)
 
 
-def dispatcher_plugin(name: str) -> Callable:
-    """Decorator to register a dispatcher plugin."""
+class Plugin(Enum):
+    """Available plugin registries."""
 
-    return DISPATCHER_PLUGIN.register(name)
+    DISPATCHER = Registry("dispatcher_plugin")
+    TASK = Registry("task_plugin")
 
+    def register(
+        self,
+        name: str,
+    ) -> Callable[[PluginType], PluginType]:
+        """Register an object with this plugin registry."""
 
-def task_plugin(name: str) -> Callable:
-    """Decorator to register a task plugin."""
+        return self.value.register(name)
 
-    return TASK_PLUGIN.register(name)
+    def get(self, name: str) -> ClassType:
+        """Return a registered plugin."""
+
+        return self.value.get(name)
+
+    def keys(self) -> KeysView[str]:
+        """Return the keys registered with this plugin type."""
+
+        return self.value.keys()
+
+    def __contains__(self, name: object) -> bool:
+        return name in self.value
+
+    def __getitem__(self, name: str) -> ClassType:
+        return self.value[name]
 
 
 # Signed off by Brian Sanford on 20260715

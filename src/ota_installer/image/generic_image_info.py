@@ -5,7 +5,7 @@ from enum import Enum
 from pathlib import Path
 
 from ..dispatcher.dispatcher_info import DispatcherTemplate, DispatcherType
-from ..plugin.plugin_registry import dispatcher_plugin
+from ..plugin.plugin_registry import Plugin
 
 
 # containers
@@ -92,7 +92,7 @@ class FileImageName(Enum):
 
 
 # dispatcher
-@dispatcher_plugin(DispatcherType.FILE.value)
+@Plugin.DISPATCHER.register(name=DispatcherType.FILE.value)
 @dataclass
 class FileTypeDispatcher(DispatcherTemplate):
     """

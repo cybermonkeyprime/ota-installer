@@ -7,7 +7,7 @@ from typing import Any, Generic, TypeVar
 from ota_installer.image.generic_image_info import FileImageName
 
 from ..dispatcher.dispatcher_info import DispatcherTemplate, DispatcherType
-from ..plugin.plugin_registry import dispatcher_plugin
+from ..plugin.plugin_registry import Plugin
 
 T = TypeVar("T")
 
@@ -151,7 +151,7 @@ class VariableType(Enum):
         return self.value(**kwargs)
 
 
-@dispatcher_plugin(name=DispatcherType.VARIABLE.value)
+@Plugin.DISPATCHER.register(name=DispatcherType.VARIABLE.value)
 @dataclass
 class VariableTypeDispatcher(DispatcherTemplate):
     """Dispatcher for handling variable types."""

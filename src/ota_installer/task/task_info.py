@@ -2,7 +2,7 @@
 from collections.abc import Callable
 from enum import StrEnum, auto
 
-from ..plugin.plugin_registry import TASK_PLUGINS
+from ..plugin.plugin_registry import Plugin
 from ..style.style_info import indentation
 from .operation.task_operation_info import (
     TaskOperationContainer,
@@ -35,13 +35,13 @@ class TaskID(StrEnum):
         The Dispatcher: Fetches the registered plugin function.
         Fails loudly if the task exists in TaskID but wasn't loaded.
         """
-        if self.value not in TASK_PLUGINS:
+        if self.value not in Plugin.TASK.keys():
             raise NotImplementedError(
                 f"LOUD FAIL: TaskID.{self.name} ('{self.value}') has no "
                 f"registered plugin. Check plugin_loader.py imports!"
             )
 
-        return TASK_PLUGINS.get(self.value)
+        return Plugin.TASK.get(self.value)
 
     @property
     def enum_values(self) -> TaskOperationContainer:

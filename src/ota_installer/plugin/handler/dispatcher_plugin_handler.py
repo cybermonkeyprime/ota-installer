@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 
 from ...dispatcher.dispatcher_info import DispatcherType
 from ...log_setup import logger
-from ..plugin_registry import DISPATCHER_PLUGINS
+from ..plugin_registry import Plugin
 
 
 class DispatcherError(Exception):
@@ -41,7 +41,7 @@ class PluginDispatcherAdapter:
         """Load a registered plugin dispatcher based on the dispatcher type."""
         logger.debug(f"Loading plugin dispatcher for type: {dispatcher_type}")
         valid_dispatcher = DispatcherType(dispatcher_type)
-        dispatcher_class = DISPATCHER_PLUGINS[valid_dispatcher]
+        dispatcher_class = Plugin.DISPATCHER[valid_dispatcher]
 
         if dispatcher_class is None:
             message = (

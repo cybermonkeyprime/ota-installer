@@ -5,7 +5,7 @@ from enum import Enum, StrEnum, auto
 
 from ..dispatcher.dispatcher_info import DispatcherTemplate, DispatcherType
 from ..log_setup import logger
-from ..plugin.plugin_registry import dispatcher_plugin
+from ..plugin.plugin_registry import Plugin
 from ..task.task_info import TaskID
 
 StrTuple = tuple[str, ...]
@@ -77,7 +77,7 @@ class TaskGroupName(StrEnum):
         return tuple(enum.value for enum in cls)
 
     @classmethod
-    def fetch_mapping(cls) -> Mapping[str, TaskGroupRenderer]:
+    def fetch_mapping(cls) -> dict[str, TaskGroupRenderer]:
         return {
             cls.PREPARATION: TaskGroupRenderer(
                 PreparationTask, "Preparation Task"
@@ -136,7 +136,7 @@ class PreparationTask(BehaviorBase):
     BACKUP_STOCK_BOOT_IMAGE = TaskID.BACKUP_STOCK_BOOT_IMAGE
 
 
-@dispatcher_plugin(name=DispatcherType.TASK_GROUP.value)
+@Plugin.DISPATCHER.register(name=DispatcherType.TASK_GROUP.value)
 @dataclass
 class TaskGroupTypeDispatcher(DispatcherTemplate):
     obj: type = field(default_factory=lambda: type)

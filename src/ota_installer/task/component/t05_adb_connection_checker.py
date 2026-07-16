@@ -2,7 +2,7 @@
 from dataclasses import dataclass, field
 
 from ... import decorator
-from ...plugin.plugin_registry import task_plugin
+from ...plugin.plugin_registry import Plugin
 from ...task.task_group_info import MigrationTask
 from ...variable.variable_director import VariableDirector
 from ..task_info import TaskID
@@ -30,7 +30,7 @@ class ADBConnectionChecker(BaseTask):
         self.task.run_with_output()
 
 
-@task_plugin(MigrationTask[TITLE.name].value)
+@Plugin.TASK.register(MigrationTask[TITLE.name].value)
 @dataclass
 class ADBConnectionCheckerPlugin(ADBConnectionChecker):
     """Plugin for the ADBConnectionChecker task."""

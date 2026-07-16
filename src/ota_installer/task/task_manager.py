@@ -4,7 +4,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Self
 
-from ota_installer.plugin.plugin_registry import TASK_PLUGINS
+from ota_installer.plugin.plugin_registry import Plugin
 
 from ..decorator.styled_indent_printer import StylizedIndentPrinter
 from ..display.display_variable_info import (
@@ -92,9 +92,8 @@ def task_pipeline(instance: VariableDirector, task_group: StringTuple) -> str:
         return _skipped_task_group_msg()
 
     run_director = task_director
-    get_plugin = TASK_PLUGINS
 
-    task_classes = (get_plugin[name] for name in task_group)
+    task_classes = (Plugin.TASK[name] for name in task_group)
 
     for task_class in task_classes:
         if callable(task_class):

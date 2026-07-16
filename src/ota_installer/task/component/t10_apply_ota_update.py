@@ -2,7 +2,7 @@
 from dataclasses import dataclass, field
 
 from ... import decorator
-from ...plugin.plugin_registry import task_plugin
+from ...plugin.plugin_registry import Plugin
 from ...task.task_group_info import ApplicationTask
 from ...variable.variable_director import VariableDirector
 from ..task_info import TaskID
@@ -39,7 +39,7 @@ class ADBSideloader(BaseTask):
             raise ValueError("No path provided for ADB sideload.")
 
 
-@task_plugin(ApplicationTask[TITLE.name].value)
+@Plugin.TASK.register(ApplicationTask[TITLE.name].value)
 @dataclass
 class ADBSideloaderPlugin(ADBSideloader):
     """Plugin for the ADBSideloader task."""

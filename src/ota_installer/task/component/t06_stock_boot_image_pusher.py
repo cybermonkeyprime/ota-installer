@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from ... import decorator
-from ...plugin.plugin_registry import task_plugin
+from ...plugin.plugin_registry import Plugin
 from ...task.task_group_info import MigrationTask
 from ...task.task_info import TaskID
 from ...variable.variable_director import VariableDirector
@@ -39,7 +39,7 @@ class StockBootImagePusher(BaseTask):
         self.task.run_with_output()
 
 
-@task_plugin(MigrationTask[TITLE.name].value)
+@Plugin.TASK.register(MigrationTask[TITLE.name].value)
 @dataclass
 class StockBootImagePusherPlugin(StockBootImagePusher):
     """Plugin for the StockBootImagePusher task."""

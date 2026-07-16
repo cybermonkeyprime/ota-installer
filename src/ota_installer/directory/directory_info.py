@@ -5,7 +5,7 @@ from pathlib import Path
 
 from ..dispatcher.dispatcher_info import DispatcherTemplate, DispatcherType
 from ..log_setup import logger
-from ..plugin.plugin_registry import dispatcher_plugin
+from ..plugin.plugin_registry import Plugin
 
 
 # Enums
@@ -65,7 +65,7 @@ class DirectoryConfig:
 
 
 # dispatcher
-@dispatcher_plugin(DispatcherType.DIRECTORY.value)
+@Plugin.DISPATCHER.register(name=DispatcherType.DIRECTORY.value)
 @dataclass
 class DirectoryHandler(DispatcherTemplate):
     """Handles directory operations for the dispatcher."""
