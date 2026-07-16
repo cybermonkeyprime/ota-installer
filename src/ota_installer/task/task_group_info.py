@@ -2,6 +2,7 @@
 from collections.abc import Callable
 from dataclasses import dataclass, field
 from enum import Enum, StrEnum, auto
+from functools import singledispatchmethod
 
 from ..dispatcher.dispatcher_info import DispatcherTemplate, DispatcherType
 from ..log_setup import logger
@@ -155,13 +156,18 @@ class TaskGroupTypeDispatcher(DispatcherTemplate):
         """Populate the collection with enum member names and their
         corresponding values.
         """
-        if isinstance(self.obj, dict):
-            return {str(k).lower(): v for k, v in self.obj.items()}
+        return self.collection_type(self.obj)
 
-        if isinstance(self.obj, type):
-            return TaskGroupName.create_dictionary(self.obj)
-
-        logger.error(
-            f"Unsupported object type passed to dispatcher: {type(self.obj)}"
-        )
+    @singledispatchmethod
+    def collection_type(self, obj):
+        message = f"Unsupported object type passed to dispatcher: {type(obj)}"
+        logger.error(message)
         return {}
+
+    @collection_type.register
+    def _(self, obj: dict) -> dict[str, object]:
+        return {str(key).lower(): value for key, value in obj.items()}
+
+    @collection_type.register
+    def _(self, obj: type) -> dict[str, object]:
+        return TaskGroupName.create_dictionary(obj)
