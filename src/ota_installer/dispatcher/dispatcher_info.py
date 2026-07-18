@@ -1,5 +1,5 @@
 # src/ota_installer/dispatchers/constants/dispatcher_type.py
-from collections.abc import Callable, Mapping
+from collections.abc import Callable
 from dataclasses import dataclass
 from enum import StrEnum, auto
 from pathlib import Path
@@ -9,7 +9,7 @@ from ..log_setup import logger
 
 type DispatcherFactory = Callable[[], object]
 type CollectionValue = Path | str | DispatcherFactory
-type CollectionDictionary = Mapping[str, CollectionValue]
+type CollectionDictionary = dict[str, CollectionValue]
 
 
 class DispatcherType(StrEnum):

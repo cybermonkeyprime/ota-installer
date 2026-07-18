@@ -18,19 +18,26 @@ class DirectoryType(StrEnum):
     REMOTE = auto()
 
     @classmethod
-    def from_object(cls, data: "VariableDirector") -> dict[str, Path]:
+    def from_object(
+        cls, data: "VariableDirector"
+    ) -> dict[DirectoryType, Path]:
         """Creates a directory collection from the boot image."""
         boot_image = data.directory.boot_image
         magisk_image = data.directories.magisk
-        return {
-            cls.STOCK: Path(boot_image.stock),
-            cls.MAGISK: Path(boot_image.magisk),
-            cls.LOCAL: Path(magisk_image.local_path),
-            cls.REMOTE: Path(magisk_image.remote_path),
+
+        boot_dict = {
+            cls[name.upper()]: getattr(boot_image, name)
+            for name in ["stock", "magisk"]
+        }
+        magisk_dict = {
+            cls[name.upper()]: Path(getattr(magisk_image, f"{name}_path"))
+            for name in ["local", "remote"]
         }
 
+        return {**boot_dict, **magisk_dict}
+
     def get_path(self, obj) -> Path:
-        return self.from_object(obj)[self.value.upper()]
+        return self.from_object(obj)[self]
 
 
 class DirectoryRender(Enum):
