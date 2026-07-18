@@ -1,3 +1,4 @@
+import collections
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Self
@@ -62,7 +63,8 @@ class TaskExecutor:
 
     def task_group_in_dispatcher_collection(self):
         """Checks if the task group is in the dispatcher collection."""
-        return self.task_group in self.dispatcher.collection
+        collection = self.dispatcher.collection
+        return self.task_group in collection
 
     @property
     def task_group_rules(self) -> bool:
@@ -82,7 +84,13 @@ class TaskExecutor:
     def get_dispatcher_instance(self, key: str):
         """Retrieves the dispatcher instance for a given key."""
         logger.debug(f"Retrieving dispatcher instance for key: {key}")
-        return self.dispatcher.get_instance(key)
+        instance = self.dispatcher.get_instance(key)
+        if not isinstance(instance, tuple):
+            message = f"instance is {type(instance).__name__}"
+            logger.error(message)
+            TypeError(message)
+
+        return instance
 
     def execute_task(self, task_group_key: str) -> None:
         """Executes a specific task based on the task group key."""
@@ -99,8 +107,8 @@ class TaskExecutor:
     def task_iteration(self, task_group_key: str) -> None:
         """Iterates over tasks in the specified task group."""
         logger.debug(f"Executing task iteration for: {task_group_key}")
-        dispatcher_instance: Path | str | None = self.get_dispatcher_instance(
-            key=task_group_key
+        dispatcher_instance: tuple[Path | str | None] = (
+            self.get_dispatcher_instance(key=task_group_key)
         )
         self.task_manager.execute_iteration(task_group=dispatcher_instance)
 

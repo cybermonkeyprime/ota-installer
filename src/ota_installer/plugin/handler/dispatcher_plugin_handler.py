@@ -21,7 +21,7 @@ class PluginDispatcherAdapter:
     """
 
     dispatcher: str = field(default_factory=str)
-    object_processor: type = field(default=type)
+    object_processor: dict = field(default_factory=dict)
 
     def load(self) -> object:
         """Load the dispatcher based on the specified type."""
@@ -36,7 +36,7 @@ class PluginDispatcherAdapter:
         )
 
     def _load_plugin_dispatcher(
-        self, dispatcher_type: str, obj: type
+        self, dispatcher_type: str, obj: dict
     ) -> object:
         """Load a registered plugin dispatcher based on the dispatcher type."""
         logger.debug(f"Loading plugin dispatcher for type: {dispatcher_type}")

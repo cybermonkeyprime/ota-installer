@@ -54,6 +54,10 @@ class TaskGroupName(StrEnum):
         return getattr(_Class, self.value)
 
     @classmethod
+    def asdict(cls):
+        return {member.name: member.value for member in cls}
+
+    @classmethod
     def create_dictionary(cls, obj) -> TaskGroupMap:
         """create the dictionary with enum member names and their
         corresponding values.
@@ -79,14 +83,14 @@ class TaskGroupName(StrEnum):
 
     @classmethod
     def fetch_mapping(cls) -> dict[str, TaskGroupRenderer]:
+        import sys
+
         return {
-            cls.PREPARATION: TaskGroupRenderer(
-                PreparationTask, "Preparation Task"
-            ),
-            cls.MIGRATION: TaskGroupRenderer(MigrationTask, "Migration Task"),
-            cls.APPLICATION: TaskGroupRenderer(
-                ApplicationTask, "Application Task"
-            ),
+            key: TaskGroupRenderer(
+                getattr(sys.modules[__name__], f"{prefix.capitalize()}Task"),
+                f"{prefix} Task",
+            )
+            for key, prefix in cls.asdict().items()
         }
 
 
@@ -159,7 +163,7 @@ class TaskGroupTypeDispatcher(DispatcherTemplate):
         return self.collection_type(self.obj)
 
     @singledispatchmethod
-    def collection_type(self, obj):
+    def collection_type(self, obj) -> dict:
         message = f"Unsupported object type passed to dispatcher: {type(obj)}"
         logger.error(message)
         return {}
