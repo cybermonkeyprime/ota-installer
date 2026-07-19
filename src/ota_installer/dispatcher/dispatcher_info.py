@@ -1,7 +1,7 @@
 # src/ota_installer/dispatchers/constants/dispatcher_type.py
 from collections.abc import Callable
 from dataclasses import dataclass
-from enum import StrEnum, auto
+from enum import Enum, StrEnum, auto
 from pathlib import Path
 from typing import Protocol, cast, runtime_checkable
 
@@ -9,7 +9,7 @@ from ..log_setup import logger
 
 type DispatcherFactory = Callable[[], object]
 type CollectionValue = Path | str | DispatcherFactory
-type CollectionDictionary = dict[str, CollectionValue]
+type CollectionDictionary = dict[Enum, CollectionValue]
 
 
 class DispatcherType(StrEnum):
@@ -101,7 +101,7 @@ class DispatcherTemplate(DispatcherProtocol):
     A template class for dispatching tasks based on a key-value collection.
     """
 
-    collection: CollectionDictionary = {}
+    collection: dict = {}
 
     def get_value(self, key: str) -> object | None:
         """Retrieve the value associated with the given key

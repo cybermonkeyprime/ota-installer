@@ -121,16 +121,13 @@ class FilePartRenderer:
     @property
     def file_parts(self) -> FilePartContainer:
         """Parse the raw file name into its components."""
+        from parse import parse
 
-        device, pkg_type, build_id, *signature = self.file_path.stem.split(
-            sep="-"
-        )
-        return FilePartContainer(
-            device=device,
-            pkg_type=pkg_type,
-            build_id=build_id,
-            signature="".join(signature),
-        )
+        pattern = "{device}-{pkg_type}-{build_id}-{signature}"
+        result = parse(pattern, self.file_path.stem)
+        result_dict = result.named
+
+        return FilePartContainer(**result_dict)
 
 
 @dataclass(frozen=True)

@@ -18,9 +18,7 @@ class DirectoryType(StrEnum):
     REMOTE = auto()
 
     @classmethod
-    def from_object(
-        cls, data: "VariableDirector"
-    ) -> dict[DirectoryType, Path]:
+    def from_object(cls, data: "VariableDirector") -> dict[Enum, Path]:
         """Creates a directory collection from the boot image."""
         boot_image = data.directory.boot_image
         magisk_image = data.directories.magisk

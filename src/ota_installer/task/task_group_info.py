@@ -54,7 +54,7 @@ class TaskGroupName(StrEnum):
         return getattr(_Class, self.value)
 
     @classmethod
-    def asdict(cls):
+    def from_object(cls):
         return {member.name: member.value for member in cls}
 
     @classmethod
@@ -90,7 +90,7 @@ class TaskGroupName(StrEnum):
                 getattr(sys.modules[__name__], f"{prefix.capitalize()}Task"),
                 f"{prefix} Task",
             )
-            for key, prefix in cls.asdict().items()
+            for key, prefix in cls.from_object().items()
         }
 
 
