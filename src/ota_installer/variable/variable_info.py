@@ -118,16 +118,17 @@ class FilePartRenderer:
     def file_path_stem(self):
         return self.file_path.stem
 
-    @property
     def file_parts(self) -> FilePartContainer:
         """Parse the raw file name into its components."""
         from parse import parse
 
-        pattern = "{device}-{pkg_type}-{build_id}-{signature}"
-        result = parse(pattern, self.file_path.stem)
-        result_dict = result.named
+        FILE_PATTERN = "{device}-{pkg_type}-{build_id}-{signature}"
+        result = parse(FILE_PATTERN, self.file_path.stem)
+        if result is None:
+            message = f"Invalid OTA filename: {self.file_path_stem!r}"
+            raise ValueError(message)
 
-        return FilePartContainer(**result_dict)
+        return FilePartContainer(**result.named)
 
 
 @dataclass(frozen=True)

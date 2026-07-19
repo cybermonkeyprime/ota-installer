@@ -43,8 +43,8 @@ class VariableDirector:
                 path=self.file_path, parts=self.file_parts
             )
             self.file_paths = VariableType.FILE_PATH.build(
-                device=self.file_parts.device,
-                build_id=self.file_parts.build_id,
+                device=self.file_parts().device,
+                build_id=self.file_parts().build_id,
             )
 
             self.ota_parent_directory = self.path.parent
