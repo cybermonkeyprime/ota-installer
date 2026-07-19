@@ -4,6 +4,8 @@ from dataclasses import dataclass, field
 from enum import Enum
 from pathlib import Path
 
+from ota_installer.variable.variable_info import FilePathRenderer
+
 from ..dispatcher.dispatcher_info import DispatcherTemplate, DispatcherType
 from ..plugin.plugin_registry import Plugin
 
@@ -83,8 +85,10 @@ class FileImageName(Enum):
         return self.directory
 
     @classmethod
-    def create_path_dictionary(cls, file_paths) -> dict[str, Path]:
-        """Compatibility helper for FileImageHandler collection building."""
+    def create_path_dictionary(
+        cls, file_paths: FilePathRenderer
+    ) -> dict[str, Path]:
+        """Build a mapping of image names to their generated paths."""
         return {
             member.name.lower(): getattr(file_paths, member.name.lower())
             for member in cls

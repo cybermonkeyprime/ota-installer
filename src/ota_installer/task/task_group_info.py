@@ -54,7 +54,7 @@ class TaskGroupName(StrEnum):
         return getattr(_Class, self.value)
 
     @classmethod
-    def from_object(cls):
+    def to_dict(cls) -> dict[str, str]:
         return {member.name: member.value for member in cls}
 
     @classmethod
@@ -85,12 +85,14 @@ class TaskGroupName(StrEnum):
     def fetch_mapping(cls) -> dict[str, TaskGroupRenderer]:
         import sys
 
+        module = vars(sys.modules[__name__])
+
         return {
-            key: TaskGroupRenderer(
-                getattr(sys.modules[__name__], f"{prefix.capitalize()}Task"),
-                f"{prefix} Task",
+            member.name: TaskGroupRenderer(
+                module[f"{member.value.capitalize()}Task"],
+                f"{member.value.capitalize()} Task",
             )
-            for key, prefix in cls.from_object().items()
+            for member in cls
         }
 
 

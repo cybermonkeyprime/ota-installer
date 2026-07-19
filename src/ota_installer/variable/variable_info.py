@@ -4,8 +4,6 @@ from enum import Enum
 from pathlib import Path
 from typing import Any, Generic, TypeVar
 
-from ota_installer.image.generic_image_info import FileImageName
-
 from ..dispatcher.dispatcher_info import DispatcherTemplate, DispatcherType
 from ..plugin.plugin_registry import Plugin
 
@@ -70,14 +68,20 @@ class FilePathRenderer:
 
     @property
     def stock(self) -> str:
+        from ..image.generic_image_info import FileImageName
+
         return self.create_image(FileImageName.STOCK)
 
     @property
     def magisk(self) -> str:
+        from ..image.generic_image_info import FileImageName
+
         return self.create_image(FileImageName.MAGISK)
 
     @property
     def payload(self) -> str:
+        from ..image.generic_image_info import FileImageName
+
         return self.create_image(FileImageName.PAYLOAD)
 
     @property
@@ -115,18 +119,19 @@ class FilePartRenderer:
     file_path: Path
 
     @property
-    def file_path_stem(self):
-        return self.file_path.stem
-
-    @property
     def file_parts(self) -> FilePartContainer:
         """Parse the raw file name into its components."""
+
         from parse import parse
 
-        FILE_PATTERN = "{device}-{pkg_type}-{build_id}-{signature}"
-        result = parse(FILE_PATTERN, self.file_path.stem)
+        FILENAME_PATTERN = "{device}-{pkg_type}-{build_id}-{signature}"
+
+        filename_stem = self.file_path.stem
+
+        result = parse(FILENAME_PATTERN, filename_stem)
+
         if result is None:
-            message = f"Invalid OTA filename: {self.file_path_stem!r}"
+            message = f"Invalid OTA filename: {filename_stem!r}"
             raise ValueError(message)
 
         return FilePartContainer(**result.named)
