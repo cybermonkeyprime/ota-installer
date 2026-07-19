@@ -84,10 +84,10 @@ class TaskExecutor:
         """Retrieves the dispatcher instance for a given key."""
         logger.debug(f"Retrieving dispatcher instance for key: {key}")
         instance = self.dispatcher.get_instance(key)
-        if not isinstance(instance, tuple):
-            message = f"instance is {type(instance).__name__}"
-            logger.error(message)
-            TypeError(message)
+        if instance is None:
+            message = f"Instance is {type(instance).__name__}"
+            logger.debug(message)
+            # TypeError(message)
 
         return instance
 
