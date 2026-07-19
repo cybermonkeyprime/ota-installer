@@ -118,6 +118,7 @@ class FilePartRenderer:
     def file_path_stem(self):
         return self.file_path.stem
 
+    @property
     def file_parts(self) -> FilePartContainer:
         """Parse the raw file name into its components."""
         from parse import parse
