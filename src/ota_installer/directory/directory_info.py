@@ -79,7 +79,7 @@ class DirectoryHandler(DispatcherTemplate):
 
     def __post_init__(self) -> None:
         """Initializes the directory collection based on provided object."""
-        self.collection = DirectoryType.from_object(self.obj)
+        self.collection = DirectoryType.to_dict(self.obj)
         message = (
             "DirectoryDispatcher initialized with collection: "
             f"{self.collection}"
