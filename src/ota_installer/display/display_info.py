@@ -1,5 +1,5 @@
 # display/display_info.py
-from collections.abc import Callable
+from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 from enum import Enum, StrEnum, auto
 from subprocess import CompletedProcess, run
@@ -13,6 +13,10 @@ from ..style.style_info import SEPARATOR
 from ..versioning.version_info import SoftwareVersion
 
 type DisplayDecorator = Callable[[Callable[[], str]], Callable[[], str]]
+
+
+class DisplayStepError(Exception):
+    pass
 
 
 class DisplayType(Enum):
@@ -60,7 +64,7 @@ class DisplayStep:
         return self.renderer()
 
 
-HEADER_DISPLAY_STEPS: tuple[DisplayStep, ...] = (
+HEADER_DISPLAY_STEPS: Sequence[DisplayStep] = (
     DisplayStep(
         name=DisplayHeader.TITLE,
         renderer=DisplayRenderer(
@@ -89,7 +93,7 @@ HEADER_DISPLAY_STEPS: tuple[DisplayStep, ...] = (
     DisplayStep(
         name=DisplayHeader.SUBTITLE,
         renderer=DisplayRenderer(
-            value=f"{DisplayType.VERBOSE.value}\n",
+            value=f"{DisplayType.VERBOSE.value}\n\n",
             decorator=decorator.Colorizer(
                 style="version",
             ),
@@ -99,14 +103,15 @@ HEADER_DISPLAY_STEPS: tuple[DisplayStep, ...] = (
 
 
 def process_display_steps(
-    steps: tuple[DisplayStep, ...],
+    steps: Sequence[DisplayStep],
 ) -> None:
     """Process an ordered collection of display steps."""
     for step in steps:
+        logger.debug(f"{step=}")
         if not isinstance(step, DisplayStep):
             message = f"Expected DisplayStep, received {type(step).__name__}."
             logger.error(message)
-            raise TypeError(message)
+            raise DisplayStepError(message)
         step.run()
 
 
@@ -120,10 +125,11 @@ def process_header_display() -> None:
 class DisplayHeaderPipeline:
     """Coordinate the header display pipeline."""
 
-    steps: tuple[DisplayStep, ...] = HEADER_DISPLAY_STEPS
+    steps: Sequence[DisplayStep] = HEADER_DISPLAY_STEPS
 
     def process_header(self) -> Self:
         """Process the complete display header."""
+        logger.debug(f"{self.steps=}")
         process_display_steps(self.steps)
         return self
 

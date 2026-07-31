@@ -1,0 +1,914 @@
+Discovered 293 definitions and 185 resolved call relationships.
+
+Root: ota_installer.__main__.main
+Maximum discovered depth: 0
+main [ota_installer.__main__] (/home/user/python/ota-installer/src/ota_installer/__main__.py:4)
+
+Root: ota_installer.application.run
+Maximum discovered depth: 4
+run [ota_installer.application] (/home/user/python/ota-installer/src/ota_installer/application.py:14)
+├── display_title [ota_installer.application] (/home/user/python/ota-installer/src/ota_installer/application.py:20)
+│   ├── display_random_exit_message [ota_installer.application] (/home/user/python/ota-installer/src/ota_installer/application.py:29)
+│   └── DisplayHeaderPipeline.process_header [ota_installer.display.display_info] (/home/user/python/ota-installer/src/ota_installer/display/display_info.py:125)
+│       └── process_display_steps [ota_installer.display.display_info] (/home/user/python/ota-installer/src/ota_installer/display/display_info.py:101)
+│           └── DisplayStep.run [ota_installer.display.display_info] (/home/user/python/ota-installer/src/ota_installer/display/display_info.py:58)
+└── clear_screen [ota_installer.display.display_info] (/home/user/python/ota-installer/src/ota_installer/display/display_info.py:131)
+    └── execute_clear_command [ota_installer.display.display_info] (/home/user/python/ota-installer/src/ota_installer/display/display_info.py:137)
+        └── DisplayStep.run [ota_installer.display.display_info] (/home/user/python/ota-installer/src/ota_installer/display/display_info.py:58)
+
+Root: ota_installer.command_line_interface.debug_callback
+Maximum discovered depth: 2
+debug_callback [ota_installer.command_line_interface] (/home/user/python/ota-installer/src/ota_installer/command_line_interface.py:22)
+└── enable_debug_logging [ota_installer.log_setup] (/home/user/python/ota-installer/src/ota_installer/log_setup.py:39)
+    └── VariableTableBuilder.add [ota_installer.display.variable.variable_item_info] (/home/user/python/ota-installer/src/ota_installer/display/variable/variable_item_info.py:37)
+
+Root: ota_installer.command_line_interface.ota_installer
+Maximum discovered depth: 8
+ota_installer [ota_installer.command_line_interface] (/home/user/python/ota-installer/src/ota_installer/command_line_interface.py:29)
+└── task_execution [ota_installer.application] (/home/user/python/ota-installer/src/ota_installer/application.py:51)
+    ├── TaskExecutor.assign_task_group [ota_installer.task.task_execution] (/home/user/python/ota-installer/src/ota_installer/task/task_execution.py:42)
+    ├── TaskExecutor.execute_task_based_on_group [ota_installer.task.task_execution] (/home/user/python/ota-installer/src/ota_installer/task/task_execution.py:76)
+    │   ├── TaskExecutor.execute_all_tasks [ota_installer.task.task_execution] (/home/user/python/ota-installer/src/ota_installer/task/task_execution.py:125)
+    │   │   ├── TaskExecutor.execute_task [ota_installer.task.task_execution] (/home/user/python/ota-installer/src/ota_installer/task/task_execution.py:94)
+    │   │   │   └── TaskExecutor.task_iteration [ota_installer.task.task_execution] (/home/user/python/ota-installer/src/ota_installer/task/task_execution.py:106)
+    │   │   │       ├── TaskExecutor.get_dispatcher_instance [ota_installer.task.task_execution] (/home/user/python/ota-installer/src/ota_installer/task/task_execution.py:83)
+    │   │   │       └── TaskManager.execute_iteration [ota_installer.task.task_manager] (/home/user/python/ota-installer/src/ota_installer/task/task_manager.py:61)
+    │   │   │           └── task_pipeline [ota_installer.task.task_manager] (/home/user/python/ota-installer/src/ota_installer/task/task_manager.py:86)
+    │   │   │               └── _skipped_task_group_msg [ota_installer.task.task_manager] (/home/user/python/ota-installer/src/ota_installer/task/task_manager.py:105)
+    │   │   └── TaskGroupName.get_task_group_members [ota_installer.task.task_group_info] (/home/user/python/ota-installer/src/ota_installer/task/task_group_info.py:80)
+    │   └── TaskExecutor.execute_single_task [ota_installer.task.task_execution] (/home/user/python/ota-installer/src/ota_installer/task/task_execution.py:114)
+    │       └── TaskExecutor.execute_task [ota_installer.task.task_execution] (/home/user/python/ota-installer/src/ota_installer/task/task_execution.py:94)
+    │           └── TaskExecutor.task_iteration [ota_installer.task.task_execution] (/home/user/python/ota-installer/src/ota_installer/task/task_execution.py:106)
+    │               ├── TaskExecutor.get_dispatcher_instance [ota_installer.task.task_execution] (/home/user/python/ota-installer/src/ota_installer/task/task_execution.py:83)
+    │               └── TaskManager.execute_iteration [ota_installer.task.task_manager] (/home/user/python/ota-installer/src/ota_installer/task/task_manager.py:61)
+    │                   └── task_pipeline [ota_installer.task.task_manager] (/home/user/python/ota-installer/src/ota_installer/task/task_manager.py:86)
+    │                       └── _skipped_task_group_msg [ota_installer.task.task_manager] (/home/user/python/ota-installer/src/ota_installer/task/task_manager.py:105)
+    ├── TaskExecutor.initialize_task_dispatcher [ota_installer.task.task_execution] (/home/user/python/ota-installer/src/ota_installer/task/task_execution.py:50)
+    │   ├── PluginDispatcherAdapter.load [ota_installer.plugin.handler.dispatcher_plugin_handler] (/home/user/python/ota-installer/src/ota_installer/plugin/handler/dispatcher_plugin_handler.py:26)
+    │   │   └── PluginDispatcherAdapter._load_plugin_dispatcher [ota_installer.plugin.handler.dispatcher_plugin_handler] (/home/user/python/ota-installer/src/ota_installer/plugin/handler/dispatcher_plugin_handler.py:38)
+    │   └── TaskGroupName.fetch_mapping [ota_installer.task.task_group_info] (/home/user/python/ota-installer/src/ota_installer/task/task_group_info.py:85)
+    ├── TaskExecutor.initialize_task_manager [ota_installer.task.task_execution] (/home/user/python/ota-installer/src/ota_installer/task/task_execution.py:33)
+    │   ├── TaskManager.log_and_process_variables [ota_installer.task.task_manager] (/home/user/python/ota-installer/src/ota_installer/task/task_manager.py:47)
+    │   │   ├── DisplayVariablePipeline.process_directory_names [ota_installer.display.display_variable_info] (/home/user/python/ota-installer/src/ota_installer/display/display_variable_info.py:113)
+    │   │   │   └── process_directory_display [ota_installer.display.display_variable_info] (/home/user/python/ota-installer/src/ota_installer/display/display_variable_info.py:101)
+    │   │   │       └── process_display_steps [ota_installer.display.display_variable_info] (/home/user/python/ota-installer/src/ota_installer/display/display_variable_info.py:93)
+    │   │   │           └── DisplayStep.run [ota_installer.display.display_variable_info] (/home/user/python/ota-installer/src/ota_installer/display/display_variable_info.py:29)
+    │   │   │               └── DisplayStep.build [ota_installer.display.display_variable_info] (/home/user/python/ota-installer/src/ota_installer/display/display_variable_info.py:21)
+    │   │   └── DisplayVariablePipeline.process_file_names [ota_installer.display.display_variable_info] (/home/user/python/ota-installer/src/ota_installer/display/display_variable_info.py:117)
+    │   │       └── process_file_display [ota_installer.display.display_variable_info] (/home/user/python/ota-installer/src/ota_installer/display/display_variable_info.py:105)
+    │   │           └── process_display_steps [ota_installer.display.display_variable_info] (/home/user/python/ota-installer/src/ota_installer/display/display_variable_info.py:93)
+    │   │               └── DisplayStep.run [ota_installer.display.display_variable_info] (/home/user/python/ota-installer/src/ota_installer/display/display_variable_info.py:29)
+    │   │                   └── DisplayStep.build [ota_installer.display.display_variable_info] (/home/user/python/ota-installer/src/ota_installer/display/display_variable_info.py:21)
+    │   ├── TaskManager.set_file_name [ota_installer.task.task_manager] (/home/user/python/ota-installer/src/ota_installer/task/task_manager.py:25)
+    │   └── TaskManager.set_variable [ota_installer.task.task_manager] (/home/user/python/ota-installer/src/ota_installer/task/task_manager.py:30)
+    │       ├── add_structured_log_sink [ota_installer.log_setup] (/home/user/python/ota-installer/src/ota_installer/log_setup.py:69)
+    │       │   └── VariableTableBuilder.add [ota_installer.display.variable.variable_item_info] (/home/user/python/ota-installer/src/ota_installer/display/variable/variable_item_info.py:37)
+    │       └── set_variable_director [ota_installer.variable.set_variable_director] (/home/user/python/ota-installer/src/ota_installer/variable/set_variable_director.py:5)
+    │           └── validate_ota_package [ota_installer.validation.ota_package_validator] (/home/user/python/ota-installer/src/ota_installer/validation/ota_package_validator.py:17)
+    └── TaskExecutor.set_path [ota_installer.task.task_execution] (/home/user/python/ota-installer/src/ota_installer/task/task_execution.py:28)
+
+Root: ota_installer.command_line_interface.version_callback
+Maximum discovered depth: 2
+version_callback [ota_installer.command_line_interface] (/home/user/python/ota-installer/src/ota_installer/command_line_interface.py:15)
+└── SoftwareVersion.formatted [ota_installer.versioning.version_info] (/home/user/python/ota-installer/src/ota_installer/versioning/version_info.py:23)
+    └── SoftwareVersion.display [ota_installer.versioning.version_info] (/home/user/python/ota-installer/src/ota_installer/versioning/version_info.py:15)
+
+Root: ota_installer.decorator.colorized_indent_printer.ColorizedIndentPrinter.__call__
+Maximum discovered depth: 0
+ColorizedIndentPrinter.__call__ [ota_installer.decorator.colorized_indent_printer] (/home/user/python/ota-installer/src/ota_installer/decorator/colorized_indent_printer.py:22)
+
+Root: ota_installer.decorator.colorized_indent_printer.ColorizedIndentPrinter.wrapper
+Maximum discovered depth: 0
+ColorizedIndentPrinter.wrapper [ota_installer.decorator.colorized_indent_printer] (/home/user/python/ota-installer/src/ota_installer/decorator/colorized_indent_printer.py:29)
+
+Root: ota_installer.decorator.colorizer.Colorizer.__call__
+Maximum discovered depth: 0
+Colorizer.__call__ [ota_installer.decorator.colorizer] (/home/user/python/ota-installer/src/ota_installer/decorator/colorizer.py:27)
+
+Root: ota_installer.decorator.colorizer.Colorizer.__post_init__
+Maximum discovered depth: 0
+Colorizer.__post_init__ [ota_installer.decorator.colorizer] (/home/user/python/ota-installer/src/ota_installer/decorator/colorizer.py:21)
+
+Root: ota_installer.decorator.colorizer.Colorizer.wrapper
+Maximum discovered depth: 2
+Colorizer.wrapper [ota_installer.decorator.colorizer] (/home/user/python/ota-installer/src/ota_installer/decorator/colorizer.py:31)
+├── RichColors.beginning [ota_installer.style.style_info] (/home/user/python/ota-installer/src/ota_installer/style/style_info.py:23)
+│   └── RichColors.tag [ota_installer.style.style_info] (/home/user/python/ota-installer/src/ota_installer/style/style_info.py:19)
+└── RichColors.ending [ota_installer.style.style_info] (/home/user/python/ota-installer/src/ota_installer/style/style_info.py:27)
+    └── RichColors.tag [ota_installer.style.style_info] (/home/user/python/ota-installer/src/ota_installer/style/style_info.py:19)
+
+Root: ota_installer.decorator.colorizer.main
+Maximum discovered depth: 1
+main [ota_installer.decorator.colorizer] (/home/user/python/ota-installer/src/ota_installer/decorator/colorizer.py:42)
+└── greet [ota_installer.decorator.colorizer] (/home/user/python/ota-installer/src/ota_installer/decorator/colorizer.py:47)
+
+Root: ota_installer.decorator.confirmation_prompt.ConfirmationPrompt.__call__
+Maximum discovered depth: 0
+ConfirmationPrompt.__call__ [ota_installer.decorator.confirmation_prompt] (/home/user/python/ota-installer/src/ota_installer/decorator/confirmation_prompt.py:82)
+
+Root: ota_installer.decorator.confirmation_prompt.ConfirmationPrompt.on_error
+Maximum discovered depth: 0
+ConfirmationPrompt.on_error [ota_installer.decorator.confirmation_prompt] (/home/user/python/ota-installer/src/ota_installer/decorator/confirmation_prompt.py:69)
+
+Root: ota_installer.decorator.confirmation_prompt.ConfirmationPrompt.wrapper
+Maximum discovered depth: 5
+ConfirmationPrompt.wrapper [ota_installer.decorator.confirmation_prompt] (/home/user/python/ota-installer/src/ota_installer/decorator/confirmation_prompt.py:86)
+├── ConfirmationPrompt.func [ota_installer.decorator.confirmation_prompt] (/home/user/python/ota-installer/src/ota_installer/decorator/confirmation_prompt.py:74)
+│   └── ConfirmationPrompt.get_message [ota_installer.decorator.confirmation_prompt] (/home/user/python/ota-installer/src/ota_installer/decorator/confirmation_prompt.py:45)
+│       ├── ConfirmationPrompt.get_key_option [ota_installer.decorator.confirmation_prompt] (/home/user/python/ota-installer/src/ota_installer/decorator/confirmation_prompt.py:40)
+│       │   ├── RichColors.beginning [ota_installer.style.style_info] (/home/user/python/ota-installer/src/ota_installer/style/style_info.py:23)
+│       │   │   └── RichColors.tag [ota_installer.style.style_info] (/home/user/python/ota-installer/src/ota_installer/style/style_info.py:19)
+│       │   └── RichColors.ending [ota_installer.style.style_info] (/home/user/python/ota-installer/src/ota_installer/style/style_info.py:27)
+│       │       └── RichColors.tag [ota_installer.style.style_info] (/home/user/python/ota-installer/src/ota_installer/style/style_info.py:19)
+│       ├── ConfirmationPrompt.get_request [ota_installer.decorator.confirmation_prompt] (/home/user/python/ota-installer/src/ota_installer/decorator/confirmation_prompt.py:36)
+│       └── indentation [ota_installer.style.style_info] (/home/user/python/ota-installer/src/ota_installer/style/style_info.py:48)
+├── ConfirmationPrompt.get_confirmation [ota_installer.decorator.confirmation_prompt] (/home/user/python/ota-installer/src/ota_installer/decorator/confirmation_prompt.py:54)
+└── ConfirmationPrompt.get_display [ota_installer.decorator.confirmation_prompt] (/home/user/python/ota-installer/src/ota_installer/decorator/confirmation_prompt.py:58)
+
+Root: ota_installer.decorator.confirmation_prompt.my_function
+Maximum discovered depth: 0
+my_function [ota_installer.decorator.confirmation_prompt] (/home/user/python/ota-installer/src/ota_installer/decorator/confirmation_prompt.py:98)
+
+Root: ota_installer.decorator.continue_on_keypress.ContinueOnKeyPress.__call__
+Maximum discovered depth: 0
+ContinueOnKeyPress.__call__ [ota_installer.decorator.continue_on_keypress] (/home/user/python/ota-installer/src/ota_installer/decorator/continue_on_keypress.py:24)
+
+Root: ota_installer.decorator.continue_on_keypress.ContinueOnKeyPress.func
+Maximum discovered depth: 0
+ContinueOnKeyPress.func [ota_installer.decorator.continue_on_keypress] (/home/user/python/ota-installer/src/ota_installer/decorator/continue_on_keypress.py:41)
+
+Root: ota_installer.decorator.continue_on_keypress.ContinueOnKeyPress.wrapper
+Maximum discovered depth: 1
+ContinueOnKeyPress.wrapper [ota_installer.decorator.continue_on_keypress] (/home/user/python/ota-installer/src/ota_installer/decorator/continue_on_keypress.py:28)
+└── ContinueOnKeyPress.display_message [ota_installer.decorator.continue_on_keypress] (/home/user/python/ota-installer/src/ota_installer/decorator/continue_on_keypress.py:36)
+
+Root: ota_installer.decorator.double_padded_footer_wrapper.DoublePaddedFooterWrapper.__call__
+Maximum discovered depth: 0
+DoublePaddedFooterWrapper.__call__ [ota_installer.decorator.double_padded_footer_wrapper] (/home/user/python/ota-installer/src/ota_installer/decorator/double_padded_footer_wrapper.py:21)
+
+Root: ota_installer.decorator.double_padded_footer_wrapper.DoublePaddedFooterWrapper.wrapper
+Maximum discovered depth: 1
+DoublePaddedFooterWrapper.wrapper [ota_installer.decorator.double_padded_footer_wrapper] (/home/user/python/ota-installer/src/ota_installer/decorator/double_padded_footer_wrapper.py:25)
+└── DoublePaddedFooterWrapper._print_footer [ota_installer.decorator.double_padded_footer_wrapper] (/home/user/python/ota-installer/src/ota_installer/decorator/double_padded_footer_wrapper.py:38)
+
+Root: ota_installer.decorator.encapsulation.Encapsulate.__call__
+Maximum discovered depth: 0
+Encapsulate.__call__ [ota_installer.decorator.encapsulation] (/home/user/python/ota-installer/src/ota_installer/decorator/encapsulation.py:13)
+
+Root: ota_installer.decorator.encapsulation.Encapsulate.wrapper
+Maximum discovered depth: 1
+Encapsulate.wrapper [ota_installer.decorator.encapsulation] (/home/user/python/ota-installer/src/ota_installer/decorator/encapsulation.py:19)
+└── Encapsulate._print_separator [ota_installer.decorator.encapsulation] (/home/user/python/ota-installer/src/ota_installer/decorator/encapsulation.py:27)
+
+Root: ota_installer.decorator.exception_handler.ExceptionHandler.__call__
+Maximum discovered depth: 0
+ExceptionHandler.__call__ [ota_installer.decorator.exception_handler] (/home/user/python/ota-installer/src/ota_installer/decorator/exception_handler.py:13)
+
+Root: ota_installer.decorator.exception_handler.ExceptionHandler.wrapper
+Maximum discovered depth: 0
+ExceptionHandler.wrapper [ota_installer.decorator.exception_handler] (/home/user/python/ota-installer/src/ota_installer/decorator/exception_handler.py:17)
+
+Root: ota_installer.decorator.figletizer.Figletizer.__call__
+Maximum discovered depth: 0
+Figletizer.__call__ [ota_installer.decorator.figletizer] (/home/user/python/ota-installer/src/ota_installer/decorator/figletizer.py:23)
+
+Root: ota_installer.decorator.figletizer.Figletizer.wrapper
+Maximum discovered depth: 0
+Figletizer.wrapper [ota_installer.decorator.figletizer] (/home/user/python/ota-installer/src/ota_installer/decorator/figletizer.py:27)
+
+Root: ota_installer.decorator.footer_wrapper.FooterWrapper.__call__
+Maximum discovered depth: 0
+FooterWrapper.__call__ [ota_installer.decorator.footer_wrapper] (/home/user/python/ota-installer/src/ota_installer/decorator/footer_wrapper.py:17)
+
+Root: ota_installer.decorator.footer_wrapper.FooterWrapper.wrapper
+Maximum discovered depth: 1
+FooterWrapper.wrapper [ota_installer.decorator.footer_wrapper] (/home/user/python/ota-installer/src/ota_installer/decorator/footer_wrapper.py:21)
+└── FooterWrapper._output_message [ota_installer.decorator.footer_wrapper] (/home/user/python/ota-installer/src/ota_installer/decorator/footer_wrapper.py:31)
+
+Root: ota_installer.decorator.header_wrapper.HeaderWrapper.__call__
+Maximum discovered depth: 0
+HeaderWrapper.__call__ [ota_installer.decorator.header_wrapper] (/home/user/python/ota-installer/src/ota_installer/decorator/header_wrapper.py:19)
+
+Root: ota_installer.decorator.header_wrapper.HeaderWrapper.wrapper
+Maximum discovered depth: 1
+HeaderWrapper.wrapper [ota_installer.decorator.header_wrapper] (/home/user/python/ota-installer/src/ota_installer/decorator/header_wrapper.py:23)
+└── HeaderWrapper._output_message [ota_installer.decorator.header_wrapper] (/home/user/python/ota-installer/src/ota_installer/decorator/header_wrapper.py:32)
+
+Root: ota_installer.decorator.indent_wrapper.IndentWrapper.__call__
+Maximum discovered depth: 0
+IndentWrapper.__call__ [ota_installer.decorator.indent_wrapper] (/home/user/python/ota-installer/src/ota_installer/decorator/indent_wrapper.py:19)
+
+Root: ota_installer.decorator.indent_wrapper.IndentWrapper.wrapper
+Maximum discovered depth: 1
+IndentWrapper.wrapper [ota_installer.decorator.indent_wrapper] (/home/user/python/ota-installer/src/ota_installer/decorator/indent_wrapper.py:22)
+└── IndentWrapper.indent [ota_installer.decorator.indent_wrapper] (/home/user/python/ota-installer/src/ota_installer/decorator/indent_wrapper.py:28)
+
+Root: ota_installer.decorator.multiply_string.MultiplyString.__call__
+Maximum discovered depth: 0
+MultiplyString.__call__ [ota_installer.decorator.multiply_string] (/home/user/python/ota-installer/src/ota_installer/decorator/multiply_string.py:17)
+
+Root: ota_installer.decorator.multiply_string.MultiplyString.wrapper
+Maximum discovered depth: 0
+MultiplyString.wrapper [ota_installer.decorator.multiply_string] (/home/user/python/ota-installer/src/ota_installer/decorator/multiply_string.py:21)
+
+Root: ota_installer.decorator.output_printer.OutputPrinter.__call__
+Maximum discovered depth: 0
+OutputPrinter.__call__ [ota_installer.decorator.output_printer] (/home/user/python/ota-installer/src/ota_installer/decorator/output_printer.py:22)
+
+Root: ota_installer.decorator.output_printer.OutputPrinter.wrapper
+Maximum discovered depth: 2
+OutputPrinter.wrapper [ota_installer.decorator.output_printer] (/home/user/python/ota-installer/src/ota_installer/decorator/output_printer.py:26)
+├── RichColors.beginning [ota_installer.style.style_info] (/home/user/python/ota-installer/src/ota_installer/style/style_info.py:23)
+│   └── RichColors.tag [ota_installer.style.style_info] (/home/user/python/ota-installer/src/ota_installer/style/style_info.py:19)
+└── RichColors.ending [ota_installer.style.style_info] (/home/user/python/ota-installer/src/ota_installer/style/style_info.py:27)
+    └── RichColors.tag [ota_installer.style.style_info] (/home/user/python/ota-installer/src/ota_installer/style/style_info.py:19)
+
+Root: ota_installer.decorator.padded_footer_wrapper.PaddedFooterWrapper.__call__
+Maximum discovered depth: 0
+PaddedFooterWrapper.__call__ [ota_installer.decorator.padded_footer_wrapper] (/home/user/python/ota-installer/src/ota_installer/decorator/padded_footer_wrapper.py:19)
+
+Root: ota_installer.decorator.padded_footer_wrapper.PaddedFooterWrapper.wrapper
+Maximum discovered depth: 1
+PaddedFooterWrapper.wrapper [ota_installer.decorator.padded_footer_wrapper] (/home/user/python/ota-installer/src/ota_installer/decorator/padded_footer_wrapper.py:23)
+└── PaddedFooterWrapper._add_padding [ota_installer.decorator.padded_footer_wrapper] (/home/user/python/ota-installer/src/ota_installer/decorator/padded_footer_wrapper.py:33)
+
+Root: ota_installer.decorator.protocol.decorator_protocols.GenericDecorator.__call__
+Maximum discovered depth: 0
+GenericDecorator.__call__ [ota_installer.decorator.protocol.decorator_protocols] (/home/user/python/ota-installer/src/ota_installer/decorator/protocol/decorator_protocols.py:17)
+
+Root: ota_installer.decorator.protocol.decorator_protocols.StringReturningDecorator.__call__
+Maximum discovered depth: 0
+StringReturningDecorator.__call__ [ota_installer.decorator.protocol.decorator_protocols] (/home/user/python/ota-installer/src/ota_installer/decorator/protocol/decorator_protocols.py:26)
+
+Root: ota_installer.decorator.styled_figlet_printer.StyledFigletPrinter.__call__
+Maximum discovered depth: 0
+StyledFigletPrinter.__call__ [ota_installer.decorator.styled_figlet_printer] (/home/user/python/ota-installer/src/ota_installer/decorator/styled_figlet_printer.py:20)
+
+Root: ota_installer.decorator.styled_figlet_printer.welcome_message
+Maximum discovered depth: 0
+welcome_message [ota_installer.decorator.styled_figlet_printer] (/home/user/python/ota-installer/src/ota_installer/decorator/styled_figlet_printer.py:35)
+
+Root: ota_installer.decorator.styled_indent_printer.StylizedIndentPrinter.__call__
+Maximum discovered depth: 0
+StylizedIndentPrinter.__call__ [ota_installer.decorator.styled_indent_printer] (/home/user/python/ota-installer/src/ota_installer/decorator/styled_indent_printer.py:22)
+
+Root: ota_installer.decorator.template.Example.__call__
+Maximum discovered depth: 0
+Example.__call__ [ota_installer.decorator.template] (/home/user/python/ota-installer/src/ota_installer/decorator/template.py:19)
+
+Root: ota_installer.decorator.template.ExampleWithArgs.__call__
+Maximum discovered depth: 0
+ExampleWithArgs.__call__ [ota_installer.decorator.template] (/home/user/python/ota-installer/src/ota_installer/decorator/template.py:35)
+
+Root: ota_installer.decorator.template.ExampleWithArgs.wrapper
+Maximum discovered depth: 0
+ExampleWithArgs.wrapper [ota_installer.decorator.template] (/home/user/python/ota-installer/src/ota_installer/decorator/template.py:39)
+
+Root: ota_installer.decorator.timeit.TimeIt.__call__
+Maximum discovered depth: 0
+TimeIt.__call__ [ota_installer.decorator.timeit] (/home/user/python/ota-installer/src/ota_installer/decorator/timeit.py:17)
+
+Root: ota_installer.decorator.timeit.TimeIt.wrapper
+Maximum discovered depth: 1
+TimeIt.wrapper [ota_installer.decorator.timeit] (/home/user/python/ota-installer/src/ota_installer/decorator/timeit.py:21)
+└── TimeIt._log_execution_time [ota_installer.decorator.timeit] (/home/user/python/ota-installer/src/ota_installer/decorator/timeit.py:30)
+
+Root: ota_installer.directory.directory_info.DirectoryConfig.__post_init__
+Maximum discovered depth: 0
+DirectoryConfig.__post_init__ [ota_installer.directory.directory_info] (/home/user/python/ota-installer/src/ota_installer/directory/directory_info.py:64)
+
+Root: ota_installer.directory.directory_info.DirectoryHandler.__post_init__
+Maximum discovered depth: 1
+DirectoryHandler.__post_init__ [ota_installer.directory.directory_info] (/home/user/python/ota-installer/src/ota_installer/directory/directory_info.py:80)
+└── DirectoryType.to_dict [ota_installer.directory.directory_info] (/home/user/python/ota-installer/src/ota_installer/directory/directory_info.py:21)
+
+Root: ota_installer.directory.directory_info.DirectoryRender.__call__
+Maximum discovered depth: 0
+DirectoryRender.__call__ [ota_installer.directory.directory_info] (/home/user/python/ota-installer/src/ota_installer/directory/directory_info.py:48)
+
+Root: ota_installer.directory.directory_info.DirectoryType.get_path
+Maximum discovered depth: 1
+DirectoryType.get_path [ota_installer.directory.directory_info] (/home/user/python/ota-installer/src/ota_installer/directory/directory_info.py:37)
+└── DirectoryType.to_dict [ota_installer.directory.directory_info] (/home/user/python/ota-installer/src/ota_installer/directory/directory_info.py:21)
+
+Root: ota_installer.dispatcher.dispatcher_info.DispatcherDefinition.build
+Maximum discovered depth: 0
+DispatcherDefinition.build [ota_installer.dispatcher.dispatcher_info] (/home/user/python/ota-installer/src/ota_installer/dispatcher/dispatcher_info.py:34)
+
+Root: ota_installer.dispatcher.dispatcher_info.DispatcherProtocol.get_instance
+Maximum discovered depth: 0
+DispatcherProtocol.get_instance [ota_installer.dispatcher.dispatcher_info] (/home/user/python/ota-installer/src/ota_installer/dispatcher/dispatcher_info.py:89)
+
+Root: ota_installer.dispatcher.dispatcher_info.DispatcherProtocol.get_value
+Maximum discovered depth: 0
+DispatcherProtocol.get_value [ota_installer.dispatcher.dispatcher_info] (/home/user/python/ota-installer/src/ota_installer/dispatcher/dispatcher_info.py:83)
+
+Root: ota_installer.dispatcher.dispatcher_info.DispatcherProtocol.normalize_key
+Maximum discovered depth: 0
+DispatcherProtocol.normalize_key [ota_installer.dispatcher.dispatcher_info] (/home/user/python/ota-installer/src/ota_installer/dispatcher/dispatcher_info.py:94)
+
+Root: ota_installer.dispatcher.dispatcher_info.DispatcherTemplate.get_instance
+Maximum discovered depth: 1
+DispatcherTemplate.get_instance [ota_installer.dispatcher.dispatcher_info] (/home/user/python/ota-installer/src/ota_installer/dispatcher/dispatcher_info.py:121)
+└── DispatcherTemplate.normalize_key [ota_installer.dispatcher.dispatcher_info] (/home/user/python/ota-installer/src/ota_installer/dispatcher/dispatcher_info.py:145)
+
+Root: ota_installer.dispatcher.dispatcher_info.DispatcherTemplate.get_value
+Maximum discovered depth: 1
+DispatcherTemplate.get_value [ota_installer.dispatcher.dispatcher_info] (/home/user/python/ota-installer/src/ota_installer/dispatcher/dispatcher_info.py:106)
+└── DispatcherTemplate.normalize_key [ota_installer.dispatcher.dispatcher_info] (/home/user/python/ota-installer/src/ota_installer/dispatcher/dispatcher_info.py:145)
+
+Root: ota_installer.display.display_info.DisplayRenderer.__call__
+Maximum discovered depth: 1
+DisplayRenderer.__call__ [ota_installer.display.display_info] (/home/user/python/ota-installer/src/ota_installer/display/display_info.py:37)
+└── DisplayRenderer.provider [ota_installer.display.display_info] (/home/user/python/ota-installer/src/ota_installer/display/display_info.py:40)
+
+Root: ota_installer.display.display_info.main
+Maximum discovered depth: 3
+main [ota_installer.display.display_info] (/home/user/python/ota-installer/src/ota_installer/display/display_info.py:145)
+└── DisplayHeaderPipeline.process_header [ota_installer.display.display_info] (/home/user/python/ota-installer/src/ota_installer/display/display_info.py:125)
+    └── process_display_steps [ota_installer.display.display_info] (/home/user/python/ota-installer/src/ota_installer/display/display_info.py:101)
+        └── DisplayStep.run [ota_installer.display.display_info] (/home/user/python/ota-installer/src/ota_installer/display/display_info.py:58)
+
+Root: ota_installer.display.display_info.process_header_display
+Maximum discovered depth: 2
+process_header_display [ota_installer.display.display_info] (/home/user/python/ota-installer/src/ota_installer/display/display_info.py:114)
+└── process_display_steps [ota_installer.display.display_info] (/home/user/python/ota-installer/src/ota_installer/display/display_info.py:101)
+    └── DisplayStep.run [ota_installer.display.display_info] (/home/user/python/ota-installer/src/ota_installer/display/display_info.py:58)
+
+Root: ota_installer.display.variable.processor.base_process_info.BaseProcessor.__post_init__
+Maximum discovered depth: 3
+BaseProcessor.__post_init__ [ota_installer.display.variable.processor.base_process_info] (/home/user/python/ota-installer/src/ota_installer/display/variable/processor/base_process_info.py:16)
+└── VariableDirector.get_dispatcher [ota_installer.variable.variable_director] (/home/user/python/ota-installer/src/ota_installer/variable/variable_director.py:90)
+    └── build_dispatcher [ota_installer.dispatcher.dispatcher_info] (/home/user/python/ota-installer/src/ota_installer/dispatcher/dispatcher_info.py:56)
+        ├── DispatcherType.allowed_dispatchers [ota_installer.dispatcher.dispatcher_info] (/home/user/python/ota-installer/src/ota_installer/dispatcher/dispatcher_info.py:25)
+        └── build_dispatcher_mapping [ota_installer.dispatcher.dispatcher_info] (/home/user/python/ota-installer/src/ota_installer/dispatcher/dispatcher_info.py:38)
+
+Root: ota_installer.display.variable.processor.base_process_info.BaseProcessor.set_item
+Maximum discovered depth: 0
+BaseProcessor.set_item [ota_installer.display.variable.processor.base_process_info] (/home/user/python/ota-installer/src/ota_installer/display/variable/processor/base_process_info.py:37)
+
+Root: ota_installer.display.variable.processor.directory_process_info.DirectoryItemInfo.get_validated_type
+Maximum discovered depth: 0
+DirectoryItemInfo.get_validated_type [ota_installer.display.variable.processor.directory_process_info] (/home/user/python/ota-installer/src/ota_installer/display/variable/processor/directory_process_info.py:20)
+
+Root: ota_installer.display.variable.processor.directory_process_info.DirectoryIterationProcessor.process_items
+Maximum discovered depth: 1
+DirectoryIterationProcessor.process_items [ota_installer.display.variable.processor.directory_process_info] (/home/user/python/ota-installer/src/ota_installer/display/variable/processor/directory_process_info.py:49)
+├── BaseProcessor.get_value_by_key [ota_installer.display.variable.processor.base_process_info] (/home/user/python/ota-installer/src/ota_installer/display/variable/processor/base_process_info.py:33)
+├── VariableTableBuilder.add [ota_installer.display.variable.variable_item_info] (/home/user/python/ota-installer/src/ota_installer/display/variable/variable_item_info.py:37)
+└── VariableTableBuilder.render [ota_installer.display.variable.variable_item_info] (/home/user/python/ota-installer/src/ota_installer/display/variable/variable_item_info.py:45)
+
+Root: ota_installer.display.variable.processor.file_process_info.FileIterationProcessor.process_items
+Maximum discovered depth: 1
+FileIterationProcessor.process_items [ota_installer.display.variable.processor.file_process_info] (/home/user/python/ota-installer/src/ota_installer/display/variable/processor/file_process_info.py:70)
+├── BaseProcessor.get_value_by_key [ota_installer.display.variable.processor.base_process_info] (/home/user/python/ota-installer/src/ota_installer/display/variable/processor/base_process_info.py:33)
+├── VariableTableBuilder.add [ota_installer.display.variable.variable_item_info] (/home/user/python/ota-installer/src/ota_installer/display/variable/variable_item_info.py:37)
+└── VariableTableBuilder.render [ota_installer.display.variable.variable_item_info] (/home/user/python/ota-installer/src/ota_installer/display/variable/variable_item_info.py:45)
+
+Root: ota_installer.display.variable.processor.file_process_info.FileIterationProcessor.set_file_names
+Maximum discovered depth: 0
+FileIterationProcessor.set_file_names [ota_installer.display.variable.processor.file_process_info] (/home/user/python/ota-installer/src/ota_installer/display/variable/processor/file_process_info.py:60)
+
+Root: ota_installer.display.variable.processor.file_process_info.VariableFileProcessor.process_items
+Maximum discovered depth: 1
+VariableFileProcessor.process_items [ota_installer.display.variable.processor.file_process_info] (/home/user/python/ota-installer/src/ota_installer/display/variable/processor/file_process_info.py:27)
+├── BaseProcessor.get_value_by_key [ota_installer.display.variable.processor.base_process_info] (/home/user/python/ota-installer/src/ota_installer/display/variable/processor/base_process_info.py:33)
+├── VariableFileProcessor.newline [ota_installer.display.variable.processor.file_process_info] (/home/user/python/ota-installer/src/ota_installer/display/variable/processor/file_process_info.py:46)
+├── VariableTableBuilder.add [ota_installer.display.variable.variable_item_info] (/home/user/python/ota-installer/src/ota_installer/display/variable/variable_item_info.py:37)
+└── VariableTableBuilder.render [ota_installer.display.variable.variable_item_info] (/home/user/python/ota-installer/src/ota_installer/display/variable/variable_item_info.py:45)
+
+Root: ota_installer.display.variable.variable_item_info.VariableTableBuilder.__init__
+Maximum discovered depth: 0
+VariableTableBuilder.__init__ [ota_installer.display.variable.variable_item_info] (/home/user/python/ota-installer/src/ota_installer/display/variable/variable_item_info.py:23)
+
+Root: ota_installer.display.variable.variable_item_info.VariableTableBuilder.newline
+Maximum discovered depth: 0
+VariableTableBuilder.newline [ota_installer.display.variable.variable_item_info] (/home/user/python/ota-installer/src/ota_installer/display/variable/variable_item_info.py:41)
+
+Root: ota_installer.exception.base_exception_info.BaseExceptionHandler.__call__
+Maximum discovered depth: 1
+BaseExceptionHandler.__call__ [ota_installer.exception.base_exception_info] (/home/user/python/ota-installer/src/ota_installer/exception/base_exception_info.py:36)
+└── BaseExceptionHandler.handle [ota_installer.exception.base_exception_info] (/home/user/python/ota-installer/src/ota_installer/exception/base_exception_info.py:19)
+
+Root: ota_installer.exception.base_exception_info.BaseExceptionHandler.print_exception_message
+Maximum discovered depth: 1
+BaseExceptionHandler.print_exception_message [ota_installer.exception.base_exception_info] (/home/user/python/ota-installer/src/ota_installer/exception/base_exception_info.py:26)
+└── BaseExceptionHandler.format_message [ota_installer.exception.base_exception_info] (/home/user/python/ota-installer/src/ota_installer/exception/base_exception_info.py:32)
+
+Root: ota_installer.exception.exception_factory_info.__init__
+Maximum discovered depth: 0
+__init__ [ota_installer.exception.exception_factory_info] (/home/user/python/ota-installer/src/ota_installer/exception/exception_factory_info.py:18)
+
+Root: ota_installer.exception.exception_factory_info.decorator
+Maximum discovered depth: 0
+decorator [ota_installer.exception.exception_factory_info] (/home/user/python/ota-installer/src/ota_installer/exception/exception_factory_info.py:10)
+
+Root: ota_installer.exception.exception_factory_info.exception_handler_factory
+Maximum discovered depth: 0
+exception_handler_factory [ota_installer.exception.exception_factory_info] (/home/user/python/ota-installer/src/ota_installer/exception/exception_factory_info.py:7)
+
+Root: ota_installer.exception.exception_factory_info.main
+Maximum discovered depth: 0
+main [ota_installer.exception.exception_factory_info] (/home/user/python/ota-installer/src/ota_installer/exception/exception_factory_info.py:35)
+
+Root: ota_installer.image.boot_image_info.BootImageType.allowed_types
+Maximum discovered depth: 0
+BootImageType.allowed_types [ota_installer.image.boot_image_info] (/home/user/python/ota-installer/src/ota_installer/image/boot_image_info.py:31)
+
+Root: ota_installer.image.generic_image_info.FileImageData.__call__
+Maximum discovered depth: 2
+FileImageData.__call__ [ota_installer.image.generic_image_info] (/home/user/python/ota-installer/src/ota_installer/image/generic_image_info.py:29)
+├── FileImageInfo.path [ota_installer.image.generic_image_info] (/home/user/python/ota-installer/src/ota_installer/image/generic_image_info.py:45)
+└── FileImageName.path [ota_installer.image.generic_image_info] (/home/user/python/ota-installer/src/ota_installer/image/generic_image_info.py:66)
+    ├── FileImageInfo.path [ota_installer.image.generic_image_info] (/home/user/python/ota-installer/src/ota_installer/image/generic_image_info.py:45)
+    └── FileImageName.path [ota_installer.image.generic_image_info] ↻ cycle
+
+Root: ota_installer.image.generic_image_info.FileImageName.directory
+Maximum discovered depth: 0
+FileImageName.directory [ota_installer.image.generic_image_info] (/home/user/python/ota-installer/src/ota_installer/image/generic_image_info.py:70)
+
+Root: ota_installer.image.generic_image_info.FileImageName.path_list
+Maximum discovered depth: 0
+FileImageName.path_list [ota_installer.image.generic_image_info] (/home/user/python/ota-installer/src/ota_installer/image/generic_image_info.py:74)
+
+Root: ota_installer.image.generic_image_info.FileTypeDispatcher.__post_init__
+Maximum discovered depth: 1
+FileTypeDispatcher.__post_init__ [ota_installer.image.generic_image_info] (/home/user/python/ota-installer/src/ota_installer/image/generic_image_info.py:109)
+└── FileImageName.create_path_dictionary [ota_installer.image.generic_image_info] (/home/user/python/ota-installer/src/ota_installer/image/generic_image_info.py:88)
+
+Root: ota_installer.image.magisk_image_info.MagiskImagePath.local_path
+Maximum discovered depth: 0
+MagiskImagePath.local_path [ota_installer.image.magisk_image_info] (/home/user/python/ota-installer/src/ota_installer/image/magisk_image_info.py:31)
+
+Root: ota_installer.image.magisk_image_info.MagiskImagePath.path_container
+Maximum discovered depth: 1
+MagiskImagePath.path_container [ota_installer.image.magisk_image_info] (/home/user/python/ota-installer/src/ota_installer/image/magisk_image_info.py:26)
+└── MagiskImagePath.list [ota_installer.image.magisk_image_info] (/home/user/python/ota-installer/src/ota_installer/image/magisk_image_info.py:22)
+
+Root: ota_installer.image.magisk_image_info.MagiskImagePath.remote_path
+Maximum discovered depth: 0
+MagiskImagePath.remote_path [ota_installer.image.magisk_image_info] (/home/user/python/ota-installer/src/ota_installer/image/magisk_image_info.py:36)
+
+Root: ota_installer.log_setup.configure_logger
+Maximum discovered depth: 1
+configure_logger [ota_installer.log_setup] (/home/user/python/ota-installer/src/ota_installer/log_setup.py:8)
+└── VariableTableBuilder.add [ota_installer.display.variable.variable_item_info] (/home/user/python/ota-installer/src/ota_installer/display/variable/variable_item_info.py:37)
+
+Root: ota_installer.log_setup.main
+Maximum discovered depth: 1
+main [ota_installer.log_setup] (/home/user/python/ota-installer/src/ota_installer/log_setup.py:96)
+└── log_messages [ota_installer.log_setup] (/home/user/python/ota-installer/src/ota_installer/log_setup.py:82)
+
+Root: ota_installer.main.main
+Maximum discovered depth: 0
+main [ota_installer.main] (/home/user/python/ota-installer/src/ota_installer/main.py:7)
+
+Root: ota_installer.plugin.plugin_registry.Plugin.__contains__
+Maximum discovered depth: 0
+Plugin.__contains__ [ota_installer.plugin.plugin_registry] (/home/user/python/ota-installer/src/ota_installer/plugin/plugin_registry.py:90)
+
+Root: ota_installer.plugin.plugin_registry.Plugin.__getitem__
+Maximum discovered depth: 0
+Plugin.__getitem__ [ota_installer.plugin.plugin_registry] (/home/user/python/ota-installer/src/ota_installer/plugin/plugin_registry.py:93)
+
+Root: ota_installer.plugin.plugin_registry.Registry.__contains__
+Maximum discovered depth: 0
+Registry.__contains__ [ota_installer.plugin.plugin_registry] (/home/user/python/ota-installer/src/ota_installer/plugin/plugin_registry.py:56)
+
+Root: ota_installer.plugin.plugin_registry.Registry.__getitem__
+Maximum discovered depth: 2
+Registry.__getitem__ [ota_installer.plugin.plugin_registry] (/home/user/python/ota-installer/src/ota_installer/plugin/plugin_registry.py:62)
+└── Registry.get [ota_installer.plugin.plugin_registry] (/home/user/python/ota-installer/src/ota_installer/plugin/plugin_registry.py:38)
+    └── MagiskImagePath.list [ota_installer.image.magisk_image_info] (/home/user/python/ota-installer/src/ota_installer/image/magisk_image_info.py:22)
+
+Root: ota_installer.plugin.plugin_registry.Registry.decorator
+Maximum discovered depth: 0
+Registry.decorator [ota_installer.plugin.plugin_registry] (/home/user/python/ota-installer/src/ota_installer/plugin/plugin_registry.py:26)
+
+Root: ota_installer.style.style_info.StyleRenderer.__call__
+Maximum discovered depth: 0
+StyleRenderer.__call__ [ota_installer.style.style_info] (/home/user/python/ota-installer/src/ota_installer/style/style_info.py:40)
+
+Root: ota_installer.style.style_info.separator
+Maximum discovered depth: 0
+separator [ota_installer.style.style_info] (/home/user/python/ota-installer/src/ota_installer/style/style_info.py:53)
+
+Root: ota_installer.task.component.base_task.BaseTask.__init__
+Maximum discovered depth: 2
+BaseTask.__init__ [ota_installer.task.component.base_task] (/home/user/python/ota-installer/src/ota_installer/task/component/base_task.py:19)
+└── BaseTask._initialize_task [ota_installer.task.component.base_task] (/home/user/python/ota-installer/src/ota_installer/task/component/base_task.py:34)
+    ├── BaseTask._set_optional_fields [ota_installer.task.component.base_task] (/home/user/python/ota-installer/src/ota_installer/task/component/base_task.py:48)
+    └── BaseTask._set_required_fields [ota_installer.task.component.base_task] (/home/user/python/ota-installer/src/ota_installer/task/component/base_task.py:42)
+
+Root: ota_installer.task.component.t01_payload_image_extractor.PayloadImageExtractor.__post_init__
+Maximum discovered depth: 1
+PayloadImageExtractor.__post_init__ [ota_installer.task.component.t01_payload_image_extractor] (/home/user/python/ota-installer/src/ota_installer/task/component/t01_payload_image_extractor.py:21)
+└── PayloadImageExtractor._create_extraction_command [ota_installer.task.component.t01_payload_image_extractor] (/home/user/python/ota-installer/src/ota_installer/task/component/t01_payload_image_extractor.py:28)
+
+Root: ota_installer.task.component.t01_payload_image_extractor.PayloadImageExtractor.perform_task
+Maximum discovered depth: 4
+PayloadImageExtractor.perform_task [ota_installer.task.component.t01_payload_image_extractor] (/home/user/python/ota-installer/src/ota_installer/task/component/t01_payload_image_extractor.py:33)
+└── TaskOperationProcessor.run_with_output [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:105)
+    ├── TaskOperationProcessor.execute_command_string [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:92)
+    │   ├── ShellCommandExecutionHandler.execute [ota_installer.task.operation.shell_command_execution_handler] (/home/user/python/ota-installer/src/ota_installer/task/operation/shell_command_execution_handler.py:39)
+    │   └── TaskOperationProcessor.show_reminder [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:88)
+    │       └── TaskItemParser.show_aspect [ota_installer.task.operation.task_operation_parser] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_parser.py:43)
+    ├── TaskOperationProcessor.show_command_string [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:80)
+    ├── TaskOperationProcessor.show_description [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:74)
+    └── TaskOperationProcessor.show_index_and_title [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:68)
+        └── TaskItemParser.show_header [ota_installer.task.operation.task_operation_parser] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_parser.py:57)
+
+Root: ota_installer.task.component.t02_payload_image_renamer.PayloadImageRenamer.__post_init__
+Maximum discovered depth: 1
+PayloadImageRenamer.__post_init__ [ota_installer.task.component.t02_payload_image_renamer] (/home/user/python/ota-installer/src/ota_installer/task/component/t02_payload_image_renamer.py:22)
+└── PayloadImageRenamer._create_rename_command [ota_installer.task.component.t02_payload_image_renamer] (/home/user/python/ota-installer/src/ota_installer/task/component/t02_payload_image_renamer.py:30)
+
+Root: ota_installer.task.component.t02_payload_image_renamer.PayloadImageRenamer.perform_task
+Maximum discovered depth: 4
+PayloadImageRenamer.perform_task [ota_installer.task.component.t02_payload_image_renamer] (/home/user/python/ota-installer/src/ota_installer/task/component/t02_payload_image_renamer.py:37)
+└── TaskOperationProcessor.run_with_output [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:105)
+    ├── TaskOperationProcessor.execute_command_string [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:92)
+    │   ├── ShellCommandExecutionHandler.execute [ota_installer.task.operation.shell_command_execution_handler] (/home/user/python/ota-installer/src/ota_installer/task/operation/shell_command_execution_handler.py:39)
+    │   └── TaskOperationProcessor.show_reminder [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:88)
+    │       └── TaskItemParser.show_aspect [ota_installer.task.operation.task_operation_parser] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_parser.py:43)
+    ├── TaskOperationProcessor.show_command_string [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:80)
+    ├── TaskOperationProcessor.show_description [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:74)
+    └── TaskOperationProcessor.show_index_and_title [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:68)
+        └── TaskItemParser.show_header [ota_installer.task.operation.task_operation_parser] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_parser.py:57)
+
+Root: ota_installer.task.component.t03_boot_image_extractor.BootImageExtractor.__post_init__
+Maximum discovered depth: 4
+BootImageExtractor.__post_init__ [ota_installer.task.component.t03_boot_image_extractor] (/home/user/python/ota-installer/src/ota_installer/task/component/t03_boot_image_extractor.py:22)
+├── BootImageExtractor._build_command_string [ota_installer.task.component.t03_boot_image_extractor] (/home/user/python/ota-installer/src/ota_installer/task/component/t03_boot_image_extractor.py:39)
+├── BootImageExtractor._format_options [ota_installer.task.component.t03_boot_image_extractor] (/home/user/python/ota-installer/src/ota_installer/task/component/t03_boot_image_extractor.py:35)
+└── image_handler [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:114)
+    ├── ImageTypeDispatcher.get_key [ota_installer.image.boot_image_info] (/home/user/python/ota-installer/src/ota_installer/image/boot_image_info.py:54)
+    │   └── BootImageType.validate_key [ota_installer.image.boot_image_info] (/home/user/python/ota-installer/src/ota_installer/image/boot_image_info.py:41)
+    │       └── BootImageType.normalize_key [ota_installer.image.boot_image_info] (/home/user/python/ota-installer/src/ota_installer/image/boot_image_info.py:36)
+    └── PluginDispatcherAdapter.load [ota_installer.plugin.handler.dispatcher_plugin_handler] (/home/user/python/ota-installer/src/ota_installer/plugin/handler/dispatcher_plugin_handler.py:26)
+        └── PluginDispatcherAdapter._load_plugin_dispatcher [ota_installer.plugin.handler.dispatcher_plugin_handler] (/home/user/python/ota-installer/src/ota_installer/plugin/handler/dispatcher_plugin_handler.py:38)
+
+Root: ota_installer.task.component.t03_boot_image_extractor.BootImageExtractor.perform_task
+Maximum discovered depth: 4
+BootImageExtractor.perform_task [ota_installer.task.component.t03_boot_image_extractor] (/home/user/python/ota-installer/src/ota_installer/task/component/t03_boot_image_extractor.py:44)
+└── TaskOperationProcessor.run_with_output [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:105)
+    ├── TaskOperationProcessor.execute_command_string [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:92)
+    │   ├── ShellCommandExecutionHandler.execute [ota_installer.task.operation.shell_command_execution_handler] (/home/user/python/ota-installer/src/ota_installer/task/operation/shell_command_execution_handler.py:39)
+    │   └── TaskOperationProcessor.show_reminder [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:88)
+    │       └── TaskItemParser.show_aspect [ota_installer.task.operation.task_operation_parser] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_parser.py:43)
+    ├── TaskOperationProcessor.show_command_string [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:80)
+    ├── TaskOperationProcessor.show_description [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:74)
+    └── TaskOperationProcessor.show_index_and_title [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:68)
+        └── TaskItemParser.show_header [ota_installer.task.operation.task_operation_parser] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_parser.py:57)
+
+Root: ota_installer.task.component.t04_stock_boot_image_backupper.StockBootImageBackupper.__post_init__
+Maximum discovered depth: 5
+StockBootImageBackupper.__post_init__ [ota_installer.task.component.t04_stock_boot_image_backupper] (/home/user/python/ota-installer/src/ota_installer/task/component/t04_stock_boot_image_backupper.py:22)
+└── StockBootImageBackupper._create_command_string [ota_installer.task.component.t04_stock_boot_image_backupper] (/home/user/python/ota-installer/src/ota_installer/task/component/t04_stock_boot_image_backupper.py:32)
+    └── image_handler [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:114)
+        ├── ImageTypeDispatcher.get_key [ota_installer.image.boot_image_info] (/home/user/python/ota-installer/src/ota_installer/image/boot_image_info.py:54)
+        │   └── BootImageType.validate_key [ota_installer.image.boot_image_info] (/home/user/python/ota-installer/src/ota_installer/image/boot_image_info.py:41)
+        │       └── BootImageType.normalize_key [ota_installer.image.boot_image_info] (/home/user/python/ota-installer/src/ota_installer/image/boot_image_info.py:36)
+        └── PluginDispatcherAdapter.load [ota_installer.plugin.handler.dispatcher_plugin_handler] (/home/user/python/ota-installer/src/ota_installer/plugin/handler/dispatcher_plugin_handler.py:26)
+            └── PluginDispatcherAdapter._load_plugin_dispatcher [ota_installer.plugin.handler.dispatcher_plugin_handler] (/home/user/python/ota-installer/src/ota_installer/plugin/handler/dispatcher_plugin_handler.py:38)
+
+Root: ota_installer.task.component.t04_stock_boot_image_backupper.StockBootImageBackupper.perform_task
+Maximum discovered depth: 4
+StockBootImageBackupper.perform_task [ota_installer.task.component.t04_stock_boot_image_backupper] (/home/user/python/ota-installer/src/ota_installer/task/component/t04_stock_boot_image_backupper.py:38)
+└── TaskOperationProcessor.run_with_output [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:105)
+    ├── TaskOperationProcessor.execute_command_string [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:92)
+    │   ├── ShellCommandExecutionHandler.execute [ota_installer.task.operation.shell_command_execution_handler] (/home/user/python/ota-installer/src/ota_installer/task/operation/shell_command_execution_handler.py:39)
+    │   └── TaskOperationProcessor.show_reminder [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:88)
+    │       └── TaskItemParser.show_aspect [ota_installer.task.operation.task_operation_parser] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_parser.py:43)
+    ├── TaskOperationProcessor.show_command_string [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:80)
+    ├── TaskOperationProcessor.show_description [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:74)
+    └── TaskOperationProcessor.show_index_and_title [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:68)
+        └── TaskItemParser.show_header [ota_installer.task.operation.task_operation_parser] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_parser.py:57)
+
+Root: ota_installer.task.component.t05_adb_connection_checker.ADBConnectionChecker.__post_init__
+Maximum discovered depth: 0
+ADBConnectionChecker.__post_init__ [ota_installer.task.component.t05_adb_connection_checker] (/home/user/python/ota-installer/src/ota_installer/task/component/t05_adb_connection_checker.py:20)
+
+Root: ota_installer.task.component.t05_adb_connection_checker.ADBConnectionChecker.perform_task
+Maximum discovered depth: 4
+ADBConnectionChecker.perform_task [ota_installer.task.component.t05_adb_connection_checker] (/home/user/python/ota-installer/src/ota_installer/task/component/t05_adb_connection_checker.py:28)
+└── TaskOperationProcessor.run_with_output [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:105)
+    ├── TaskOperationProcessor.execute_command_string [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:92)
+    │   ├── ShellCommandExecutionHandler.execute [ota_installer.task.operation.shell_command_execution_handler] (/home/user/python/ota-installer/src/ota_installer/task/operation/shell_command_execution_handler.py:39)
+    │   └── TaskOperationProcessor.show_reminder [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:88)
+    │       └── TaskItemParser.show_aspect [ota_installer.task.operation.task_operation_parser] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_parser.py:43)
+    ├── TaskOperationProcessor.show_command_string [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:80)
+    ├── TaskOperationProcessor.show_description [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:74)
+    └── TaskOperationProcessor.show_index_and_title [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:68)
+        └── TaskItemParser.show_header [ota_installer.task.operation.task_operation_parser] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_parser.py:57)
+
+Root: ota_installer.task.component.t06_stock_boot_image_pusher.StockBootImagePusher.__post_init__
+Maximum discovered depth: 1
+StockBootImagePusher.__post_init__ [ota_installer.task.component.t06_stock_boot_image_pusher] (/home/user/python/ota-installer/src/ota_installer/task/component/t06_stock_boot_image_pusher.py:21)
+└── StockBootImagePusher._create_adb_push_command [ota_installer.task.component.t06_stock_boot_image_pusher] (/home/user/python/ota-installer/src/ota_installer/task/component/t06_stock_boot_image_pusher.py:31)
+
+Root: ota_installer.task.component.t06_stock_boot_image_pusher.StockBootImagePusher.perform_task
+Maximum discovered depth: 4
+StockBootImagePusher.perform_task [ota_installer.task.component.t06_stock_boot_image_pusher] (/home/user/python/ota-installer/src/ota_installer/task/component/t06_stock_boot_image_pusher.py:37)
+└── TaskOperationProcessor.run_with_output [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:105)
+    ├── TaskOperationProcessor.execute_command_string [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:92)
+    │   ├── ShellCommandExecutionHandler.execute [ota_installer.task.operation.shell_command_execution_handler] (/home/user/python/ota-installer/src/ota_installer/task/operation/shell_command_execution_handler.py:39)
+    │   └── TaskOperationProcessor.show_reminder [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:88)
+    │       └── TaskItemParser.show_aspect [ota_installer.task.operation.task_operation_parser] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_parser.py:43)
+    ├── TaskOperationProcessor.show_command_string [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:80)
+    ├── TaskOperationProcessor.show_description [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:74)
+    └── TaskOperationProcessor.show_index_and_title [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:68)
+        └── TaskItemParser.show_header [ota_installer.task.operation.task_operation_parser] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_parser.py:57)
+
+Root: ota_installer.task.component.t07_magisk_image_finder.MagiskImageFinder.__post_init__
+Maximum discovered depth: 1
+MagiskImageFinder.__post_init__ [ota_installer.task.component.t07_magisk_image_finder] (/home/user/python/ota-installer/src/ota_installer/task/component/t07_magisk_image_finder.py:19)
+└── MagiskImageFinder._create_command_string [ota_installer.task.component.t07_magisk_image_finder] (/home/user/python/ota-installer/src/ota_installer/task/component/t07_magisk_image_finder.py:27)
+
+Root: ota_installer.task.component.t07_magisk_image_finder.MagiskImageFinder.perform_task
+Maximum discovered depth: 2
+MagiskImageFinder.perform_task [ota_installer.task.component.t07_magisk_image_finder] (/home/user/python/ota-installer/src/ota_installer/task/component/t07_magisk_image_finder.py:32)
+├── TaskOperationProcessor.show_description [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:74)
+├── TaskOperationProcessor.show_index_and_title [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:68)
+│   └── TaskItemParser.show_header [ota_installer.task.operation.task_operation_parser] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_parser.py:57)
+└── TaskOperationProcessor.show_reminder [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:88)
+    └── TaskItemParser.show_aspect [ota_installer.task.operation.task_operation_parser] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_parser.py:43)
+
+Root: ota_installer.task.component.t08_magisk_image_puller.MagiskImagePuller.__post_init__
+Maximum discovered depth: 2
+MagiskImagePuller.__post_init__ [ota_installer.task.component.t08_magisk_image_puller] (/home/user/python/ota-installer/src/ota_installer/task/component/t08_magisk_image_puller.py:25)
+└── MagiskImagePuller._build_command [ota_installer.task.component.t08_magisk_image_puller] (/home/user/python/ota-installer/src/ota_installer/task/component/t08_magisk_image_puller.py:32)
+    ├── MagiskImagePuller._get_destination_path [ota_installer.task.component.t08_magisk_image_puller] (/home/user/python/ota-installer/src/ota_installer/task/component/t08_magisk_image_puller.py:43)
+    └── MagiskImagePuller._get_source_path [ota_installer.task.component.t08_magisk_image_puller] (/home/user/python/ota-installer/src/ota_installer/task/component/t08_magisk_image_puller.py:39)
+
+Root: ota_installer.task.component.t08_magisk_image_puller.MagiskImagePuller.perform_task
+Maximum discovered depth: 4
+MagiskImagePuller.perform_task [ota_installer.task.component.t08_magisk_image_puller] (/home/user/python/ota-installer/src/ota_installer/task/component/t08_magisk_image_puller.py:50)
+└── TaskOperationProcessor.run_with_output [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:105)
+    ├── TaskOperationProcessor.execute_command_string [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:92)
+    │   ├── ShellCommandExecutionHandler.execute [ota_installer.task.operation.shell_command_execution_handler] (/home/user/python/ota-installer/src/ota_installer/task/operation/shell_command_execution_handler.py:39)
+    │   └── TaskOperationProcessor.show_reminder [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:88)
+    │       └── TaskItemParser.show_aspect [ota_installer.task.operation.task_operation_parser] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_parser.py:43)
+    ├── TaskOperationProcessor.show_command_string [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:80)
+    ├── TaskOperationProcessor.show_description [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:74)
+    └── TaskOperationProcessor.show_index_and_title [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:68)
+        └── TaskItemParser.show_header [ota_installer.task.operation.task_operation_parser] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_parser.py:57)
+
+Root: ota_installer.task.component.t09_recovery_rebooter.RecoveryRebooter.__post_init__
+Maximum discovered depth: 0
+RecoveryRebooter.__post_init__ [ota_installer.task.component.t09_recovery_rebooter] (/home/user/python/ota-installer/src/ota_installer/task/component/t09_recovery_rebooter.py:20)
+
+Root: ota_installer.task.component.t09_recovery_rebooter.RecoveryRebooter.perform_task
+Maximum discovered depth: 4
+RecoveryRebooter.perform_task [ota_installer.task.component.t09_recovery_rebooter] (/home/user/python/ota-installer/src/ota_installer/task/component/t09_recovery_rebooter.py:27)
+└── TaskOperationProcessor.run_with_output [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:105)
+    ├── TaskOperationProcessor.execute_command_string [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:92)
+    │   ├── ShellCommandExecutionHandler.execute [ota_installer.task.operation.shell_command_execution_handler] (/home/user/python/ota-installer/src/ota_installer/task/operation/shell_command_execution_handler.py:39)
+    │   └── TaskOperationProcessor.show_reminder [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:88)
+    │       └── TaskItemParser.show_aspect [ota_installer.task.operation.task_operation_parser] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_parser.py:43)
+    ├── TaskOperationProcessor.show_command_string [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:80)
+    ├── TaskOperationProcessor.show_description [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:74)
+    └── TaskOperationProcessor.show_index_and_title [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:68)
+        └── TaskItemParser.show_header [ota_installer.task.operation.task_operation_parser] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_parser.py:57)
+
+Root: ota_installer.task.component.t10_apply_ota_update.ADBSideloader.__post_init__
+Maximum discovered depth: 1
+ADBSideloader.__post_init__ [ota_installer.task.component.t10_apply_ota_update] (/home/user/python/ota-installer/src/ota_installer/task/component/t10_apply_ota_update.py:20)
+└── ADBSideloader._create_command_string [ota_installer.task.component.t10_apply_ota_update] (/home/user/python/ota-installer/src/ota_installer/task/component/t10_apply_ota_update.py:29)
+
+Root: ota_installer.task.component.t10_apply_ota_update.ADBSideloader.perform_task
+Maximum discovered depth: 4
+ADBSideloader.perform_task [ota_installer.task.component.t10_apply_ota_update] (/home/user/python/ota-installer/src/ota_installer/task/component/t10_apply_ota_update.py:34)
+└── TaskOperationProcessor.run_with_output [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:105)
+    ├── TaskOperationProcessor.execute_command_string [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:92)
+    │   ├── ShellCommandExecutionHandler.execute [ota_installer.task.operation.shell_command_execution_handler] (/home/user/python/ota-installer/src/ota_installer/task/operation/shell_command_execution_handler.py:39)
+    │   └── TaskOperationProcessor.show_reminder [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:88)
+    │       └── TaskItemParser.show_aspect [ota_installer.task.operation.task_operation_parser] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_parser.py:43)
+    ├── TaskOperationProcessor.show_command_string [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:80)
+    ├── TaskOperationProcessor.show_description [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:74)
+    └── TaskOperationProcessor.show_index_and_title [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:68)
+        └── TaskItemParser.show_header [ota_installer.task.operation.task_operation_parser] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_parser.py:57)
+
+Root: ota_installer.task.component.t11_bootloader_rebooter.BootloaderRebooter.__post_init__
+Maximum discovered depth: 0
+BootloaderRebooter.__post_init__ [ota_installer.task.component.t11_bootloader_rebooter] (/home/user/python/ota-installer/src/ota_installer/task/component/t11_bootloader_rebooter.py:20)
+
+Root: ota_installer.task.component.t11_bootloader_rebooter.BootloaderRebooter.perform_task
+Maximum discovered depth: 4
+BootloaderRebooter.perform_task [ota_installer.task.component.t11_bootloader_rebooter] (/home/user/python/ota-installer/src/ota_installer/task/component/t11_bootloader_rebooter.py:28)
+└── TaskOperationProcessor.run_with_output [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:105)
+    ├── TaskOperationProcessor.execute_command_string [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:92)
+    │   ├── ShellCommandExecutionHandler.execute [ota_installer.task.operation.shell_command_execution_handler] (/home/user/python/ota-installer/src/ota_installer/task/operation/shell_command_execution_handler.py:39)
+    │   └── TaskOperationProcessor.show_reminder [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:88)
+    │       └── TaskItemParser.show_aspect [ota_installer.task.operation.task_operation_parser] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_parser.py:43)
+    ├── TaskOperationProcessor.show_command_string [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:80)
+    ├── TaskOperationProcessor.show_description [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:74)
+    └── TaskOperationProcessor.show_index_and_title [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:68)
+        └── TaskItemParser.show_header [ota_installer.task.operation.task_operation_parser] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_parser.py:57)
+
+Root: ota_installer.task.component.t12_magisk_image_booter.MagiskImageBooter.__post_init__
+Maximum discovered depth: 5
+MagiskImageBooter.__post_init__ [ota_installer.task.component.t12_magisk_image_booter] (/home/user/python/ota-installer/src/ota_installer/task/component/t12_magisk_image_booter.py:22)
+├── MagiskImageBooter._build_command [ota_installer.task.component.t12_magisk_image_booter] (/home/user/python/ota-installer/src/ota_installer/task/component/t12_magisk_image_booter.py:37)
+└── MagiskImageBooter._get_partition [ota_installer.task.component.t12_magisk_image_booter] (/home/user/python/ota-installer/src/ota_installer/task/component/t12_magisk_image_booter.py:32)
+    └── image_handler [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:114)
+        ├── ImageTypeDispatcher.get_key [ota_installer.image.boot_image_info] (/home/user/python/ota-installer/src/ota_installer/image/boot_image_info.py:54)
+        │   └── BootImageType.validate_key [ota_installer.image.boot_image_info] (/home/user/python/ota-installer/src/ota_installer/image/boot_image_info.py:41)
+        │       └── BootImageType.normalize_key [ota_installer.image.boot_image_info] (/home/user/python/ota-installer/src/ota_installer/image/boot_image_info.py:36)
+        └── PluginDispatcherAdapter.load [ota_installer.plugin.handler.dispatcher_plugin_handler] (/home/user/python/ota-installer/src/ota_installer/plugin/handler/dispatcher_plugin_handler.py:26)
+            └── PluginDispatcherAdapter._load_plugin_dispatcher [ota_installer.plugin.handler.dispatcher_plugin_handler] (/home/user/python/ota-installer/src/ota_installer/plugin/handler/dispatcher_plugin_handler.py:38)
+
+Root: ota_installer.task.component.t12_magisk_image_booter.MagiskImageBooter.perform_task
+Maximum discovered depth: 4
+MagiskImageBooter.perform_task [ota_installer.task.component.t12_magisk_image_booter] (/home/user/python/ota-installer/src/ota_installer/task/component/t12_magisk_image_booter.py:43)
+└── TaskOperationProcessor.run_with_output [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:105)
+    ├── TaskOperationProcessor.execute_command_string [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:92)
+    │   ├── ShellCommandExecutionHandler.execute [ota_installer.task.operation.shell_command_execution_handler] (/home/user/python/ota-installer/src/ota_installer/task/operation/shell_command_execution_handler.py:39)
+    │   └── TaskOperationProcessor.show_reminder [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:88)
+    │       └── TaskItemParser.show_aspect [ota_installer.task.operation.task_operation_parser] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_parser.py:43)
+    ├── TaskOperationProcessor.show_command_string [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:80)
+    ├── TaskOperationProcessor.show_description [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:74)
+    └── TaskOperationProcessor.show_index_and_title [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:68)
+        └── TaskItemParser.show_header [ota_installer.task.operation.task_operation_parser] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_parser.py:57)
+
+Root: ota_installer.task.operation.task_operation_parser.TaskItemParser.func
+Maximum discovered depth: 0
+TaskItemParser.func [ota_installer.task.operation.task_operation_parser] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_parser.py:46)
+
+Root: ota_installer.task.operation.task_operation_processor.TaskAspect.indent_printer
+Maximum discovered depth: 0
+TaskAspect.indent_printer [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:27)
+
+Root: ota_installer.task.operation.task_operation_processor.TaskOperationProcessor.execute_and_return_output
+Maximum discovered depth: 1
+TaskOperationProcessor.execute_and_return_output [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:98)
+└── ShellCommandExecutionHandler.execute_and_return_output [ota_installer.task.operation.shell_command_execution_handler] (/home/user/python/ota-installer/src/ota_installer/task/operation/shell_command_execution_handler.py:48)
+
+Root: ota_installer.task.operation.task_operation_processor.TaskOperationProcessor.get_item
+Maximum discovered depth: 1
+TaskOperationProcessor.get_item [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:63)
+└── TaskOpsItemType.get_validated_type [ota_installer.task.operation.task_operation_info] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_info.py:52)
+
+Root: ota_installer.task.operation.task_operation_processor.TaskOperationProcessor.set_item
+Maximum discovered depth: 1
+TaskOperationProcessor.set_item [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:52)
+└── TaskOpsItemType.get_validated_type [ota_installer.task.operation.task_operation_info] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_info.py:52)
+
+Root: ota_installer.task.operation.task_operation_processor.TaskOperationProcessor.show_comment
+Maximum discovered depth: 1
+TaskOperationProcessor.show_comment [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:84)
+└── TaskItemParser.show_aspect [ota_installer.task.operation.task_operation_parser] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_parser.py:43)
+
+Root: ota_installer.task.operation.task_operation_processor.main
+Maximum discovered depth: 0
+main [ota_installer.task.operation.task_operation_processor] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_processor.py:127)
+
+Root: ota_installer.task.task_execution.TaskExecutor.task_group_rules
+Maximum discovered depth: 1
+TaskExecutor.task_group_rules [ota_installer.task.task_execution] (/home/user/python/ota-installer/src/ota_installer/task/task_execution.py:69)
+└── TaskExecutor.task_group_in_dispatcher_collection [ota_installer.task.task_execution] (/home/user/python/ota-installer/src/ota_installer/task/task_execution.py:63)
+
+Root: ota_installer.task.task_execution.main
+Maximum discovered depth: 0
+main [ota_installer.task.task_execution] (/home/user/python/ota-installer/src/ota_installer/task/task_execution.py:131)
+
+Root: ota_installer.task.task_group_info.TaskGroupName.normalize_key
+Maximum discovered depth: 0
+TaskGroupName.normalize_key [ota_installer.task.task_group_info] (/home/user/python/ota-installer/src/ota_installer/task/task_group_info.py:70)
+
+Root: ota_installer.task.task_group_info.TaskGroupName.to_dict
+Maximum discovered depth: 0
+TaskGroupName.to_dict [ota_installer.task.task_group_info] (/home/user/python/ota-installer/src/ota_installer/task/task_group_info.py:57)
+
+Root: ota_installer.task.task_group_info.TaskGroupName.validation
+Maximum discovered depth: 0
+TaskGroupName.validation [ota_installer.task.task_group_info] (/home/user/python/ota-installer/src/ota_installer/task/task_group_info.py:75)
+
+Root: ota_installer.task.task_group_info.TaskGroupRenderer.__call__
+Maximum discovered depth: 1
+TaskGroupRenderer.__call__ [ota_installer.task.task_group_info] (/home/user/python/ota-installer/src/ota_installer/task/task_group_info.py:21)
+└── TaskGroupRenderer.execute_pipeline [ota_installer.task.task_group_info] (/home/user/python/ota-installer/src/ota_installer/task/task_group_info.py:32)
+
+Root: ota_installer.task.task_group_info.TaskGroupRenderer.result
+Maximum discovered depth: 1
+TaskGroupRenderer.result [ota_installer.task.task_group_info] (/home/user/python/ota-installer/src/ota_installer/task/task_group_info.py:28)
+└── BehaviorBase.get_member_names [ota_installer.task.task_group_info] (/home/user/python/ota-installer/src/ota_installer/task/task_group_info.py:114)
+
+Root: ota_installer.task.task_group_info.TaskGroupTypeDispatcher._
+Maximum discovered depth: 2
+TaskGroupTypeDispatcher._ [ota_installer.task.task_group_info] (/home/user/python/ota-installer/src/ota_installer/task/task_group_info.py:178)
+└── TaskGroupName.create_dictionary [ota_installer.task.task_group_info] (/home/user/python/ota-installer/src/ota_installer/task/task_group_info.py:61)
+    └── TaskGroupName._get_value [ota_installer.task.task_group_info] (/home/user/python/ota-installer/src/ota_installer/task/task_group_info.py:50)
+
+Root: ota_installer.task.task_group_info.TaskGroupTypeDispatcher.__post_init__
+Maximum discovered depth: 2
+TaskGroupTypeDispatcher.__post_init__ [ota_installer.task.task_group_info] (/home/user/python/ota-installer/src/ota_installer/task/task_group_info.py:153)
+└── TaskGroupTypeDispatcher.populate_collection [ota_installer.task.task_group_info] (/home/user/python/ota-installer/src/ota_installer/task/task_group_info.py:161)
+    └── TaskGroupTypeDispatcher.collection_type [ota_installer.task.task_group_info] (/home/user/python/ota-installer/src/ota_installer/task/task_group_info.py:168)
+
+Root: ota_installer.task.task_info.TaskID.enum_values
+Maximum discovered depth: 1
+TaskID.enum_values [ota_installer.task.task_info] (/home/user/python/ota-installer/src/ota_installer/task/task_info.py:47)
+└── get_task_detail [ota_installer.task.operation.task_operation_info] (/home/user/python/ota-installer/src/ota_installer/task/operation/task_operation_info.py:80)
+
+Root: ota_installer.task.task_info.TaskID.execute
+Maximum discovered depth: 0
+TaskID.execute [ota_installer.task.task_info] (/home/user/python/ota-installer/src/ota_installer/task/task_info.py:33)
+
+Root: ota_installer.task.task_info.TaskID.success_message
+Maximum discovered depth: 1
+TaskID.success_message [ota_installer.task.task_info] (/home/user/python/ota-installer/src/ota_installer/task/task_info.py:51)
+└── indentation [ota_installer.style.style_info] (/home/user/python/ota-installer/src/ota_installer/style/style_info.py:48)
+
+Root: ota_installer.task.task_manager.TaskManager.set_posix_path
+Maximum discovered depth: 0
+TaskManager.set_posix_path [ota_installer.task.task_manager] (/home/user/python/ota-installer/src/ota_installer/task/task_manager.py:42)
+
+Root: ota_installer.task.task_manager.task_director
+Maximum discovered depth: 1
+task_director [ota_installer.task.task_manager] (/home/user/python/ota-installer/src/ota_installer/task/task_manager.py:66)
+├── BehaviorBase.task_name [ota_installer.task.task_group_info] (/home/user/python/ota-installer/src/ota_installer/task/task_group_info.py:109)
+└── _is_executable [ota_installer.task.task_manager] (/home/user/python/ota-installer/src/ota_installer/task/task_manager.py:78)
+
+Root: ota_installer.variable.variable_director.VariableDirector.__post_init__
+Maximum discovered depth: 2
+VariableDirector.__post_init__ [ota_installer.variable.variable_director] (/home/user/python/ota-installer/src/ota_installer/variable/variable_director.py:37)
+├── set_directory [ota_installer.directory.directory_info] (/home/user/python/ota-installer/src/ota_installer/directory/directory_info.py:91)
+│   └── FileImageName.fetch_directory_path [ota_installer.image.generic_image_info] (/home/user/python/ota-installer/src/ota_installer/image/generic_image_info.py:84)
+└── BootImageContainer.create [ota_installer.image.boot_image_info] (/home/user/python/ota-installer/src/ota_installer/image/boot_image_info.py:21)
+    └── FileImageName.boot_directories [ota_installer.image.generic_image_info] (/home/user/python/ota-installer/src/ota_installer/image/generic_image_info.py:78)
+
+Root: ota_installer.variable.variable_director.VariableDirector.api_adapter
+Maximum discovered depth: 0
+VariableDirector.api_adapter [ota_installer.variable.variable_director] (/home/user/python/ota-installer/src/ota_installer/variable/variable_director.py:74)
+
+Root: ota_installer.variable.variable_director.VariableDirector.file_parts
+Maximum discovered depth: 0
+VariableDirector.file_parts [ota_installer.variable.variable_director] (/home/user/python/ota-installer/src/ota_installer/variable/variable_director.py:71)
+
+Root: ota_installer.variable.variable_director.VariableDirector.file_path
+Maximum discovered depth: 0
+VariableDirector.file_path [ota_installer.variable.variable_director] (/home/user/python/ota-installer/src/ota_installer/variable/variable_director.py:67)
+
+Root: ota_installer.variable.variable_info.DirectoryNames.__iter__
+Maximum discovered depth: 0
+DirectoryNames.__iter__ [ota_installer.variable.variable_info] (/home/user/python/ota-installer/src/ota_installer/variable/variable_info.py:29)
+
+Root: ota_installer.variable.variable_info.FileNameInfo.device
+Maximum discovered depth: 0
+FileNameInfo.device [ota_installer.variable.variable_info] (/home/user/python/ota-installer/src/ota_installer/variable/variable_info.py:45)
+
+Root: ota_installer.variable.variable_info.FileNameInfo.stem
+Maximum discovered depth: 0
+FileNameInfo.stem [ota_installer.variable.variable_info] (/home/user/python/ota-installer/src/ota_installer/variable/variable_info.py:41)
+
+Root: ota_installer.variable.variable_info.FileNameInfo.version
+Maximum discovered depth: 0
+FileNameInfo.version [ota_installer.variable.variable_info] (/home/user/python/ota-installer/src/ota_installer/variable/variable_info.py:49)
+
+Root: ota_installer.variable.variable_info.FilePartRenderer.file_parts
+Maximum discovered depth: 0
+FilePartRenderer.file_parts [ota_installer.variable.variable_info] (/home/user/python/ota-installer/src/ota_installer/variable/variable_info.py:122)
+
+Root: ota_installer.variable.variable_info.FilePathRenderer.__iter__
+Maximum discovered depth: 0
+FilePathRenderer.__iter__ [ota_installer.variable.variable_info] (/home/user/python/ota-installer/src/ota_installer/variable/variable_info.py:60)
+
+Root: ota_installer.variable.variable_info.FilePathRenderer.log_file
+Maximum discovered depth: 0
+FilePathRenderer.log_file [ota_installer.variable.variable_info] (/home/user/python/ota-installer/src/ota_installer/variable/variable_info.py:88)
+
+Root: ota_installer.variable.variable_info.FilePathRenderer.magisk
+Maximum discovered depth: 2
+FilePathRenderer.magisk [ota_installer.variable.variable_info] (/home/user/python/ota-installer/src/ota_installer/variable/variable_info.py:76)
+└── FilePathRenderer.create_image [ota_installer.variable.variable_info] (/home/user/python/ota-installer/src/ota_installer/variable/variable_info.py:101)
+    └── FilePathRenderer.image_data [ota_installer.variable.variable_info] (/home/user/python/ota-installer/src/ota_installer/variable/variable_info.py:64)
+
+Root: ota_installer.variable.variable_info.FilePathRenderer.magisk_image_name
+Maximum discovered depth: 0
+FilePathRenderer.magisk_image_name [ota_installer.variable.variable_info] (/home/user/python/ota-installer/src/ota_installer/variable/variable_info.py:98)
+
+Root: ota_installer.variable.variable_info.FilePathRenderer.payload
+Maximum discovered depth: 2
+FilePathRenderer.payload [ota_installer.variable.variable_info] (/home/user/python/ota-installer/src/ota_installer/variable/variable_info.py:82)
+└── FilePathRenderer.create_image [ota_installer.variable.variable_info] (/home/user/python/ota-installer/src/ota_installer/variable/variable_info.py:101)
+    └── FilePathRenderer.image_data [ota_installer.variable.variable_info] (/home/user/python/ota-installer/src/ota_installer/variable/variable_info.py:64)
+
+Root: ota_installer.variable.variable_info.FilePathRenderer.stock
+Maximum discovered depth: 2
+FilePathRenderer.stock [ota_installer.variable.variable_info] (/home/user/python/ota-installer/src/ota_installer/variable/variable_info.py:70)
+└── FilePathRenderer.create_image [ota_installer.variable.variable_info] (/home/user/python/ota-installer/src/ota_installer/variable/variable_info.py:101)
+    └── FilePathRenderer.image_data [ota_installer.variable.variable_info] (/home/user/python/ota-installer/src/ota_installer/variable/variable_info.py:64)
+
+Root: ota_installer.variable.variable_info.VariableRenderer.__call__
+Maximum discovered depth: 0
+VariableRenderer.__call__ [ota_installer.variable.variable_info] (/home/user/python/ota-installer/src/ota_installer/variable/variable_info.py:144)
+
+Root: ota_installer.variable.variable_info.VariableType.build
+Maximum discovered depth: 0
+VariableType.build [ota_installer.variable.variable_info] (/home/user/python/ota-installer/src/ota_installer/variable/variable_info.py:154)
+
+Root: ota_installer.variable.variable_info.VariableTypeDispatcher.__post_init__
+Maximum discovered depth: 1
+VariableTypeDispatcher.__post_init__ [ota_installer.variable.variable_info] (/home/user/python/ota-installer/src/ota_installer/variable/variable_info.py:166)
+└── VariableTypeDispatcher._initialize_collection [ota_installer.variable.variable_info] (/home/user/python/ota-installer/src/ota_installer/variable/variable_info.py:170)

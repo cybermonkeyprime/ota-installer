@@ -1,0 +1,30 @@
+Discovered 293 definitions and 185 resolved call relationships.
+
+Deepest static call chains
+========================================================================
+  8  ota_installer                            ota_installer.command_line_interface
+  7  task_execution                           ota_installer.application
+  6  TaskExecutor.execute_task_based_on_group ota_installer.task.task_execution
+  6  TaskExecutor.initialize_task_manager     ota_installer.task.task_execution
+  5  ConfirmationPrompt.wrapper               ota_installer.decorator.confirmation_prompt
+  5  StockBootImageBackupper.__post_init__    ota_installer.task.component.t04_stock_boot_image_backupper
+  5  MagiskImageBooter.__post_init__          ota_installer.task.component.t12_magisk_image_booter
+  5  TaskExecutor.execute_all_tasks           ota_installer.task.task_execution
+  5  TaskExecutor.execute_single_task         ota_installer.task.task_execution
+  5  TaskManager.log_and_process_variables    ota_installer.task.task_manager
+  4  run                                      ota_installer.application
+  4  ConfirmationPrompt.func                  ota_installer.decorator.confirmation_prompt
+  4  DisplayVariablePipeline.process_directory_names ota_installer.display.display_variable_info
+  4  DisplayVariablePipeline.process_file_names ota_installer.display.display_variable_info
+  4  PayloadImageExtractor.perform_task       ota_installer.task.component.t01_payload_image_extractor
+  4  PayloadImageRenamer.perform_task         ota_installer.task.component.t02_payload_image_renamer
+  4  BootImageExtractor.__post_init__         ota_installer.task.component.t03_boot_image_extractor
+  4  BootImageExtractor.perform_task          ota_installer.task.component.t03_boot_image_extractor
+  4  StockBootImageBackupper._create_command_string ota_installer.task.component.t04_stock_boot_image_backupper
+  4  StockBootImageBackupper.perform_task     ota_installer.task.component.t04_stock_boot_image_backupper
+  4  ADBConnectionChecker.perform_task        ota_installer.task.component.t05_adb_connection_checker
+  4  StockBootImagePusher.perform_task        ota_installer.task.component.t06_stock_boot_image_pusher
+  4  MagiskImagePuller.perform_task           ota_installer.task.component.t08_magisk_image_puller
+  4  RecoveryRebooter.perform_task            ota_installer.task.component.t09_recovery_rebooter
+  4  ADBSideloader.perform_task               ota_installer.task.component.t10_apply_ota_update
+
