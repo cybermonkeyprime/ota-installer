@@ -2,7 +2,7 @@
 from dataclasses import dataclass
 from enum import Enum, IntEnum, StrEnum
 
-from ... import decorator
+from ...style import decorator
 
 
 class TaskItemType(Enum):

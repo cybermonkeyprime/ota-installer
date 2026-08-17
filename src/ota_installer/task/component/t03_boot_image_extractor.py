@@ -2,8 +2,8 @@
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from ... import decorator
 from ...plugin.plugin_registry import Plugin
+from ...style import decorator
 from ...task.task_group_info import PreparationTask
 from ...variable.variable_director import VariableDirector
 from ..operation.task_operation_processor import image_handler

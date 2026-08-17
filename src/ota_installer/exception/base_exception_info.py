@@ -2,7 +2,7 @@
 from collections.abc import Callable
 from dataclasses import dataclass, field
 
-from .. import decorator
+from ..style import decorator
 
 
 @dataclass(slots=True)

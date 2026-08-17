@@ -1,5 +1,4 @@
 # src/ota_installer/application.py
-from . import decorator
 from .display.display_info import (
     DisplayHeaderPipeline,
     clear_screen,
@@ -7,6 +6,7 @@ from .display.display_info import (
 from .exception.keyboard_interrupt_info import (
     KeyboardInterruptHandler,
 )
+from .style import decorator
 from .task.task_execution import CLIArguments, TaskExecutor
 from .versioning.version_info import SoftwareVersion
 

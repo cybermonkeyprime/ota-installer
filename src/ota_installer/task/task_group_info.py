@@ -23,7 +23,7 @@ class TaskGroupRenderer:
         Executes the task group's generation logic wrapped in the required UI
             decorators.
         """
-        from .. import decorator
+        from ..style import decorator
 
         def result():
             return self.task_class.get_member_names()

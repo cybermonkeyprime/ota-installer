@@ -1,18 +1,18 @@
 # src/ota_installer/tasks/managers/task_manager.py
 from collections.abc import Callable
 from dataclasses import dataclass, field
+from enum import Enum
 from pathlib import Path
 from types import SimpleNamespace
-from typing import Self, Literal
-from enum import Enum
+from typing import Self
 
 from ota_installer.plugin.plugin_registry import Plugin
 
-from ..decorator.styled_indent_printer import StylizedIndentPrinter
 from ..display.display_variable_info import (
     DisplayVariablePipeline,
 )
 from ..log_setup import add_structured_log_sink, logger
+from ..style import decorator
 from ..variable.variable_director import VariableDirector
 
 
@@ -158,7 +158,9 @@ class TaskInvocation:
         )
 
 
-@StylizedIndentPrinter(indent=2, style="variable", end="\n\n", use_output=True)
+@decorator.StylizedIndentPrinter(
+    indent=2, style="variable", end="\n\n", use_output=True
+)
 def _skipped_task_group_msg() -> str:
     """Displays a message indicating that the task group was skipped."""
     return "Task Group skipped"

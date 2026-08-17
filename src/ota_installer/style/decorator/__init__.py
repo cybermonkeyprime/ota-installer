@@ -4,7 +4,6 @@ from .confirmation_prompt import ConfirmationPrompt
 from .continue_on_keypress import ContinueOnKeyPress
 from .double_padded_footer_wrapper import DoublePaddedFooterWrapper
 from .encapsulation import Encapsulate
-from .exception_handler import ExceptionHandler
 from .figletizer import Figletizer
 from .footer_wrapper import FooterWrapper
 from .header_wrapper import HeaderWrapper

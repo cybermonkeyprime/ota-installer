@@ -12,6 +12,17 @@ class SoftwareVersion(Enum):
     PATCH_NUMBER = 15
 
     @classmethod
+    def to_dict(cls):
+        return {
+            name.lower(): member.value
+            for name, member in cls.__members__.items()
+        }
+
+    @classmethod
+    def software_info(cls):
+        return SoftwareInfo(**cls.to_dict())
+
+    @classmethod
     def display(cls) -> str:
         """Returns the display string for the global software version."""
         return (
@@ -35,6 +46,19 @@ class SoftwareInfo:
     major_number: int
     minor_number: int
     patch_number: int
+
+    def display(self) -> str:
+        """Returns the display string for the global software version."""
+        return (
+            f"Build: {self.major_number}."
+            f"{self.minor_number}.{self.patch_number}"
+        )
+
+    def formatted(self) -> str:
+        """
+        Returns a formatted string with the title or display of the software
+        version."""
+        return f"{self.title} - {self.display()}"
 
 
 # Signed off by Brian Sanford on 20260702

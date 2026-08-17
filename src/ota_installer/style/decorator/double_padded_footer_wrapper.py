@@ -3,7 +3,7 @@ from collections.abc import Callable
 from dataclasses import dataclass, field
 from functools import wraps
 
-from ..log_setup import logger
+from ...log_setup import logger
 from .container.decorator_container import Decorators
 from .protocol.decorator_protocols import GenericDecorator
 

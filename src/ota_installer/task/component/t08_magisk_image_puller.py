@@ -2,12 +2,12 @@
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from ... import decorator
 from ...image.magisk_image_info import (
     MagiskImagePath,
 )
 from ...log_setup import logger
 from ...plugin.plugin_registry import Plugin
+from ...style import decorator
 from ...task.task_group_info import ApplicationTask, MigrationTask
 from ...variable.variable_director import VariableDirector
 from ..task_info import TaskID

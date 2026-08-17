@@ -3,8 +3,7 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from functools import wraps
 
-from ota_installer.decorator.figletizer import FontType
-
+from .figletizer import FontType
 from .protocol.decorator_protocols import GenericDecorator
 
 

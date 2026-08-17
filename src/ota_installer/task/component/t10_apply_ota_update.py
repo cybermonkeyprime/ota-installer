@@ -1,8 +1,8 @@
 # src/ota_installer/tasks/components/t10_apply_ota_update.py
 from dataclasses import dataclass, field
 
-from ... import decorator
 from ...plugin.plugin_registry import Plugin
+from ...style import decorator
 from ...task.task_group_info import ApplicationTask
 from ...variable.variable_director import VariableDirector
 from ..task_info import TaskID

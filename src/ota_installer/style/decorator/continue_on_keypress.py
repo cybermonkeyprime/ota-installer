@@ -16,11 +16,11 @@ class ContinueOnKeyPress:
     indent: int = field(default=1)
     char: str = field(default=" ")
 
+    from ...exception import decorator
     from .colorizer import Colorizer
-    from .exception_handler import ExceptionHandler
     from .output_printer import OutputPrinter
 
-    @ExceptionHandler()
+    @decorator.ExceptionHandler()
     def __call__(self, function: Callable) -> Callable:
         """Wraps the function to display a message and wait for user input."""
 

@@ -5,8 +5,8 @@ from functools import partial
 from subprocess import check_output, run
 from typing import Self
 
-from ... import decorator
 from ...log_setup import logger
+from ...style import decorator
 from .task_operation_info import Indents, Messages
 
 

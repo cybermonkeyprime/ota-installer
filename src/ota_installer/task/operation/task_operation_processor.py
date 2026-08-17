@@ -5,9 +5,9 @@ from functools import partial
 from pathlib import Path
 from typing import Self
 
-from ... import decorator
 from ...log_setup import logger
 from ...plugin.handler.dispatcher_plugin_handler import PluginDispatcherAdapter
+from ...style import decorator
 from ...style.style_info import StyleRenderer
 from .shell_command_execution_handler import ShellCommandExecutionHandler
 from .task_operation_info import (
