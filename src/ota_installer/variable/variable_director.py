@@ -3,15 +3,13 @@ from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Self
 
-from ..directory.directory_info import DirectoryConfig, set_directory
+from loguru import logger
+
+from ..directory.directory_info import set_directory
 from ..dispatcher.dispatcher_info import build_dispatcher
 from ..image.magisk_image_info import MagiskImagePath
 from .variable_info import (
-    DirectoryNames,
-    FileNameInfo,
-    FilePathRenderer,
     MagiskPathGroup,
-    VariableRenderer,
     VariableType,
 )
 
@@ -22,50 +20,43 @@ class VariableDirector:
 
     path: Path = field(default_factory=Path)
 
-    """ directory type validation"""
-    directory: DirectoryConfig = field(init=False)
-    ota_parent_directory: Path = field(init=False)
+    def __post_init__(self) -> None:
+        self.magisk_image: str = "place_holder"
 
-    """dicts"""
-    variables: VariableRenderer = field(init=False)
-    file_paths: FilePathRenderer = field(init=False)
-    file_name: FileNameInfo = field(init=False)
-    image_name: dict[str, str] = field(init=False)
-    directories: DirectoryNames = field(init=False)
-
-    magisk_image: str = "place_holder"
-
-    def set_variables(self) -> Self:
+    def set_base_variables(self) -> Self:
         self.variables = VariableType.CONTEXT.build(file_path=self.path)
+        if self.undefined_variables_error():
+            message = "Variables are not set"
+            logger.error(message)
+            raise AttributeError(message)
         return self
 
+    def undefined_variables_error(self) -> bool:
+        return bool(self.variables is None)
+
     def set_filenames(self):
-        if self.variables:
-            self.file_name = VariableType.FILE_NAME.build(
-                path=self.file_path, parts=self.file_parts
-            )
-            self.file_paths = VariableType.FILE_PATH.build(
-                parts=self.file_parts
-            )
+        self.file_name = VariableType.FILE_NAME.build(
+            path=self.file_path, parts=self.file_parts
+        )
+        self.file_paths = VariableType.FILE_PATH.build(parts=self.file_parts)
         return self
 
     def set_directories(self) -> Self:
         from ..image.boot_image_info import BootImageContainer
 
-        if self.variables:
-            self.ota_parent_directory = self.path.parent
-            self.directory = set_directory(self.file_name.path.parent)
+        self.ota_parent_directory = self.path.parent
+        self.directory = set_directory(self.file_name.path.parent)
 
-            self.boot_directories = BootImageContainer.create()
-            self.directories = VariableType.DIRECTORY.build(
-                magisk=MagiskPathGroup(
-                    local_path=MagiskImagePath.LOCAL_PATH.value,
-                    remote_path=MagiskImagePath.REMOTE_PATH.value,
-                ),
-            )
-            self.image_name = {
-                "patched": self.file_paths.magisk_image_name,
-            }
+        self.boot_directories = BootImageContainer.create()
+        self.directories = VariableType.DIRECTORY.build(
+            magisk=MagiskPathGroup(
+                local_path=MagiskImagePath.LOCAL_PATH.value,
+                remote_path=MagiskImagePath.REMOTE_PATH.value,
+            ),
+        )
+        self.image_name = {
+            "patched": self.file_paths.magisk_image_name,
+        }
         return self
 
     @property
@@ -92,7 +83,7 @@ class VariableDirector:
         pprint(variable_api)
         return variable_api
 
-    def get_dispatcher(self, process_type) -> type | None:
+    def get_dispatcher(self, process_type) -> object:
         """Retrieves the dispatcher for the given process type."""
         return build_dispatcher(process_type, self)
 

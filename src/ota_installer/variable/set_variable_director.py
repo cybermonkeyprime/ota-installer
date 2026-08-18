@@ -18,7 +18,7 @@ def set_variable_director(path: Path) -> "VariableDirector":
 
     return (
         VariableDirector(path=valid_path)
-        .set_variables()
+        .set_base_variables()
         .set_filenames()
         .set_directories()
     )
