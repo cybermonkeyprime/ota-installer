@@ -26,18 +26,16 @@ class VariableDirector:
     def set_base_variables(self) -> Self:
         self.variables = VariableType.CONTEXT.build(file_path=self.path)
         if self.undefined_variables_error():
-            message = "Variables are not set"
+            message = "Variables are unset or invalid"
             logger.error(message)
             raise AttributeError(message)
         return self
 
     def undefined_variables_error(self) -> bool:
-        return bool(self.variables is None)
+        return bool(self.variables is None or self.variables == "")
 
     def set_filenames(self):
-        self.file_name = VariableType.FILE_NAME.build(
-            path=self.file_path, parts=self.file_parts
-        )
+        self.file_name = VariableType.FILE_NAME.build(path=self.file_path)
         self.file_paths = VariableType.FILE_PATH.build(parts=self.file_parts)
         return self
 

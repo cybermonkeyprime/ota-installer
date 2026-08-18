@@ -9,7 +9,7 @@ class SoftwareVersion(Enum):
     TITLE = "OTA-Installer"
     MAJOR_NUMBER = 2026
     MINOR_NUMBER = 8
-    PATCH_NUMBER = 16
+    PATCH_NUMBER = 17
 
     @classmethod
     def to_dict(cls):
