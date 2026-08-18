@@ -54,8 +54,7 @@ class FileNameInfo:
 class FilePathRenderer:
     """Container for file paths used in the OTA installer."""
 
-    device: str
-    build_id: str
+    parts: FilePartContainer
 
     def __iter__(self):
         return iter(self.__dict__.items())
@@ -64,7 +63,7 @@ class FilePathRenderer:
     def image_data(self) -> "FileImageData":
         from ..image.generic_image_info import FileImageData
 
-        return FileImageData(self.device, self.build_id)
+        return FileImageData(self.parts.device, self.parts.build_id)
 
     @property
     def stock(self) -> str:
@@ -91,7 +90,7 @@ class FilePathRenderer:
 
         return (
             Path(gettempdir())
-            / f"ota-installer_{self.device}_{self.build_id}.txt"
+            / f"ota-installer_{self.parts.device}_{self.parts.build_id}.txt"
         )
 
     @property
