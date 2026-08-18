@@ -36,9 +36,10 @@ class VariableDirector:
     magisk_image: str = "place_holder"
 
     def set_variables(self) -> Self:
-        from ..image.boot_image_info import BootImageContainer
-
         self.variables = VariableType.CONTEXT.build(file_path=self.path)
+        return self
+
+    def set_filenames(self):
         if self.variables:
             self.file_name = VariableType.FILE_NAME.build(
                 path=self.file_path, parts=self.file_parts
@@ -46,7 +47,12 @@ class VariableDirector:
             self.file_paths = VariableType.FILE_PATH.build(
                 parts=self.file_parts
             )
+        return self
 
+    def set_directories(self) -> Self:
+        from ..image.boot_image_info import BootImageContainer
+
+        if self.variables:
             self.ota_parent_directory = self.path.parent
             self.directory = set_directory(self.file_name.path.parent)
 
@@ -60,7 +66,6 @@ class VariableDirector:
             self.image_name = {
                 "patched": self.file_paths.magisk_image_name,
             }
-            # self.api_adapter()
         return self
 
     @property

@@ -16,7 +16,12 @@ def set_variable_director(path: Path) -> "VariableDirector":
         logger.error(message)
         raise FileNotFoundError(message)
 
-    return VariableDirector(path=valid_path).set_variables()
+    return (
+        VariableDirector(path=valid_path)
+        .set_variables()
+        .set_filenames()
+        .set_directories()
+    )
 
 
 # Signed off by Brian Sanford on 20260712
