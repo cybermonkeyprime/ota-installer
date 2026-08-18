@@ -1,6 +1,7 @@
 # src/ota_installer/variables/variable_director.py
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
+from typing import Self
 
 from ..directory.directory_info import DirectoryConfig, set_directory
 from ..dispatcher.dispatcher_info import build_dispatcher
@@ -34,7 +35,7 @@ class VariableDirector:
 
     magisk_image: str = "place_holder"
 
-    def __post_init__(self) -> None:
+    def set_variables(self) -> Self:
         from ..image.boot_image_info import BootImageContainer
 
         self.variables = VariableType.CONTEXT.build(file_path=self.path)
@@ -60,8 +61,8 @@ class VariableDirector:
             self.image_name = {
                 "patched": self.file_paths.magisk_image_name,
             }
-
             # self.api_adapter()
+        return self
 
     @property
     def file_path(self) -> Path:
