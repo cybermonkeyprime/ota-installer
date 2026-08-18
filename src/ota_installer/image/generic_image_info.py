@@ -104,7 +104,7 @@ class FileTypeDispatcher(DispatcherTemplate):
     """
 
     obj: type = field(default_factory=lambda: type)
-    collection: Mapping = field(init=False, default_factory=dict)
+    collection: Mapping[str, Path] = field(init=False, default_factory=dict)
 
     def __post_init__(self) -> None:
         """
