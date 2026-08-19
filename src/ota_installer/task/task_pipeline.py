@@ -4,7 +4,7 @@ from typing import Self
 
 from ..log_setup import logger
 from ..task.task_group_info import TaskGroupName
-from .task_manager import TaskManager
+from .task_manager import Pipeline, TaskManager
 
 
 @dataclass(frozen=True, slots=True)
@@ -106,10 +106,9 @@ class TaskPipeline:
     def task_iteration(self, task_group_key: str) -> None:
         """Iterates over tasks in the specified task group."""
         logger.debug(f"Executing task iteration for: {task_group_key}")
-        dispatcher_instance: tuple[Path | str | None] = (
-            self.get_dispatcher_instance(key=task_group_key)
-        )
-        self.task_manager.execute_iteration(task_group=dispatcher_instance)
+        stages = self.get_dispatcher_instance(key=task_group_key)
+        pipeline = Pipeline(stages=stages)
+        self.task_manager.execute_iteration(pipeline=pipeline)
 
     def execute_single_task(self) -> None:
         """Executes a single task if a task group is defined."""

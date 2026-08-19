@@ -35,10 +35,15 @@ class FileNameInfo:
     """Represents information about a file name."""
 
     path: Path
+    parts: FilePartContainer
 
     @property
     def stem(self) -> str:
         return self.path.stem
+
+    @property
+    def device(self) -> str:
+        return self.parts.device
 
 
 @dataclass(frozen=True, slots=True)

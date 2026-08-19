@@ -6,12 +6,11 @@ from pathlib import Path
 from types import SimpleNamespace
 from typing import Self
 
-from ota_installer.plugin.plugin_registry import Plugin
-
 from ..display.display_variable_info import (
     DisplayVariablePipeline,
 )
 from ..log_setup import add_structured_log_sink, logger
+from ..plugin.plugin_registry import Plugin
 from ..style import decorator
 from ..variable.variable_director import VariableDirector
 
@@ -21,7 +20,6 @@ class TaskManager:
     """Manages the execution of tasks based on a specified file name."""
 
     file_name: Path = field(default_factory=Path)
-    function: Callable = field(default=type)
     variable: VariableDirector = field(init=False)
 
     def set_file_name(self, arguments: Path) -> Self:
@@ -41,11 +39,6 @@ class TaskManager:
                 f"Failed to initialize {type(self.variable).__name__}"
             )
 
-        return self
-
-    def set_posix_path(self) -> Self:
-        """Sets the POSIX path for the file name."""
-        self.posix_path = self.file_name
         return self
 
     def log_and_process_variables(self) -> None:
@@ -68,9 +61,26 @@ class TaskManager:
         else:
             logger.error(log_obj.error)
 
-    def execute_iteration(self, task_group) -> None:
-        """Executes the task iteration for the given task group."""
-        task_pipeline(instance=self.variable, task_group=task_group)
+    def execute_iteration(self, pipeline: Pipeline) -> None:
+        pipeline.run(self.variable)
+
+
+@dataclass(frozen=True, slots=True)
+class Pipeline:
+    stages: tuple[str, ...] | None
+
+    def run(self, context: VariableDirector) -> None:
+        if self.stages is None:
+            _skipped_task_group_msg()
+            return
+
+        for stage in self.stages:
+            task_class = Plugin.TASK[stage]
+
+            task_director(
+                instance=context,
+                task_name=task_class,
+            )
 
 
 @dataclass(frozen=True, slots=True)
@@ -115,47 +125,6 @@ def task_director(instance: VariableDirector, task_name: Callable) -> None:
 def _is_executable(task: object) -> bool:
     """Checks if the task has a perform_task method."""
     return callable(getattr(task, "perform_task", None))
-
-
-StringTuple = tuple[str, ...]
-
-
-def task_pipeline(instance: VariableDirector, task_group: StringTuple) -> str:
-    """Iterates over a task group and executes each task."""
-
-    logger.debug(f"Iterating over task group: {task_group}")
-
-    if not task_group:
-        return _skipped_task_group_msg()
-
-    run_invocator = TaskInvocation
-
-    task_classes = tuple(Plugin.TASK[name] for name in task_group)
-
-    for task_class in task_classes:
-        api = {
-            "arguments": {"instance": instance, "task_name": task_class},
-        }
-
-        api_obj = SimpleNamespace(**api)
-        arguments = SimpleNamespace(**api_obj.arguments)
-
-        if callable(task_class):
-            logger.debug(f"{arguments.task_name}")
-            run_invocator(**api_obj.arguments).run()
-    return ""
-
-
-@dataclass(frozen=True)
-class TaskInvocation:
-    instance: VariableDirector
-    task_name: type
-
-    def run(self):
-        task_director(
-            instance=self.instance,
-            task_name=self.task_name,
-        )
 
 
 @decorator.StylizedIndentPrinter(
