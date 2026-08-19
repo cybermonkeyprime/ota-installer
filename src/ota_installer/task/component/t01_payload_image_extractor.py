@@ -4,7 +4,7 @@ from pathlib import Path
 
 from ...plugin.plugin_registry import Plugin
 from ...style import decorator
-from ...task.task_group_info import PreparationTask
+from ...task.task_group_info import PreparationPipeline
 from ...task.task_info import TaskID
 from ...variable.variable_director import VariableDirector
 from .base_task import BaseTask
@@ -35,7 +35,7 @@ class PayloadImageExtractor(BaseTask):
         self.task.run_with_output()
 
 
-@Plugin.TASK.register(PreparationTask[TITLE.name].value)
+@Plugin.TASK.register(PreparationPipeline[TITLE.name].value)
 @dataclass
 class PayloadImageExtractorPlugin(PayloadImageExtractor):
     """Plugin for the PayloadImageRenamer task."""

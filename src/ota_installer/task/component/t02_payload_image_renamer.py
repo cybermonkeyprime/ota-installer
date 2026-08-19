@@ -6,7 +6,7 @@ from ota_installer.task.task_info import TaskID
 
 from ...plugin.plugin_registry import Plugin
 from ...style import decorator
-from ...task.task_group_info import PreparationTask
+from ...task.task_group_info import PreparationPipeline
 from ...variable.variable_director import VariableDirector
 from .base_task import BaseTask
 
@@ -40,7 +40,7 @@ class PayloadImageRenamer(BaseTask):
             self.task.run_with_output()
 
 
-@Plugin.TASK.register(PreparationTask[TITLE.name].value)
+@Plugin.TASK.register(PreparationPipeline[TITLE.name].value)
 @dataclass
 class PayloadImageRenamerPlugin(PayloadImageRenamer):
     """Plugin for the PayloadImageRenamer task."""

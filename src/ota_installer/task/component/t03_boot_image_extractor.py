@@ -4,7 +4,7 @@ from pathlib import Path
 
 from ...plugin.plugin_registry import Plugin
 from ...style import decorator
-from ...task.task_group_info import PreparationTask
+from ...task.task_group_info import PreparationPipeline
 from ...variable.variable_director import VariableDirector
 from ..operation.task_operation_processor import image_handler
 from ..task_info import TaskID
@@ -46,8 +46,7 @@ class BootImageExtractor(BaseTask):
         self.task.run_with_output()
 
 
-# @Plugin.TASK.register(PreparationTask[TITLE.name].value)
-@Plugin.TASK.register(PreparationTask[TITLE.name].value)
+@Plugin.TASK.register(PreparationPipeline[TITLE.name].value)
 @dataclass
 class BootImageExtractorPlugin(BootImageExtractor):
     """Plugin for the BootImageExtractor task."""

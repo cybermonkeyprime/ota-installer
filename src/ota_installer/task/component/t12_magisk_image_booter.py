@@ -4,7 +4,7 @@ from pathlib import Path
 
 from ...plugin.plugin_registry import Plugin
 from ...style import decorator
-from ...task.task_group_info import ApplicationTask
+from ...task.task_group_info import ApplicationPipeline
 from ...variable.variable_director import VariableDirector
 from ..operation.task_operation_processor import image_handler
 from ..task_info import TaskID
@@ -45,7 +45,7 @@ class MagiskImageBooter(BaseTask):
         self.task.run_with_output()
 
 
-@Plugin.TASK.register(ApplicationTask[TITLE.name].value)
+@Plugin.TASK.register(ApplicationPipeline[TITLE.name].value)
 @dataclass
 class MagiskImageBooterPlugin(MagiskImageBooter):
     """Plugin for the MagiskImageBooter task."""

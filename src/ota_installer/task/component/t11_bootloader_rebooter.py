@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 
 from ...plugin.plugin_registry import Plugin
 from ...style import decorator
-from ...task.task_group_info import ApplicationTask
+from ...task.task_group_info import ApplicationPipeline
 from ...variable.variable_director import VariableDirector
 from ..task_info import TaskID
 from .base_task import BaseTask
@@ -30,7 +30,7 @@ class BootloaderRebooter(BaseTask):
         self.task.run_with_output()
 
 
-@Plugin.TASK.register(ApplicationTask[TITLE.name].value)
+@Plugin.TASK.register(ApplicationPipeline[TITLE.name].value)
 @dataclass
 class BootloaderRebooterPlugin(BootloaderRebooter):
     """Plugin for the BootloaderRebooter task."""

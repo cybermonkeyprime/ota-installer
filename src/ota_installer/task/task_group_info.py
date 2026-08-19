@@ -89,8 +89,8 @@ class TaskGroupName(StrEnum):
 
         return {
             member.name: TaskGroupRenderer(
-                module[f"{member.value.capitalize()}Task"],
-                f"{member.value.capitalize()} Task",
+                module[f"{member.value.capitalize()}Pipeline"],
+                f"{member.value.capitalize()} Pipeline",
             )
             for member in cls
         }
@@ -116,7 +116,7 @@ class BehaviorBase(Enum):
         return tuple(enum_member.value.value for enum_member in cls)
 
 
-class ApplicationTask(BehaviorBase):
+class ApplicationPipeline(BehaviorBase):
     """Enumeration of application tasks for OTA installation."""
 
     REBOOT_TO_RECOVERY = TaskID.REBOOT_TO_RECOVERY
@@ -125,7 +125,7 @@ class ApplicationTask(BehaviorBase):
     BOOT_TO_MAGISK_IMAGE = TaskID.BOOT_TO_MAGISK_IMAGE
 
 
-class MigrationTask(BehaviorBase):
+class MigrationPipeline(BehaviorBase):
     """Enumeration of migration tasks with associated task IDs."""
 
     CHECK_ADB_CONNECTION = TaskID.CHECK_ADB_CONNECTION
@@ -134,7 +134,7 @@ class MigrationTask(BehaviorBase):
     PULL_MAGISK_IMAGE = TaskID.PULL_MAGISK_IMAGE
 
 
-class PreparationTask(BehaviorBase):
+class PreparationPipeline(BehaviorBase):
     """Enumeration of preparation tasks for OTA installation."""
 
     EXTRACT_PAYLOAD_IMAGE = TaskID.EXTRACT_PAYLOAD_IMAGE
