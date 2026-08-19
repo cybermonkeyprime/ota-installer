@@ -31,9 +31,9 @@ class TaskManager:
 
     def set_variable(self) -> Self:
         """Initializes the variable manager and sets up logging."""
-        from ..variable.set_variable_director import set_variable_director
+        from ..variable.variable_director import variable_pipeline
 
-        self.variable = set_variable_director(self.file_name)
+        self.variable = variable_pipeline(self.file_name)
         if self.variable:
             add_structured_log_sink(self.variable.file_paths.log_file)
         else:
