@@ -1,5 +1,5 @@
 # src/ota_installer/variables/variable_director.py
-from dataclasses import dataclass, field
+from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Self
 
@@ -66,6 +66,22 @@ class VariableDirector:
     @property
     def file_parts(self) -> Path:
         return self.variables.file_parts
+
+    def to_context(self) -> tuple:
+        from pprint import pprint
+
+        variable_api = tuple(
+            {
+                "files_paths": asdict(self.file_paths),
+                "directory_paths": {
+                    "parent": self.ota_parent_directory,
+                    "boot_paths": asdict(self.boot_directories),
+                }
+                | asdict(self.directories),
+            }
+        )
+        pprint(variable_api)
+        return variable_api
 
     def get_dispatcher(self, process_type) -> object:
         """Retrieves the dispatcher for the given process type."""
