@@ -18,7 +18,7 @@ class CLIArguments:
 
 
 @dataclass(slots=True)
-class TaskExecutor:
+class TaskPipeline:
     arguments: CLIArguments
     task_manager: TaskManager = field(default_factory=lambda: TaskManager())
     dispatcher: object = field(init=False)

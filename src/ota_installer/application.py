@@ -7,7 +7,7 @@ from .exception.keyboard_interrupt_info import (
     KeyboardInterruptHandler,
 )
 from .style import decorator
-from .task.task_execution import CLIArguments, TaskExecutor
+from .task.task_pipeline import CLIArguments, TaskPipeline
 from .versioning.version_info import SoftwareVersion
 
 
@@ -51,7 +51,7 @@ def display_random_exit_message() -> str:
 def task_execution(arguments: CLIArguments):
     """Execute tasks based on the provided CLI arguments."""
     (
-        TaskExecutor(arguments)
+        TaskPipeline(arguments)
         .set_path()
         .initialize_task_manager()
         .assign_task_group()
