@@ -50,11 +50,4 @@ def display_random_exit_message() -> str:
 @decorator.FooterWrapper(message=display_random_exit_message())
 def task_execution(arguments: CLIArguments):
     """Execute tasks based on the provided CLI arguments."""
-    (
-        TaskPipeline(arguments)
-        .set_path()
-        .initialize_task_manager()
-        .assign_task_group()
-        .initialize_task_dispatcher()
-        .execute_task_based_on_group()
-    )
+    (TaskPipeline(arguments).set_path().initialize_task_manager().execute())

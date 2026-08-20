@@ -90,7 +90,7 @@ class TaskGroupName(StrEnum):
         return {
             member.name: TaskGroupRenderer(
                 module[f"{member.value.capitalize()}Pipeline"],
-                f"{member.value.capitalize()} Pipeline",
+                f"{member.value.capitalize()} Task",
             )
             for member in cls
         }
