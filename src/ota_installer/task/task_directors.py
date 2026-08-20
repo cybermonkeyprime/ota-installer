@@ -1,20 +1,9 @@
 # src/ota_installer/task/task_directors.py
 from dataclasses import dataclass, field
-from pathlib import Path
 
 from ..log_setup import logger
 from ..task.task_group_info import TaskGroupName
 from .task_manager import TaskManager
-
-
-@dataclass(frozen=True, slots=True)
-class CLIArguments:
-    """Represents command-line arguments for the application."""
-
-    path: Path
-    task_group: str | None = None
-    list: bool = False
-    version: bool = False
 
 
 @dataclass(slots=True)

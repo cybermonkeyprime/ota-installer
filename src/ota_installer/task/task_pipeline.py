@@ -13,7 +13,7 @@ class CLIArguments:
     path: Path
     task_group: str | None = None
     list: bool = False
-    version = False
+    version = False  # Adding type annotation bool causes the display header not to display
 
 
 @dataclass(slots=True)
