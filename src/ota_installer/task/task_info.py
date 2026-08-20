@@ -1,13 +1,16 @@
 # tasks/task_info.py
 from collections.abc import Callable
+from dataclasses import dataclass
 from enum import StrEnum, auto
 
+from ..log_setup import logger
 from ..plugin.plugin_registry import Plugin
 from ..style.style_info import indentation
 from .operation.task_operation_info import (
     TaskOperationContainer,
     get_task_detail,
 )
+from .task_manager import TaskManager
 
 
 class TaskID(StrEnum):

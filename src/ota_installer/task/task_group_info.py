@@ -7,7 +7,7 @@ from functools import singledispatchmethod
 from ..dispatcher.dispatcher_info import DispatcherTemplate, DispatcherType
 from ..log_setup import logger
 from ..plugin.plugin_registry import Plugin
-from ..task.task_info import TaskID
+from .task_info import TaskID
 
 StrTuple = tuple[str, ...]
 TaskGroupMap = dict[str, object]
