@@ -12,7 +12,7 @@ class SoftwareVersion(Enum):
     PATCH_NUMBER = 17
 
     @classmethod
-    def to_dict(cls):
+    def to_dict(cls) -> dict:
         return {
             name.lower(): member.value
             for name, member in cls.__members__.items()
