@@ -18,9 +18,8 @@ def run() -> None:
 
 
 def display_title():
-    """Display the title and exit message if version is not specified."""
     arguments = CLIArguments
-    if not arguments.version:
+    if bool(arguments.version):
         DisplayHeaderPipeline().process_header()
         display_random_exit_message()
 
