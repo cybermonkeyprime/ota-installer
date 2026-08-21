@@ -1,14 +1,17 @@
 # src/ota_installer/task/task_directors.py
+from collections.abc import Callable
 from dataclasses import dataclass, field
+from typing import cast
 
 from ..log_setup import logger
 from ..task.task_group_info import TaskGroupName
+from .task_group_info import TaskGroupTypeDispatcher
 from .task_manager import TaskManager
 
 
 @dataclass(slots=True)
 class DispatcherDirector:
-    dispatcher: object = field(init=False)
+    dispatcher: TaskGroupTypeDispatcher = field(init=False)
 
     def __post_init__(self) -> None:
         """Initializes the task dispatcher."""
@@ -18,11 +21,15 @@ class DispatcherDirector:
             PluginDispatcherAdapter,
         )
 
-        self.dispatcher: object = PluginDispatcherAdapter(
-            DispatcherType.TASK_GROUP.value, TaskGroupName.fetch_mapping()
-        ).load()
+        self.dispatcher = cast(
+            TaskGroupTypeDispatcher,
+            PluginDispatcherAdapter(
+                DispatcherType.TASK_GROUP.value, TaskGroupName.fetch_mapping()
+            ).load(),
+        )
+        logger.debug(f"dispatcher type: {type(self.dispatcher)!r}")
 
-    def get_instance(self, key: str):
+    def get_instance(self, key: str) -> Callable:
         """Retrieves the dispatcher instance for a given key."""
         logger.debug(f"Retrieving dispatcher instance for key: {key}")
         return self.dispatcher.get_instance(key)
@@ -42,7 +49,10 @@ class TaskDirector:
 
         """Iterates over tasks in the specified task group."""
         logger.debug(f"Executing task iteration for: {task_group_key}")
-        stages = self.dispatcher.get_instance(key=task_group_key)
+        stages = cast(
+            tuple[str, ...] | None,
+            self.dispatcher.get_instance(key=task_group_key),
+        )
         pipeline = Pipeline(stages=stages)
         self.task_manager.execute_iteration(pipeline=pipeline)
 
