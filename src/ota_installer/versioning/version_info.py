@@ -9,7 +9,7 @@ class SoftwareVersion(Enum):
     TITLE = "OTA-Installer"
     MAJOR_NUMBER = 2026
     MINOR_NUMBER = 8
-    PATCH_NUMBER = 17
+    PATCH_NUMBER = 27
 
     @classmethod
     def to_dict(cls) -> dict:
@@ -19,27 +19,23 @@ class SoftwareVersion(Enum):
         }
 
     @classmethod
-    def software_info(cls):
-        return SoftwareInfo(**cls.to_dict())
+    def render(cls):
+        return SoftwareRenderer(**cls.to_dict())
 
     @classmethod
     def display(cls) -> str:
-        """Returns the display string for the global software version."""
-        return (
-            f"Build: {cls.MAJOR_NUMBER.value}."
-            f"{cls.MINOR_NUMBER.value}.{cls.PATCH_NUMBER.value}"
-        )
+        return cls.render().display()
 
     @classmethod
     def formatted(cls) -> str:
         """
         Returns a formatted string with the title or display of the software
         version."""
-        return f"{cls.TITLE.value} - {cls.display()}"
+        return cls.render().formatted()
 
 
 @dataclass(frozen=True)
-class SoftwareInfo:
+class SoftwareRenderer:
     """Represents a software container with versioning information."""
 
     title: str
