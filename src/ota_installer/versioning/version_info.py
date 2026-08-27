@@ -28,9 +28,6 @@ class SoftwareVersion(Enum):
 
     @classmethod
     def formatted(cls) -> str:
-        """
-        Returns a formatted string with the title or display of the software
-        version."""
         return cls.render().formatted()
 
 
