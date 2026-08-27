@@ -37,7 +37,7 @@ class DispatcherDefinition:
 
 def build_dispatcher_mapping() -> dict[DispatcherType, type]:
     from ..plugin.loader.dispatcher_plugin_loader import (
-        DirectoryHandler,
+        DirectoryDispatcher,
         FileTypeDispatcher,
         ImageTypeDispatcher,
         TaskGroupTypeDispatcher,
@@ -46,7 +46,7 @@ def build_dispatcher_mapping() -> dict[DispatcherType, type]:
 
     return {
         DispatcherType.FILE: FileTypeDispatcher,
-        DispatcherType.DIRECTORY: DirectoryHandler,
+        DispatcherType.DIRECTORY: DirectoryDispatcher,
         DispatcherType.IMAGE: ImageTypeDispatcher,
         DispatcherType.TASK_GROUP: TaskGroupTypeDispatcher,
         DispatcherType.VARIABLE: VariableTypeDispatcher,

@@ -5,7 +5,7 @@ from typing import Self
 
 from loguru import logger
 
-from ..directory.directory_info import set_directory
+from ..directory.directory_pipeline import set_directory_pipeline
 from ..dispatcher.dispatcher_info import build_dispatcher
 from ..image.magisk_image_info import MagiskImagePath
 from .variable_info import (
@@ -45,7 +45,7 @@ class VariableDirector:
         from ..image.boot_image_info import BootImageContainer
 
         self.ota_parent_directory = self.path.parent
-        self.directory = set_directory(self.file_name.path.parent)
+        self.directory = set_directory_pipeline(self.file_name.path.parent)
 
         self.boot_directories = BootImageContainer.create()
         self.directories = VariableType.DIRECTORY.build(
