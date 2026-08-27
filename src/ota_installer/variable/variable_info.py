@@ -4,7 +4,8 @@ from enum import Enum
 from pathlib import Path
 from typing import Any, Generic, TypeVar
 
-from ..dispatcher.dispatcher_info import DispatcherTemplate, DispatcherType
+from ..dispatcher.dispatcher_template import DispatcherTemplate
+from ..dispatcher.dispatcher_type import DispatcherType
 from ..plugin.plugin_registry import Plugin
 
 T = TypeVar("T")

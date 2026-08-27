@@ -1,3 +1,4 @@
+# src/ota_installer/directory/directory_type.py
 from enum import Enum, StrEnum, auto
 from pathlib import Path
 
@@ -29,3 +30,6 @@ class DirectoryType(StrEnum):
 
     def get_path(self, obj) -> Path:
         return self.to_dict(obj)[self]
+
+
+# Signed off by Brian Sanford on 20260827

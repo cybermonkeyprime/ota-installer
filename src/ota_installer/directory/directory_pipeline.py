@@ -1,3 +1,4 @@
+# src/ota_installer/directory/directory_pipeline.py
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Self
@@ -49,3 +50,6 @@ def set_directory_pipeline(parent_directory: Path) -> DirectoryPipeline:
         .set_item("_boot_image", FileImageName.STOCK.fetch_directory_path())
         .set_item("magisk_image", FileImageName.MAGISK.fetch_directory_path())
     )
+
+
+# Signed off by Brian Sanford on 20260827

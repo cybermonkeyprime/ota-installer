@@ -41,7 +41,7 @@ class DirectoryIterationProcessor(BaseProcessor):
 
     def __post_init__(self):
         """Initializes the dispatcher type."""
-        from ....dispatcher.dispatcher_info import DispatcherType
+        from ....dispatcher.dispatcher_type import DispatcherType
 
         self.dispatcher_type = DispatcherType.DIRECTORY.value
         super().__post_init__()

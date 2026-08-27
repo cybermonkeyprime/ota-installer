@@ -4,7 +4,8 @@ from dataclasses import dataclass, field
 from enum import Enum, StrEnum, auto
 from functools import singledispatchmethod
 
-from ..dispatcher.dispatcher_info import DispatcherTemplate, DispatcherType
+from ..dispatcher.dispatcher_template import DispatcherTemplate
+from ..dispatcher.dispatcher_type import DispatcherType
 from ..log_setup import logger
 from ..plugin.plugin_registry import Plugin
 from .task_info import TaskID

@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Self
 
-from ....dispatcher.dispatcher_info import DispatcherType
+from ....dispatcher.dispatcher_type import DispatcherType
 from ....variable.variable_director import VariableDirector
 from ...variable.processor.base_process_info import BaseProcessor
 

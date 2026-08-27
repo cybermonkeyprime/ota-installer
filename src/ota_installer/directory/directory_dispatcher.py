@@ -1,6 +1,8 @@
+# src/ota_installer/directory/directory_dispatcher.py
 from dataclasses import dataclass, field
 
-from ..dispatcher.dispatcher_info import DispatcherTemplate, DispatcherType
+from ..dispatcher.dispatcher_template import DispatcherTemplate
+from ..dispatcher.dispatcher_type import DispatcherType
 from ..log_setup import logger
 from ..plugin.plugin_registry import Plugin
 from .directory_type import DirectoryType
@@ -21,3 +23,6 @@ class DirectoryDispatcher(DispatcherTemplate):
             f"{self.collection}"
         )
         logger.debug(message)
+
+
+# Signed off by Brian Sanford on 20260827

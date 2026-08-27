@@ -1,7 +1,7 @@
 # src/ota_installer/plugin/handler/dispatcher_plugin_handler.py
 from dataclasses import dataclass, field
 
-from ...dispatcher.dispatcher_info import DispatcherType
+from ...dispatcher.dispatcher_type import DispatcherType
 from ...log_setup import logger
 from ..plugin_registry import Plugin
 

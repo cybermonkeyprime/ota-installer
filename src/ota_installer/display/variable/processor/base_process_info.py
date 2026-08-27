@@ -2,7 +2,7 @@
 from dataclasses import dataclass, field
 from typing import Self
 
-from ....dispatcher.dispatcher_info import DispatcherProtocol
+from ....dispatcher.dispatcher_protocol import DispatcherProtocol
 
 
 @dataclass

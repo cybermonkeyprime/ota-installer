@@ -6,7 +6,7 @@ from typing import Self
 from loguru import logger
 
 from ..directory.directory_pipeline import set_directory_pipeline
-from ..dispatcher.dispatcher_info import build_dispatcher
+from ..dispatcher.dispatcher_builder import build_dispatcher
 from ..image.magisk_image_info import MagiskImagePath
 from .variable_info import (
     MagiskPathGroup,
