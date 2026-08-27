@@ -9,7 +9,7 @@ from rich.control import Control
 
 from ..log_setup import logger
 from ..style import decorator
-from ..style.style_info import SEPARATOR
+from ..style.style_renderer import SEPARATOR
 from ..versioning.version_info import SoftwareVersion
 
 type DisplayDecorator = Callable[[Callable[[], str]], Callable[[], str]]

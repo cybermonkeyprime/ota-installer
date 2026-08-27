@@ -5,7 +5,7 @@ from rich.console import Console
 from rich.padding import Padding
 from rich.table import Table
 
-from ...style.style_info import RichColors
+from ...style.rich_colors import RichColors
 
 
 @dataclass(frozen=True, slots=True)

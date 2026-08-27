@@ -3,7 +3,7 @@ from collections.abc import Callable
 from dataclasses import dataclass, field
 from functools import wraps
 
-from ..style_info import RichColors
+from ..rich_colors import RichColors
 from .protocol.decorator_protocols import StringReturningDecorator
 
 type R = str

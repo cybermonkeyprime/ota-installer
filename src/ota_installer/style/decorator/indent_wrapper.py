@@ -2,7 +2,7 @@
 from collections.abc import Callable
 from dataclasses import dataclass
 
-from ..style_info import StyleRenderer
+from ..style_renderer import StyleRenderer
 from .protocol.decorator_protocols import StringReturningDecorator
 
 type R = str

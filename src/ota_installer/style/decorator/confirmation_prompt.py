@@ -7,7 +7,8 @@ from functools import wraps
 import pyinputplus as pyip
 from rich.console import Console
 
-from ..style_info import RichColors, indentation
+from ..rich_colors import RichColors
+from ..style_renderer import indentation
 
 console = Console()
 
