@@ -1,5 +1,5 @@
 # src/ota_installer/application.py
-from .display.display_info import (
+from .display.display_header import (
     DisplayHeaderPipeline,
     clear_screen,
 )
