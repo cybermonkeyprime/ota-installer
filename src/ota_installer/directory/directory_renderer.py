@@ -14,7 +14,7 @@ class DirectoryRender(Enum):
     def __call__(self, *args, **kwargs):
         """Creates an instance of the specified container class."""
         logger.debug(f"Creating directory container: {self.name}")
-        return self.value(*args) if args else None
+        return self.value(*args, **kwargs)
 
 
 # Signed off by Brian Sanford on 20260827
