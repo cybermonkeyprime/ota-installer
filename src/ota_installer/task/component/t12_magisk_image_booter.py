@@ -6,7 +6,7 @@ from ...plugin.plugin_registry import Plugin
 from ...style import decorator
 from ...task.task_group_info import ApplicationPipeline
 from ...variable.variable_director import VariableDirector
-from ..operation.task_operation_processor import image_handler
+from ..operation.task_operation_processor import resolve_image_path
 from ..task_info import TaskID
 from .base_task import BaseTask
 
@@ -31,7 +31,7 @@ class MagiskImageBooter(BaseTask):
 
     def _get_partition(self, device: str) -> str:
         """Retrieves the partition name for the given device."""
-        partition_path: Path = image_handler(device)
+        partition_path: Path = resolve_image_path(device)
         return partition_path.stem
 
     def _build_command(self, partition: str) -> str:

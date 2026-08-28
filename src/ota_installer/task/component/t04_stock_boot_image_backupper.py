@@ -6,7 +6,7 @@ from ...plugin.plugin_registry import Plugin
 from ...style import decorator
 from ...task.task_group_info import PreparationPipeline
 from ...variable.variable_director import VariableDirector
-from ..operation.task_operation_processor import image_handler
+from ..operation.task_operation_processor import resolve_image_path
 from ..task_info import TaskID
 from .base_task import BaseTask
 
@@ -31,7 +31,7 @@ class StockBootImageBackupper(BaseTask):
 
     def _create_command_string(self) -> str:
         """Create the command string for the backup operation."""
-        image_path = Path(image_handler(self.instance.file_name.device))
+        image_path = Path(resolve_image_path(self.instance.file_name.device))
         return f"cp -v {image_path} {self.instance.file_paths.stock}"
 
     @decorator.DoublePaddedFooterWrapper(message=f"{TITLE.success_message}")

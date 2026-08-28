@@ -111,7 +111,7 @@ class TaskOperationProcessor:
         self.execute_command_string()
 
 
-def image_handler(key: str) -> Path:
+def resolve_image_path(key: str) -> Path:
     """Handles image retrieval based on a key."""
     logger.debug(f"image_handler(): {key=}")
     dispatcher = PluginDispatcherAdapter("image")

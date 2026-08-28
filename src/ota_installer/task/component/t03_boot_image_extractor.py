@@ -6,7 +6,7 @@ from ...plugin.plugin_registry import Plugin
 from ...style import decorator
 from ...task.task_group_info import PreparationPipeline
 from ...variable.variable_director import VariableDirector
-from ..operation.task_operation_processor import image_handler
+from ..operation.task_operation_processor import resolve_image_path
 from ..task_info import TaskID
 from .base_task import BaseTask
 
@@ -23,7 +23,7 @@ class BootImageExtractor(BaseTask):
         """Initializes the command string for extracting the boot image."""
         device = self.instance.file_name.device
         destination_path = Path.home() / "images"
-        image_key = image_handler(device)
+        image_key = resolve_image_path(device)
         options = self._format_options(image_key.stem, destination_path)
         command_string = self._build_command_string(options)
 
