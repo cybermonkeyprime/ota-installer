@@ -62,7 +62,7 @@ class FilePathRenderer:
         return iter(self.__dict__.items())
 
     def __post_init__(self) -> None:
-        self.image_pipeline()
+        self.image_name_pipeline()
 
     @property
     def magisk_image_name(self) -> str:
@@ -84,7 +84,7 @@ class FilePathRenderer:
             / f"ota-installer_{self.parts.device}_{self.parts.build_id}.txt"
         )
 
-    def image_pipeline(self) -> None:
+    def image_name_pipeline(self) -> None:
         from ..image.generic.generic_image_info import FileImageName
 
         for key in FileImageName.valid_members():
