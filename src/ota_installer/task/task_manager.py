@@ -6,7 +6,7 @@ from pathlib import Path
 from types import SimpleNamespace
 from typing import Self
 
-from ..display.display_variable_pipeline import (
+from ..display.display_variables import (
     DisplayVariablePipeline,
 )
 from ..log_setup import add_structured_log_sink, logger
