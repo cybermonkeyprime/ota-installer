@@ -1,4 +1,6 @@
 # src/ota_installer/variable/variable_info.py
+from asyncio.log import logger
+from attr import frozen
 from dataclasses import dataclass, field
 from enum import Enum
 from pathlib import Path
@@ -52,33 +54,25 @@ class FilePathRenderer:
     """Container for file paths used in the OTA installer."""
 
     parts: FilePartContainer
+    stock: str | None = None
+    magisk: str | None = None
+    payload: str | None = None
 
     def __iter__(self):
         return iter(self.__dict__.items())
 
+    def __post_init__(self) -> None:
+        self.image_pipeline()
+
+    @property
+    def magisk_image_name(self) -> str:
+        return "place_holder"
+
     @property
     def image_data(self) -> "FileImageData":
-        from ..image.generic_image_info import FileImageData
+        from ..image.generic.generic_image_info import FileImageData
 
         return FileImageData(self.parts.device, self.parts.build_id)
-
-    @property
-    def stock(self) -> str:
-        from ..image.generic_image_info import FileImageName
-
-        return self.create_image(FileImageName.STOCK)
-
-    @property
-    def magisk(self) -> str:
-        from ..image.generic_image_info import FileImageName
-
-        return self.create_image(FileImageName.MAGISK)
-
-    @property
-    def payload(self) -> str:
-        from ..image.generic_image_info import FileImageName
-
-        return self.create_image(FileImageName.PAYLOAD)
 
     @property
     def log_file(self) -> Path:
@@ -90,12 +84,12 @@ class FilePathRenderer:
             / f"ota-installer_{self.parts.device}_{self.parts.build_id}.txt"
         )
 
-    @property
-    def magisk_image_name(self) -> str:
-        return "place_holder"
+    def image_pipeline(self) -> None:
+        from ..image.generic.generic_image_info import FileImageName
 
-    def create_image(self, image):
-        return self.image_data(image)
+        for key in FileImageName.valid_keys():
+            value = self.image_data(FileImageName[key.upper()])
+            object.__setattr__(self, key, value)
 
 
 @dataclass(frozen=True, slots=True)

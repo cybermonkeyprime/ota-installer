@@ -6,9 +6,9 @@ from pathlib import Path
 
 from ota_installer.variable.variable_info import FilePathRenderer
 
-from ..dispatcher.dispatcher_template import DispatcherTemplate
-from ..dispatcher.dispatcher_type import DispatcherType
-from ..plugin.plugin_registry import Plugin
+from ...dispatcher.dispatcher_template import DispatcherTemplate
+from ...dispatcher.dispatcher_type import DispatcherType
+from ...plugin.plugin_registry import Plugin
 
 
 # containers
@@ -63,6 +63,10 @@ class FileImageName(Enum):
         "magisk",
         "img",
     )
+
+    @classmethod
+    def valid_keys(cls) -> tuple:
+        return tuple(member.name.lower() for member in cls)
 
     def path(self, device: str, build_id: str) -> Path:
         return self.value.path(device, build_id)

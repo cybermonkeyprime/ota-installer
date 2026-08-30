@@ -7,7 +7,7 @@ from loguru import logger
 
 from ..directory.directory_pipeline import set_directory_pipeline
 from ..dispatcher.dispatcher_builder import build_dispatcher
-from ..image.magisk_image_info import MagiskImagePath
+from ..image.magisk.magisk_image_info import MagiskImagePath
 from .variable_info import (
     MagiskPathGroup,
     VariableType,
@@ -42,7 +42,7 @@ class VariableDirector:
         return self
 
     def set_directories(self) -> Self:
-        from ..image.boot_image_info import BootImageContainer
+        from ..image.boot.boot_image_info import BootImageContainer
 
         self.ota_parent_directory = self.path.parent
         self.directory = set_directory_pipeline(self.file_name.path.parent)
