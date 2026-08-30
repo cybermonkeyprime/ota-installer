@@ -1,4 +1,3 @@
-# src/ota_installer/display/variable/processor/display_variable_info.py
 from dataclasses import dataclass
 from typing import Self
 
