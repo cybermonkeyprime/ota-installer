@@ -1,3 +1,4 @@
+# src/ota_installer/display/display_variable_pipeline.py
 from dataclasses import dataclass
 from typing import Self
 
@@ -116,3 +117,6 @@ class DisplayVariablePipeline:
     def process_file_names(self) -> Self:
         process_file_display(self.variable_director)
         return self
+
+
+# Signed off by Brian Sanford on 20260830
