@@ -65,8 +65,8 @@ class FileImageName(Enum):
     )
 
     @classmethod
-    def valid_keys(cls) -> tuple:
-        return tuple(member.name.lower() for member in cls)
+    def valid_members(cls) -> tuple:
+        return tuple(member.name for member in cls)
 
     def path(self, device: str, build_id: str) -> Path:
         return self.value.path(device, build_id)

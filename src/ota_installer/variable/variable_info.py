@@ -87,9 +87,9 @@ class FilePathRenderer:
     def image_pipeline(self) -> None:
         from ..image.generic.generic_image_info import FileImageName
 
-        for key in FileImageName.valid_keys():
-            value = self.image_data(FileImageName[key.upper()])
-            object.__setattr__(self, key, value)
+        for key in FileImageName.valid_members():
+            value = self.image_data(FileImageName[key])
+            object.__setattr__(self, key.lower(), value)
 
 
 @dataclass(frozen=True, slots=True)
