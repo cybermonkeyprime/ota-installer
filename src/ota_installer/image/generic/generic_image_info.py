@@ -4,11 +4,10 @@ from dataclasses import dataclass, field
 from enum import Enum
 from pathlib import Path
 
-from ota_installer.variable.variable_info import FilePathRenderer
-
 from ...dispatcher.dispatcher_template import DispatcherTemplate
 from ...dispatcher.dispatcher_type import DispatcherType
 from ...plugin.plugin_registry import Plugin
+from ...variable.variable_info import FilePathRenderer
 
 
 # containers

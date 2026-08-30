@@ -1,6 +1,4 @@
 # src/ota_installer/variable/variable_info.py
-from asyncio.log import logger
-from attr import frozen
 from dataclasses import dataclass, field
 from enum import Enum
 from pathlib import Path
