@@ -42,7 +42,7 @@ class VariableDirector:
         return self
 
     def set_directories(self) -> Self:
-        from ..image.boot.boot_image_info import BootImageContainer
+        from ..image.boot.boot_image_container import BootImageContainer
 
         self.ota_parent_directory = self.path.parent
         self.directory = set_directory_pipeline(self.file_name.path.parent)

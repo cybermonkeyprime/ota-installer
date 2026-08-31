@@ -5,7 +5,7 @@ from ..log_setup import logger
 
 
 class DirectoryRender(Enum):
-    from ..image.boot.boot_image_info import BootImageContainer
+    from ..image.boot.boot_image_container import BootImageContainer
     from ..image.magisk.magisk_image_info import MagiskImageContainer
 
     BOOT = BootImageContainer.create
