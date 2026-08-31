@@ -41,3 +41,6 @@ class ImageRenderer:
             self.directory
             / f"{device}-{self.title}-{build_id}.{self.extension}"
         )
+
+
+# Signed off by Brian Sanford on 20260831

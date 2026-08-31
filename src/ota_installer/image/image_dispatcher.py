@@ -1,3 +1,4 @@
+# src/ota_installer/image/image_dispatcher.py
 from collections.abc import Mapping
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -24,3 +25,6 @@ class FileTypeDispatcher(DispatcherTemplate):
         file paths.
         """
         self.collection = ImageName.create_path_dictionary(self.obj.file_paths)
+
+
+# Signed off by Brian Sanford on 20260831

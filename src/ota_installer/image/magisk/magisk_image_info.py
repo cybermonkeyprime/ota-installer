@@ -1,4 +1,4 @@
-# src/ota_installer/image/magisk_image_info.py
+# src/ota_installer/image/magisk/magisk_image_info.py
 from dataclasses import dataclass
 from enum import Enum
 from pathlib import Path
@@ -36,3 +36,6 @@ class MagiskImagePath(Enum):
     def remote_path(self) -> Path:
         """Returns the remote path from the path container."""
         return self.path_container.remote_path
+
+
+# Signed off by Brian Sanford on 20260831

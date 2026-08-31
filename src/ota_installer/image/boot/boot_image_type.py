@@ -1,3 +1,4 @@
+# src/ota_installer/image/boot/boot_image_type.py
 from enum import StrEnum
 
 
@@ -23,3 +24,6 @@ class BootImageType(StrEnum):
         """
         normalized_key = cls.normalize_key(key).upper()
         return cls.__members__.get(normalized_key, cls.DEFAULT).value
+
+
+# Signed off by Brian Sanford on 20260831

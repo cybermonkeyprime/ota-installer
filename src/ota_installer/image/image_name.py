@@ -1,3 +1,4 @@
+# src/ota_installer/image/image_name.py
 from enum import Enum
 from pathlib import Path
 
@@ -52,3 +53,6 @@ class ImageName(Enum):
             member.name.lower(): getattr(file_paths, member.name.lower())
             for member in cls
         }
+
+
+# Signed off by Brian Sanford on 20260831

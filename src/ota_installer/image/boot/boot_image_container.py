@@ -1,4 +1,4 @@
-# src/ota_installer/image/boot_image_info.py
+# src/ota_installer/image/boot/boot_image_container.py
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Self
@@ -17,3 +17,6 @@ class BootImageContainer:
     @classmethod
     def create(cls) -> Self:
         return cls(**ImageName.boot_directories())
+
+
+# Signed off by Brian Sanford on 20260831

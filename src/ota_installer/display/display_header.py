@@ -1,4 +1,4 @@
-# display/display_info.py
+# src/ota_installer/display/display_header.py
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 from enum import Enum, StrEnum, auto

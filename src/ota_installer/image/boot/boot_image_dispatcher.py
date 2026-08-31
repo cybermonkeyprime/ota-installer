@@ -1,3 +1,4 @@
+# src/ota_installer/image/boot/boot_image_dispatcher.py
 from dataclasses import dataclass, field
 
 from ...dispatcher.dispatcher_template import DispatcherTemplate
@@ -16,3 +17,6 @@ class ImageTypeDispatcher(DispatcherTemplate):
         type value.
         """
         return BootImageType.validate_key(key)
+
+
+# Signed off by Brian Sanford on 20260831
