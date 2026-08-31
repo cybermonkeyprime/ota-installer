@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Self
 
-from ..image_info import ImageName
+from ..image_name import ImageName
 
 
 @dataclass(frozen=True, slots=True)
