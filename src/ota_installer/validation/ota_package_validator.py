@@ -19,34 +19,34 @@ def validate_ota_package(path: str | Path) -> Path | None:
 
     if not zip_path.exists():
         message = f"Path does not exist: {zip_path}"
-        report = {"status": "Error", "reason": message}
-        logger.critical(message)
+        report = {"status": "Error", "response": message}
+        logger.critical(report)
         return None
 
     if not zip_path.is_file():
         message = f"Not a file: {zip_path}"
-        report = {"status": "Error", "reason": message}
-        logger.critical(message)
+        report = {"status": "Error", "response": message}
+        logger.critical(report)
         return None
 
     mime = magic.from_file(filename=str(object=path), mime=True)
 
     if mime not in VALID_ZIP_MIME_TYPES:
         message = f"Unexpected MIME type: {mime}"
-        report = {"status": "Error", "reason": message}
-        logger.critical(message)
+        report = {"status": "Error", "response": message}
+        logger.critical(report)
         return None
 
     if not is_zipfile(filename=zip_path):
         message = "Not a valid zip file format!"
-        report = {"status": "Error", "reason": message}
-        logger.critical(message)
+        report = {"status": "Error", "response": message}
+        logger.critical(report)
         return None
 
     if not ZipFile(zip_path).namelist():
         message = "Zip archive is empty."
-        report = {"status": "Error", "reason": message}
-        logger.critical(message)
+        report = {"status": "Error", "response": message}
+        logger.critical(report)
         return None
 
     return zip_path.resolve()

@@ -98,9 +98,10 @@ def variable_pipeline(path: Path) -> VariableDirector:
     valid_path = validate_ota_package(path)
 
     if not valid_path:
-        message = f"Invalid file path: {path}. Aborting."
-        logger.error(message)
-        raise FileNotFoundError(message)
+        message = f"Invalid file path: {path}."
+        report = {"status": "Error", "response": message}
+        logger.critical(report)
+        raise FileNotFoundError(report)
 
     return (
         VariableDirector(path=valid_path)
