@@ -1,13 +1,13 @@
-# src/ota_installer/image/generic_image_info.py
+# src/ota_installer/image/image_info.py
 from collections.abc import Mapping
 from dataclasses import dataclass, field
 from enum import Enum
 from pathlib import Path
 
-from ...dispatcher.dispatcher_template import DispatcherTemplate
-from ...dispatcher.dispatcher_type import DispatcherType
-from ...plugin.plugin_registry import Plugin
-from ...variable.variable_info import FilePathRenderer
+from ..dispatcher.dispatcher_template import DispatcherTemplate
+from ..dispatcher.dispatcher_type import DispatcherType
+from ..plugin.plugin_registry import Plugin
+from ..variable.variable_info import FilePathRenderer
 
 
 # containers

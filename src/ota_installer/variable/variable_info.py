@@ -68,7 +68,7 @@ class FilePathRenderer:
 
     @property
     def image_data(self) -> "FileImageData":
-        from ..image.generic.generic_image_info import FileImageData
+        from ..image.image_info import FileImageData
 
         return FileImageData(self.parts.device, self.parts.build_id)
 
@@ -83,7 +83,7 @@ class FilePathRenderer:
         )
 
     def image_pipeline(self) -> None:
-        from ..image.generic.generic_image_info import FileImageName
+        from ..image.image_info import FileImageName
 
         for key in FileImageName.valid_members():
             value = self.image_data(FileImageName[key])
