@@ -14,7 +14,7 @@ console = Console()
 
 
 class PromptType(StrEnum):
-    KEY_OPTION = "Y/N"
+    KEY_OPTION = "y/N"
     ERROR = "Invalid Option!"
     REQUEST = "Do you want to "
     EXECUTE = "execute the command"
