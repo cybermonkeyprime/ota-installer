@@ -4,7 +4,7 @@ build-backend = "uv_build"
 
 [project]
 name = "ota-installer"
-version = "2026.8.16"
+version = "2026.8.31"
 requires-python = ">=3.14"
 dependencies = [
   "dependency-injector==4.48.3",
