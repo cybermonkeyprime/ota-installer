@@ -67,10 +67,10 @@ class FilePathRenderer:
         return "place_holder"
 
     @property
-    def image_data(self) -> "FileImageData":
-        from ..image.image_info import FileImageData
+    def image_data(self) -> "ImageData":
+        from ..image.image_info import ImageData
 
-        return FileImageData(self.parts.device, self.parts.build_id)
+        return ImageData(self.parts.device, self.parts.build_id)
 
     @property
     def log_file(self) -> Path:
@@ -83,10 +83,10 @@ class FilePathRenderer:
         )
 
     def image_pipeline(self) -> None:
-        from ..image.image_info import FileImageName
+        from ..image.image_info import ImageName
 
-        for key in FileImageName.valid_members():
-            value = self.image_data(FileImageName[key])
+        for key in ImageName.valid_members():
+            value = self.image_data(ImageName[key])
             object.__setattr__(self, key.lower(), value)
 
 

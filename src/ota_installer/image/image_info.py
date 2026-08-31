@@ -12,7 +12,7 @@ from ..variable.variable_info import FilePathRenderer
 
 # containers
 @dataclass(frozen=True, slots=True)
-class FileImagePaths:
+class ImagePaths:
     """Represents file and directory paths for a file image."""
 
     file_path: Path
@@ -20,24 +20,24 @@ class FileImagePaths:
 
 
 @dataclass(frozen=True, slots=True)
-class FileImageData:
+class ImageData:
     """Contains information about the file image data."""
 
     device: str
     build_id: str
 
-    def __call__(self, image: FileImageName | str) -> Path:
-        if isinstance(image, FileImageName):
+    def __call__(self, image: ImageName | str) -> Path:
+        if isinstance(image, ImageName):
             return image.path(self.device, self.build_id)
 
-        return FileImageName[image.upper()].path(
+        return ImageName[image.upper()].path(
             self.device,
             self.build_id,
         )
 
 
 @dataclass(frozen=True, slots=True)
-class FileImageInfo:
+class ImageInfo:
     directory: Path
     title: str
     extension: str
@@ -50,14 +50,14 @@ class FileImageInfo:
 
 
 # enums
-class FileImageName(Enum):
-    PAYLOAD = FileImageInfo(Path.home(), "payload", "bin")
-    STOCK = FileImageInfo(
+class ImageName(Enum):
+    PAYLOAD = ImageInfo(Path.home(), "payload", "bin")
+    STOCK = ImageInfo(
         Path.home() / "Android" / "boot-images" / "stock",
         "boot",
         "img",
     )
-    MAGISK = FileImageInfo(
+    MAGISK = ImageInfo(
         Path.home() / "Android" / "boot-images" / "magisk",
         "magisk",
         "img",
@@ -115,6 +115,4 @@ class FileTypeDispatcher(DispatcherTemplate):
         Initializes the collection with normalized keys and corresponding
         file paths.
         """
-        self.collection = FileImageName.create_path_dictionary(
-            self.obj.file_paths
-        )
+        self.collection = ImageName.create_path_dictionary(self.obj.file_paths)

@@ -36,7 +36,7 @@ class DirectoryPipeline:
 
 def set_directory_pipeline(parent_directory: Path) -> DirectoryPipeline:
     """Creates a DirectoryTypeDefinition for the specified parent directory."""
-    from ..image.image_info import FileImageName
+    from ..image.image_info import ImageName
 
     logger.debug("Creating Directories")
     if not parent_directory.exists() or not parent_directory.is_dir():
@@ -47,8 +47,8 @@ def set_directory_pipeline(parent_directory: Path) -> DirectoryPipeline:
     return (
         DirectoryPipeline()
         .set_item("parent_directory", parent_directory)
-        .set_item("_boot_image", FileImageName.STOCK.fetch_directory_path())
-        .set_item("magisk_image", FileImageName.MAGISK.fetch_directory_path())
+        .set_item("_boot_image", ImageName.STOCK.fetch_directory_path())
+        .set_item("magisk_image", ImageName.MAGISK.fetch_directory_path())
     )
 
 
