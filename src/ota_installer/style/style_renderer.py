@@ -1,3 +1,4 @@
+# src/ota_installer/style/style_renderer.py
 from dataclasses import dataclass
 
 
@@ -25,3 +26,6 @@ def indentation(interval: int = 1, char: str = " ", spaces: int = 4) -> str:
 def separator(cls: StyleRenderer = SEPARATOR) -> str:
     """Generates a formatted separator string."""
     return cls()
+
+
+# Signed off by Brian Sanford on 20260831

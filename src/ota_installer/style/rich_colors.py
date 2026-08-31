@@ -1,3 +1,4 @@
+# src/ota_installer/style/rich_colors.py
 from enum import StrEnum
 
 
@@ -25,3 +26,6 @@ class RichColors(StrEnum):
     def ending(self):
         """Constructs the ending tag for the rich style."""
         return self.tag(closing=True)
+
+
+# src/ota_installer/style/rich_colors.py

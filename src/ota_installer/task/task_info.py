@@ -1,4 +1,4 @@
-# tasks/task_info.py
+# src/ota_installer/task/task_info.py
 from collections.abc import Callable
 from enum import StrEnum, auto
 

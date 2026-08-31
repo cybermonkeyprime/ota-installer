@@ -1,3 +1,4 @@
+# src/ota_installer/task/task_pipeline.py
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Self
@@ -66,3 +67,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+# Signed off by Brian Sanford on 20260831
