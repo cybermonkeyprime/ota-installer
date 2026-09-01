@@ -1,4 +1,4 @@
-# src/ota_installer/plugin/handler/dispatcher_plugin_adapter.py
+# src/ota_installer/plugin/plugin_dispatcher_adapter.py
 from dataclasses import dataclass, field
 
 from ..dispatcher.dispatcher_type import DispatcherType
