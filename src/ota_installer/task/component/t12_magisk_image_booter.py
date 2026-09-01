@@ -4,7 +4,7 @@ from pathlib import Path
 
 from ...plugin.plugin_registry import Plugin
 from ...style import decorator
-from ...task.task_group_info import ApplicationPipeline
+from ...task_group.task_group_pipelines import ApplicationPipeline
 from ...variable.variable_director import VariableDirector
 from ..operation.task_operation_processor import resolve_image_path
 from ..task_info import TaskID

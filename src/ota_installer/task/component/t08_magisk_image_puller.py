@@ -8,7 +8,10 @@ from ...image.magisk.magisk_image_info import (
 from ...log_setup import logger
 from ...plugin.plugin_registry import Plugin
 from ...style import decorator
-from ...task.task_group_info import ApplicationPipeline, MigrationPipeline
+from ...task_group.task_group_pipelines import (
+    ApplicationPipeline,
+    MigrationPipeline,
+)
 from ...variable.variable_director import VariableDirector
 from ..task_info import TaskID
 from .base_task import BaseTask

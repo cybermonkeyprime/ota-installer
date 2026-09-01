@@ -4,8 +4,8 @@ from pathlib import Path
 
 from ...plugin.plugin_registry import Plugin
 from ...style import decorator
-from ...task.task_group_info import PreparationPipeline
 from ...task.task_info import TaskID
+from ...task_group.task_group_pipelines import PreparationPipeline
 from ...variable.variable_director import VariableDirector
 from .base_task import BaseTask
 
