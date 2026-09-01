@@ -1,9 +1,9 @@
-# src/ota_installer/plugin/handler/dispatcher_plugin_handler.py
+# src/ota_installer/plugin/handler/dispatcher_plugin_adapter.py
 from dataclasses import dataclass, field
 
-from ...dispatcher.dispatcher_type import DispatcherType
-from ...log_setup import logger
-from ..plugin_registry import Plugin
+from ..dispatcher.dispatcher_type import DispatcherType
+from ..log_setup import logger
+from .plugin_registry import Plugin
 
 
 class DispatcherError(Exception):

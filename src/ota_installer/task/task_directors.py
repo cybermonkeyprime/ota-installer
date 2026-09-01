@@ -17,7 +17,7 @@ class DispatcherDirector:
         """Initializes the task dispatcher."""
 
         from ..dispatcher.dispatcher_type import DispatcherType
-        from ..plugin.handler.dispatcher_plugin_handler import (
+        from ..plugin.plugin_dispatcher_adapter import (
             PluginDispatcherAdapter,
         )
 

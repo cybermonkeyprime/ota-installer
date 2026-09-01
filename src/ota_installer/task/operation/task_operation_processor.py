@@ -6,7 +6,7 @@ from pathlib import Path
 from typing import Self
 
 from ...log_setup import logger
-from ...plugin.handler.dispatcher_plugin_handler import PluginDispatcherAdapter
+from ...plugin.plugin_dispatcher_adapter import PluginDispatcherAdapter
 from ...style import decorator
 from ...style.style_renderer import StyleRenderer
 from .shell_command_execution_handler import ShellCommandExecutionHandler
