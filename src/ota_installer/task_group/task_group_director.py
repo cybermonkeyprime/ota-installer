@@ -2,14 +2,14 @@
 from dataclasses import dataclass
 
 from ..log_setup import logger
-from ..task.task_directors import DispatcherDirector, TaskDirector
+from ..task.task_director import TaskDirector, TaskDispatcherDirector
 from .task_group_names import TaskGroupName
 
 
 @dataclass(frozen=True, slots=True)
 class TaskGroupDirector:
     task_director: TaskDirector
-    dispatcher: DispatcherDirector
+    dispatcher: TaskDispatcherDirector
     task_group: str | None = None
 
     @property

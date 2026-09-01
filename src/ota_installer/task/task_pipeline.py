@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import Self
 
 from ..task_group.task_group_director import TaskGroupDirector
-from .task_directors import DispatcherDirector, TaskDirector
+from .task_director import TaskDirector, TaskDispatcherDirector
 from .task_manager import TaskManager
 
 
@@ -23,8 +23,8 @@ class TaskPipeline:
     arguments: CLIArguments
     task_manager: TaskManager = field(default_factory=lambda: TaskManager())
 
-    dispatcher_director: DispatcherDirector = field(
-        default_factory=DispatcherDirector
+    dispatcher_director: TaskDispatcherDirector = field(
+        default_factory=TaskDispatcherDirector
     )
     task_director: TaskDirector = field(init=False)
     task_group_director: TaskGroupDirector = field(init=False)

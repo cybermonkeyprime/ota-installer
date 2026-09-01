@@ -10,7 +10,7 @@ from .task_manager import TaskManager
 
 
 @dataclass(slots=True)
-class DispatcherDirector:
+class TaskDispatcherDirector:
     dispatcher: TaskGroupTypeDispatcher = field(init=False)
 
     def __post_init__(self) -> None:
@@ -42,7 +42,7 @@ class DispatcherDirector:
 @dataclass(frozen=True, slots=True)
 class TaskDirector:
     task_manager: TaskManager
-    dispatcher: DispatcherDirector
+    dispatcher: TaskDispatcherDirector
 
     def execute(self, task_group_key: str) -> None:
         from .task_manager import Pipeline
