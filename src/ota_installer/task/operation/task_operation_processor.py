@@ -9,7 +9,7 @@ from ...log_setup import logger
 from ...plugin.plugin_dispatcher_adapter import PluginDispatcherAdapter
 from ...style import decorator
 from ...style.style_renderer import StyleRenderer
-from .shell_command_execution import ShellCommandExecuter
+from .shell_command_execution import ShellCommandExecutor
 from .task_operation_info import (
     DefaultIndent,
     Indents,
@@ -97,7 +97,7 @@ class TaskOperationProcessor:
 
     def execute_and_return_output(self, output_name) -> str:
         """Executes the command string and returns the output."""
-        output = ShellCommandExecuter(
+        output = ShellCommandExecutor(
             self.command_string
         ).execute_and_return_output(output_name)
         return output or "No output"

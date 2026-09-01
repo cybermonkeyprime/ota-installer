@@ -28,7 +28,7 @@ class Shell:
 
 
 @dataclass
-class ShellCommandExecuter:
+class ShellCommandExecutor:
     """Executes shell commands with confirmation prompts and error handling."""
 
     command: str
