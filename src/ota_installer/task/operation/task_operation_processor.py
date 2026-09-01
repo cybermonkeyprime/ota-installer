@@ -9,7 +9,7 @@ from ...log_setup import logger
 from ...plugin.plugin_dispatcher_adapter import PluginDispatcherAdapter
 from ...style import decorator
 from ...style.style_renderer import StyleRenderer
-from .shell_command_execution_handler import ShellCommandExecutionHandler
+from .shell_command_execution import ShellCommandExecuter
 from .task_operation_info import (
     DefaultIndent,
     Indents,
@@ -91,13 +91,13 @@ class TaskOperationProcessor:
 
     def execute_command_string(self) -> None:
         """Executes the command string associated with the task."""
-        ShellCommandExecutionHandler(self.command_string).execute()
+        ShellCommandExecuter(self.command_string).execute()
         if getattr(self, "reminder", None):
             self.show_reminder()
 
     def execute_and_return_output(self, output_name) -> str:
         """Executes the command string and returns the output."""
-        output = ShellCommandExecutionHandler(
+        output = ShellCommandExecuter(
             self.command_string
         ).execute_and_return_output(output_name)
         return output or "No output"
