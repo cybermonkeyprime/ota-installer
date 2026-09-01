@@ -5,7 +5,7 @@ from ...plugin.plugin_registry import Plugin
 from ...style import decorator
 from ...task_group.task_group_pipelines import MigrationPipeline
 from ...variable.variable_director import VariableDirector
-from ..task_info import TaskID
+from ..task_id import TaskID
 from .base_task import BaseTask
 
 TITLE = TaskID.CHECK_ADB_CONNECTION

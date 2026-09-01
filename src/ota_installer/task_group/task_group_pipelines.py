@@ -1,7 +1,7 @@
 # src/ota_installer/task/task_group_pipelines.py
 from enum import Enum
 
-from ..task.task_info import TaskID
+from ..task.task_id import TaskID
 
 StrTuple = tuple[str, ...]
 

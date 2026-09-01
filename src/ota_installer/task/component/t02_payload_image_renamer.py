@@ -2,12 +2,11 @@
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from ota_installer.task.task_info import TaskID
-
 from ...plugin.plugin_registry import Plugin
 from ...style import decorator
 from ...task_group.task_group_pipelines import PreparationPipeline
 from ...variable.variable_director import VariableDirector
+from ..task_id import TaskID
 from .base_task import BaseTask
 
 TITLE = TaskID.RENAME_PAYLOAD_IMAGE
