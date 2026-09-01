@@ -45,9 +45,9 @@ class TaskDirector:
     dispatcher: TaskInvocation
 
     def execute(self, task_group_key: str) -> None:
+        """Iterates over tasks in the specified task group."""
         from .task_manager import Pipeline
 
-        """Iterates over tasks in the specified task group."""
         logger.debug(f"Executing task iteration for: {task_group_key}")
         stages = cast(
             tuple[str, ...] | None,
