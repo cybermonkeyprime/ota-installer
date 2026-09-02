@@ -10,8 +10,8 @@ from ..dispatcher.dispatcher_builder import build_dispatcher
 from ..image.magisk.magisk_image_info import MagiskImagePath
 from .variable_info import (
     MagiskPaths,
-    VariableType,
 )
+from .variable_renderer import VariableType
 
 
 @dataclass
