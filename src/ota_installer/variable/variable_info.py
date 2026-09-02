@@ -14,7 +14,7 @@ StrPathDict = dict[str, Path | str]
 
 
 @dataclass(frozen=False, slots=True)
-class MagiskPathGroup:
+class MagiskPaths:
     """Represents the local and remote directory paths."""
 
     local_path: Path
@@ -25,7 +25,7 @@ class MagiskPathGroup:
 class DirectoryNames:
     """Container for directory names used in the OTA installer."""
 
-    magisk: MagiskPathGroup
+    magisk: MagiskPaths
 
     def __iter__(self):
         return iter(self.__dict__.items())
@@ -143,9 +143,9 @@ class VariableType(Enum):
         return self.value(**kwargs)
 
 
-@Plugin.DISPATCHER.register(name=DispatcherType.VARIABLE.value)
+# @Plugin.DISPATCHER.register(name=DispatcherType.VARIABLE.value)
 @dataclass
-class VariableTypeDispatcher(DispatcherTemplate):
+class _VariableTypeDispatcher(DispatcherTemplate):
     """Dispatcher for handling variable types."""
 
     obj: type = field(default_factory=lambda: type)
@@ -155,7 +155,7 @@ class VariableTypeDispatcher(DispatcherTemplate):
         """Initializes the collection of paths based on the provided object."""
         self.collection = self._initialize_collection()
 
-    def _initialize_collection(self) -> StrPathDict:
+    def _initialize_collection(self) -> dict[str, str | Path]:
         """Creates a collection of paths and log file."""
         return {
             "path.name": Path(self.obj.path).name,
