@@ -30,6 +30,10 @@ class SoftwareVersion(Enum):
     def formatted(cls) -> str:
         return cls.render().formatted()
 
+    @classmethod
+    def version(cls) -> str:
+        return cls.render().version()
+
 
 @dataclass(frozen=True)
 class SoftwareRenderer:
@@ -46,6 +50,9 @@ class SoftwareRenderer:
             f"Build: {self.major_number}."
             f"{self.minor_number}.{self.patch_number}"
         )
+
+    def version(self) -> str:
+        return f"{self.major_number}.{self.minor_number}.{self.patch_number}"
 
     def formatted(self) -> str:
         """
