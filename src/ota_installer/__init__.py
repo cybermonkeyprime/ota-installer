@@ -1,4 +1,4 @@
-from .versioning.version_info import SoftwareVersion
+from .versioning.version_config import SoftwareVersion
 
 version = SoftwareVersion
 __version__ = (

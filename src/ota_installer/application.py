@@ -8,7 +8,7 @@ from .exception.keyboard_interrupt_info import (
 )
 from .style import decorator
 from .task.task_pipeline import CLIArguments, TaskPipeline
-from .versioning.version_info import SoftwareVersion
+from .versioning.version_config import SoftwareVersion
 
 
 def run() -> None:
