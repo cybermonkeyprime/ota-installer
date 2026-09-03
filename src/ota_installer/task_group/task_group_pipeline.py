@@ -133,13 +133,4 @@ APPLICATION = Pipeline(
 )
 
 
-def get_step_names(pipeline: Pipeline) -> tuple[str, ...]:
-    return tuple(step.name for step in pipeline.steps)
-
-
-TASK_GROUPS = {
-    "preparation": partial(get_step_names, PREPARATION),
-    "migration": partial(get_step_names, MIGRATION),
-    "application": partial(get_step_names, APPLICATION),
-}
 # Signed off by Brian Sanford on 20260903
