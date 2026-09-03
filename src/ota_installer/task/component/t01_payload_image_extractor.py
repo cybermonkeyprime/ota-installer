@@ -4,14 +4,12 @@ from pathlib import Path
 
 from ...plugin.plugin_registry import Plugin
 from ...style import decorator
-from ...task_group.task_group_pipelines import PreparationPipeline
+from ...task_group.task_group_pipeline import PREPARATION
 from ...variable.variable_director import VariableDirector
-from ..operation.task_operation_pipeline import PREPARATION
-from ..task_id import TaskID
 from .base_task import BaseTask
 
 STEP = PREPARATION[0]
-TITLE = TaskID.EXTRACT_PAYLOAD_IMAGE
+TITLE = STEP.name
 
 
 @dataclass
@@ -31,13 +29,13 @@ class PayloadImageExtractor(BaseTask):
         """Constructs the command string for extraction."""
         return f'7z e "{self.instance.path}" payload.bin -o"{Path.home()}" -y'
 
-    @decorator.DoublePaddedFooterWrapper(message=f"{TITLE.success_message}")
+    @decorator.DoublePaddedFooterWrapper(message=f"{STEP.success_message}")
     def perform_task(self) -> None:
         """Executes the task to extract the payload image."""
         self.task.run_with_output()
 
 
-@Plugin.TASK.register(PreparationPipeline[TITLE.name].value)
+@Plugin.TASK.register(TITLE.lower())
 @dataclass
 class PayloadImageExtractorPlugin(PayloadImageExtractor):
     """Plugin for the PayloadImageRenamer task."""
@@ -45,4 +43,4 @@ class PayloadImageExtractorPlugin(PayloadImageExtractor):
     pass
 
 
-# Signed off by Brian Sanford on 20260625
+# Signed off by Brian Sanford on 20260903

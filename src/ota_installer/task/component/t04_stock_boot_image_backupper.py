@@ -4,13 +4,13 @@ from pathlib import Path
 
 from ...plugin.plugin_registry import Plugin
 from ...style import decorator
-from ...task_group.task_group_pipelines import PreparationPipeline
+from ...task_group.task_group_pipeline import PREPARATION
 from ...variable.variable_director import VariableDirector
 from ..operation.task_operation_processor import resolve_image_path
-from ..task_id import TaskID
 from .base_task import BaseTask
 
-TITLE = TaskID.BACKUP_STOCK_BOOT_IMAGE
+STEP = PREPARATION[3]
+TITLE = STEP.name
 
 
 @dataclass
@@ -25,7 +25,7 @@ class StockBootImageBackupper(BaseTask):
         """
         self.command_string = self._create_command_string()
         super().__init__(
-            enum_values=TITLE.enum_values,
+            enum_values=STEP,
             command_string=self._create_command_string(),
         )
 
@@ -34,13 +34,13 @@ class StockBootImageBackupper(BaseTask):
         image_path = Path(resolve_image_path(self.instance.file_name.device))
         return f"cp -v {image_path} {self.instance.file_paths.stock}"
 
-    @decorator.DoublePaddedFooterWrapper(message=f"{TITLE.success_message}")
+    @decorator.DoublePaddedFooterWrapper(message=f"{STEP.success_message}")
     def perform_task(self) -> None:
         """Execute the task to backup the stock boot image."""
         self.task.run_with_output()
 
 
-@Plugin.TASK.register(PreparationPipeline[TITLE.name].value)
+@Plugin.TASK.register(TITLE.lower())
 @dataclass
 class StockBootImageBackupperPlugin(StockBootImageBackupper):
     """Plugin for the StockBootImageBackupper task."""

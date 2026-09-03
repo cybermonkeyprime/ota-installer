@@ -6,7 +6,6 @@ from ..dispatcher.dispatcher_template import DispatcherTemplate
 from ..dispatcher.dispatcher_type import DispatcherType
 from ..log_setup import logger
 from ..plugin.plugin_registry import Plugin
-from .task_group_names import TaskGroupName
 
 TaskGroupMap = dict[str, object]
 
@@ -14,8 +13,7 @@ TaskGroupMap = dict[str, object]
 @Plugin.DISPATCHER.register(name=DispatcherType.TASK_GROUP.value)
 @dataclass
 class TaskGroupTypeDispatcher(DispatcherTemplate):
-    obj: type = field(default_factory=lambda: type)
-    data_enum: TaskGroupName = field(init=False)
+    obj: object = field(default_factory=lambda: dict)
     collection: TaskGroupMap = field(default_factory=dict, init=False)
 
     def __post_init__(self) -> None:
@@ -41,10 +39,6 @@ class TaskGroupTypeDispatcher(DispatcherTemplate):
     @collection_type.register
     def _(self, obj: dict) -> dict[str, object]:
         return {str(key).lower(): value for key, value in obj.items()}
-
-    @collection_type.register
-    def _(self, obj: type) -> dict[str, object]:
-        return TaskGroupName.create_dictionary(obj)
 
 
 # Signed off by Brian Sanford on 20260831

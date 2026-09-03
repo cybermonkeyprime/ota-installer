@@ -4,13 +4,13 @@ from pathlib import Path
 
 from ...plugin.plugin_registry import Plugin
 from ...style import decorator
-from ...task_group.task_group_pipelines import PreparationPipeline
+from ...task_group.task_group_pipeline import PREPARATION
 from ...variable.variable_director import VariableDirector
 from ..operation.task_operation_processor import resolve_image_path
-from ..task_id import TaskID
 from .base_task import BaseTask
 
-TITLE = TaskID.EXTRACT_STOCK_BOOT_IMAGE
+STEP = PREPARATION[2]
+TITLE = STEP.name
 
 
 @dataclass
@@ -28,7 +28,7 @@ class BootImageExtractor(BaseTask):
         command_string = self._build_command_string(options)
 
         super().__init__(
-            enum_values=TITLE.enum_values,
+            enum_values=STEP,
             command_string=command_string,
         )
 
@@ -40,13 +40,13 @@ class BootImageExtractor(BaseTask):
         """Constructs the command string for the payload dumper."""
         return f"payload_dumper {self.instance.file_paths.payload} {options}"
 
-    @decorator.DoublePaddedFooterWrapper(message=f"{TITLE.success_message}")
+    @decorator.DoublePaddedFooterWrapper(message=f"{STEP.success_message}")
     def perform_task(self) -> None:
         """Executes the task to extract the boot image."""
         self.task.run_with_output()
 
 
-@Plugin.TASK.register(PreparationPipeline[TITLE.name].value)
+@Plugin.TASK.register(TITLE.lower())
 @dataclass
 class BootImageExtractorPlugin(BootImageExtractor):
     """Plugin for the BootImageExtractor task."""

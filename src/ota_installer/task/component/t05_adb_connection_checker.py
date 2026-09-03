@@ -3,12 +3,12 @@ from dataclasses import dataclass, field
 
 from ...plugin.plugin_registry import Plugin
 from ...style import decorator
-from ...task_group.task_group_pipelines import MigrationPipeline
+from ...task_group.task_group_pipeline import MIGRATION
 from ...variable.variable_director import VariableDirector
-from ..task_id import TaskID
 from .base_task import BaseTask
 
-TITLE = TaskID.CHECK_ADB_CONNECTION
+STEP = MIGRATION[0]
+TITLE = STEP.name
 
 
 @dataclass
@@ -20,17 +20,17 @@ class ADBConnectionChecker(BaseTask):
     def __post_init__(self) -> None:
         """Initializes the ADBConnectionChecker with command string."""
         super().__init__(
-            enum_values=TITLE.enum_values,
-            command_string=TITLE.enum_values.command_string,
+            enum_values=STEP,
+            command_string=STEP.command_string,
         )
 
-    @decorator.DoublePaddedFooterWrapper(message=f"{TITLE.success_message}")
+    @decorator.DoublePaddedFooterWrapper(message=f"{STEP.success_message}")
     def perform_task(self) -> None:
         """Executes the ADB connection check task."""
         self.task.run_with_output()
 
 
-@Plugin.TASK.register(MigrationPipeline[TITLE.name].value)
+@Plugin.TASK.register(TITLE.lower())
 @dataclass
 class ADBConnectionCheckerPlugin(ADBConnectionChecker):
     """Plugin for the ADBConnectionChecker task."""

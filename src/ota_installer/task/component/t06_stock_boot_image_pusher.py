@@ -4,12 +4,12 @@ from pathlib import Path
 
 from ...plugin.plugin_registry import Plugin
 from ...style import decorator
-from ...task_group.task_group_pipelines import MigrationPipeline
+from ...task_group.task_group_pipeline import MIGRATION
 from ...variable.variable_director import VariableDirector
-from ..task_id import TaskID
 from .base_task import BaseTask
 
-TITLE = TaskID.PUSH_STOCK_IMAGE
+STEP = MIGRATION[1]
+TITLE = STEP.name
 
 
 @dataclass
@@ -23,9 +23,9 @@ class StockBootImagePusher(BaseTask):
         command_string = self._create_adb_push_command()
 
         super().__init__(
-            enum_values=TITLE.enum_values,
+            enum_values=STEP,
             command_string=command_string,
-            reminder=TITLE.enum_values.reminder,
+            reminder=STEP.reminder,
         )
 
     def _create_adb_push_command(self) -> str:
@@ -33,13 +33,13 @@ class StockBootImagePusher(BaseTask):
         stock_image_path = Path(self.instance.file_paths.stock)
         return f'adb push "{stock_image_path}" /sdcard/'
 
-    @decorator.DoublePaddedFooterWrapper(message=f"{TITLE.success_message}")
+    @decorator.DoublePaddedFooterWrapper(message=f"{STEP.success_message}")
     def perform_task(self) -> None:
         """Executes the task to push the stock boot image."""
         self.task.run_with_output()
 
 
-@Plugin.TASK.register(MigrationPipeline[TITLE.name].value)
+@Plugin.TASK.register(TITLE.lower())
 @dataclass
 class StockBootImagePusherPlugin(StockBootImagePusher):
     """Plugin for the StockBootImagePusher task."""

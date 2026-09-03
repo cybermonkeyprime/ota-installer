@@ -4,12 +4,12 @@ from pathlib import Path
 
 from ...plugin.plugin_registry import Plugin
 from ...style import decorator
-from ...task_group.task_group_pipelines import PreparationPipeline
+from ...task_group.task_group_pipeline import PREPARATION
 from ...variable.variable_director import VariableDirector
-from ..task_id import TaskID
 from .base_task import BaseTask
 
-TITLE = TaskID.RENAME_PAYLOAD_IMAGE
+STEP = PREPARATION[1]
+TITLE = STEP.name
 
 
 @dataclass
@@ -22,7 +22,7 @@ class PayloadImageRenamer(BaseTask):
         """Initializes the command string for renaming the payload image."""
 
         super().__init__(
-            enum_values=TITLE.enum_values,
+            enum_values=STEP,
             command_string=self._create_rename_command(),
         )
 
@@ -32,14 +32,14 @@ class PayloadImageRenamer(BaseTask):
         destination_path = self.instance.file_paths.payload
         return f"mv -v {source_path} {destination_path}"
 
-    @decorator.DoublePaddedFooterWrapper(message=f"{TITLE.success_message}")
+    @decorator.DoublePaddedFooterWrapper(message=f"{STEP.success_message}")
     def perform_task(self) -> None:
         """Executes the task to rename the payload image."""
         if self.task:
             self.task.run_with_output()
 
 
-@Plugin.TASK.register(PreparationPipeline[TITLE.name].value)
+@Plugin.TASK.register(TITLE.lower())
 @dataclass
 class PayloadImageRenamerPlugin(PayloadImageRenamer):
     """Plugin for the PayloadImageRenamer task."""

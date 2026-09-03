@@ -3,12 +3,12 @@ from dataclasses import dataclass, field
 
 from ...plugin.plugin_registry import Plugin
 from ...style import decorator
-from ...task_group.task_group_pipelines import ApplicationPipeline
+from ...task_group.task_group_pipeline import APPLICATION
 from ...variable.variable_director import VariableDirector
-from ..task_id import TaskID
 from .base_task import BaseTask
 
-TITLE = TaskID.REBOOT_TO_RECOVERY
+STEP = APPLICATION[0]
+TITLE = STEP.name
 
 
 @dataclass
@@ -19,18 +19,18 @@ class RecoveryRebooter(BaseTask):
 
     def __post_init__(self) -> None:
         super().__init__(
-            enum_values=TITLE.enum_values,
-            command_string=TITLE.enum_values.command_string,
+            enum_values=STEP,
+            command_string=STEP.command_string,
         )
 
-    @decorator.DoublePaddedFooterWrapper(message=f"{TITLE.success_message}")
+    @decorator.DoublePaddedFooterWrapper(message=f"{STEP.success_message}")
     def perform_task(self) -> None:
         """Executes the task to reboot into recovery mode."""
         if self.task:
             self.task.run_with_output()
 
 
-@Plugin.TASK.register(ApplicationPipeline[TITLE.name].value)
+@Plugin.TASK.register(TITLE.lower())
 @dataclass
 class RecoveryRebooterPlugin(RecoveryRebooter):
     """Plugin for the RecoveryRebooter task."""

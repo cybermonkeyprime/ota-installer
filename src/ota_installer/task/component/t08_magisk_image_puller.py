@@ -8,15 +8,12 @@ from ...image.magisk.magisk_image_info import (
 from ...log_setup import logger
 from ...plugin.plugin_registry import Plugin
 from ...style import decorator
-from ...task_group.task_group_pipelines import (
-    ApplicationPipeline,
-    MigrationPipeline,
-)
+from ...task_group.task_group_pipeline import APPLICATION, MIGRATION
 from ...variable.variable_director import VariableDirector
-from ..task_id import TaskID
 from .base_task import BaseTask
 
-TITLE = TaskID.PULL_MAGISK_IMAGE
+STEP = MIGRATION[3]
+TITLE = STEP.name
 
 
 @dataclass
@@ -28,7 +25,7 @@ class MagiskImagePuller(BaseTask):
     def __post_init__(self) -> None:
         """Initializes the command string for pulling the image."""
         super().__init__(
-            enum_values=TITLE.enum_values,
+            enum_values=STEP,
             command_string=self._build_command(),
         )
 
@@ -49,14 +46,14 @@ class MagiskImagePuller(BaseTask):
             MagiskImagePath.LOCAL_PATH.value / self.instance.file_paths.magisk
         )
 
-    @decorator.DoublePaddedFooterWrapper(message=f"{TITLE.success_message}")
+    @decorator.DoublePaddedFooterWrapper(message=f"{STEP.success_message}")
     def perform_task(self) -> None:
         """Executes the task to pull the patched boot image."""
         self.task.run_with_output()
-        logger.debug(f"{ApplicationPipeline.REBOOT_TO_BOOTLOADER.value=}")
+        logger.debug(f"{APPLICATION[0].name=}")
 
 
-@Plugin.TASK.register(MigrationPipeline[TITLE.name].value)
+@Plugin.TASK.register(TITLE.lower())
 @dataclass
 class MagiskImagePullerPlugin(MagiskImagePuller):
     """Plugin for the MagiskImagePuller task."""

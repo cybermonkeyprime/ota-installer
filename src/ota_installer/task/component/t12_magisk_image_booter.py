@@ -4,13 +4,13 @@ from pathlib import Path
 
 from ...plugin.plugin_registry import Plugin
 from ...style import decorator
-from ...task_group.task_group_pipelines import ApplicationPipeline
+from ...task_group.task_group_pipeline import APPLICATION
 from ...variable.variable_director import VariableDirector
 from ..operation.task_operation_processor import resolve_image_path
-from ..task_id import TaskID
 from .base_task import BaseTask
 
-TITLE = TaskID.BOOT_TO_MAGISK_IMAGE
+STEP = APPLICATION[3]
+TITLE = STEP.name
 
 
 @dataclass
@@ -25,9 +25,7 @@ class MagiskImageBooter(BaseTask):
         partition: str = self._get_partition(device)
         command_string: str = self._build_command(partition)
 
-        super().__init__(
-            enum_values=TITLE.enum_values, command_string=command_string
-        )
+        super().__init__(enum_values=STEP, command_string=command_string)
 
     def _get_partition(self, device: str) -> str:
         """Retrieves the partition name for the given device."""
@@ -39,13 +37,13 @@ class MagiskImageBooter(BaseTask):
         magisk_path = Path(self.instance.file_paths.magisk)
         return f"fastboot flash {partition} {magisk_path}"
 
-    @decorator.DoublePaddedFooterWrapper(message=f"{TITLE.success_message}")
+    @decorator.DoublePaddedFooterWrapper(message=f"{STEP.success_message}")
     def perform_task(self) -> None:
         """Executes the task to flash the Magisk image."""
         self.task.run_with_output()
 
 
-@Plugin.TASK.register(ApplicationPipeline[TITLE.name].value)
+@Plugin.TASK.register(TITLE.lower())
 @dataclass
 class MagiskImageBooterPlugin(MagiskImageBooter):
     """Plugin for the MagiskImageBooter task."""

@@ -5,7 +5,7 @@ from typing import cast
 
 from ..log_setup import logger
 from ..task_group.task_group_dispatcher import TaskGroupTypeDispatcher
-from ..task_group.task_group_names import TaskGroupName
+from ..task_group.task_group_renderer import TASK_GROUPS
 from .task_manager import TaskManager
 
 
@@ -24,7 +24,7 @@ class TaskInvocation:
         self.dispatcher = cast(
             TaskGroupTypeDispatcher,
             PluginDispatcherAdapter(
-                DispatcherType.TASK_GROUP.value, TaskGroupName.fetch_mapping()
+                DispatcherType.TASK_GROUP.value, TASK_GROUPS
             ).load(),
         )
         logger.debug(f"dispatcher type: {type(self.dispatcher)!r}")

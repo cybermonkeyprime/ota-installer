@@ -1,39 +1,53 @@
-# src/ota_installer/handler/task_group_renderer.py
+# src/ota_installer/task_group/task_group_renderer.py
+
 from collections.abc import Callable
 from dataclasses import dataclass
 
-from .task_group_pipelines import (
-    ApplicationPipeline,
-    MigrationPipeline,
-    PreparationPipeline,
+from ..log_setup import logger
+from .task_group_pipeline import (
+    APPLICATION,
+    MIGRATION,
+    PREPARATION,
+    Pipeline,
 )
 
 
 @dataclass(frozen=True, slots=True)
 class TaskGroupRenderer:
-    task_class: type
+    pipeline: Pipeline
     task_name: str
 
-    def __call__(self, *args, **kwargs) -> tuple:
-        """
-        Executes the task group's generation logic wrapped in the required UI
-            decorators.
-        """
+    def __call__(self, *args, **kwargs) -> tuple[str, ...]:
         from ..style import decorator
 
-        def result():
-            return self.task_class.get_member_names()
+        logger.debug(f"Rendering task group confirmation: {self.task_name}")
+
+        def result() -> tuple[str, ...]:
+            return tuple(step.name for step in self.pipeline.steps)
 
         @decorator.PaddedFooterWrapper()
-        def execute_pipeline():
+        def execute_pipeline() -> tuple[str, ...]:
             decorated_function: Callable = decorator.ConfirmationPrompt(
-                char=" ", comment=f"perform the {self.task_name}s"
+                char=" ",
+                comment=f"perform the {self.task_name}s",
             )(result)
 
             return decorated_function()
 
-        # 3. Fire the pipeline and hand back the final tuple payload
         return execute_pipeline()
 
 
-# Signed off by Brian Sanford on 20260901
+TASK_GROUPS: dict[str, TaskGroupRenderer] = {
+    "preparation": TaskGroupRenderer(
+        pipeline=PREPARATION,
+        task_name="Preparation Task",
+    ),
+    "migration": TaskGroupRenderer(
+        pipeline=MIGRATION,
+        task_name="Migration Task",
+    ),
+    "application": TaskGroupRenderer(
+        pipeline=APPLICATION,
+        task_name="Application Task",
+    ),
+}
