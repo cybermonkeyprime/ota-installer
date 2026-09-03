@@ -1,6 +1,5 @@
 # src/ota_installer/task/task_group_pipelines.py
 from dataclasses import dataclass
-from functools import partial
 
 
 @dataclass(frozen=True, slots=True)
