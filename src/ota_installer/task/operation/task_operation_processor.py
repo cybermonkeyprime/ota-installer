@@ -91,7 +91,7 @@ class TaskOperationProcessor:
 
     def execute_command_string(self) -> None:
         """Executes the command string associated with the task."""
-        ShellCommandExecuter(self.command_string).execute()
+        ShellCommandExecutor(self.command_string).execute()
         if getattr(self, "reminder", None):
             self.show_reminder()
 

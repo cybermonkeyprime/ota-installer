@@ -8,10 +8,10 @@ from loguru import logger
 from ..directory.directory_pipeline import set_directory_pipeline
 from ..dispatcher.dispatcher_builder import build_dispatcher
 from ..image.magisk.magisk_image_info import MagiskImagePath
-from .variable_info import (
-    MagiskPaths,
+from .variable_invocations import (
+    MagiskPathInvocation,
 )
-from .variable_renderer import VariableType
+from .variable_renderers import VariableType
 
 
 @dataclass
@@ -49,7 +49,7 @@ class VariableDirector:
 
         self.boot_directories = BootImageContainer.create()
         self.directories = VariableType.DIRECTORY.build(
-            magisk=MagiskPaths(
+            magisk=MagiskPathInvocation(
                 local_path=MagiskImagePath.LOCAL_PATH.value,
                 remote_path=MagiskImagePath.REMOTE_PATH.value,
             ),

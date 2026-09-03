@@ -2,11 +2,9 @@
 from dataclasses import dataclass
 from pathlib import Path
 
-from .file_part_renderer import FilePartContainer
-
 
 @dataclass(frozen=False, slots=True)
-class MagiskPaths:
+class MagiskPathInvocation:
     """Represents the local and remote directory paths."""
 
     local_path: Path
@@ -14,10 +12,10 @@ class MagiskPaths:
 
 
 @dataclass(frozen=True, slots=True)
-class DirectoryNames:
+class DirectoryNameInvocation:
     """Container for directory names used in the OTA installer."""
 
-    magisk: MagiskPaths
+    magisk: MagiskPathInvocation
 
     def __iter__(self):
         return iter(self.__dict__.items())
@@ -28,7 +26,7 @@ class FileNameInvocation:
     """Represents information about a file name."""
 
     path: Path
-    parts: FilePartContainer
+    parts: FilePartInvocation
 
     @property
     def stem(self) -> str:
@@ -37,6 +35,16 @@ class FileNameInvocation:
     @property
     def device(self) -> str:
         return self.parts.device
+
+
+@dataclass(frozen=True, slots=True)
+class FilePartInvocation:
+    """Container for file name components."""
+
+    device: str
+    pkg_type: str
+    build_id: str  # contains [0-9|\.]
+    signature: str | None = None
 
 
 # Signed off by Brian Sanford on 20260712

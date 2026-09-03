@@ -2,7 +2,7 @@
 from enum import Enum
 from pathlib import Path
 
-from ..variable.file_path_renderer import FilePathRenderer
+from ..variable.variable_renderers import FilePathRenderer
 from .image_containers import ImageRenderer
 
 
