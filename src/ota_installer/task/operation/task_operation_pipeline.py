@@ -1,0 +1,133 @@
+from dataclasses import dataclass
+
+from ..task_id import TaskID
+
+
+@dataclass(frozen=True, slots=True)
+class Pipeline:
+    steps: tuple
+
+    def get(self, name: str) -> Step:
+        for step in self.steps:
+            if step.name == name:
+                return step
+
+        raise KeyError(f"Pipeline step does not exist: {name}")
+
+    def __getitem__(self, index: int) -> Step:
+        return self.steps[index]
+
+
+@dataclass(frozen=True, slots=True)
+class Step:
+    name: str
+    index: int
+    title: str
+    description: str
+    command_string: str | None = None
+    reminder: str | None = None
+
+    @property
+    def success_message(self) -> str:
+        from ...style.style_renderer import indentation
+
+        return (
+            f"{indentation(2)}"
+            f"{self.name.lower().replace('_', ' ').capitalize()} "
+            "finished successfully!"
+        )
+
+
+PREPARATION = Pipeline(
+    steps=(
+        Step(
+            name=TaskID.EXTRACT_PAYLOAD_IMAGE.name,
+            index=1,
+            title="Payload Image Extractor",
+            description="📦 Extracting payload.bin to access OTA image files.",
+        ),
+        Step(
+            name=TaskID.RENAME_PAYLOAD_IMAGE.name,
+            index=2,
+            title="Payload Image Renamer",
+            description="📝 Renaming the extracted image file for clarity.",
+        ),
+        Step(
+            name=TaskID.EXTRACT_STOCK_BOOT_IMAGE.name,
+            index=3,
+            title="Boot Image Extractor",
+            description="🪄  Pulling the boot image from the OTA payload.",
+        ),
+        Step(
+            name=TaskID.BACKUP_STOCK_BOOT_IMAGE.name,
+            index=4,
+            title="Backup Stock Boot Image",
+            description="📁 Backing up your stock boot image.",
+        ),
+    )
+)
+
+MIGRATION = Pipeline(
+    steps=(
+        Step(
+            name=TaskID.CHECK_ADB_CONNECTION.name,
+            index=1,
+            title="Check ADB Connection",
+            description="🔌 Checking for an ADB-connected device.",
+            command_string="adb devices",
+        ),
+        Step(
+            name=TaskID.PUSH_STOCK_IMAGE.name,
+            index=2,
+            title="Push Stock Boot Image",
+            description="📤 Pushing the stock boot image to your device.",
+            reminder="Patch boot image in Magisk app",
+        ),
+        Step(
+            name=TaskID.FIND_MAGISK_IMAGE.name,
+            index=3,
+            title="Find Magisk Image",
+            description="🔍 Searching for the patched Magisk image.",
+        ),
+        Step(
+            name=TaskID.PULL_MAGISK_IMAGE.name,
+            index=4,
+            title="Pull Magisk Image",
+            description="📥 Pulling the patched Magisk image to your computer.",
+            command_string="",
+            reminder="",
+        ),
+    )
+)
+
+APPLICATION = Pipeline(
+    steps=(
+        Step(
+            name=TaskID.REBOOT_TO_RECOVERY.name,
+            index=1,
+            title="Reboot To Recovery",
+            description="♻️ Rebooting the device into recovery mode.",
+            command_string="adb reboot recovery",
+        ),
+        Step(
+            name=TaskID.APPLY_OTA_UPDATE.name,
+            index=2,
+            title="Apply OTA Image",
+            description="🚀 Applying the OTA update via adb sideload.",
+            reminder="Restart to verify build, then reboot to Bootloader",
+        ),
+        Step(
+            name=TaskID.REBOOT_TO_BOOTLOADER.name,
+            index=3,
+            title="Reboot to Bootloader",
+            description="🧰 Rebooting into bootloader (fastboot) mode.",
+            command_string="adb reboot bootloader",
+        ),
+        Step(
+            name=TaskID.BOOT_TO_MAGISK_IMAGE.name,
+            index=4,
+            title="Boot to Magisk Image",
+            description="💾 Flashing the patched Magisk image with fastboot.",
+        ),
+    )
+)

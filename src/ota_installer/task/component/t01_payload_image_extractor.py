@@ -6,9 +6,11 @@ from ...plugin.plugin_registry import Plugin
 from ...style import decorator
 from ...task_group.task_group_pipelines import PreparationPipeline
 from ...variable.variable_director import VariableDirector
+from ..operation.task_operation_pipeline import PREPARATION
 from ..task_id import TaskID
 from .base_task import BaseTask
 
+STEP = PREPARATION[0]
 TITLE = TaskID.EXTRACT_PAYLOAD_IMAGE
 
 
@@ -21,7 +23,7 @@ class PayloadImageExtractor(BaseTask):
     def __post_init__(self):
         """Initializes the command string for extracting the payload image."""
         super().__init__(
-            enum_values=TITLE.enum_values,
+            enum_values=STEP,
             command_string=self._create_extraction_command(),
         )
 

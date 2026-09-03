@@ -78,7 +78,7 @@ class TaskOperationContainer:
 
 
 def get_task_detail(key: str) -> TaskOperationContainer:
-    from ota_installer.task.task_id import TaskID
+    from ..task_id import TaskID
 
     details = {
         TaskID.EXTRACT_PAYLOAD_IMAGE.name: TaskOperationContainer(
