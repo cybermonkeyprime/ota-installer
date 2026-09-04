@@ -1,0 +1,78 @@
+commit 85ae2136c390f7bc3a4237db300c174bab2d002b
+Author: Brian Sanford <brians018883@gmail.com>
+Date:   Thu Sep 3 05:41:47 2026 -0700
+
+    Remove unused import of partial in task_group_pipeline.py.
+
+commit 36a915670d97bc96e66f9b46a50c7fa07493c9c5
+Author: Brian Sanford <brians018883@gmail.com>
+Date:   Thu Sep 3 05:38:40 2026 -0700
+
+    Remove unused get_step_names function and related TASK_GROUPS dictionary from
+    task_group_pipeline.py.
+
+commit 07b4061670d2600e97b523a6c830b5d7d407e455
+Author: Brian Sanford <brians018883@gmail.com>
+Date:   Thu Sep 3 05:37:17 2026 -0700
+
+    Refactor task group handling by consolidating pipelines and updating task
+    registration. Replace TaskID references with step names in task components.
+    Update TaskGroupTypeDispatcher to use new task group renderer.
+
+commit c804ae6d6d1c2ffe4cc1981a9953d396af85f435
+Author: Brian Sanford <brians018883@gmail.com>
+Date:   Thu Sep 3 02:11:28 2026 -0700
+
+    Refactor import paths and add task operation pipeline
+    
+     • Updated import statements for clarity.
+     • Introduced task_operation_pipeline.py with Pipeline and Step classes.
+     • Defined PREPARATION, MIGRATION, and APPLICATION pipelines with task steps.
+
+commit 66403b15aaab73e2dd43bb0070721ebceb77f490
+Author: Brian Sanford <brians018883@gmail.com>
+Date:   Wed Sep 2 23:45:42 2026 -0700
+
+    Refactor variable handling in OTA installer
+    
+     • Updated import paths for FilePathRenderer and ShellCommandExecutor.
+     • Removed unused file_part_renderer.py and file_path_renderer.py.
+     • Renamed variable_info.py to variable_invocations.py and adjusted class names.
+     • Consolidated variable rendering logic into variable_renderers.py.
+
+commit 53e33d110b7384192fe7b460e87ecd78dea18682
+Author: Brian Sanford <brians018883@gmail.com>
+Date:   Wed Sep 2 02:57:31 2026 -0700
+
+    Refactor variable handling in OTA installer
+    
+     • Moved FilePathRenderer and FilePartRenderer to separate files.
+     • Updated imports in image_name.py and variable_director.py.
+     • Renamed FileNameInfo to FileNameInvocation.
+     • Simplified variable type management with VariableRenderer and VariableType
+       enums.
+
+commit 17e4b872dafdaa27e1dde92cb4cad2486b1ade49
+Author: Brian Sanford <brians018883@gmail.com>
+Date:   Wed Sep 2 02:09:20 2026 -0700
+
+    Refactor variable handling: rename VariableTypeDispatcher to
+    VariableTypeDispatcher, update MagiskPathGroup to MagiskPaths, and create
+    variable_dispatcher.py for improved organization.
+
+commit 8b2c2af7f0afedb9d627ba67c153df71a450f7de
+Author: Brian Sanford <brians018883@gmail.com>
+Date:   Wed Sep 2 01:58:15 2026 -0700
+
+    Refactor version handling in ota_installer
+    
+     • Updated version assignment to use SoftwareVersion.version() method.
+     • Added version() method to SoftwareVersion class for cleaner version
+       retrieval.
+
+commit 7a88bf09080be3b2647ec77037a8d6310fe153cc
+Author: Brian Sanford <brians018883@gmail.com>
+Date:   Wed Sep 2 01:49:01 2026 -0700
+
+    refactor: rename version_info to version_config and update imports across the
+    project

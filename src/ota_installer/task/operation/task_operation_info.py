@@ -2,8 +2,6 @@
 from dataclasses import dataclass
 from enum import Enum, IntEnum, StrEnum, auto
 
-from ...log_setup import logger
-
 
 class Styles(StrEnum):
     """Constants for styles."""
@@ -75,86 +73,6 @@ class TaskOperationContainer:
     description: str
     command_string: str | None = None
     reminder: str | None = None
-
-
-def get_task_detail(key: str) -> TaskOperationContainer:
-    from ..task_id import TaskID
-
-    details = {
-        TaskID.EXTRACT_PAYLOAD_IMAGE.name: TaskOperationContainer(
-            index=1,
-            title="Payload Image Extractor",
-            description="📦 Extracting payload.bin to access OTA image files.",
-        ),
-        TaskID.RENAME_PAYLOAD_IMAGE.name: TaskOperationContainer(
-            index=2,
-            title="Payload Image Renamer",
-            description="📝 Renaming the extracted image file for clarity.",
-        ),
-        TaskID.EXTRACT_STOCK_BOOT_IMAGE.name: TaskOperationContainer(
-            index=3,
-            title="Boot Image Extractor",
-            description="🪄  Pulling the boot image from the OTA payload.",
-        ),
-        TaskID.BACKUP_STOCK_BOOT_IMAGE.name: TaskOperationContainer(
-            index=4,
-            title="Backup Stock Boot Image",
-            description="📁 Backing up your stock boot image.",
-        ),
-        TaskID.CHECK_ADB_CONNECTION.name: TaskOperationContainer(
-            index=1,
-            title="Check ADB Connection",
-            description="🔌 Checking for an ADB-connected device.",
-            command_string="adb devices",
-        ),
-        TaskID.PUSH_STOCK_IMAGE.name: TaskOperationContainer(
-            index=2,
-            title="Push Stock Boot Image",
-            description="📤 Pushing the stock boot image to your device.",
-            reminder="Patch boot image in Magisk app",
-        ),
-        TaskID.FIND_MAGISK_IMAGE.name: TaskOperationContainer(
-            index=3,
-            title="Find Magisk Image",
-            description="🔍 Searching for the patched Magisk image.",
-        ),
-        TaskID.PULL_MAGISK_IMAGE.name: TaskOperationContainer(
-            index=4,
-            title="Pull Magisk Image",
-            description="📥 Pulling the patched Magisk image to your computer.",
-            command_string="",
-            reminder="",
-        ),
-        TaskID.REBOOT_TO_RECOVERY.name: TaskOperationContainer(
-            index=1,
-            title="Reboot To Recovery",
-            description="♻️ Rebooting the device into recovery mode.",
-            command_string="adb reboot recovery",
-        ),
-        TaskID.APPLY_OTA_UPDATE.name: TaskOperationContainer(
-            index=2,
-            title="Apply OTA Image",
-            description="🚀 Applying the OTA update via adb sideload.",
-            reminder="Restart to verify build, then reboot to Bootloader",
-        ),
-        TaskID.REBOOT_TO_BOOTLOADER.name: TaskOperationContainer(
-            index=3,
-            title="Reboot to Bootloader",
-            description="🧰 Rebooting into bootloader (fastboot) mode.",
-            command_string="adb reboot bootloader",
-        ),
-        TaskID.BOOT_TO_MAGISK_IMAGE.name: TaskOperationContainer(
-            index=4,
-            title="Boot to Magisk Image",
-            description="💾 Flashing the patched Magisk image with fastboot.",
-        ),
-    }
-    result = details.get(key)
-    if result is None:
-        message = f"Task detail key does not exist: {key}"
-        logger.error(message)
-        raise KeyError(message)
-    return result
 
 
 # Signed off by Brian Sanford on 20260628
