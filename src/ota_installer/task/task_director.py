@@ -4,8 +4,8 @@ from dataclasses import dataclass, field
 from typing import cast
 
 from ..log_setup import logger
-from ..task_group.task_group_dispatcher import TaskGroupTypeDispatcher
-from ..task_group.task_group_renderer import TASK_GROUPS
+from .task_group.task_group_dispatcher import TaskGroupTypeDispatcher
+from .task_group.task_group_renderer import TASK_GROUPS
 from .task_manager import TaskManager
 
 

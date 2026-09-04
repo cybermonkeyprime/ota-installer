@@ -1,8 +1,8 @@
 # src/ota_installer/task_group/task_group_director.py
 from dataclasses import dataclass
 
-from ..log_setup import logger
-from ..task.task_director import TaskDirector, TaskInvocation
+from ...log_setup import logger
+from ...task.task_director import TaskDirector, TaskInvocation
 from .task_group_names import TaskGroupName
 
 

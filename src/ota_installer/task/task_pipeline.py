@@ -3,8 +3,8 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Self
 
-from ..task_group.task_group_director import TaskGroupDirector
 from .task_director import TaskDirector, TaskInvocation
+from .task_group.task_group_director import TaskGroupDirector
 from .task_manager import TaskManager
 
 

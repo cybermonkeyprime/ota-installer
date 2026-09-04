@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 
 from ...plugin.plugin_registry import Plugin
 from ...style import decorator
-from ...task_group.task_group_pipeline import APPLICATION
+from ...task.task_group.task_group_pipeline import APPLICATION
 from ...variable.variable_director import VariableDirector
 from .base_task import BaseTask
 

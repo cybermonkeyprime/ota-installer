@@ -28,7 +28,7 @@ class Step:
 
     @property
     def success_message(self) -> str:
-        from ..style.style_renderer import indentation
+        from ...style.style_renderer import indentation
 
         return (
             f"{indentation(2)}"

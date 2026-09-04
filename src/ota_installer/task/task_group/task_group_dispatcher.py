@@ -2,10 +2,10 @@
 from dataclasses import dataclass, field
 from functools import singledispatchmethod
 
-from ..dispatcher.dispatcher_template import DispatcherTemplate
-from ..dispatcher.dispatcher_type import DispatcherType
-from ..log_setup import logger
-from ..plugin.plugin_registry import Plugin
+from ...dispatcher.dispatcher_template import DispatcherTemplate
+from ...dispatcher.dispatcher_type import DispatcherType
+from ...log_setup import logger
+from ...plugin.plugin_registry import Plugin
 
 TaskGroupMap = dict[str, object]
 
