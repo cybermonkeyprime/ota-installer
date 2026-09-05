@@ -7,7 +7,7 @@ from typing import Self
 
 from ...log_setup import logger
 from ...style import decorator
-from .task_operation_info import Indents, Messages
+from .task_operation_invocation import Indents, Messages
 
 
 class ShellType(StrEnum):

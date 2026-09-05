@@ -1,4 +1,4 @@
-# tasks/operations/task_operation_info.py
+# src/ota_installer/task/operation/task_operation_invocation.py
 from dataclasses import dataclass
 from enum import Enum, IntEnum, StrEnum, auto
 

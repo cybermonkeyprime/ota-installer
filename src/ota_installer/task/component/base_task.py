@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from enum import StrEnum, auto
 
 from ...task.task_group.task_group_pipeline import Step
-from ..operation.task_operation_info import TaskOperationContainer
+from ..operation.task_operation_invocation import TaskOperationContainer
 from ..operation.task_operation_processor import TaskOperationProcessor
 
 

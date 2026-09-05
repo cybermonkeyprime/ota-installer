@@ -10,7 +10,7 @@ from ...plugin.plugin_dispatcher_adapter import PluginDispatcherAdapter
 from ...style import decorator
 from ...style.style_renderer import StyleRenderer
 from .shell_command_execution import ShellCommandExecutor
-from .task_operation_info import (
+from .task_operation_invocation import (
     DefaultIndent,
     Indents,
     Styles,
