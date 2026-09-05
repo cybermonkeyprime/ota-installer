@@ -27,8 +27,9 @@ class VariableDirector:
         self.variables = VariableType.CONTEXT.build(file_path=self.path)
         if self.undefined_variables_error():
             message = "Variables are unset or invalid"
-            logger.error(message)
-            raise AttributeError(message)
+            report = {"status": "Error", "response": message}
+            logger.error(report)
+            raise AttributeError(report)
         return self
 
     def undefined_variables_error(self) -> bool:
