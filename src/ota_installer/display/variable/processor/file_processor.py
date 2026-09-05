@@ -1,11 +1,11 @@
-# src/ota_installer/display/variable/processor/base_process_info.py
+# src/ota_installer/display/variable/processor/file_processor.py
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Self
 
 from ....dispatcher.dispatcher_type import DispatcherType
 from ....variable.variable_director import VariableDirector
-from ...variable.processor.base_process_info import BaseProcessor
+from ...variable.processor.base_processor import BaseProcessor
 
 
 @dataclass(slots=True)
@@ -26,7 +26,7 @@ class VariableFileProcessor(BaseProcessor):
 
     def process_items(self) -> Self:
         """Processes the items and renders the variable table."""
-        from ..variable_item_info import (
+        from ..variable_item_invocation import (
             VariableItemContainer,
             VariableTableBuilder,
         )
@@ -69,7 +69,7 @@ class FileIterationProcessor(BaseProcessor):
 
     def process_items(self) -> None:
         """Processes each file name and builds a variable table."""
-        from ..variable_item_info import (
+        from ..variable_item_invocation import (
             VariableItemContainer,
             VariableTableBuilder,
         )

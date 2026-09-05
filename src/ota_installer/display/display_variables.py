@@ -3,10 +3,10 @@ from dataclasses import dataclass
 from typing import Self
 
 from ..variable.variable_director import VariableDirector
-from .variable.processor.directory_process_info import (
+from .variable.processor.directory_processer import (
     DirectoryIterationProcessor,
 )
-from .variable.processor.file_process_info import (
+from .variable.processor.file_processor import (
     FileIterationProcessor,
     VariableFileProcessor,
 )

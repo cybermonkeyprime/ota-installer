@@ -1,4 +1,4 @@
-# display/variable/variable_item_info.py
+# src/ota_installer/display/variable/variable_item_invocation.py
 from dataclasses import dataclass
 
 from rich.console import Console

@@ -1,4 +1,4 @@
-# src/ota_installer/display/variables/processors/base_process_info.py
+# src/ota_installer/display/variable/processor/base_processor.py
 from dataclasses import dataclass, field
 from typing import Self
 
