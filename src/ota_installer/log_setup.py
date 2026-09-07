@@ -1,4 +1,5 @@
 import sys
+from collections.abc import Callable
 from pathlib import Path
 
 from loguru import logger
@@ -96,6 +97,20 @@ configure_logger()
 def main() -> None:
     """Main entry point of the application."""
     log_messages()
+
+
+def log_status(status: str, _type: Callable | None, response: str) -> None:
+    report = {
+        "status": status,
+        "type": str(_type),
+        "response": response,
+    }
+    if _type is None:
+        report = {"status": status, "response": response}
+
+        getattr(logger, status.lower())(report)
+    if _type:
+        raise _type(report)
 
 
 if __name__ == "__main__":

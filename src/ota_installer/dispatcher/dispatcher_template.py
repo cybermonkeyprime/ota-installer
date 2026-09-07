@@ -22,9 +22,11 @@ class DispatcherTemplate(DispatcherProtocol):
         result = self.collection.get(self.normalize_key(key))
 
         if result is None:
-            message = f"Key not found in collection: {normalized_key}"
-            logger.error(message)
-            raise KeyError(message)
+            report_status(
+                "Error",
+                KeyError,
+                f"Key not found in collection: {normalized_key}",
+            )
 
         return result
 
@@ -55,6 +57,17 @@ class DispatcherTemplate(DispatcherProtocol):
     def normalize_key(key: str) -> str:
         """Normalize dictionary keys for consistent dispatcher behavior."""
         return key.lower().strip()
+
+
+def report_status(status: str, _type: Callable, response: str) -> None:
+    report = {
+        "status": status,
+        "type": str(type(_type).__name__),
+        "response": response,
+    }
+    if status == "Error":
+        logger.error(report)
+        raise _type(report)
 
 
 # Signed off by Brian Sanford on 20260827

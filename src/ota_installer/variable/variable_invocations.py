@@ -1,4 +1,4 @@
-# src/ota_installer/variable/variable_info.py
+# src/ota_installer/variable/variable_invocations.py
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -47,4 +47,4 @@ class FilePartInvocation:
     signature: str | None = None
 
 
-# Signed off by Brian Sanford on 20260712
+# Signed off by Brian Sanford on 20260907

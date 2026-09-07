@@ -3,11 +3,10 @@ from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Self
 
-from loguru import logger
-
 from ..directory.directory_pipeline import set_directory_pipeline
 from ..dispatcher.dispatcher_builder import build_dispatcher
 from ..image.magisk.magisk_image_info import MagiskImagePath
+from ..log_setup import log_status
 from .variable_invocations import (
     MagiskPathInvocation,
 )
@@ -26,10 +25,9 @@ class VariableDirector:
     def set_base_variables(self) -> Self:
         self.variables = VariableType.CONTEXT.build(file_path=self.path)
         if self.undefined_variables_error():
-            message = "Variables are unset or invalid"
-            report = {"status": "Error", "response": message}
-            logger.error(report)
-            raise AttributeError(report)
+            log_status(
+                "Error", AttributeError, "Variables are unset or invalid"
+            )
         return self
 
     def undefined_variables_error(self) -> bool:
@@ -90,7 +88,6 @@ class VariableDirector:
 
 
 def variable_pipeline(path: Path) -> VariableDirector:
-    from ..log_setup import logger
     from ..validation.ota_package_validator import validate_ota_package
     from ..variable.variable_director import VariableDirector
 
@@ -99,10 +96,7 @@ def variable_pipeline(path: Path) -> VariableDirector:
     valid_path = validate_ota_package(path)
 
     if not valid_path:
-        message = f"Invalid file path: {path}."
-        report = {"status": "Error", "response": message}
-        logger.critical(report)
-        raise FileNotFoundError(report)
+        log_status("Error", FileNotFoundError, f"Invalid file path: {path}.")
 
     return (
         VariableDirector(path=valid_path)
