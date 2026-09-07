@@ -9,7 +9,7 @@ from typing import Self
 from ..display.display_variables import (
     DisplayVariablePipeline,
 )
-from ..log_setup import add_structured_log_sink, logger
+from ..log_setup import add_structured_log_sink, log_status, logger
 from ..plugin.plugin_registry import Plugin
 from ..style import decorator
 from ..variable.variable_director import VariableDirector
@@ -35,8 +35,10 @@ class TaskManager:
         if self.variable:
             add_structured_log_sink(self.variable.file_paths.log_file)
         else:
-            logger.error(
-                f"Failed to initialize {type(self.variable).__name__}"
+            log_status(
+                "Error",
+                None,
+                f"Failed to initialize {type(self.variable).__name__}",
             )
 
         return self
@@ -50,7 +52,7 @@ class TaskManager:
 
         log_obj = SimpleNamespace(**log_api)
 
-        logger.debug(log_obj.debug)
+        log_status("Debug", None, log_obj.debug)
 
         if self.variable:
             (
@@ -59,7 +61,7 @@ class TaskManager:
                 .process_file_names()
             )
         else:
-            logger.error(log_obj.error)
+            log_status("Error", None, log_obj.error)
 
     def execute_iteration(self, pipeline: Pipeline) -> None:
         pipeline.run(self.variable)
