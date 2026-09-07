@@ -40,7 +40,7 @@ def validate_ota_package(path: str | Path) -> Path | None:
         )
 
     if not ZipFile(zip_path).namelist():
-        log_status("Critical", None, "Zip archive is empty.")
+        log_status("Critical", EmptyZipFileError, "Zip archive is empty.")
 
     return zip_path.resolve()
 
