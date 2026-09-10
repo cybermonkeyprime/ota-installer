@@ -1,5 +1,6 @@
 import sys
 from collections.abc import Callable
+from dataclasses import dataclass
 from pathlib import Path
 
 from loguru import logger
@@ -94,23 +95,33 @@ def log_messages() -> None:
 configure_logger()
 
 
-def main() -> None:
-    """Main entry point of the application."""
-    log_messages()
+@dataclass(frozen=True, slots=True)
+class StatusReporter:
+    status: str
+    _type: Callable
+    response: str
+
+    @property
+    def report(self):
+        struct = {"status": self.status}
+        if self._type is not None:
+            struct["_type"] = str(self._type)
+        struct["response"] = self.response
+        return struct
+
+    def run(self) -> None:
+        getattr(logger, self.status.lower())(self.report)
+        if self._type:
+            raise self._type(self.report)
 
 
 def log_status(status: str, _type: Callable | None, response: str) -> None:
-    report = {
-        "status": status,
-        "type": str(_type),
-        "response": response,
-    }
-    if _type is None:
-        report = {"status": status, "response": response}
+    StatusReporter(status, _type, response).run()
 
-        getattr(logger, status.lower())(report)
-    if _type:
-        raise _type(report)
+
+def main() -> None:
+    """Main entry point of the application."""
+    log_messages()
 
 
 if __name__ == "__main__":
