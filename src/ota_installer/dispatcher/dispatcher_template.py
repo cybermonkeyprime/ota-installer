@@ -2,7 +2,7 @@
 from collections.abc import Callable
 from typing import cast
 
-from ..log_setup import log_status, logger
+from ..log_setup import log_status
 from .dispatcher_protocol import DispatcherProtocol
 
 
@@ -47,12 +47,11 @@ class DispatcherTemplate(DispatcherProtocol):
             )
 
         if not callable(callback):
-            message = (
-                "Expected a callable object, "
-                f"but got {type(callback).__name__}"
+            log_status(
+                "Error",
+                TypeError,
+                f"Expected a callable object, but got {type(callback).__name__}",
             )
-            logger.error(message)
-            raise TypeError(message)
         return cast(Callable, callback)()
 
     @staticmethod
