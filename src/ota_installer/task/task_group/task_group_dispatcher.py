@@ -4,7 +4,7 @@ from functools import singledispatchmethod
 
 from ...dispatcher.dispatcher_template import DispatcherTemplate
 from ...dispatcher.dispatcher_type import DispatcherType
-from ...log_setup import logger
+from ...log_setup import log_status
 from ...plugin.plugin_registry import Plugin
 
 TaskGroupMap = dict[str, object]
@@ -19,9 +19,11 @@ class TaskGroupTypeDispatcher(DispatcherTemplate):
     def __post_init__(self) -> None:
         self.collection: TaskGroupMap = self.populate_collection()
 
-        logger.debug(
+        log_status(
+            "debug",
+            None,
             f"TaskGroupTypeDispatcher initialized with collection:"
-            f"{self.collection}"
+            f"{self.collection}",
         )
 
     def populate_collection(self) -> TaskGroupMap:
@@ -32,8 +34,11 @@ class TaskGroupTypeDispatcher(DispatcherTemplate):
 
     @singledispatchmethod
     def collection_type(self, obj) -> dict:
-        message = f"Unsupported object type passed to dispatcher: {type(obj)}"
-        logger.error(message)
+        log_status(
+            "error",
+            None,
+            f"Unsupported object type passed to dispatcher: {type(obj)}",
+        )
         return {}
 
     @collection_type.register
