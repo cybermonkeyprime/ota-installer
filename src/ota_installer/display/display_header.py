@@ -7,7 +7,7 @@ from typing import Self
 
 from rich.control import Control
 
-from ..log_setup import logger
+from ..log_setup import log_status
 from ..style import decorator
 from ..style.style_renderer import SEPARATOR
 from ..versioning.version_config import SoftwareVersion
@@ -107,11 +107,13 @@ def process_display_steps(
 ) -> None:
     """Process an ordered collection of display steps."""
     for step in steps:
-        logger.debug(f"{step=}")
+        log_status("debug", None, f"{step=}")
         if not isinstance(step, DisplayStep):
-            message = f"Expected DisplayStep, received {type(step).__name__}."
-            logger.error(message)
-            raise DisplayStepError(message)
+            log_status(
+                "error",
+                DisplayStepError,
+                f"Expected DisplayStep, received {type(step).__name__}.",
+            )
         step.run()
 
 
@@ -129,7 +131,7 @@ class DisplayHeaderPipeline:
 
     def process_header(self) -> Self:
         """Process the complete display header."""
-        logger.debug(f"{self.steps=}")
+        log_status("debug", None, f"{self.steps=}")
         process_display_steps(self.steps)
         return self
 
@@ -137,7 +139,7 @@ class DisplayHeaderPipeline:
 def clear_screen() -> None:
     """Clears the terminal screen."""
     if not execute_clear_command():
-        logger.error("Failed to clear the screen.")
+        log_status("error", None, "Failed to clear the screen.")
 
 
 def execute_clear_command() -> CompletedProcess:
