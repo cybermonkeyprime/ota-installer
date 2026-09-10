@@ -5,7 +5,7 @@ from functools import partial
 from subprocess import check_output, run
 from typing import Self
 
-from ...log_setup import logger
+from ...log_setup import log_status
 from ...style import decorator
 from .task_operation_invocation import Indents, Messages
 
@@ -39,7 +39,9 @@ class ShellCommandExecutor:
     def execute(self) -> Self:
         """Executes the command without returning output."""
         if run(args=self.command, shell=True, check=True).returncode != 0:
-            logger.exception(f"Command execution failed: {self.command}")
+            log_status(
+                "execution", None, f"Command execution failed: {self.command}"
+            )
         return self
 
     @Shell.prompt(ShellType.OUTPUT)
@@ -53,7 +55,11 @@ class ShellCommandExecutor:
             else ""
         )
         if not result:
-            logger.exception(f"{output_name} execution failed: {self.command}")
+            log_status(
+                "exception",
+                None,
+                f"{output_name} execution failed: {self.command}",
+            )
         return result
 
 
