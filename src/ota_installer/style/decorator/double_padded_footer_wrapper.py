@@ -3,7 +3,7 @@ from collections.abc import Callable
 from dataclasses import dataclass, field
 from functools import wraps
 
-from ...log_setup import logger
+from ...log_setup import log_status
 from .container.decorator_container import Decorators
 from .protocol.decorator_protocols import GenericDecorator
 
@@ -25,7 +25,7 @@ class DoublePaddedFooterWrapper(GenericDecorator):
         def wrapper(*args, **kwargs) -> object:
             result = func(*args, **kwargs)
             self._print_footer(self.beginning)
-            logger.debug(self.message)
+            log_status("debug", None, self.message)
             self._print_footer(self.message)
             self._print_footer(self.ending)
             return result
