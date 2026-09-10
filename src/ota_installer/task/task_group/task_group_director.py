@@ -1,7 +1,7 @@
 # src/ota_installer/task_group/task_group_director.py
 from dataclasses import dataclass
 
-from ...log_setup import logger
+from ...log_setup import log_status
 from ...task.task_director import TaskDirector, TaskInvocation
 from .task_group_names import TaskGroupName
 
@@ -30,10 +30,14 @@ class TaskGroupDirector:
         """Executes a single task if a task group is defined."""
 
         if not self.task_group:
-            raise AttributeError(f"{self.task_group!r} does not exist!")
+            log_status(
+                "error", AttributeError, f"{self.task_group!r} does not exist!"
+            )
 
-        logger.debug(
-            f"Executing single task for task group: {self.task_group}"
+        log_status(
+            "debug",
+            None,
+            f"Executing single task for task group: {self.task_group}",
         )
         self.task_director.execute(self.task_group)
 
