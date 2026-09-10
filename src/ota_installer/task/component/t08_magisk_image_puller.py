@@ -5,7 +5,7 @@ from pathlib import Path
 from ...image.magisk.magisk_image_info import (
     MagiskImagePath,
 )
-from ...log_setup import logger
+from ...log_setup import log_status
 from ...plugin.plugin_registry import Plugin
 from ...style import decorator
 from ...task.task_group.task_group_pipeline import APPLICATION, MIGRATION
@@ -50,7 +50,7 @@ class MagiskImagePuller(BaseTask):
     def perform_task(self) -> None:
         """Executes the task to pull the patched boot image."""
         self.task.run_with_output()
-        logger.debug(f"{APPLICATION[0].name=}")
+        log_status("debug", None, f"{APPLICATION[0].name=}")
 
 
 @Plugin.TASK.register(TITLE.lower())
