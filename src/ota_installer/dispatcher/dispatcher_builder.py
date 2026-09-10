@@ -1,5 +1,5 @@
 # src/ota_installer/dispatcher/dispatcher_builder.py
-from ..log_setup import logger
+from ..log_setup import log_status
 from .dispatcher_type import DispatcherType
 
 
@@ -11,12 +11,12 @@ def build_dispatcher(
     allowed_dispatchers = DispatcherType.allowed_dispatchers()
 
     if normalized_type not in allowed_dispatchers:
-        message = (
+        log_status(
+            "error",
+            ValueError,
             f"Invalid dispatcher type: {process_type}. "
-            f"Allowed: {allowed_dispatchers}"
+            f"Allowed: {allowed_dispatchers}",
         )
-        logger.error(message)
-        raise ValueError(message)
 
     dispatcher_name = DispatcherType(normalized_type)
     dispatcher_type = build_dispatcher_mapping()[dispatcher_name]
