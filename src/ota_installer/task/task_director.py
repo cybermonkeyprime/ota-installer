@@ -3,7 +3,7 @@ from collections.abc import Callable
 from dataclasses import dataclass, field
 from typing import cast
 
-from ..log_setup import logger
+from ..log_setup import log_status
 from .task_group.task_group_dispatcher import TaskGroupTypeDispatcher
 from .task_group.task_group_renderer import TASK_GROUPS
 from .task_manager import TaskManager
@@ -27,11 +27,15 @@ class TaskInvocation:
                 DispatcherType.TASK_GROUP.value, TASK_GROUPS
             ).load(),
         )
-        logger.debug(f"dispatcher type: {type(self.dispatcher)!r}")
+        log_status(
+            "debug", None, f"dispatcher type: {type(self.dispatcher)!r}"
+        )
 
     def get_instance(self, key: str) -> Callable:
         """Retrieves the dispatcher instance for a given key."""
-        logger.debug(f"Retrieving dispatcher instance for key: {key}")
+        log_status(
+            "debug", None, f"Retrieving dispatcher instance for key: {key}"
+        )
         return self.dispatcher.get_instance(key)
 
     def contains(self, key: str):
@@ -48,7 +52,9 @@ class TaskDirector:
         """Iterates over tasks in the specified task group."""
         from .task_manager import Pipeline
 
-        logger.debug(f"Executing task iteration for: {task_group_key}")
+        log_status(
+            "debug", None, f"Executing task iteration for: {task_group_key}"
+        )
         stages = cast(
             tuple[str, ...] | None,
             self.dispatcher.get_instance(key=task_group_key),

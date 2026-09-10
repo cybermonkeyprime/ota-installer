@@ -98,7 +98,7 @@ configure_logger()
 @dataclass(frozen=True, slots=True)
 class StatusReporter:
     status: str
-    _type: Callable
+    _type: Callable | None
     response: str
 
     @property

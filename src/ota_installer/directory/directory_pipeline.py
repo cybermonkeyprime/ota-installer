@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Self
 
-from ..log_setup import logger
+from ..log_setup import log_status
 from .directory_renderer import DirectoryRender
 
 
@@ -26,9 +26,9 @@ class DirectoryPipeline:
 
     def set_item(self, name: str, path: Path) -> Self:
         if name not in self.valid_keys:
-            message = f"{name} is not in {self.valid_keys}"
-            logger.error(message)
-            raise AttributeError(message)
+            log_status(
+                "Error", AttributeError, f"{name} is not in {self.valid_keys}"
+            )
 
         setattr(self, name, path)
         return self
@@ -38,11 +38,13 @@ def set_directory_pipeline(parent_directory: Path) -> DirectoryPipeline:
     """Creates a DirectoryTypeDefinition for the specified parent directory."""
     from ..image.image_name import ImageName
 
-    logger.debug("Creating Directories")
+    log_status("debug", None, "Creating Directories")
     if not parent_directory.exists() or not parent_directory.is_dir():
-        message = f"Invalid parent directory: {parent_directory}"
-        logger.error(message)
-        raise SystemExit(message)
+        log_status(
+            "error",
+            SystemExit,
+            f"Invalid parent directory: {parent_directory}",
+        )
 
     return (
         DirectoryPipeline()
