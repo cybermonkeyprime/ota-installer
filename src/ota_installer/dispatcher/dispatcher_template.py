@@ -2,7 +2,7 @@
 from collections.abc import Callable
 from typing import cast
 
-from ..log_setup import logger
+from ..log_setup import log_status, logger
 from .dispatcher_protocol import DispatcherProtocol
 
 
@@ -22,7 +22,7 @@ class DispatcherTemplate(DispatcherProtocol):
         result = self.collection.get(self.normalize_key(key))
 
         if result is None:
-            report_status(
+            log_status(
                 "Error",
                 KeyError,
                 f"Key not found in collection: {normalized_key}",
@@ -40,9 +40,11 @@ class DispatcherTemplate(DispatcherProtocol):
         callback = self.collection.get(normalized_key)
 
         if callback is None:
-            message = f"Key not found in collection: {normalized_key}"
-            logger.critical(message)
-            raise KeyError(message)
+            log_status(
+                "critical",
+                KeyError,
+                f"Key not found in collection: {normalized_key}",
+            )
 
         if not callable(callback):
             message = (
@@ -57,17 +59,6 @@ class DispatcherTemplate(DispatcherProtocol):
     def normalize_key(key: str) -> str:
         """Normalize dictionary keys for consistent dispatcher behavior."""
         return key.lower().strip()
-
-
-def report_status(status: str, _type: Callable, response: str) -> None:
-    report = {
-        "status": status,
-        "type": str(type(_type).__name__),
-        "response": response,
-    }
-    if status == "Error":
-        logger.error(report)
-        raise _type(report)
 
 
 # Signed off by Brian Sanford on 20260827
