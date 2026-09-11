@@ -97,20 +97,20 @@ configure_logger()
 
 @dataclass(frozen=True, slots=True)
 class StatusReporter:
-    status: str
+    severity: str
     exception_type: Callable | None
     response: str
 
     @property
     def report(self) -> dict[str, str]:
-        struct = {"status": self.status}
+        struct = {"status": self.severity}
         if self.exception_type is not None:
             struct["exception_type"] = str(self.exception_type)
         struct["response"] = self.response
         return struct
 
     def log_report(self):
-        getattr(logger, self.status.lower())(self.report)
+        getattr(logger, self.severity.lower())(self.report)
 
     def raise_error(self) -> None:
         if self.exception_type:
