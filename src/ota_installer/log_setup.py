@@ -98,25 +98,33 @@ configure_logger()
 @dataclass(frozen=True, slots=True)
 class StatusReporter:
     status: str
-    _type: Callable | None
+    exception_type: Callable | None
     response: str
 
     @property
-    def report(self):
+    def report(self) -> dict[str, str]:
         struct = {"status": self.status}
-        if self._type is not None:
-            struct["_type"] = str(self._type)
+        if self.exception_type is not None:
+            struct["exception_type"] = str(self.exception_type)
         struct["response"] = self.response
         return struct
 
-    def run(self) -> None:
+    def log_report(self):
         getattr(logger, self.status.lower())(self.report)
-        if self._type:
-            raise self._type(self.report)
+
+    def raise_error(self) -> None:
+        if self.exception_type:
+            raise self.exception_type(self.report)
+
+    def pipeline(self) -> None:
+        self.log_report()
+        self.raise_error()
 
 
-def log_status(status: str, _type: Callable | None, response: str) -> None:
-    StatusReporter(status, _type, response).run()
+def log_status(
+    status: str, exception_type: Callable | None, response: str
+) -> None:
+    StatusReporter(status, exception_type, response).pipeline()
 
 
 def main() -> None:
