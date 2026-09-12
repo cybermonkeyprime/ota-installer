@@ -1,7 +1,7 @@
 # src/ota_installer/directory/directory_renderer.py
 from enum import Enum
 
-from ..log_setup import log_status
+from ..log_setup import log_structure
 
 
 class DirectoryRender(Enum):
@@ -13,7 +13,7 @@ class DirectoryRender(Enum):
 
     def __call__(self, *args, **kwargs):
         """Creates an instance of the specified container class."""
-        log_status("debug", None, f"Creating directory container: {self.name}")
+        log_structure("debug", None, f"Creating directory container: {self.name}")
         return self.value(*args, **kwargs)
 
 

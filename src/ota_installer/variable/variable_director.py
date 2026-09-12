@@ -6,7 +6,7 @@ from typing import Self
 from ..directory.directory_pipeline import set_directory_pipeline
 from ..dispatcher.dispatcher_builder import build_dispatcher
 from ..image.magisk.magisk_image_info import MagiskImagePath
-from ..log_setup import log_status
+from ..log_setup import log_structure
 from .variable_invocations import (
     MagiskPathInvocation,
 )
@@ -25,7 +25,7 @@ class VariableDirector:
     def set_base_variables(self) -> Self:
         self.variables = VariableType.CONTEXT.build(file_path=self.path)
         if self.undefined_variables_error():
-            log_status(
+            log_structure(
                 "Error", AttributeError, "Variables are unset or invalid"
             )
         return self

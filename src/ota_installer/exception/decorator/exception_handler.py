@@ -16,11 +16,11 @@ class ExceptionHandler(GenericDecorator):
         @wraps(func)
         def wrapper(*args, **kwargs) -> object:
             """Executes the original function and logs exceptions."""
-            from ...log_setup import log_status
+            from ...log_setup import log_structure
 
             if callable(func) and not (result := func(*args, **kwargs)):
                 name = getattr(func, "__name__", "func")
-                log_status("error", None, f"{name} occured in {name}")
+                log_structure("error", None, f"{name} occured in {name}")
             return result
 
         return wrapper

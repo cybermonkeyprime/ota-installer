@@ -3,9 +3,7 @@ from .display.display_header import (
     DisplayHeaderPipeline,
     clear_screen,
 )
-from .exception.keyboard_interrupt_info import (
-    KeyboardInterruptHandler,
-)
+from .exception.exception_factory import KeyboardInterruptInvocation
 from .style import decorator
 from .task.task_pipeline import CLIArguments, TaskPipeline
 from .versioning.version_config import SoftwareVersion
@@ -45,7 +43,7 @@ def display_random_exit_message() -> str:
     return f"{message} {emoji}\n"
 
 
-@KeyboardInterruptHandler
+@KeyboardInterruptInvocation
 @decorator.FooterWrapper(message=display_random_exit_message())
 def task_execution(arguments: CLIArguments):
     """Execute tasks based on the provided CLI arguments."""

@@ -123,7 +123,7 @@ class StatusReporter:
         self.raise_error()
 
 
-def log_status(
+def log_structure(
     status: str, exception_type: Callable | None, response: str
 ) -> None:
     StatusReporter(status, exception_type, response).pipeline()

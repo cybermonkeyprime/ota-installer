@@ -1,4 +1,4 @@
-# src/ota_installer/exceptions/handlers/base_exception_handler.py
+# src/ota_installer/exceptions/handlers/exception_factory.py
 from collections.abc import Callable
 from dataclasses import dataclass, field
 
@@ -6,7 +6,7 @@ from ..style import decorator
 
 
 @dataclass(slots=True)
-class BaseExceptionHandler:
+class BaseExceptionInvocation:
     """Handles exceptions for a given function with customizable messages."""
 
     function: Callable
@@ -38,7 +38,46 @@ class BaseExceptionHandler:
         return self.handle(*args, **kwargs)
 
 
-if __name__ == "__main__":
+def exception_factory(
+    *exception_types: type[BaseException],
+) -> Callable:
+    def decorator(
+        handler_class: type[BaseExceptionInvocation],
+    ) -> type[BaseExceptionInvocation]:
+        """
+        Factory to create exception handlers for specified exception types.
+        """
+        original_init = handler_class.__init__
+
+        def __init__(self: BaseExceptionInvocation, *args, **kwargs) -> None:
+            """
+            Initialize the exception handler with specified exception types.
+            """
+            original_init(self, *args, **kwargs)
+
+            self.custom_messages = dict.fromkeys(
+                exception_types, self.default_message
+            )
+
+            handler_class.__init__ = __init__
+
+        return handler_class
+
+    return decorator
+
+
+@exception_factory(KeyboardInterrupt)
+@dataclass
+class KeyboardInterruptInvocation(BaseExceptionInvocation):
+    """Handles KeyboardInterrupt exceptions."""
+
+    default_message: str = "Keyboard interrupt detected, quitting!"
+
+
+def main():
     pass
 
-# Signed off by Brian Sanford on 20260626
+
+if __name__ == "__main__":
+    main()
+# Signed off by Brian Sanford on 20260911

@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Self
 
-from ..log_setup import log_status
+from ..log_setup import log_structure
 from .directory_renderer import DirectoryRender
 
 
@@ -26,7 +26,7 @@ class DirectoryPipeline:
 
     def set_item(self, name: str, path: Path) -> Self:
         if name not in self.valid_keys:
-            log_status(
+            log_structure(
                 "Error", AttributeError, f"{name} is not in {self.valid_keys}"
             )
 
@@ -38,9 +38,9 @@ def set_directory_pipeline(parent_directory: Path) -> DirectoryPipeline:
     """Creates a DirectoryTypeDefinition for the specified parent directory."""
     from ..image.image_name import ImageName
 
-    log_status("debug", None, "Creating Directories")
+    log_structure("debug", None, "Creating Directories")
     if not parent_directory.exists() or not parent_directory.is_dir():
-        log_status(
+        log_structure(
             "error",
             SystemExit,
             f"Invalid parent directory: {parent_directory}",

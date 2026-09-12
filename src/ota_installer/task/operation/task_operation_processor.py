@@ -5,7 +5,7 @@ from functools import partial
 from pathlib import Path
 from typing import Self
 
-from ...log_setup import log_status
+from ...log_setup import log_structure
 from ...plugin.plugin_dispatcher_adapter import PluginDispatcherAdapter
 from ...style import decorator
 from ...style.style_renderer import StyleRenderer
@@ -113,11 +113,11 @@ class TaskOperationProcessor:
 
 def resolve_image_path(key: str) -> Path:
     """Handles image retrieval based on a key."""
-    log_status("debug", None, f"image_handler(): {key=}")
+    log_structure("debug", None, f"image_handler(): {key=}")
     dispatcher = PluginDispatcherAdapter("image")
-    log_status("debug", None, f"image_handler(): {dispatcher=}")
+    log_structure("debug", None, f"image_handler(): {dispatcher=}")
     retriever = dispatcher.load()
-    log_status("debug", None, f"image_handler(): {retriever=}")
+    log_structure("debug", None, f"image_handler(): {retriever=}")
     image_path = Path.home() / "images" / f"{retriever.get_key(key)}.img"
     if not image_path.exists():
         raise ValueError(f"Invalid key for image handler: {key}")

@@ -2,7 +2,7 @@
 from collections.abc import Callable
 from typing import cast
 
-from ..log_setup import log_status
+from ..log_setup import log_structure
 from .dispatcher_protocol import DispatcherProtocol
 
 
@@ -22,7 +22,7 @@ class DispatcherTemplate(DispatcherProtocol):
         result = self.collection.get(self.normalize_key(key))
 
         if result is None:
-            log_status(
+            log_structure(
                 "Error",
                 KeyError,
                 f"Key not found in collection: {normalized_key}",
@@ -40,14 +40,14 @@ class DispatcherTemplate(DispatcherProtocol):
         callback = self.collection.get(normalized_key)
 
         if callback is None:
-            log_status(
+            log_structure(
                 "critical",
                 KeyError,
                 f"Key not found in collection: {normalized_key}",
             )
 
         if not callable(callback):
-            log_status(
+            log_structure(
                 "Error",
                 TypeError,
                 f"Expected a callable object, but got {type(callback).__name__}",

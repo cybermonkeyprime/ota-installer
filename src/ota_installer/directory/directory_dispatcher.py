@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 
 from ..dispatcher.dispatcher_template import DispatcherTemplate
 from ..dispatcher.dispatcher_type import DispatcherType
-from ..log_setup import log_status
+from ..log_setup import log_structure
 from ..plugin.plugin_registry import Plugin
 from .directory_type import DirectoryType
 
@@ -18,7 +18,7 @@ class DirectoryDispatcher(DispatcherTemplate):
     def __post_init__(self) -> None:
         """Initializes the directory collection based on provided object."""
         self.collection = DirectoryType.to_dict(self.obj)
-        log_status(
+        log_structure(
             "debug",
             None,
             "DirectoryDispatcher initialized with collection: "
