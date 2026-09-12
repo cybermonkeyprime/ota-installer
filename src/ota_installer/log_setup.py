@@ -104,8 +104,10 @@ class StatusReporter:
     @property
     def report(self) -> dict[str, str]:
         struct = {"status": self.severity}
+
         if self.exception_type is not None:
-            struct["exception_type"] = str(self.exception_type)
+            struct["exception_type"] = self.exception_type.__name__
+
         struct["response"] = self.response
         return struct
 
