@@ -3,9 +3,8 @@ from .display.display_header import (
     DisplayHeaderPipeline,
     clear_screen,
 )
-from .exception.decorator.exception_decorator import ExceptionDecorator
+from .exception.decorator.abort_decorator import AbortDecorator
 from .style import decorator
-from .style.rich_colors import RichColors
 from .task.task_pipeline import CLIArguments, TaskPipeline
 from .versioning.version_config import SoftwareVersion
 
@@ -44,14 +43,7 @@ def display_random_exit_message() -> str:
     return f"{message} {emoji}\n"
 
 
-@ExceptionDecorator(
-    RichColors.WARNING.name.lower(),
-    KeyboardInterrupt,
-)
-@ExceptionDecorator(
-    RichColors.WARNING.name.lower(),
-    EOFError,
-)
+@AbortDecorator()
 @decorator.FooterWrapper(message=display_random_exit_message())
 def task_execution(arguments: CLIArguments):
     """Execute tasks based on the provided CLI arguments."""
