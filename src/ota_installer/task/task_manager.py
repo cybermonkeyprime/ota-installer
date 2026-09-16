@@ -9,7 +9,7 @@ from typing import Self
 from ..display.display_variables import (
     DisplayVariablePipeline,
 )
-from ..log_setup import add_structured_log_sink, log_structure, logger
+from ..log_setup import add_structured_log_sink, structure_log, logger
 from ..plugin.plugin_registry import Plugin
 from ..style import decorator
 from ..variable.variable_director import VariableDirector
@@ -35,7 +35,7 @@ class TaskManager:
         if self.variable:
             add_structured_log_sink(self.variable.file_paths.log_file)
         else:
-            log_structure(
+            structure_log(
                 "Error",
                 None,
                 f"Failed to initialize {type(self.variable).__name__}",
@@ -52,7 +52,7 @@ class TaskManager:
 
         log_obj = SimpleNamespace(**log_api)
 
-        log_structure("Debug", None, log_obj.debug)
+        structure_log("Debug", None, log_obj.debug)
 
         if self.variable:
             (
@@ -61,7 +61,7 @@ class TaskManager:
                 .process_file_names()
             )
         else:
-            log_structure("Error", None, log_obj.error)
+            structure_log("Error", None, log_obj.error)
 
     def execute_iteration(self, pipeline: Pipeline) -> None:
         pipeline.run(self.variable)
@@ -97,7 +97,7 @@ class TaskDirectorRender:
 
 def task_director(instance: VariableDirector, task_name: Callable) -> None:
     """Manages the initiation of task processing."""
-    log_structure("debug", None, f"Initiating task: {task_name}")
+    structure_log("debug", None, f"Initiating task: {task_name}")
     task = task_name(instance=instance)
 
     class TaskDirectorError(Enum):
