@@ -21,7 +21,7 @@ class DisplayStepError(Exception):
 
 class DisplayType(Enum):
     VERBOSE = SoftwareVersion.display()
-    CONSICE = SoftwareVersion.formatted()
+    CONCISE = SoftwareVersion.formatted()
 
 
 class DisplayHeader(StrEnum):
