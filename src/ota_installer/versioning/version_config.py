@@ -24,15 +24,15 @@ class SoftwareVersion(Enum):
 
     @classmethod
     def display(cls) -> str:
-        return cls.render().display()
+        return cls.render().fetch_normal_display()
 
     @classmethod
     def formatted(cls) -> str:
-        return cls.render().formatted()
+        return cls.render().fetch_formatted_display()
 
     @classmethod
     def version(cls) -> str:
-        return cls.render().version()
+        return cls.render().fetch_version_stats()
 
 
 @dataclass(frozen=True)
@@ -44,21 +44,18 @@ class SoftwareRenderer:
     minor_number: int
     patch_number: int
 
-    def display(self) -> str:
-        """Returns the display string for the global software version."""
-        return (
-            f"Build: {self.major_number}."
-            f"{self.minor_number}.{self.patch_number}"
-        )
-
-    def version(self) -> str:
+    def fetch_version_stats(self) -> str:
         return f"{self.major_number}.{self.minor_number}.{self.patch_number}"
 
-    def formatted(self) -> str:
+    def fetch_normal_display(self) -> str:
+        """Returns the display string for the global software version."""
+        return f"Build: {self.fetch_version_stats()}"
+
+    def fetch_formatted_display(self) -> str:
         """
         Returns a formatted string with the title or display of the software
         version."""
-        return f"{self.title} - {self.display()}"
+        return f"{self.title} - {self.fetch_normal_display()}"
 
 
-# Signed off by Brian Sanford on 20260827
+# Signed off by Brian Sanford on 20260917
