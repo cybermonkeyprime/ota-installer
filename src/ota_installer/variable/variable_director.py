@@ -87,7 +87,7 @@ class VariableDirector:
         return build_dispatcher(process_type, self)
 
 
-def variable_pipeline(path: Path) -> VariableDirector:
+def variable_pipeline(path: Path) -> VariableDirector | None:
     from ..validation.ota_package_validator import validate_ota_package
     from ..variable.variable_director import VariableDirector
 
