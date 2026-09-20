@@ -105,7 +105,7 @@ class LogType(StrEnum):
     ERROR = auto()
     CRITICAL = auto()
 
-    def handle_exception(self, exception_type: Callable | None, response: str):
+    def handle_exception(self, exception_type: Callable, response: str):
         ExceptionHandler(self.value, exception_type, response).pipeline()
 
     def write_log(self, response: str):
@@ -117,7 +117,7 @@ class LogType(StrEnum):
 @dataclass(frozen=True, slots=True)
 class ExceptionHandler:
     severity: str
-    exception_type: Callable | None
+    exception_type: Callable
     response: str
 
     @property
