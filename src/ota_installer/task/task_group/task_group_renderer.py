@@ -3,7 +3,7 @@
 from collections.abc import Callable
 from dataclasses import dataclass
 
-from ...log_setup import structure_log
+from ...log_setup import LogType
 from .task_group_pipeline import (
     APPLICATION,
     MIGRATION,
@@ -20,9 +20,7 @@ class TaskGroupRenderer:
     def __call__(self, *args, **kwargs) -> tuple[str, ...]:
         from ...style import decorator
 
-        structure_log(
-            "debug",
-            None,
+        LogType.DEBUG.write_log(
             f"Rendering task group confirmation: {self.task_name}",
         )
 

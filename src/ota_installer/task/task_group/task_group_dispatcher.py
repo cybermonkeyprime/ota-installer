@@ -4,7 +4,7 @@ from functools import singledispatchmethod
 
 from ...dispatcher.dispatcher_template import DispatcherTemplate
 from ...dispatcher.dispatcher_type import DispatcherType
-from ...log_setup import structure_log
+from ...log_setup import LogType
 from ...plugin.plugin_registry import Plugin
 
 TaskGroupMap = dict[str, object]
@@ -19,9 +19,7 @@ class TaskGroupTypeDispatcher(DispatcherTemplate):
     def __post_init__(self) -> None:
         self.collection: TaskGroupMap = self.populate_collection()
 
-        structure_log(
-            "debug",
-            None,
+        LogType.DEBUG.write_log(
             f"TaskGroupTypeDispatcher initialized with collection:"
             f"{self.collection}",
         )
@@ -34,9 +32,7 @@ class TaskGroupTypeDispatcher(DispatcherTemplate):
 
     @singledispatchmethod
     def collection_type(self, obj) -> dict:
-        structure_log(
-            "error",
-            None,
+        LogType.ERROR.write_log(
             f"Unsupported object type passed to dispatcher: {type(obj)}",
         )
         return {}
@@ -46,4 +42,4 @@ class TaskGroupTypeDispatcher(DispatcherTemplate):
         return {str(key).lower(): value for key, value in obj.items()}
 
 
-# Signed off by Brian Sanford on 20260831
+# Signed off by Brian Sanford on 20260920

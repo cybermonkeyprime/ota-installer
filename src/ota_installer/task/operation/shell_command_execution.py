@@ -5,7 +5,7 @@ from functools import partial
 from subprocess import check_output, run
 from typing import Self
 
-from ...log_setup import structure_log
+from ...log_setup import LogType
 from ...style import decorator
 from .task_operation_invocation import Indents, Messages
 
@@ -39,8 +39,8 @@ class ShellCommandExecutor:
     def execute(self) -> Self:
         """Executes the command without returning output."""
         if run(args=self.command, shell=True, check=True).returncode != 0:
-            structure_log(
-                "execution", None, f"Command execution failed: {self.command}"
+            LogType.ERROR.write_log(
+                f"Command execution failed: {self.command}"
             )
         return self
 
@@ -55,10 +55,8 @@ class ShellCommandExecutor:
             else ""
         )
         if not result:
-            structure_log(
-                "exception",
-                None,
-                f"{output_name} execution failed: {self.command}",
+            LogType.ERROR.write_log(
+                f"{output_name} error failed: {self.command}",
             )
         return result
 

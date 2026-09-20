@@ -1,9 +1,7 @@
-from logging import WARNING
-from re import DEBUG
 import sys
-from enum import StrEnum, auto
 from collections.abc import Callable
 from dataclasses import dataclass
+from enum import StrEnum, auto
 from pathlib import Path
 
 from loguru import logger
@@ -98,20 +96,26 @@ def log_messages() -> None:
 configure_logger()
 
 
-class LogLevel(StrEnum):
+class LogType(StrEnum):
     TRACE = auto()
     DEBUG = auto()
     INFO = auto()
     SUCCESS = auto()
     WARNING = auto()
-    ERRROR = auto()
+    ERROR = auto()
+    CRITICAL = auto()
 
-    def write_log(self, exception_type: Callable | None, response: str):
-        StatusReporter(self.value, exception_type, response).pipeline()
+    def handle_exception(self, exception_type: Callable | None, response: str):
+        ExceptionHandler(self.value, exception_type, response).pipeline()
+
+    def write_log(self, response: str):
+        getattr(logger, self.value)(
+            {"status": self.value, "response": response}
+        )
 
 
 @dataclass(frozen=True, slots=True)
-class StatusReporter:
+class ExceptionHandler:
     severity: str
     exception_type: Callable | None
     response: str
@@ -138,12 +142,6 @@ class StatusReporter:
         self.raise_error()
 
 
-def structure_log(
-    status: str, exception_type: Callable | None, response: str
-) -> None:
-    StatusReporter(status, exception_type, response).pipeline()
-
-
 def main() -> None:
     """Main entry point of the application."""
     log_messages()
@@ -151,3 +149,5 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+# Signed off by Brian Sanford on 20260920

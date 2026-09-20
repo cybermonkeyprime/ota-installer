@@ -6,7 +6,7 @@ from typing import Self
 from ..directory.directory_pipeline import set_directory_pipeline
 from ..dispatcher.dispatcher_builder import build_dispatcher
 from ..image.magisk.magisk_image_info import MagiskImagePath
-from ..log_setup import structure_log
+from ..log_setup import LogType
 from .variable_invocations import (
     MagiskPathInvocation,
 )
@@ -25,8 +25,8 @@ class VariableDirector:
     def set_base_variables(self) -> Self:
         self.variables = VariableType.CONTEXT.build(file_path=self.path)
         if self.undefined_variables_error():
-            structure_log(
-                "error", AttributeError, "Variables are unset or invalid"
+            LogType.ERROR.handle_exception(
+                AttributeError, "Variables are unset or invalid"
             )
         return self
 
@@ -92,7 +92,9 @@ def variable_pipeline(path: Path) -> VariableDirector:
 
     """Create a VariableDirector instance after validating the file path. """
     if not is_zip_valid_path(path):
-        structure_log("critical", FileNotFoundError, f"{path} is not valid")
+        LogType.CRITICAL.handle_exception(
+            FileNotFoundError, f"{path} is not valid"
+        )
 
     return (
         VariableDirector(path=path)
@@ -108,4 +110,4 @@ def is_zip_valid_path(path: Path) -> Path:
     return validate_ota_package(path)
 
 
-# Signed off by Brian Sanford on 20260919
+# Signed off by Brian Sanford on 20260920
