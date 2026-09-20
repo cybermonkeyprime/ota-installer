@@ -18,7 +18,7 @@ class EmptyZipFileError(ValueError):
 VALID_ZIP_MIME_TYPES: set[str] = {"application/java-archive"}
 
 
-def validate_ota_package(path: str | Path) -> Path | None:
+def validate_ota_package(path: str | Path) -> Path:
     zip_path = Path(path)
 
     if not zip_path.exists():

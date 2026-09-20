@@ -87,23 +87,25 @@ class VariableDirector:
         return build_dispatcher(process_type, self)
 
 
-def variable_pipeline(path: Path) -> VariableDirector | None:
-    from ..validation.ota_package_validator import validate_ota_package
+def variable_pipeline(path: Path) -> VariableDirector:
     from ..variable.variable_director import VariableDirector
 
     """Create a VariableDirector instance after validating the file path. """
-
-    valid_path = validate_ota_package(path)
-
-    if not (valid_path := validate_ota_package(path)):
-        return None
+    if not is_zip_valid_path(path):
+        structure_log("critical", FileNotFoundError, f"{path} is not valid")
 
     return (
-        VariableDirector(path=valid_path)
+        VariableDirector(path=path)
         .set_base_variables()
         .set_filenames()
         .set_directories()
     )
 
 
-# Signed off by Brian Sanford on 20260629
+def is_zip_valid_path(path: Path) -> Path:
+    from ..validation.ota_package_validator import validate_ota_package
+
+    return validate_ota_package(path)
+
+
+# Signed off by Brian Sanford on 20260919
