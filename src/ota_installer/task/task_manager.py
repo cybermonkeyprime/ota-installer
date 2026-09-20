@@ -36,7 +36,7 @@ class TaskManager:
             add_structured_log_sink(self.variable.file_paths.log_file)
         else:
             structure_log(
-                "Error",
+                "error",
                 None,
                 f"Failed to initialize {type(self.variable).__name__}",
             )
@@ -52,7 +52,7 @@ class TaskManager:
 
         log_obj = SimpleNamespace(**log_api)
 
-        structure_log("Debug", None, log_obj.debug)
+        structure_log("debug", None, log_obj.debug)
 
         if self.variable:
             (
@@ -61,7 +61,7 @@ class TaskManager:
                 .process_file_names()
             )
         else:
-            structure_log("Error", None, log_obj.error)
+            structure_log("error", None, log_obj.error)
 
     def execute_iteration(self, pipeline: Pipeline) -> None:
         pipeline.run(self.variable)

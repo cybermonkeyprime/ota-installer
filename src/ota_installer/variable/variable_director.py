@@ -26,7 +26,7 @@ class VariableDirector:
         self.variables = VariableType.CONTEXT.build(file_path=self.path)
         if self.undefined_variables_error():
             structure_log(
-                "Error", AttributeError, "Variables are unset or invalid"
+                "error", AttributeError, "Variables are unset or invalid"
             )
         return self
 

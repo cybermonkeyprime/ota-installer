@@ -23,7 +23,7 @@ class DispatcherTemplate(DispatcherProtocol):
 
         if result is None:
             structure_log(
-                "Error",
+                "error",
                 KeyError,
                 f"Key not found in collection: {normalized_key}",
             )
@@ -48,7 +48,7 @@ class DispatcherTemplate(DispatcherProtocol):
 
         if not callable(callback):
             structure_log(
-                "Error",
+                "error",
                 TypeError,
                 f"Expected a callable object, but got {type(callback).__name__}",
             )

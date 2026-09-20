@@ -1,4 +1,7 @@
+from logging import WARNING
+from re import DEBUG
 import sys
+from enum import StrEnum, auto
 from collections.abc import Callable
 from dataclasses import dataclass
 from pathlib import Path
@@ -93,6 +96,18 @@ def log_messages() -> None:
 
 
 configure_logger()
+
+
+class LogLevel(StrEnum):
+    TRACE = auto()
+    DEBUG = auto()
+    INFO = auto()
+    SUCCESS = auto()
+    WARNING = auto()
+    ERRROR = auto()
+
+    def write_log(self, exception_type: Callable | None, response: str):
+        StatusReporter(self.value, exception_type, response).pipeline()
 
 
 @dataclass(frozen=True, slots=True)

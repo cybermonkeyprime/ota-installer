@@ -27,7 +27,7 @@ class DirectoryPipeline:
     def set_item(self, name: str, path: Path) -> Self:
         if name not in self.valid_keys:
             structure_log(
-                "Error", AttributeError, f"{name} is not in {self.valid_keys}"
+                "error", AttributeError, f"{name} is not in {self.valid_keys}"
             )
 
         setattr(self, name, path)
