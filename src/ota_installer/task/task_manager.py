@@ -95,7 +95,7 @@ class TaskDirectorRender:
 
 def task_director(instance: VariableDirector, task_name: Callable) -> None:
     """Manages the initiation of task processing."""
-    LogType.DEBUG.write_log(f"Initiating task: {task_name}")
+    LogType.DEBUG.write_log(f"Initiating task: {task_name.__name__}")
     task = task_name(instance=instance)
 
     class TaskDirectorError(Enum):

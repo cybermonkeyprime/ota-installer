@@ -25,7 +25,7 @@ class DoublePaddedFooterWrapper(GenericDecorator):
         def wrapper(*args, **kwargs) -> object:
             result = func(*args, **kwargs)
             self._print_footer(self.beginning)
-            LogType.DEBUG.write_log( self.message)
+            LogType.DEBUG.write_log(self.message.strip())
             self._print_footer(self.message)
             self._print_footer(self.ending)
             return result

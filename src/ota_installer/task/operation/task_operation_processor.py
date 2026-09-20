@@ -113,11 +113,11 @@ class TaskOperationProcessor:
 
 def resolve_image_path(key: str) -> Path:
     """Handles image retrieval based on a key."""
-    LogType.DEBUG.write_log( f"image_handler(): {key=}")
+    LogType.DEBUG.write_log(f"{key=}")
     dispatcher = PluginDispatcherAdapter("image")
-    LogType.DEBUG.write_log( f"image_handler(): {dispatcher=}")
+    LogType.DEBUG.write_log(f"{dispatcher=}")
     retriever = dispatcher.load()
-    LogType.DEBUG.write_log( f"image_handler(): {retriever=}")
+    LogType.DEBUG.write_log(f"{retriever=}")
     image_path = Path.home() / "images" / f"{retriever.get_key(key)}.img"
     if not image_path.exists():
         raise ValueError(f"Invalid key for image handler: {key}")
@@ -131,4 +131,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-# Signed off by Brian Sanford on 20260628
+# Signed off by Brian Sanford on 20260920
