@@ -8,6 +8,8 @@ from typing import Self
 from loguru import logger
 from rich.logging import RichHandler
 
+LogMethod = Callable[[dict[str, str]], None]
+
 
 def configure_logger() -> None:
     """Configure the logger with different handlers for console and file output."""
@@ -25,18 +27,7 @@ def configure_logger() -> None:
         ),
         level="WARNING",
         format="{message}",
-        # format="{time:YYYY-MM-DD HH:mm:ss.SSS} | {level} | {module}:{function}:{line} - {message}",
         backtrace=False,
-    )
-
-    """ structured machine-readable stdout (for logs to file, piping, etc. """
-    logger.add(
-        sys.stdout,
-        level="CRITICAL",  # Can lower to DEBUG for verbose JSON output
-        serialize=True,
-        colorize=True,
-        backtrace=False,
-        diagnose=True,
     )
 
 
@@ -51,31 +42,29 @@ def enable_debug_logging() -> None:
             show_level=True,
             show_path=True,
         ),
-        #    sys.stderr,
-        level="DEBUG",
-        # format="{time:YYYY-MM-DD HH:mm:ss.SSS} | {level} | {module}:{function}:{line} - {message}",
-        format="{message}",
-        serialize=False,
+        # level="DEBUG",
+        # format="{message}",
+        # serialize=False,
         # colorize=True,
-        backtrace=True,
-        # diagnose=True,
+        # backtrace=True,
+        # diagnose=False,
     )
-    # Keep JSON logs (stdout)
-    logger.add(
-        sys.stdout,
-        level="DEBUG",
-        serialize=True,
-        backtrace=True,
-        diagnose=True,
-    )
+
+
+def structured_sink(message) -> None:
+    log_data = message.record["extra"].get("log_data")
+
+    if log_data is not None:
+        print(log_data)
 
 
 def add_structured_log_sink(path: Path) -> None:
     """Add a structured log sink to the specified path."""
     logger.add(
         str(path),
+        format="{extra[log_data]}",
         level="DEBUG",
-        serialize=True,
+        serialize=False,
         backtrace=True,
         diagnose=True,
         rotation=None,  # No rotation, since filename is already unique
@@ -97,6 +86,11 @@ def log_messages() -> None:
 configure_logger()
 
 
+def fetch_logger_type(severity: str) -> LogMethod:
+    """Fetches the corresponding logger method based on severity string."""
+    return getattr(logger, severity.lower(), logger.info)
+
+
 class LogType(StrEnum):
     TRACE = auto()
     DEBUG = auto()
@@ -106,27 +100,43 @@ class LogType(StrEnum):
     ERROR = auto()
     CRITICAL = auto()
 
-    def handle_exception(self, exception_type: Callable, response: str):
+    @property
+    def logger_type(self) -> LogMethod:
+        return fetch_logger_type(self.value)
+
+    def bind(self, log_data: dict[str, str]) -> LogMethod:
+        bound_logger = logger.bind(log_data=log_data).opt(depth=1)
+        return getattr(bound_logger, self.value)
+
+    def handle_exception(
+        self, exception_type: type[BaseException], response: str
+    ):
+        """Logs the error and raises the provided exception type."""
         (
             ExceptionHandler(self.value, exception_type, response)
             .log_report()
             .raise_error()
         )
 
-    def write_log(self, response: str):
-        getattr(logger, self.value)(
-            {"status": self.value, "response": response}
-        )
+    def write_log(self, response):
+        """Writes a simple structured log message."""
+        report_log = {"status": self.value, "response": response}
+
+        self.bind(report_log)(response)
 
 
 @dataclass(frozen=True, slots=True)
 class ExceptionHandler:
     severity: str
-    exception_type: Callable
+    exception_type: type[BaseException] | None
     response: str
 
     @property
-    def report(self) -> dict[str, str]:
+    def logger_type(self):
+        return fetch_logger_type(self.severity)
+
+    @property
+    def report_log(self) -> dict[str, str]:
         struct = {"status": self.severity}
 
         if self.exception_type is not None:
@@ -135,23 +145,34 @@ class ExceptionHandler:
         struct["response"] = self.response
         return struct
 
-    @property
-    def logger_type(self):
-        return getattr(logger, self.severity.lower())
+    def bind(self, log_data: dict[str, str]) -> LogMethod:
+        bound_logger = logger.bind(log_data=log_data).opt(depth=1)
+        return getattr(bound_logger, self.severity)
 
     def log_report(self) -> Self:
-        self.logger_type(self.report)
+        self.bind(self.report_log)(self.response)
+
         return self
 
     def raise_error(self) -> Self:
         if self.exception_type:
-            raise self.exception_type(self.report)
+            raise self.exception_type(self.report_log)
         return self
 
 
 def main() -> None:
+    from contextlib import suppress
+
     """Main entry point of the application."""
-    log_messages()
+    configure_logger()
+
+    # Test cases
+    LogType.WARNING.write_log("This is a clean warning message!")
+
+    with suppress(TypeError):
+        LogType.ERROR.handle_exception(
+            TypeError, "Uh Oh! This is not the right type!"
+        )
 
 
 if __name__ == "__main__":
