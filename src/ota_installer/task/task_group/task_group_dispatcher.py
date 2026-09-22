@@ -19,8 +19,8 @@ class TaskGroupTypeDispatcher(DispatcherTemplate):
     def __post_init__(self) -> None:
         self.collection: TaskGroupMap = self.populate_collection()
 
-        LogType.DEBUG.write_log(
-            f"TaskGroupTypeDispatcher initialized with collection:"
+        LogType.INFO.write_log(
+            f"TaskGroupTypeDispatcher initialized with collection: "
             f"{self.collection}",
         )
 

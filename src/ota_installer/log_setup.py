@@ -1,4 +1,3 @@
-import sys
 from collections.abc import Callable
 from dataclasses import dataclass
 from enum import StrEnum, auto
@@ -42,12 +41,6 @@ def enable_debug_logging() -> None:
             show_level=True,
             show_path=True,
         ),
-        # level="DEBUG",
-        # format="{message}",
-        # serialize=False,
-        # colorize=True,
-        # backtrace=True,
-        # diagnose=False,
     )
 
 
@@ -105,7 +98,7 @@ class LogType(StrEnum):
         return fetch_logger_type(self.value)
 
     def bind(self, log_data: dict[str, str]) -> LogMethod:
-        bound_logger = logger.bind(log_data=log_data).opt(depth=1)
+        bound_logger = logger.bind(log_data=log_data).opt(depth=3)
         return getattr(bound_logger, self.value)
 
     def handle_exception(

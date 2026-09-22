@@ -38,7 +38,7 @@ def set_directory_pipeline(parent_directory: Path) -> DirectoryPipeline:
     """Creates a DirectoryTypeDefinition for the specified parent directory."""
     from ..image.image_name import ImageName
 
-    LogType.DEBUG.write_log("Creating Directories")
+    LogType.INFO.write_log("Creating Directories")
     if not parent_directory.exists() or not parent_directory.is_dir():
         LogType.ERROR.handle_exception(
             SystemExit,

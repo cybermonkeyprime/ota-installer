@@ -25,9 +25,7 @@ class PluginDispatcherAdapter:
 
     def load(self) -> object:
         """Load the dispatcher based on the specified type."""
-        LogType.DEBUG.handle_exception(
-            None, f"Loading dispatcher: {self.dispatcher}"
-        )
+        LogType.INFO.write_log(f"Loading dispatcher: {self.dispatcher}")
         if self.dispatcher not in DispatcherType:
             LogType.ERROR.handle_exception(
                 DispatcherError,
@@ -42,8 +40,7 @@ class PluginDispatcherAdapter:
         self, dispatcher_type: str, obj: dict
     ) -> object:
         """Load a registered plugin dispatcher based on the dispatcher type."""
-        LogType.DEBUG.handle_exception(
-            None,
+        LogType.INFO.write_log(
             f"Loading plugin dispatcher for type: {dispatcher_type}",
         )
         valid_dispatcher = DispatcherType(dispatcher_type)
