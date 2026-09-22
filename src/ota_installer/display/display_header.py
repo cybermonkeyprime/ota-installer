@@ -107,7 +107,7 @@ def process_display_steps(
 ) -> None:
     """Process an ordered collection of display steps."""
     for step in steps:
-        LogType.DEBUG.write_log( f"{step=}")
+        LogType.DEBUG.write_log(f"{step=}")
         if not isinstance(step, DisplayStep):
             LogType.ERROR.handle_exception(
                 DisplayStepError,
@@ -130,7 +130,7 @@ class DisplayHeaderPipeline:
 
     def process_header(self) -> Self:
         """Process the complete display header."""
-        LogType.DEBUG.write_log( f"{self.steps=}")
+        LogType.DEBUG.write_log(f"{self.steps=}")
         process_display_steps(self.steps)
         return self
 
@@ -138,7 +138,7 @@ class DisplayHeaderPipeline:
 def clear_screen() -> None:
     """Clears the terminal screen."""
     if not execute_clear_command():
-        LogType.ERROR.handle_exception(None, "Failed to clear the screen.")
+        LogType.ERROR.write_log("Failed to clear the screen.")
 
 
 def execute_clear_command() -> CompletedProcess:

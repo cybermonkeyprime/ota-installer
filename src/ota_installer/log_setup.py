@@ -135,8 +135,12 @@ class ExceptionHandler:
         struct["response"] = self.response
         return struct
 
+    @property
+    def logger_type(self):
+        return getattr(logger, self.severity.lower())
+
     def log_report(self) -> Self:
-        getattr(logger, self.severity.lower())(self.report)
+        self.logger_type(self.report)
         return self
 
     def raise_error(self) -> Self:
