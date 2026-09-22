@@ -3,6 +3,7 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from enum import StrEnum, auto
 from pathlib import Path
+from typing import Self
 
 from loguru import logger
 from rich.logging import RichHandler
@@ -106,7 +107,11 @@ class LogType(StrEnum):
     CRITICAL = auto()
 
     def handle_exception(self, exception_type: Callable, response: str):
-        ExceptionHandler(self.value, exception_type, response).pipeline()
+        (
+            ExceptionHandler(self.value, exception_type, response)
+            .log_report()
+            .raise_error()
+        )
 
     def write_log(self, response: str):
         getattr(logger, self.value)(
@@ -130,16 +135,14 @@ class ExceptionHandler:
         struct["response"] = self.response
         return struct
 
-    def log_report(self):
+    def log_report(self) -> Self:
         getattr(logger, self.severity.lower())(self.report)
+        return self
 
-    def raise_error(self) -> None:
+    def raise_error(self) -> Self:
         if self.exception_type:
             raise self.exception_type(self.report)
-
-    def pipeline(self) -> None:
-        self.log_report()
-        self.raise_error()
+        return self
 
 
 def main() -> None:
