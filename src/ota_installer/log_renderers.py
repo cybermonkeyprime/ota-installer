@@ -27,10 +27,12 @@ class LogType(StrEnum):
     ERROR = auto()
     CRITICAL = auto()
 
-    def raise_error(self, exception_type: type[BaseException], response: str):
+    def raise_error(
+        self, exception_type: type[BaseException], response: str
+    ) -> None:
         LogRenderer(self.value).handle_exception(exception_type, response)
 
-    def write(self, response: str):
+    def write(self, response: str) -> None:
         LogRenderer(self.value).write_log(response)
 
 
