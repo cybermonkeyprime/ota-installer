@@ -30,11 +30,11 @@ class TaskGroupDirector:
         """Executes a single task if a task group is defined."""
 
         if not self.task_group:
-            LogType.ERROR.handle_exception(
+            LogType.ERROR.raise_error(
                 AttributeError, f"{self.task_group!r} does not exist!"
             )
 
-        LogType.DEBUG.write_log(
+        LogType.DEBUG.write(
             f"Executing single task for task group: {self.task_group}",
         )
         self.task_director.execute(self.task_group)

@@ -27,28 +27,39 @@ class LogType(StrEnum):
     ERROR = auto()
     CRITICAL = auto()
 
+    def raise_error(self, exception_type: type[BaseException], response: str):
+        LogRenderer(self.value).handle_exception(exception_type, response)
+
+    def write(self, response: str):
+        LogRenderer(self.value).write_log(response)
+
+
+@dataclass(frozen=True, slots=True)
+class LogRenderer:
+    log_level: str
+
     def bind(self, log_data: dict[str, str]) -> LogMethod:
-        return bind_logger(self.value, log_data)
+        return bind_logger(self.log_level, log_data)
 
     def handle_exception(
         self, exception_type: type[BaseException], response: str
     ):
         """Logs the error and raises the provided exception type."""
         (
-            ExceptionHandler(self.value, exception_type, response)
+            ExceptionRenderer(self.log_level, exception_type, response)
             .log_report()
             .raise_error()
         )
 
     def write_log(self, response):
         """Writes a simple structured log message."""
-        report_log = {"status": self.value, "response": response}
+        report_log = {"status": self.log_level, "response": response}
 
         self.bind(report_log)(response)
 
 
 @dataclass(frozen=True, slots=True)
-class ExceptionHandler:
+class ExceptionRenderer:
     log_level: str
     exception_type: type[BaseException] | None
     response: str
@@ -71,7 +82,7 @@ class ExceptionHandler:
         return bind_logger(self.log_level, log_data)
 
     def log_report(self) -> Self:
-        self.logger_type(self.report_log)
+        self.bind(self.report_log)(self.response)
 
         return self
 

@@ -20,7 +20,7 @@ class ExceptionHandler(GenericDecorator):
 
             if callable(func) and not (result := func(*args, **kwargs)):
                 name = getattr(func, "__name__", "func")
-                LogType.ERROR.handle_exception(None, f"{name} occured in {name}")
+                LogType.ERROR.raise_error(None, f"{name} occured in {name}")
             return result
 
         return wrapper

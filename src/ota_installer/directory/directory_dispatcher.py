@@ -18,7 +18,7 @@ class DirectoryDispatcher(DispatcherTemplate):
     def __post_init__(self) -> None:
         """Initializes the directory collection based on provided object."""
         self.collection = DirectoryType.to_dict(self.obj)
-        LogType.INFO.write_log(
+        LogType.INFO.write(
             "DirectoryDispatcher initialized with collection: "
             f"{self.collection}",
         )

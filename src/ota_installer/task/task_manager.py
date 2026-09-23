@@ -50,7 +50,7 @@ class TaskManager:
 
         log_obj = SimpleNamespace(**log_api)
 
-        LogType.DEBUG.write_log(f"{log_obj.debug=}")
+        LogType.DEBUG.write(f"{log_obj.debug=}")
 
         if self.variable:
             (
@@ -95,7 +95,7 @@ class TaskDirectorRender:
 
 def task_director(instance: VariableDirector, task_name: Callable) -> None:
     """Manages the initiation of task processing."""
-    LogType.INFO.write_log(f"Initiating task: {task_name.__name__}")
+    LogType.INFO.write(f"Initiating task: {task_name.__name__}")
     task = task_name(instance=instance)
 
     class TaskDirectorError(Enum):

@@ -50,7 +50,7 @@ class MagiskImagePuller(BaseTask):
     def perform_task(self) -> None:
         """Executes the task to pull the patched boot image."""
         self.task.run_with_output()
-        LogType.DEBUG.write_log(f"{APPLICATION[0].name=}")
+        LogType.DEBUG.write(f"{APPLICATION[0].name=}")
 
 
 @Plugin.TASK.register(TITLE.lower())

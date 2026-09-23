@@ -107,9 +107,9 @@ def process_display_steps(
 ) -> None:
     """Process an ordered collection of display steps."""
     for step in steps:
-        LogType.DEBUG.write_log(f"{step=}")
+        LogType.DEBUG.write(f"{step=}")
         if not isinstance(step, DisplayStep):
-            LogType.ERROR.handle_exception(
+            LogType.ERROR.raise_error(
                 DisplayStepError,
                 f"Expected DisplayStep, received {type(step).__name__}.",
             )
@@ -130,7 +130,7 @@ class DisplayHeaderPipeline:
 
     def process_header(self) -> Self:
         """Process the complete display header."""
-        LogType.DEBUG.write_log(f"{self.steps=}")
+        LogType.DEBUG.write(f"{self.steps=}")
         process_display_steps(self.steps)
         return self
 

@@ -22,7 +22,7 @@ class DispatcherTemplate(DispatcherProtocol):
         result = self.collection.get(self.normalize_key(key))
 
         if result is None:
-            LogType.ERROR.handle_exception(
+            LogType.ERROR.raise_error(
                 KeyError,
                 f"Key not found in collection: {normalized_key}",
             )
@@ -39,13 +39,13 @@ class DispatcherTemplate(DispatcherProtocol):
         callback = self.collection.get(normalized_key)
 
         if callback is None:
-            LogType.CRITICAL.handle_exception(
+            LogType.CRITICAL.raise_error(
                 KeyError,
                 f"Key not found in collection: {normalized_key}",
             )
 
         if not callable(callback):
-            LogType.ERROR.handle_exception(
+            LogType.ERROR.raise_error(
                 TypeError,
                 f"Expected a callable object, but got {type(callback).__name__}",
             )

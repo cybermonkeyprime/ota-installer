@@ -20,7 +20,7 @@ class TaskGroupRenderer:
     def __call__(self, *args, **kwargs) -> tuple[str, ...]:
         from ...style import decorator
 
-        LogType.DEBUG.write_log(
+        LogType.DEBUG.write(
             f"Rendering task group confirmation: {self.task_name}",
         )
 

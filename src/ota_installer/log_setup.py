@@ -82,10 +82,10 @@ def main() -> None:
     configure_logger()
 
     # Test cases
-    LogType.WARNING.write_log("This is a clean warning message!")
+    LogType.WARNING.write("This is a clean warning message!")
 
     with suppress(TypeError):
-        LogType.ERROR.handle_exception(
+        LogType.ERROR.raise_error(
             TypeError, "Uh Oh! This is not the right type!"
         )
 

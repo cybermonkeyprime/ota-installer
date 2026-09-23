@@ -26,7 +26,7 @@ class DirectoryPipeline:
 
     def set_item(self, name: str, path: Path) -> Self:
         if name not in self.valid_keys:
-            LogType.ERROR.handle_exception(
+            LogType.ERROR.raise_error(
                 AttributeError, f"{name} is not in {self.valid_keys}"
             )
 
@@ -38,9 +38,9 @@ def set_directory_pipeline(parent_directory: Path) -> DirectoryPipeline:
     """Creates a DirectoryTypeDefinition for the specified parent directory."""
     from ..image.image_name import ImageName
 
-    LogType.INFO.write_log("Creating Directories")
+    LogType.INFO.write("Creating Directories")
     if not parent_directory.exists() or not parent_directory.is_dir():
-        LogType.ERROR.handle_exception(
+        LogType.ERROR.raise_error(
             SystemExit,
             f"Invalid parent directory: {parent_directory}",
         )

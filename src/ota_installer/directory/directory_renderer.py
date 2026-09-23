@@ -13,7 +13,7 @@ class DirectoryRender(Enum):
 
     def __call__(self, *args, **kwargs):
         """Creates an instance of the specified container class."""
-        LogType.INFO.write_log(f"Creating directory container: {self.name}")
+        LogType.INFO.write(f"Creating directory container: {self.name}")
         return self.value(*args, **kwargs)
 
 

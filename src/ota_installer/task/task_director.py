@@ -27,11 +27,11 @@ class TaskInvocation:
                 DispatcherType.TASK_GROUP.value, TASK_GROUPS
             ).load(),
         )
-        LogType.DEBUG.write_log(f"dispatcher type: {type(self.dispatcher)!r}")
+        LogType.DEBUG.write(f"dispatcher type: {type(self.dispatcher)!r}")
 
     def get_instance(self, key: str) -> Callable:
         """Retrieves the dispatcher instance for a given key."""
-        LogType.INFO.write_log(
+        LogType.INFO.write(
             f"Retrieving dispatcher instance for key: {key}"
         )
         return self.dispatcher.get_instance(key)
@@ -50,7 +50,7 @@ class TaskDirector:
         """Iterates over tasks in the specified task group."""
         from .task_manager import Pipeline
 
-        LogType.INFO.write_log(
+        LogType.INFO.write(
             f"Executing task iteration for: {task_group_key}"
         )
         stages = cast(

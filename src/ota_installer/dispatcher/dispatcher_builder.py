@@ -11,7 +11,7 @@ def build_dispatcher(
     allowed_dispatchers = DispatcherType.allowed_dispatchers()
 
     if normalized_type not in allowed_dispatchers:
-        LogType.ERROR.handle_exception(
+        LogType.ERROR.raise_error(
             ValueError,
             f"Invalid dispatcher type: {process_type}. "
             f"Allowed: {allowed_dispatchers}",

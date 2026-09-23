@@ -25,7 +25,7 @@ class VariableDirector:
     def set_base_variables(self) -> Self:
         self.variables = VariableType.CONTEXT.build(file_path=self.path)
         if self.undefined_variables_error():
-            LogType.ERROR.handle_exception(
+            LogType.ERROR.raise_error(
                 AttributeError, "Variables are unset or invalid"
             )
         return self
@@ -92,9 +92,7 @@ def variable_pipeline(path: Path) -> VariableDirector:
 
     """Create a VariableDirector instance after validating the file path. """
     if not is_zip_valid_path(path):
-        LogType.CRITICAL.handle_exception(
-            FileNotFoundError, f"{path} is not valid"
-        )
+        LogType.CRITICAL.raise_error(FileNotFoundError, f"{path} is not valid")
 
     return (
         VariableDirector(path=path)
