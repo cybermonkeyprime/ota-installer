@@ -1,6 +1,6 @@
 # src/ota_installer/decorators/colorizer.py
 from collections.abc import Callable
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from functools import wraps
 
 from ..rich_colors import RichColors
@@ -16,11 +16,11 @@ class Colorizer(StringReturningDecorator):
     functions.
     """
 
-    style: str = field(default="")
+    style: RichColors
 
     def __post_init__(self) -> None:
         """Initializes the color attribute based on the provided style."""
-        self.color = RichColors[self.style.upper()]
+        self.color = self.style
         if self.color is None:
             raise ValueError(f"Invalid style: {self.style}")
 
@@ -41,7 +41,7 @@ class Colorizer(StringReturningDecorator):
 
 def main() -> None:
     # Example usage
-    colorizer = Colorizer(style="task")
+    colorizer = Colorizer(style=RichColors.VARIABLE)
 
     @colorizer
     def greet(name: str) -> str:

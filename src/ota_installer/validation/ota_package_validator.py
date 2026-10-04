@@ -1,5 +1,5 @@
 # src/ota_installer/validation/validate_zip_file.py
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from zipfile import ZipFile, is_zipfile
 
@@ -24,7 +24,9 @@ def pipeline_step(func):
 @dataclass(frozen=True, slots=True)
 class OTAPackageValidator:
     zip_path: Path
-    valid_zip_mime_types: set[str] = {"application/java-archive"}
+    valid_zip_mime_types: set[str] = field(
+        default_factory=lambda: {"application/java-archive"}
+    )
 
     @pipeline_step
     def does_path_exist(self) -> None:

@@ -3,6 +3,7 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from functools import wraps
 
+from ..rich_colors import RichColors
 from .protocol.decorator_protocols import GenericDecorator
 
 
@@ -13,7 +14,7 @@ class StylizedIndentPrinter(GenericDecorator):
     function's output.
     """
 
-    style: str = "variable"
+    style: RichColors = RichColors.VARIABLE
     indent: int = 0
     begin: str = ""
     end: str = ""

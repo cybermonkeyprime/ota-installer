@@ -5,6 +5,7 @@ from .display.display_header import (
 )
 from .exception.decorator.abort_decorator import AbortDecorator
 from .style import decorator
+from .style.rich_colors import RichColors
 from .task.task_pipeline import CLIArguments, TaskPipeline
 from .versioning.version_config import SoftwareVersion
 
@@ -22,7 +23,9 @@ def display_title():
         display_random_exit_message()
 
 
-@decorator.StylizedIndentPrinter(indent=1, style="task", use_output=False)
+@decorator.StylizedIndentPrinter(
+    indent=1, style=RichColors.TASK, use_output=False
+)
 def display_random_exit_message() -> str:
     from secrets import choice
 

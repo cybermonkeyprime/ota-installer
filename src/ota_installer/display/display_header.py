@@ -9,6 +9,7 @@ from rich.control import Control
 
 from ..log_setup import LogType
 from ..style import decorator
+from ..style.rich_colors import RichColors
 from ..style.style_renderer import SEPARATOR
 from ..versioning.version_config import SoftwareVersion
 
@@ -70,7 +71,7 @@ HEADER_DISPLAY_STEPS: Sequence[DisplayStep] = (
         renderer=DisplayRenderer(
             value=f" {SoftwareVersion.TITLE.value}",
             decorator=decorator.StyledFigletPrinter(
-                style="title",
+                style=RichColors.TITLE,
                 font="slant",
             ),
         ),
@@ -86,7 +87,7 @@ HEADER_DISPLAY_STEPS: Sequence[DisplayStep] = (
         renderer=DisplayRenderer(
             value=f"{SEPARATOR()}> ",
             decorator=decorator.Colorizer(
-                style="title",
+                style=RichColors.TITLE,
             ),
         ),
     ),
@@ -95,7 +96,7 @@ HEADER_DISPLAY_STEPS: Sequence[DisplayStep] = (
         renderer=DisplayRenderer(
             value=f"{DisplayType.VERBOSE.value}\n\n",
             decorator=decorator.Colorizer(
-                style="version",
+                style=RichColors.VERSION,
             ),
         ),
     ),
@@ -138,7 +139,7 @@ class DisplayHeaderPipeline:
 def clear_screen() -> None:
     """Clears the terminal screen."""
     if not execute_clear_command():
-        LogType.ERROR.write_log("Failed to clear the screen.")
+        LogType.ERROR.write("Failed to clear the screen.")
 
 
 def execute_clear_command() -> CompletedProcess:
