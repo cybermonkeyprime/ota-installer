@@ -31,39 +31,34 @@ class OTAPackageValidator:
     @pipeline_step
     def does_path_exist(self) -> None:
         if not self.zip_path.exists():
-            LogType.CRITICAL.raise_error(
-                FileNotFoundError, f"Path does not exist: {self.zip_path}"
-            )
+            message = f"Path does not exist: {self.zip_path}"
+            LogType.CRITICAL.raise_error(FileNotFoundError, message)
 
     @pipeline_step
     def is_path_a_zip_file(self) -> None:
         if not self.zip_path.is_file():
-            LogType.CRITICAL.raise_error(
-                FileExistsError, f"Not a file: {self.zip_path}"
-            )
+            message = f"Not a file: {self.zip_path}"
+            LogType.CRITICAL.raise_error(FileExistsError, message)
 
     @pipeline_step
     def is_mime_type_correct(self) -> None:
         mime = magic.from_file(filename=str(object=self.zip_path), mime=True)
 
         if mime not in self.valid_zip_mime_types:
-            LogType.CRITICAL.raise_error(
-                ValueError, f"Unexpected MIME type: {mime}"
-            )
+            message = f"Unexpected MIME type: {mime}"
+            LogType.CRITICAL.raise_error(ValueError, message)
 
     @pipeline_step
     def is_a_zipfile(self) -> None:
         if not is_zipfile(filename=self.zip_path):
-            LogType.CRITICAL.raise_error(
-                InvalidZipFileError, "Not a valid zip file format!"
-            )
+            message = "Not a valid zip file format"
+            LogType.CRITICAL.raise_error(InvalidZipFileError, message)
 
     @pipeline_step
     def is_archive_empty(self) -> None:
         if not ZipFile(self.zip_path).namelist():
-            LogType.CRITICAL.raise_error(
-                EmptyZipFileError, "Zip archive is empty."
-            )
+            message = "Zip archive is empty"
+            LogType.CRITICAL.raise_error(EmptyZipFileError, message)
 
 
 PIPELINE_STEPS = tuple(

@@ -35,6 +35,9 @@ class LogType(StrEnum):
     def write(self, response: str) -> None:
         LogRenderer(self.value).write_log(response)
 
+    def log_then_return_none(self, response: str) -> None:
+        return LogRenderer(self.value).write_log(response).return_none()
+
 
 @dataclass(frozen=True, slots=True)
 class LogRenderer:
@@ -58,6 +61,10 @@ class LogRenderer:
         report_log = {"status": self.log_level, "response": response}
 
         self.bind(report_log)(response)
+        return self
+
+    def return_none(self):
+        return None
 
 
 @dataclass(frozen=True, slots=True)
