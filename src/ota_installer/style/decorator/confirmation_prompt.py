@@ -94,7 +94,10 @@ class ConfirmationPrompt:
 
 
 @ConfirmationPrompt(
-    begin="Start process", comment="Are you sure", indent=2, style="info"
+    begin="Start process",
+    comment="Are you sure",
+    indent=2,
+    style=RichColors.VARIABLE,
 )
 def my_function():
     """Function implementation."""

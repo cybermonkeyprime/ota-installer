@@ -3,6 +3,7 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from functools import wraps
 
+from ..rich_colors import RichColors
 from .figletizer import FontType
 from .protocol.decorator_protocols import GenericDecorator
 
@@ -11,7 +12,7 @@ from .protocol.decorator_protocols import GenericDecorator
 class StyledFigletPrinter(GenericDecorator):
     """Decorator for printing styled figlet text."""
 
-    style: str = "variable"
+    style: RichColors = RichColors.VARIABLE
     font: FontType = FontType.SLANT
     end: str = "\n"
     use_output: bool = False
@@ -30,7 +31,9 @@ class StyledFigletPrinter(GenericDecorator):
         return wraps(func)(decorated_func)
 
 
-@StyledFigletPrinter(style="variable", font=FontType.SLANT, use_output=True)
+@StyledFigletPrinter(
+    style=RichColors.VARIABLE, font=FontType.SLANT, use_output=True
+)
 def welcome_message() -> str:
     """Returns a welcome message for the OTA Installer."""
     return "OTA Installer ready!"

@@ -3,21 +3,22 @@ from dataclasses import dataclass
 from enum import Enum, IntEnum, StrEnum
 
 from ...style import decorator
+from ...style.rich_colors import RichColors
 
 
-class TaskItemType(Enum):
-    STYLE = "task"
+class TaskItemType(StrEnum):
+    STYLE = RichColors.TASK
 
 
 class TaskItemAspect(Enum):
     INDENT = 2
-    STYLE = TaskItemType.STYLE.value
+    STYLE = TaskItemType.STYLE
 
 
 class TaskItemStyle(StrEnum):
     HEADER = TaskItemType.STYLE.value
     ASPECT = TaskItemType.STYLE.value
-    DEFAULT = "tasks"
+    DEFAULT = RichColors.TASK
 
 
 class TaskItemIndent(IntEnum):

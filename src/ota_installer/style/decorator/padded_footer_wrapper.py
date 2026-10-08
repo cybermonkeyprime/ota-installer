@@ -3,6 +3,8 @@ from collections.abc import Callable
 from dataclasses import dataclass, field
 from functools import wraps
 
+from ota_installer.style.rich_colors import RichColors
+
 from .protocol.decorator_protocols import GenericDecorator
 
 
@@ -28,7 +30,7 @@ class PaddedFooterWrapper(GenericDecorator):
         return wrapper
 
     @OutputPrinter(use_color=True)
-    @Colorizer(style="variable")
+    @Colorizer(style=RichColors.VARIABLE)
     @IndentWrapper(interval=1)
     def _add_padding(self) -> str:
         return self.padding

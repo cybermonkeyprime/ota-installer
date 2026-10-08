@@ -3,6 +3,7 @@ from collections.abc import Callable
 from dataclasses import dataclass, field
 from functools import wraps
 
+from ..rich_colors import RichColors
 from .protocol.decorator_protocols import GenericDecorator
 
 
@@ -27,7 +28,7 @@ class HeaderWrapper(GenericDecorator):
         return wrapper
 
     @OutputPrinter(use_color=True)
-    @Colorizer(style="variable")
+    @Colorizer(style=RichColors.VARIABLE)
     @IndentWrapper(interval=1)  # type: ignore[return-value]
     def _output_message(self) -> str:
         """Outputs the header message."""

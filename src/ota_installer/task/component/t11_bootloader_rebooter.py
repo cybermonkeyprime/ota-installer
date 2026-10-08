@@ -3,8 +3,8 @@ from dataclasses import dataclass, field
 
 from ...plugin.plugin_registry import Plugin
 from ...style import decorator
-from ...variable.variable_director import VariableDirector
 from ...task.task_group.task_group_pipeline import APPLICATION
+from ...variable.variable_director import VariableDirector
 from .base_task import BaseTask
 
 STEP = APPLICATION[2]

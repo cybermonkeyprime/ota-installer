@@ -9,6 +9,7 @@ from ...log_setup import LogType
 from ...plugin.plugin_dispatcher_adapter import PluginDispatcherAdapter
 from ...style import decorator
 from ...style.style_renderer import StyleRenderer
+from .image_path_resolver import ImagePathResolver
 from .shell_command_execution import ShellCommandExecutor
 from .task_operation_invocation import (
     DefaultIndent,
@@ -109,19 +110,6 @@ class TaskOperationProcessor:
             self.show_description()
         self.show_command_string()
         self.execute_command_string()
-
-
-def resolve_image_path(key: str) -> Path:
-    """Handles image retrieval based on a key."""
-    LogType.DEBUG.write(f"{key=}")
-    dispatcher = PluginDispatcherAdapter("image")
-    LogType.DEBUG.write(f"{dispatcher=}")
-    retriever = dispatcher.load()
-    LogType.DEBUG.write(f"{retriever=}")
-    image_path = Path.home() / "images" / f"{retriever.get_key(key)}.img"
-    if not image_path.exists():
-        raise ValueError(f"Invalid key for image handler: {key}")
-    return image_path
 
 
 def main():

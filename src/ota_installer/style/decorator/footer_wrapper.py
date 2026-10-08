@@ -3,6 +3,8 @@ from collections.abc import Callable
 from dataclasses import dataclass, field
 from functools import wraps
 
+from ..rich_colors import RichColors
+
 
 @dataclass
 class FooterWrapper:
@@ -26,7 +28,7 @@ class FooterWrapper:
         return wrapper
 
     @OutputPrinter(use_color=True)
-    @Colorizer(style="variable")
+    @Colorizer(style=RichColors.VARIABLE)
     @IndentWrapper(interval=1)  # type: ignore[return-value]
     def _output_message(self) -> str:
         """Outputs the footer message."""

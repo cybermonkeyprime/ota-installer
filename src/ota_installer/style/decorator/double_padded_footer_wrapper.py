@@ -4,6 +4,7 @@ from dataclasses import dataclass, field
 from functools import wraps
 
 from ...log_setup import LogType
+from ..rich_colors import RichColors
 from .container.decorator_container import Decorators
 from .protocol.decorator_protocols import GenericDecorator
 
@@ -33,7 +34,7 @@ class DoublePaddedFooterWrapper(GenericDecorator):
         return wrapper
 
     @Decorators.output_printer(use_color=False)
-    @Decorators.colorizer(style="variable")
+    @Decorators.colorizer(style=RichColors.VARIABLE)
     @Decorators.indent_wrapper(interval=1)
     def _print_footer(self, message: str) -> str:
         """Outputs the footer messages."""

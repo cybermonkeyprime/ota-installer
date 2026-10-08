@@ -12,6 +12,7 @@ from ..display.display_variables import (
 from ..log_setup import LogType, add_structured_log_sink, logger
 from ..plugin.plugin_registry import Plugin
 from ..style import decorator
+from ..style.rich_colors import RichColors
 from ..variable.variable_director import VariableDirector
 
 
@@ -128,7 +129,7 @@ def _is_executable(task: object) -> bool:
 
 
 @decorator.StylizedIndentPrinter(
-    indent=2, style="variable", end="\n\n", use_output=True
+    indent=2, style=RichColors.VARIABLE, end="\n\n", use_output=True
 )
 def _skipped_task_group_msg() -> str:
     """Displays a message indicating that the task group was skipped."""

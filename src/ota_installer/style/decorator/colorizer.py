@@ -20,7 +20,7 @@ class Colorizer(StringReturningDecorator):
 
     def __post_init__(self) -> None:
         """Initializes the color attribute based on the provided style."""
-        self.color = self.style
+        self.color = RichColors(self.style)
         if self.color is None:
             raise ValueError(f"Invalid style: {self.style}")
 

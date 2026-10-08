@@ -2,15 +2,17 @@
 from dataclasses import dataclass
 from enum import Enum, IntEnum, StrEnum, auto
 
+from ...style.rich_colors import RichColors
+
 
 class Styles(StrEnum):
     """Constants for styles."""
 
-    COMMAND = "non_error"
+    COMMAND = RichColors.NON_ERROR
     NON_ERROR = auto()
     WARNING = auto()
     TASK = auto()
-    DESCRIPTION = "warning"
+    DESCRIPTION = RichColors.WARNING
 
 
 class Indents(IntEnum):
