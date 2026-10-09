@@ -34,7 +34,7 @@ class DoublePaddedFooterWrapper(GenericDecorator):
         return wrapper
 
     @Decorators.output_printer(use_color=False)
-    @Decorators.colorizer(style=RichColors.VARIABLE)
+    @Decorators.colorizer(style=RichColors.YELLOW)
     @Decorators.indent_wrapper(interval=1)
     def _print_footer(self, message: str) -> str:
         """Outputs the footer messages."""

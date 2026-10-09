@@ -24,7 +24,7 @@ def display_title():
 
 
 @decorator.StylizedIndentPrinter(
-    indent=1, style=RichColors.TASK, use_output=False
+    indent=1, style=RichColors.BOLD_GREEN, use_output=False
 )
 def display_random_exit_message() -> str:
     from secrets import choice

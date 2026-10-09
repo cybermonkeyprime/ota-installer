@@ -3,6 +3,7 @@ from collections.abc import Callable
 from dataclasses import dataclass, field
 from enum import StrEnum
 from functools import wraps
+from ..rich_colors import RichColors
 
 
 class Message(StrEnum):
@@ -42,7 +43,7 @@ class ContinueOnKeyPress:
             return Message.PROMPT
 
         decorated_func = OutputPrinter(prefix="\n", suffix="")(func)
-        decorated_func = Colorizer(style="title")(decorated_func)
+        decorated_func = Colorizer(style=RichColors.BOLD_GREEN)(decorated_func)
         return decorated_func()
 
 

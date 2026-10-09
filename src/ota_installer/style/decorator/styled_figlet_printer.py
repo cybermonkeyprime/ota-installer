@@ -12,7 +12,7 @@ from .protocol.decorator_protocols import GenericDecorator
 class StyledFigletPrinter(GenericDecorator):
     """Decorator for printing styled figlet text."""
 
-    style: RichColors = RichColors.VARIABLE
+    style: RichColors = RichColors.YELLOW
     font: FontType = FontType.SLANT
     end: str = "\n"
     use_output: bool = False
@@ -32,7 +32,7 @@ class StyledFigletPrinter(GenericDecorator):
 
 
 @StyledFigletPrinter(
-    style=RichColors.VARIABLE, font=FontType.SLANT, use_output=True
+    style=RichColors.YELLOW, font=FontType.SLANT, use_output=True
 )
 def welcome_message() -> str:
     """Returns a welcome message for the OTA Installer."""

@@ -129,7 +129,7 @@ def _is_executable(task: object) -> bool:
 
 
 @decorator.StylizedIndentPrinter(
-    indent=2, style=RichColors.VARIABLE, end="\n\n", use_output=True
+    indent=2, style=RichColors.YELLOW, end="\n\n", use_output=True
 )
 def _skipped_task_group_msg() -> str:
     """Displays a message indicating that the task group was skipped."""

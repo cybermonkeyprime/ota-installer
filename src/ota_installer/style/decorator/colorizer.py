@@ -41,7 +41,7 @@ class Colorizer(StringReturningDecorator):
 
 def main() -> None:
     # Example usage
-    colorizer = Colorizer(style=RichColors.VARIABLE)
+    colorizer = Colorizer(style=RichColors.YELLOW)
 
     @colorizer
     def greet(name: str) -> str:

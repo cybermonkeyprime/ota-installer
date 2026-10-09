@@ -8,11 +8,11 @@ from ...style.rich_colors import RichColors
 class Styles(StrEnum):
     """Constants for styles."""
 
-    COMMAND = RichColors.NON_ERROR
+    COMMAND = RichColors.WHITE
     NON_ERROR = auto()
     WARNING = auto()
     TASK = auto()
-    DESCRIPTION = RichColors.WARNING
+    DESCRIPTION = RichColors.YELLOW
 
 
 class Indents(IntEnum):

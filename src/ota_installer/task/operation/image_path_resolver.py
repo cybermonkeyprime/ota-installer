@@ -2,8 +2,10 @@
 from dataclasses import dataclass
 from pathlib import Path
 
-from ...plugin.plugin_dispatcher_adapter import PluginDispatcherAdapter
-from ...plugin.plugin_type import PluginType
+from ...plugin.plugin_dispatcher_adapter import (
+    PluginDispatcherAdapter,
+    PluginType,
+)
 
 
 @dataclass(slots=True, frozen=True)

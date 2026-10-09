@@ -71,7 +71,7 @@ HEADER_DISPLAY_STEPS: Sequence[DisplayStep] = (
         renderer=DisplayRenderer(
             value=f" {SoftwareVersion.TITLE.value}",
             decorator=decorator.StyledFigletPrinter(
-                style=RichColors.TITLE,
+                style=RichColors.BOLD_GREEN,
                 font="slant",
             ),
         ),
@@ -87,7 +87,7 @@ HEADER_DISPLAY_STEPS: Sequence[DisplayStep] = (
         renderer=DisplayRenderer(
             value=f"{SEPARATOR()}> ",
             decorator=decorator.Colorizer(
-                style=RichColors.TITLE,
+                style=RichColors.BOLD_GREEN,
             ),
         ),
     ),
@@ -96,7 +96,7 @@ HEADER_DISPLAY_STEPS: Sequence[DisplayStep] = (
         renderer=DisplayRenderer(
             value=f"{DisplayType.VERBOSE.value}\n\n",
             decorator=decorator.Colorizer(
-                style=RichColors.VERSION,
+                style=RichColors.YELLOW,
             ),
         ),
     ),

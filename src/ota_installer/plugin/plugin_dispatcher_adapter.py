@@ -1,5 +1,6 @@
 # src/ota_installer/plugin/plugin_dispatcher_adapter.py
 from dataclasses import dataclass, field
+from enum import StrEnum, auto
 
 from ..dispatcher.dispatcher_type import DispatcherType
 from ..log_setup import LogType
@@ -12,6 +13,10 @@ class DispatcherError(Exception):
     pass
 
 
+class PluginType(StrEnum):
+    IMAGE = auto()
+
+
 @dataclass
 class PluginDispatcherAdapter:
     """Adapter for loading and interacting with plugin dispatchers.
@@ -20,7 +25,7 @@ class PluginDispatcherAdapter:
     based on a type string and safely accessing their methods.
     """
 
-    dispatcher: str = field(default_factory=str)
+    dispatcher: PluginType
     object_processor: dict = field(default_factory=dict)
 
     def load(self) -> object:
@@ -37,7 +42,7 @@ class PluginDispatcherAdapter:
         )
 
     def _load_plugin_dispatcher(
-        self, dispatcher_type: str, obj: dict
+        self, dispatcher_type: PluginType, obj: dict
     ) -> object:
         """Load a registered plugin dispatcher based on the dispatcher type."""
         LogType.INFO.write(

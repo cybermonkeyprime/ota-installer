@@ -7,7 +7,7 @@ from ...style.rich_colors import RichColors
 
 
 class TaskItemType(StrEnum):
-    STYLE = RichColors.TASK
+    STYLE = RichColors.BOLD_GREEN
 
 
 class TaskItemAspect(Enum):
@@ -18,7 +18,7 @@ class TaskItemAspect(Enum):
 class TaskItemStyle(StrEnum):
     HEADER = TaskItemType.STYLE.value
     ASPECT = TaskItemType.STYLE.value
-    DEFAULT = RichColors.TASK
+    DEFAULT = RichColors.BOLD_GREEN
 
 
 class TaskItemIndent(IntEnum):

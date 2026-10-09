@@ -30,7 +30,7 @@ class PaddedFooterWrapper(GenericDecorator):
         return wrapper
 
     @OutputPrinter(use_color=True)
-    @Colorizer(style=RichColors.VARIABLE)
+    @Colorizer(style=RichColors.YELLOW)
     @IndentWrapper(interval=1)
     def _add_padding(self) -> str:
         return self.padding

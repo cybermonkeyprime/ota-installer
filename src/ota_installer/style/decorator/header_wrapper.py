@@ -28,7 +28,7 @@ class HeaderWrapper(GenericDecorator):
         return wrapper
 
     @OutputPrinter(use_color=True)
-    @Colorizer(style=RichColors.VARIABLE)
+    @Colorizer(style=RichColors.YELLOW)
     @IndentWrapper(interval=1)  # type: ignore[return-value]
     def _output_message(self) -> str:
         """Outputs the header message."""

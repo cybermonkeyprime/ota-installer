@@ -27,10 +27,10 @@ class VariableTableBuilder:
             "Title",
             no_wrap=True,
             justify="left",
-            style=RichColors.VARIABLE,
+            style=RichColors.YELLOW,
         )
         self.table.add_column(
-            "Value", justify="left", style=RichColors.VARIABLE
+            "Value", justify="left", style=RichColors.YELLOW
         )
         self.indent = indent
 
