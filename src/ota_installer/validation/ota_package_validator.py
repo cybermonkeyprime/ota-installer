@@ -80,4 +80,11 @@ def validate_ota_package(path: str | Path) -> Path:
     return zip_path.resolve()
 
 
-# Signed off by Brian Sanford on 20260924
+def main() -> None:
+    zip_path = Path("ota_package.zip")
+    validate_ota_package(zip_path)
+
+
+if __name__ == "__main__":
+    main()
+# Signed off by Brian Sanford on 20261014
