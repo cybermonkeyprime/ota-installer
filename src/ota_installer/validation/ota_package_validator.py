@@ -1,4 +1,5 @@
 # src/ota_installer/validation/validate_zip_file.py
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from pathlib import Path
 from zipfile import ZipFile, is_zipfile
@@ -16,7 +17,7 @@ class EmptyZipFileError(ValueError):
     pass
 
 
-def pipeline_step(func):
+def pipeline_step(func: Callable):
     func.is_step = True
     return func
 

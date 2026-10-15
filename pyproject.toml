@@ -5,7 +5,7 @@ build-backend = "uv_build"
 [project]
 name = "ota-installer"
 version = "2026.9.1"
-requires-python = ">=3.14"
+requires-python = ">=3.15"
 dependencies = [
   "dependency-injector==4.48.3",
   "loguru==0.7.3",
@@ -76,6 +76,7 @@ max-line-length = 79 # Controls the E501 linter rule
 "src/variables/functions.py" = ["F821"]
 "**/__init__.py" = ["F403", "F401"]
 "**/plugin_loader.py" = ["F401"]
+"src/ota_installer/main.py" = ["E402", "F401"]
 [tool.ruff.isort]
 combine-as-imports = true
 force-single-line = false
