@@ -16,7 +16,7 @@ def import_filter(importer: str, name: str, fromlist: tuple[str, ...]) -> bool:
     }
 
     root_package = name.split(".")[0] if name else ""
-    return bool(root_package not in MUST_BE_EAGER)
+    return root_package not in MUST_BE_EAGER
 
 
 # Configure the runtime before executing application code
